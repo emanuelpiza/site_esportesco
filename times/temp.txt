@@ -28,3 +28,6 @@ IPADDR=''
 NETMASK='quinze'
 IPADDR=''
 NETMASK='quinze'
+ffmpeg -i ../../../videos/${video}.mp4 -ss $inicio_s -t $duracao -vf "crop=1400:787:${direita[$lado]}:150" ../../../videos/lances/${video}_${lado}_${inicio_s}_${duracao}.mp4 & wait
+ffmpeg -i ../../../videos/${video}.mp4 -ss $inicio_s -t $duracao -vf "crop=1400:787:${direita[$lado]}:150" ../../../videos/lances/${video}_${lado}_${inicio_s}_${duracao}.mp4 & wait
+ffmpeg -i ../../../videos/.R1QcMpSzkCM..mp4 -ss $inicio_s -t $duracao -vf "crop=1400:787:${direita[$lado]}:150" ../../../videos/lances/${video}_${lado}_${inicio_s}_${duracao}.mp4 & wait

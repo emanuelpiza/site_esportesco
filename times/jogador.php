@@ -151,7 +151,7 @@
                             <div class="timeline-body">
                               <div class="embed-responsive embed-responsive-16by9">
                                 <video width="100%" loop onclick="this.paused?this.play():this.pause();">
-                                  <source src="img/' . $data2['id_plays'] . '.mp4" type="video/mp4" />
+                                  <source src="lances/' . $data2['video_id'] . '.mp4" type="video/mp4" />
                                   Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
                                     </video>
                               </div>

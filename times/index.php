@@ -23,7 +23,7 @@
     $sql_jogadores = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id'");
     $sql_jogadores2 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id'");
     while ($data4 = mysqli_fetch_assoc($sql_jogadores2)) {
-        $selecoes .= '<option value="'.$data4['players_profile'].'">'.$data4['players_name'].'</option>' ;
+        $selecoes .= "<option value=".$data4['id_players'].">".$data4['players_name']."</option>" ;
     }
 ?>
 
@@ -142,7 +142,7 @@
                 <?php while ($data2 = mysqli_fetch_assoc($sql_jogadores)) {
                     echo '
                     <li>
-                        <a class="users-list-name" href="./jogador.php?id=' . $data2['player_profile'] . '">
+                        <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">
                       <img class="img-circle" src="img/jogadores/' . $data2['player_picture'] . '.png" alt="User Image" style="height:80px; width:80px;"></a>
                       <a class="users-list-name" href="./jogador.php?id=' . $data2['player_picture'] . '">' . $data2['players_name'] . '</a>
                       <span class="users-list-date">Today</span>
@@ -164,14 +164,16 @@
                     while ($data3 = mysqli_fetch_assoc($sqltime)) {
                     echo '
                     <form action="acoes.php" method="POST">
+                    <input type="hidden" name="video" value="' . $data3['webaddress'] . '">
+                    <input type="hidden" name="equipe" value="' . $id . '">
                     
                         <div style="width: 95%; margin:10px auto; 10px; auto;" ><iframe width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '" frameborder="0" allowfullscreen></iframe>
                     
                     <div class="row">
                      <div class="form-group col-xs-4 col-md-4">
-                        <label class="form-group control-label">Momento Final</label>
+                        <label class="form-group control-label">Momento Inicial </label>
                         <div>
-                            <input type="text" name="momento" class="form-control col-xs-2 col-md-2" name="00:00" />
+                            <input type="text" name="momento" class="form-control col-xs-2 col-md-2" placeholder="hh:mm:ss" />
                         </div>
                       </div>
                     
@@ -179,19 +181,19 @@
                       <div class="form-group col-xs-4 col-md-4">
                           <div class="radio">
                             <label>
-                              <input class="control-label" type="radio" name="radio_duracao" id="quinze" value="quinze" checked>
+                              <input class="control-label" type="radio" name="radio_duracao" id="quinze" value="15" checked>
                               15 segundos
                               </label>
                           </div>
                           <div class="radio">
                             <label>
-                              <input class="control-label" type="radio" name="radio_duracao" id="dez" value="dez">
+                              <input class="control-label" type="radio" name="radio_duracao" id="dez" value="10">
                               10 segundos
                             </label>
                           </div>
                           <div class="radio" class="col-xs-4">
                             <label>
-                              <input class="col-xs-4 control-label" type="radio" name="radio_duracao" id="cinco" value="cinco">
+                              <input class="col-xs-4 control-label" type="radio" name="radio_duracao" id="cinco" value="5">
                               5 segundos
                             </label>
                           </div>
@@ -201,13 +203,13 @@
                         <div class="form-group col-xs-4 col-md-4">
                           <div class="radio">
                             <label>
-                              <input class="col-xs-4 col-md-4" type="radio" name="radio_campo" id="direito" value="direito" checked>
+                              <input class="col-xs-4 col-md-4" type="radio" name="radio_campo" id="direito" value="1" checked>
                               Campo Direito
                               </label>
                           </div>
                           <div class="radio">
                             <label>
-                              <input class="form-group col-xs-3 col-md-3 control-label" type="radio" name="radio_campo" id="esquerdo" value="esquerdo">
+                              <input class="form-group col-xs-3 col-md-3 control-label" type="radio" name="radio_campo" id="esquerdo" value="0">
                               Campo Esquerdo
                             </label>
                           </div>
@@ -218,9 +220,10 @@
                         <div class="col-xs-4 col-md-4" style="margin-top:-10px;">
                             <select name="jogada"class="form-control">
                                 <option value="Selecionar">Ação</option>
-                                <option value="gol">Gol</option>
-                                <option value="drible">Drible</option>
-                                <option value="defesa">Defesa</option>
+                                <option value="0">Gol</option>
+                                <option value="2">Drible</option>
+                                <option value="4">Defesa</option>
+                                <option value="3">Bola Mucha</option>
                             </select>
                         </div>
 
@@ -232,7 +235,7 @@
                         </div>
 
 
-                        <div class="col-xs-4 col-md-4" style="text-align:center;">
+                        <div class="col-xs-4 col-md-4" style="text-align:center; margin-top:-10px; margin-bottom:20px;">
                             <button class="btn btn-sm btn-success"
                             name="mySubmit" type="submit" value="Send">Salvar Marcação</button>
                         </div>
