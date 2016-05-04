@@ -1,8 +1,22 @@
-R1QcMpSzkCM_1_2_5.mp4, ,Inicio: 20160408 03:34:13 Final : 20160408 03:34:13
-R1QcMpSzkCM_1_2_15.mp4, ,Inicio: 20160408 03:36:25 Final : 20160408 03:36:26
-R1QcMpSzkCM_1_2_15.mp4, ,Inicio: 20160408 03:37:58 Final : 20160408 03:37:58
-R1QcMpSzkCM_1_2_15.mp4, ,Inicio: 20160408 03:39:55 Final : 20160408 03:39:56
-R1QcMpSzkCM_1_2_15.mp4, ,Inicio: 20160408 03:40:58 Final : 20160408 03:40:58
-R1QcMpSzkCM_1_2_15.mp4, ,Inicio: 20160408 03:43:08 Final : 20160408 03:43:08
-R1QcMpSzkCM_1_2_5.mp4, ,Inicio: 20160408 03:44:53 Final : 20160408 03:45:16
-R1QcMpSzkCM_0_1_5, ,Inicio: 20160408 03:55:24 Final : 20160408 03:55:39
+./mode.sh R1QcMpSzkCM 00:00:13 10 0 0 19  1arquivo= R1QcMpSzkCM inicio= 00:00:13  duracao= 10  lado= 0  jogada= 19  jogador= 1  equipe= 
+\nR1QcMpSzkCM_0_5_10, ,Inicio: 20160429 14:08:35 Final : 20160429 14:08:35
+./mode.sh R1QcMpSzkCM 00:00:13 10 1 0 19  1arquivo= R1QcMpSzkCM inicio= 00:00:13  duracao= 10  lado= 1  jogada= 19  jogador= 1  equipe= 
+\nR1QcMpSzkCM_1_5_10, ,Inicio: 20160429 14:09:09 Final : 20160429 14:11:10
+arquivo= R1QcMpSzkCM inicio= 00:00:13  duracao= 10  lado= 1  jogada= 0  jogador= 19  equipe= 1
+\nR1QcMpSzkCM_1_5_10, ,Inicio: 20160429 14:11:22 Final : 20160429 14:11:23
+arquivo= R1QcMpSzkCM inicio= 00:00:10  duracao= 10  lado= 1  jogada= 0  jogador= 21  equipe= 1
+arquivo= R1QcMpSzkCM inicio= 00:00:11  duracao= 10  lado= 1  jogada= 0  jogador= 20  equipe= 1
+arquivo= R1QcMpSzkCM inicio= 00:00:12  duracao= 10  lado= 1  jogada= 0  jogador= 18  equipe= 1
+\nR1QcMpSzkCM_1_2_10, ,Inicio: 20160429 14:15:12 Final : 20160429 14:17:20
+\nR1QcMpSzkCM_1_3_10, ,Inicio: 20160429 14:15:20 Final : 20160429 14:21:35
+\nR1QcMpSzkCM_1_4_10, ,Inicio: 20160429 14:15:29 Final : 20160429 14:21:37
+arquivo= o2wVpTDW15g inicio= 00:00:10  duracao= 10  lado= 0  jogada= 0  jogador= 1  equipe= 1
+arquivo= o2wVpTDW15g inicio= 00:00:11  duracao= 10  lado= 1  jogada= 0  jogador= 1  equipe= 1
+\no2wVpTDW15g_0_2_10, ,Inicio: 20160429 14:58:07 Final : 20160429 15:01:15
+\no2wVpTDW15g_1_3_10, ,Inicio: 20160429 14:58:14 Final : 20160429 15:02:32
+arquivo= o2wVpTDW15g inicio= 00:25:23  duracao= 10  lado= 0  jogada= 0  jogador= 13  equipe= 1
+\no2wVpTDW15g_0_1515_10, ,Inicio: 20160429 15:09:04 Final : 20160429 16:00:57
+arquivo= drJpFySqghc inicio= 1222212123123123  duracao= 10  lado= 1  jogada= 0  jogador= 54  equipe= 2
+\ndrJpFySqghc_1_4399963643243242792_10, ,Inicio: 20160502 00:52:59 Final : 20160502 00:53:00
+arquivo= xbxK2yjDZwY inicio= lmnçlknçlkjnçkljn  duracao= 10  lado= 0  jogada= 0  jogador= Selecionar  equipe= 3
+\nxbxK2yjDZwY_0__10, ,Inicio: 20160503 20:27:01 Final : 20160503 20:27:01

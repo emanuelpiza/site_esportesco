@@ -11,25 +11,16 @@
    // }   
     #print_r($_POST);
 
-    $video = $_POST['video'];
-    $inicio = $_POST['momento']; 
-    $campo = $_POST['radio_campo']; 
-    //$jogada = $_POST['jogada']; 
-    $craque = $_POST['craque']; 
-    $equipe = $_POST['equipe']; 
-
-    $tempo = date("H:i:s");
-    $fp = fopen("log.txt", "a+");
-
-    //$cmd = "./mode.sh R1QcMpSzkCM 00:00:05 10 0 2 27 2 2>&1"; Duracao padrao agora é 10
-    $cmd = './mode.sh '.$video.' '.$inicio.' 10 '.$campo.' 0  '.$craque.'  '.$equipe.' 2>&1';
-    $escreve = fwrite($cmd);  
-    fclose($fp);
-    shell_exec($cmd);
+    //$cmd = "./mode.sh R1QcMpSzkCM 00:00:05 10 0 2 27 2 2>&1";
+    $cmd = './script.sh 2>&1';
+    echo '<script language="javascript">';
+    echo 'alert("Lance marcado com sucesso!")';
+    echo '</script>';
+    echo"<pre>". shell_exec($cmd)."</pre>";
     #abaixo, criamos uma variavel que terá como conteúdo o endereço para onde haverá o redirecionamento:  
-    //$redirect = "http://ec2-54-191-247-48.us-west-2.compute.amazonaws.com/times/index.php?id=1";
-
+    
+    $redirect = "http://ec2-54-191-247-48.us-west-2.compute.amazonaws.com/marcador/";
     #abaixo, chamamos a função header() com o atributo location: apontando para a variavel $redirect, que por 
     #sua vez aponta para o endereço de onde ocorrerá o redirecionamento
-   // header("location:$redirect");
+    header("location:$redirect");
 ?>

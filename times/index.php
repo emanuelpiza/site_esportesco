@@ -39,18 +39,25 @@
     <meta name="description" content="">
     <meta name="author" content="Emanuel Piza" >
 
+    <!-- Javascript - Nosso 
+    <script src="marcador.js" type="text/javascript"></script>-->
+    
+    <!-- Sweet Alert -->
+    <script src="../../js/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/sweetalert.css">
+    
     <title><?php echo $dados['teams_name']; ?> - Esportes.Co</title>
 
-   <link rel="stylesheet" href="../css/bootstrap.min.css">
+   <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../css/_all-skins.min.css">
+    <link rel="stylesheet" href="../../css/_all-skins.min.css">
      <!-- jQuery -->
     <script src="./js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
@@ -144,7 +151,7 @@
                     <li>
                         <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">
                       <img class="img-circle" src="img/jogadores/' . $data2['player_picture'] . '.png" alt="User Image" style="height:80px; width:80px;"></a>
-                      <a class="users-list-name" href="./jogador.php?id=' . $data2['player_picture'] . '">' . $data2['players_name'] . '</a>
+                      <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">' . $data2['players_name'] . '</a>
                       <span class="users-list-date">Today</span>
                     </li>';}
                 ?>
@@ -162,91 +169,101 @@
             <div class="box-body no-padding">
                 <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' order by datetime DESC LIMIT 5");
                     while ($data3 = mysqli_fetch_assoc($sqltime)) {
-                    echo '
-                    <form action="acoes.php" method="POST">
-                    <input type="hidden" name="video" value="' . $data3['webaddress'] . '">
-                    <input type="hidden" name="equipe" value="' . $id . '">
-                    
-                        <div style="width: 95%; margin:10px auto; 10px; auto;" ><iframe width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '" frameborder="0" allowfullscreen></iframe>
-                    
-                    <div class="row">
+                        if ($data3['available'] != 1) {
+                            $marcador = ""; // Vídeo não está disponível
+                        } else{
+                            $marcador = '
+                             <div class="row">
                      <div class="form-group col-xs-4 col-md-4">
-                        <label class="form-group control-label">Momento Inicial </label>
-                        <div>
-                            <input type="text" name="momento" class="form-control col-xs-2 col-md-2" placeholder="hh:mm:ss" />
-                        </div>
-                      </div>
-                    
-                     <!-- radio -->
-                      <div class="form-group col-xs-4 col-md-4">
-                          <div class="radio">
-                            <label>
-                              <input class="control-label" type="radio" name="radio_duracao" id="quinze" value="15" checked>
-                              15 segundos
-                              </label>
-                          </div>
-                          <div class="radio">
-                            <label>
-                              <input class="control-label" type="radio" name="radio_duracao" id="dez" value="10">
-                              10 segundos
-                            </label>
-                          </div>
-                          <div class="radio" class="col-xs-4">
-                            <label>
-                              <input class="col-xs-4 control-label" type="radio" name="radio_duracao" id="cinco" value="5">
-                              5 segundos
-                            </label>
-                          </div>
+                        <input type="text" name="momento" id="'.$data3['webaddress'].'_mom" class="form-control col-xs-2 col-md-2" placeholder="Momento: (hh:mm:ss)" style="margin-top:20px;" />
                       </div>
                     
                         <!-- radio -->
                         <div class="form-group col-xs-4 col-md-4">
                           <div class="radio">
                             <label>
-                              <input class="col-xs-4 col-md-4" type="radio" name="radio_campo" id="direito" value="1" checked>
+                              <input class="col-xs-4 col-md-4" type="radio" name="radio_campo" value="1" checked>
                               Campo Direito
                               </label>
                           </div>
                           <div class="radio">
                             <label>
-                              <input class="form-group col-xs-3 col-md-3 control-label" type="radio" name="radio_campo" id="esquerdo" value="0">
+                              <input class="form-group col-xs-3 col-md-3 control-label" type="radio" name="radio_campo" id="'.$data3['webaddress'].'_campEsq" value="0">
                               Campo Esquerdo
                             </label>
                           </div>
                         </div>
-                    </div>
-                    
-                    <div class=row">
-                        <div class="col-xs-4 col-md-4" style="margin-top:-10px;">
-                            <select name="jogada"class="form-control">
-                                <option value="Selecionar">Ação</option>
-                                <option value="0">Gol</option>
-                                <option value="2">Drible</option>
-                                <option value="4">Defesa</option>
-                                <option value="3">Bola Mucha</option>
-                            </select>
-                        </div>
-
-                        <div class="col-xs-4 col-md-4" style="margin-top:-10px;">
-                            <select name="craque" class="form-control">
+                        <div class="col-xs-3 col-md-3" style="margin-top:20px;">
+                            <select id="'.$data3['webaddress'].'_craq" class="form-control">
                                 <option value="Selecionar">Craque</option>
                                 '. $selecoes .'
                             </select>
                         </div>
-
-
-                        <div class="col-xs-4 col-md-4" style="text-align:center; margin-top:-10px; margin-bottom:20px;">
-                            <button class="btn btn-sm btn-success"
-                            name="mySubmit" type="submit" value="Send">Salvar Marcação</button>
-                        </div>
                     </div>
-                </div>
-                </form>    ';}
+                    
+                    <div class=row" style="text-align:center;">
+                        <button class="btn btn-sm btn-success"  style="margin: 10 auto;" onclick=\'myFunction("'.$data3['webaddress'].'")\'>Salvar Marcação</button>
+                    </div>';};
+                    echo '
+                    <form name="f" id="f" onSubmit="return false">
+                    <input type="hidden" name="video" value="' . $data3['webaddress'] . '">
+                    <input type="hidden" id="'.$data3['webaddress'].'_equip" name="equipe" value="' . $id . '">
+                    
+                        <div style="width: 95%; margin:10px auto; 10px; auto;" ><iframe width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '" frameborder="0" allowfullscreen></iframe>
+                    
+                        '.$marcador.'
+                        </div>
+                    </form>';}
                 ?>
             </div><!-- /.box-body -->
           </div><!--/.box -->
         </div><!-- /.col -->
     </div>
+    
+    <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <!-- Box Comment -->
+        
+        <?php 
+
+        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where teams_name = '".$dados['teams_name']."' order by date DESC") or die(mysqli_error($mysqli)); 
+        
+        while ($plays = mysqli_fetch_assoc($query_plays)) {
+            echo '
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                      <div class="user-block">
+                        <img class="img-circle" src="img/jogadores/0.png" alt="user image">
+                        <span class="username"><a href="jogador.php?id=' . $plays['plays_players_id'] . '">' . $plays['players_name'] . '</a></span>
+                        <span class="description">' . $plays['teams_name'] . ' - ' . $plays['date'] . '</span>
+                      </div><!-- /.user-block -->
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <video width="100%" loop onclick="this.paused?this.play():this.pause();">
+                          <source src="lances/' . $plays['video_id'] . '.mp4#t=2" type="video/mp4" />
+                            Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
+                        </video>
+                    </div><!-- /.box-body -->
+                  </div><!-- /.box -->';}
+        ?>
+    </div><!-- /.col -->
+    </div>
+    
+<script>
+function myFunction(strVideo) {
+    swal("Marcação realizada!", "Vídeo em processamento.\nO resultado será exibido na página principal e na página do jogador.", "success");
+    
+    var craq = document.getElementById(strVideo + "_craq");
+    var strCraq = craq.options[craq.selectedIndex].value;
+    var camp_esq = 0;
+    if (document.getElementById(strVideo + "_campEsq").checked) {
+        camp_esq = 1;
+    }
+    var strMomento = (document.getElementById(strVideo + "_mom").value); 
+   
+    $.post("acoes.php",{video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})
+}
+</script>
     
     <!-- Footer -->
    <footer>

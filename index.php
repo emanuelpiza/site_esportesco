@@ -59,21 +59,21 @@
         
         <?php 
 
-        $query = mysqli_query($mysqli, "SELECT * FROM plays where id_plays > 1 order by date DESC") or die(mysqli_error($mysqli)); 
+        $query = mysqli_query($mysqli, "SELECT * FROM plays order by date DESC") or die(mysqli_error($mysqli)); 
         
         while ($data2 = mysqli_fetch_assoc($query)) {
             echo '
                 <div class="box box-widget">
                     <div class="box-header with-border">
                       <div class="user-block">
-                        <img class="img-circle" src="times/img/jogadores/' . $data2['plays_players_id'] . '.png" alt="user image">
+                        <img class="img-circle" src="times/img/jogadores/0.png" alt="user image">
                         <span class="username"><a href="times/jogador.php?id=' . $data2['plays_players_id'] . '">' . $data2['players_name'] . '</a></span>
                         <span class="description">' . $data2['teams_name'] . ' - ' . $data2['date'] . '</span>
                       </div><!-- /.user-block -->
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <video width="100%" loop onclick="this.paused?this.play():this.pause();">
-                          <source src="times/img/' . $data2['id_plays'] . '.mp4#t=2" type="video/mp4" />
+                          <source src="times/lances/' . $data2['video_id'] . '.mp4#t=2" type="video/mp4" />
                             Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
                         </video>
                     </div><!-- /.box-body -->

@@ -1,0 +1,169 @@
+
+        @import url('http://getbootstrap.com/dist/css/bootstrap.css');
+        *{margin:0px; padding:0px;}
+	    body{margin:10px;}
+        .btn {
+            margin: 10px 0px;
+        }
+
+        .iconok {
+            font-size: 27px;
+            color: green;
+        }
+
+        .iconno {
+            font-size: 27px;
+            color: rgb(221, 41, 41);
+        }
+
+        .theader {
+            text-align: center;
+            color: rgb(78, 33, 33);
+        }
+
+        .ptitle {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 7px;
+        }
+
+        .pprice {
+            font-size: 17px;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .occurance {
+        }
+
+        .cfeature {
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .feature {
+            margin-bottom: 3px;
+        }
+
+        .infos {
+            background: #CDD8C9;
+        }
+
+        .free {
+            background: #DFF0D8;
+        }
+
+        .theader.free {
+            background: #DFF0D8;
+            border-bottom: 3px solid white;
+        }
+
+        .standard {
+            background: #D9EDF7;
+        }
+
+        .theader.standard {
+            background: #D9EDF7;
+            border-bottom: 3px solid white;
+        }
+
+
+        .premium {
+            background: #8DB9DF;
+        }
+
+        .theader.premium {
+            background: #8DB9DF;
+            border-bottom: 3px solid white;
+        }
+
+        .ccfreature {
+            text-align: center;
+            font-size: 2em;
+        }
+		.sucess
+		{
+			font:11px verdana;
+			color:#333;
+			background-color: #f9f9f9;
+			border:1px solid #999;
+			padding:4px;
+			display:none;
+			width:350px;
+		}
+		
+		.error
+		{
+			font:11px verdana;
+			color:red;
+			background-color: #f9f9f9;
+			border:1px solid red;
+			padding:10px;
+			display:none;
+			width:350px;		
+		}
+		
+		.amarelo
+		{
+                    background-color: yellow;
+                    width: 200px;
+                }
+                
+		.vermelho
+		{
+                    background-color: red;
+                    width: 200px;
+                }
+                
+		label
+		{
+			display:block;
+			font:30px verdana;
+			color:#333;
+			padding:4px;
+			padding-left:0px;
+		}
+		
+		input
+		{
+			font:30px verdana;
+			color:#333;
+			background-color: #f9f9f9;
+			border:1px solid #999;
+			padding:2px;
+		}
+		
+		button
+		{
+			font:40px verdana;
+			color:#333;
+			background-color: #f9f9f9;
+			border:1px solid #999;
+			padding:2px;
+                        width:200px;
+		}   
+
+        ul.options {
+          list-style-type: none;
+          width: 80%;
+          margin: 0.3em 0;
+          padding: 0;
+        }
+
+        ul.options li {
+          background: #def url(../cross_bright.png) no-repeat 98% center;
+          margin: 1px;
+          padding: 0.1em 0.3em;
+          cursor: pointer;
+          color: #46a;
+          font-weight: bold;
+          border: solid 1px #cde;
+          width: 100%;
+          max-width: 220px;
+          min-width: 150px;
+        }
+
+        select.options {
+          color: #46a;
+          font-weight: bold;
+        }
