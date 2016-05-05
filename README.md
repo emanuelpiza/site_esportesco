@@ -23,4 +23,5 @@ Mudar o / do apache pra dentro de site_esportesco
 sudo vi /etc/apache2/sites-available/000-default.conf 
 sudo service apache2 restart
 
-
+Instalar o FFmpeg
+https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
