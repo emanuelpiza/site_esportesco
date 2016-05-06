@@ -5,7 +5,7 @@
 	$password = 'k1llersql';
 	$database_name = 'esportes_co';
 
-    $mysqli = new mysqli("localhost", "root", "k1llersql", "esportes_co");
+    $mysqli = new mysqli("localhost", "root", "k1llersql", "Esportes");
 
     /* check connection */
     if (mysqli_connect_errno()) {

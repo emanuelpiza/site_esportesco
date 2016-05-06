@@ -159,7 +159,7 @@
             </div><!-- /.box-body -->
           </div><!--/.box -->
         </div><!-- /.col -->
-        
+
         <div class="col-md-6">
           <!-- USERS LIST -->
           <div class="box box-warning">
@@ -183,19 +183,19 @@
                           <div class="radio">
                             <label>
                               <input class="col-xs-4 col-md-4" type="radio" name="radio_campo" value="1" checked>
-                              Campo Direito
+                              Gol do Bar
                               </label>
                           </div>
                           <div class="radio">
                             <label>
                               <input class="form-group col-xs-3 col-md-3 control-label" type="radio" name="radio_campo" id="'.$data3['webaddress'].'_campEsq" value="0">
-                              Campo Esquerdo
+                              Gol do Fundo
                             </label>
                           </div>
                         </div>
                         <div class="col-xs-3 col-md-3" style="margin-top:20px;">
                             <select id="'.$data3['webaddress'].'_craq" class="form-control">
-                                <option value="Selecionar">Craque</option>
+                                <option value="45">Craque</option>
                                 '. $selecoes .'
                             </select>
                         </div>
@@ -240,7 +240,7 @@
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <video width="100%" loop onclick="this.paused?this.play():this.pause();">
-                          <source src="lances/' . $plays['video_id'] . '.mp4#t=2" type="video/mp4" />
+                          <source src="lances/' . $plays['video_id'] . '.mp4" type="video/mp4" />
                             Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
                         </video>
                     </div><!-- /.box-body -->
@@ -249,21 +249,21 @@
     </div><!-- /.col -->
     </div>
     
-<script>
-function myFunction(strVideo) {
-    swal("Marcação realizada!", "Vídeo em processamento.\nO resultado será exibido na página principal e na página do jogador.", "success");
-    
-    var craq = document.getElementById(strVideo + "_craq");
-    var strCraq = craq.options[craq.selectedIndex].value;
-    var camp_esq = 0;
-    if (document.getElementById(strVideo + "_campEsq").checked) {
-        camp_esq = 1;
+    <script>
+    function myFunction(strVideo) {
+        swal("Marcação realizada!", "Vídeo em processamento.\nO resultado será exibido na página principal e na página do jogador.", "success");
+
+        var craq = document.getElementById(strVideo + "_craq");
+        var strCraq = craq.options[craq.selectedIndex].value;
+        var camp_esq = 0;
+        if (document.getElementById(strVideo + "_campEsq").checked) {
+            camp_esq = 1;
+        }
+        var strMomento = (document.getElementById(strVideo + "_mom").value); 
+
+        $.post("acoes.php",{video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})
     }
-    var strMomento = (document.getElementById(strVideo + "_mom").value); 
-   
-    $.post("acoes.php",{video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})
-}
-</script>
+    </script>
     
     <!-- Footer -->
    <footer>
@@ -278,8 +278,9 @@ function myFunction(strVideo) {
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="http://www.esportes.co/times/?id=1">Amigos de Quinta</a></li>
-                <li><a href="http://www.esportes.co/times/?id=3">Poka Yoke</a></li>
+                <li class="active"><a href="./?id=1">Amigos de Quinta</a></li>
+               <li class="active"><a href="./?id=2">Peladeiros de Sexta</a></li>
+                <li><a href="./?id=3">Poka Yoke</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->

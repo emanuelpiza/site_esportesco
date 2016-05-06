@@ -73,7 +73,7 @@
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <video width="100%" loop onclick="this.paused?this.play():this.pause();">
-                          <source src="times/lances/' . $data2['video_id'] . '.mp4#t=2" type="video/mp4" />
+                          <source src="times/lances/' . $data2['video_id'] . '.mp4" type="video/mp4" />
                             Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
                         </video>
                     </div><!-- /.box-body -->
@@ -94,8 +94,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="http://www.esportes.co/times/index2.php?id=1">Amigos de Quinta</a></li>
-                <li><a href="http://www.esportes.co/times/index2.php?id=3">Poka Yoke</a></li>
+                <li class="active"><a href="./times/id=1">Amigos de Quinta</a></li>
+                <li class="active"><a href="./times/?id=2">Peladeiros de Sexta</a></li>
+                <li><a href="./times/?id=3">Poka Yoke</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
