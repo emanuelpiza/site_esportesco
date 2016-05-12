@@ -13,14 +13,15 @@ jogada="$5"
 jogador="$6"
 equipe="$7"
 direita=(0 1400)
-
+if (( $lado == 0 )); then gol="bar"; else gol="fundo"; fi
+duracao="17"
 IFS=: read -r h m s <<<"$inicio"
-inicio_s=$(((h * 60 + m) * 60 + s - 8))
+#inicio_s=$(((h * 60 + m) * 60 + s - 8))
 #Começando 8 segundos antes do momento do gol
 
-video="${arquivo}_${lado}_${inicio_s}_${duracao}"
+video="${arquivo}_${gol}_h${h}m${m}s${s}_dur${duracao}"
 echo "arquivo= $1 inicio= $2  duracao= $3  lado= $4  jogada= $5  jogador= $6  equipe= $7" >> log.txt
-if (( $equipe == 3 )); then filters=""; else filters="-vf crop=1400:787:${direita[$lado]}:150 -movflags faststart"; fi
+if (( $equipe > 2 )); then filters=""; else filters="-vf crop=1400:787:${direita[$lado]}:150 -movflags faststart"; fi
 
 /home/ubuntu/bin/ffmpeg -i ../../../videos/${arquivo}.mp4 -ss $inicio -t $duracao $filters ./lances/${video}.mp4 2>&1  & wait
 

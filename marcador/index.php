@@ -21,12 +21,23 @@
     <!-- CSS - Nosso -->    
 	<link href="style.css" type="text/css" rel="stylesheet" />    
     
+    <!-- Sweet Alerts -->
+    <script src="../../js/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/sweetalert.css">
 </head>
 <body>
+    <?php include_once("../admin/analyticstracking.php") ?>
     <form action="marcador.php" method="POST">
 		<div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6" style="text-align:center;">
-            <button name="mySubmit" type="submit" value="Send" class="btn btn-lg btn-success">Marcar Lance</button>
+            <button class="btn btn-lg  btn-success" onclick='myFunction()'>Marcar Lance</button>
         </div>
+        
+    <script>
+    function myFunction(strVideo) {
+        swal("Sucesso!", "", "success");
+        $.post("marcador.php",{},function(data){})
+    }
+    </script>
 </form>   
     
 </body>

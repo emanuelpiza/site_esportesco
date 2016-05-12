@@ -83,7 +83,7 @@
 </head>
 
 <body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
-
+    <?php include_once("../admin/analyticstracking.php") ?>
             <div class="col-md-4">
               <!-- Widget: user widget style 1 -->
               <div class="box box-widget widget-user">
@@ -137,7 +137,7 @@
 
          <ul class="timeline">
              
-                <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where plays_players_id='$jogador'");
+                <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where available = 1 and plays_players_id='$jogador'");
                     while ($data2 = mysqli_fetch_assoc($sqltime)) {
                         echo '
                          <li class="time-label">

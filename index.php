@@ -51,7 +51,7 @@
 </head>
 
 <body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
-    
+    <?php include_once("./admin/analyticstracking.php") ?>
     
     <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -59,7 +59,7 @@
         
         <?php 
 
-        $query = mysqli_query($mysqli, "SELECT * FROM plays order by date DESC") or die(mysqli_error($mysqli)); 
+        $query = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 order by date DESC") or die(mysqli_error($mysqli)); 
         
         while ($data2 = mysqli_fetch_assoc($query)) {
             echo '

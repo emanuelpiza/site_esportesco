@@ -12,14 +12,14 @@
     #print_r($_POST);
 
     //$cmd = "./mode.sh R1QcMpSzkCM 00:00:05 10 0 2 27 2 2>&1";
-    $cmd = './script.sh 2>&1';
-    echo '<script language="javascript">';
-    echo 'alert("Lance marcado com sucesso!")';
-    echo '</script>';
+    $cmd = './mark.sh 2>&1';
+    //echo '<script language="javascript">';
+    //echo 'alert("Lance marcado com sucesso!")';
+    //echo '</script>';
     echo"<pre>". shell_exec($cmd)."</pre>";
     #abaixo, criamos uma variavel que terá como conteúdo o endereço para onde haverá o redirecionamento:  
     
-    $redirect = "http://ec2-54-191-247-48.us-west-2.compute.amazonaws.com/marcador/";
+    $redirect = "http://www.esportes.co/marcador/";
     #abaixo, chamamos a função header() com o atributo location: apontando para a variavel $redirect, que por 
     #sua vez aponta para o endereço de onde ocorrerá o redirecionamento
     header("location:$redirect");

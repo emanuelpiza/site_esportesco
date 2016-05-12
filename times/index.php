@@ -16,7 +16,7 @@
     $sqlcount_videos = mysqli_query($mysqli,"SELECT count(*) as total FROM videos  where team_id='$id'");
     $count_videos = mysqli_fetch_assoc($sqlcount_videos);
     $nome = $dados['teams_name'];
-    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where teams_name LIKE '%".$nome."%' ");
+    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available = 1 and teams_name LIKE '%".$nome."%' ");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     $sql_anos = mysqli_query($mysqli,"SELECT YEAR(teams_schedule_date) as year FROM teams WHERE id_teams='$id'");
     $anos = mysqli_fetch_assoc($sql_anos);
@@ -80,6 +80,7 @@
 </head>
 
 <body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
+    <?php include_once("../admin/analyticstracking.php") ?>
        <section class="content-header">
           <h1>
             <?php echo $dados['teams_name']; ?>
@@ -226,17 +227,18 @@
         
         <?php 
 
-        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where teams_name = '".$dados['teams_name']."' order by date DESC") or die(mysqli_error($mysqli)); 
+        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by date DESC") or die(mysqli_error($mysqli)); 
         
         while ($plays = mysqli_fetch_assoc($query_plays)) {
             echo '
                 <div class="box box-widget">
                     <div class="box-header with-border">
+                     <button class="btn btn-box-tool" data-widget="remove" style="float:right; margin-top:-5px;"><i class="fa fa-remove"></i></button>
+                     <button class="btn btn-box-tool" data-widget="collapse" style="float:right; margin-top:-5px;"><i class="fa fa-minus"></i></button>
                       <div class="user-block">
                         <img class="img-circle" src="img/jogadores/0.png" alt="user image">
                         <span class="username"><a href="jogador.php?id=' . $plays['plays_players_id'] . '">' . $plays['players_name'] . '</a></span>
-                        <span class="description">' . $plays['teams_name'] . ' - ' . $plays['date'] . '</span>
-                      </div><!-- /.user-block -->
+                        <span class="description">' . $plays['teams_name'] . ' - ' . $plays['date'] . '</span></div><!-- /.user-block -->
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <video width="100%" loop onclick="this.paused?this.play():this.pause();">
