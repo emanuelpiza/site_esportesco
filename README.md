@@ -25,3 +25,22 @@ sudo service apache2 restart
 
 Instalar o FFmpeg
 https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
+
+Instalar o Composer
+cd /usr/local/bin/
+mkdir composer
+cd composer
+wget https://getcomposer.org/composer.phar
+sudo chmod a+x ../composer -R
+
+Instalar o MediaWiki
+cd /var/www/html/site_esportesco/
+git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git
+mv ./core ./mediawiki
+cd ./mediawiki
+composer update
+Abrir http://www.esportes.co/mediawiki/
+
+Rodei no Sequel
+CREATE USER 'wikisql'@'localhost' IDENTIFIED BY 'prefixo_wiki';
+GRANT ALL PRIVILEGES ON my_wiki. * TO 'wikisql'@'prefixo_wiki';
