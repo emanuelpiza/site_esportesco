@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta name="author" content="Emanuel Piza" >
 
-    <title>Esportes.Co</title>
+    <title>EsportesCo</title>
 
    <link rel="stylesheet" href="./css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -34,7 +34,10 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="./css/_all-skins.min.css">
-    
+    <!-- Ícones -->
+    <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16" />
+
     <script src="./times/js/Chart.js"></script>
 		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
 		<style>
@@ -59,7 +62,7 @@
         
         <?php 
 
-        $query = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 order by date DESC") or die(mysqli_error($mysqli)); 
+        $query = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 order by date DESC LIMIT 10") or die(mysqli_error($mysqli)); 
         
         while ($data2 = mysqli_fetch_assoc($query)) {
             echo '

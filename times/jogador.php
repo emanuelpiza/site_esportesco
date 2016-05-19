@@ -26,7 +26,7 @@
     <meta name="description" content="">
     <meta name="author" content="Emanuel Piza" >
 
-    <title><?php echo $dados['players_name']; ?></title>
+    <title><?php echo $dados['players_name']; ?> - EsportesCo</title>
 
    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -38,6 +38,9 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../css/_all-skins.min.css">
+    <!-- Ícones -->
+    <link rel="icon" type="image/png" href="../img/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="../img/favicon-16x16.png" sizes="16x16" />
     
     <script src="./js/Chart.js"></script>
 		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
@@ -137,7 +140,7 @@
 
          <ul class="timeline">
              
-                <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where available = 1 and plays_players_id='$jogador'");
+                <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where available = 1 and plays_players_id='$jogador' order by date DESC");
                     while ($data2 = mysqli_fetch_assoc($sqltime)) {
                         echo '
                          <li class="time-label">

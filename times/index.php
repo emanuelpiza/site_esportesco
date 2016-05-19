@@ -46,7 +46,7 @@
     <script src="../../js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../css/sweetalert.css">
     
-    <title><?php echo $dados['teams_name']; ?> - Esportes.Co</title>
+    <title><?php echo $dados['teams_name']; ?> - EsportesCo</title>
 
    <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -58,6 +58,9 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../css/_all-skins.min.css">
+    <!-- Ícones -->
+    <link rel="icon" type="image/png" href="../img/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="../img/favicon-16x16.png" sizes="16x16" />
      <!-- jQuery -->
     <script src="./js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
@@ -203,7 +206,7 @@
                     </div>
                     
                     <div class=row" style="text-align:center;">
-                        <button class="btn btn-sm btn-success"  style="margin: 10 auto;" onclick=\'myFunction("'.$data3['webaddress'].'")\'>Salvar Marcação</button>
+                        <button class="btn btn-sm btn-success"  style="margin: 10 auto;" onclick=\'marcacao("'.$data3['webaddress'].'")\'>Salvar Marcação</button>
                     </div>';};
                     echo '
                     <form name="f" id="f" onSubmit="return false">
@@ -227,13 +230,13 @@
         
         <?php 
 
-        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by date DESC") or die(mysqli_error($mysqli)); 
+        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by date DESC LIMIT 15") or die(mysqli_error($mysqli)); 
         
         while ($plays = mysqli_fetch_assoc($query_plays)) {
             echo '
-                <div class="box box-widget">
+                <div class="box box-widget" id="'. $plays['video_id'] .'">
                     <div class="box-header with-border">
-                     <button class="btn btn-box-tool" data-widget="remove" style="float:right; margin-top:-5px;"><i class="fa fa-remove"></i></button>
+                     <button class="btn btn-box-tool" onclick=\'deletar("'. $plays['video_id'] .'")\' style="float:right; margin-top:-5px;"><i class="fa fa-remove"></i></button>
                      <button class="btn btn-box-tool" data-widget="collapse" style="float:right; margin-top:-5px;"><i class="fa fa-minus"></i></button>
                       <div class="user-block">
                         <img class="img-circle" src="img/jogadores/0.png" alt="user image">
@@ -252,7 +255,7 @@
     </div>
     
     <script>
-    function myFunction(strVideo) {
+    function marcacao(strVideo) {
         swal("Marcação realizada!", "Vídeo em processamento.\nO resultado será exibido na página principal e na página do jogador.", "success");
 
         var craq = document.getElementById(strVideo + "_craq");
@@ -265,8 +268,14 @@
 
         $.post("acoes.php",{video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})
     }
+        
+    function deletar(strVideo) {     
+        swal({title: "Tem certeza?", text: "Seguindo em frente, você removerá o arquivo da base de dados!", type: "warning", showCancelButton: true,   confirmButtonColor: "#DD6B55", confirmButtonText: "Sim, deletar!", closeOnConfirm: false }, 
+            function(){swal("Deletado!", "O vídeo foi removido com sucesso.", "success"); 
+            //$.post("acoes.php",{video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})  
+        });
+    }
     </script>
-    
     <!-- Footer -->
    <footer>
         <nav class="navbar navbar-static-top">
