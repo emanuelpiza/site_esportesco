@@ -140,7 +140,11 @@
 
          <ul class="timeline">
              
+<<<<<<< HEAD
                 <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where available = 1 and plays_players_id='$jogador' order by datetime DESC");
+=======
+                <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where available = 1 and plays_players_id='$jogador' order by date DESC");
+>>>>>>> 17b308232cac366a41e5bbc6d004fbcd2cb5bd37
                     while ($data2 = mysqli_fetch_assoc($sqltime)) {
                         echo '
                          <li class="time-label">

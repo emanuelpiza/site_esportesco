@@ -62,7 +62,11 @@
         
         <?php 
 
+<<<<<<< HEAD
         $query = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 order by datetime DESC LIMIT 10") or die(mysqli_error($mysqli)); 
+=======
+        $query = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 order by date DESC LIMIT 10") or die(mysqli_error($mysqli)); 
+>>>>>>> 17b308232cac366a41e5bbc6d004fbcd2cb5bd37
         
         while ($data2 = mysqli_fetch_assoc($query)) {
             echo '

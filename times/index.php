@@ -230,7 +230,11 @@
         
         <?php 
 
+<<<<<<< HEAD
         $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by datetime DESC LIMIT 15") or die(mysqli_error($mysqli)); 
+=======
+        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by date DESC LIMIT 15") or die(mysqli_error($mysqli)); 
+>>>>>>> 17b308232cac366a41e5bbc6d004fbcd2cb5bd37
         
         while ($plays = mysqli_fetch_assoc($query_plays)) {
             echo '
@@ -273,6 +277,13 @@
         swal({title: "Tem certeza?", text: "Seguindo em frente, você removerá o arquivo da base de dados!", type: "warning", showCancelButton: true,   confirmButtonColor: "#DD6B55", confirmButtonText: "Sim, deletar!", closeOnConfirm: false }, 
             function(){swal("Deletado!", "O vídeo foi removido com sucesso.", "success"); 
             $.post("acoes.php",{acao: "deletar", video: strVideo, equipe: $id},function(data){})  
+        });
+    }
+        
+    function deletar(strVideo) {     
+        swal({title: "Tem certeza?", text: "Seguindo em frente, você removerá o arquivo da base de dados!", type: "warning", showCancelButton: true,   confirmButtonColor: "#DD6B55", confirmButtonText: "Sim, deletar!", closeOnConfirm: false }, 
+            function(){swal("Deletado!", "O vídeo foi removido com sucesso.", "success"); 
+            //$.post("acoes.php",{video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})  
         });
     }
     </script>
