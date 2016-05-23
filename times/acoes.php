@@ -4,32 +4,40 @@
     @header("Cache-Control: no-cache, must-revalidate");  
     @header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");  
 
-
+    session_start();
+    ob_start();
+    include('../admin/dbcon/dbcon.php');
     # PARA DEBUG: Verifica se os dados foram enviados do form e retira o espaco em branco (trim)
-   //  foreach ($_POST as $param_name => $param_val) {
-    //    echo "Param: $param_name; Value: $param_val<br />\n";
-   // }   
-    #print_r($_POST);
+      foreach ($_POST as $param_name => $param_val) {
+        echo "Param: $param_name; Value: $param_val<br />\n";
+     }   
+    print_r($_POST);
 
+    $acao = $_POST['acao'];
     $video = $_POST['video'];
-    $inicio = $_POST['momento']; 
-    $campo = $_POST['radio_campo']; 
-    //$jogada = $_POST['jogada']; 
-    $craque = $_POST['craque']; 
     $equipe = $_POST['equipe']; 
+    //$fp = fopen("log.txt", "a+");
 
-    $tempo = date("H:i:s");
-    $fp = fopen("log.txt", "a+");
+    if ($acao == "marcar") {
+        $inicio = $_POST['momento']; 
+        $campo = $_POST['radio_campo']; 
+        //$jogada = $_POST['jogada']; 
+        $craque = $_POST['craque']; 
+        $tempo = date("H:i:s");
 
-    //$cmd = "./mode.sh o2wVpTDW15g 00:00:09 10 0 0 45 1 2>&1";// Duracao padrao agora é 10
-    $cmd = './mode.sh '.$video.' '.$inicio.' 10 '.$campo.' 0  '.$craque.'  '.$equipe.' 2>&1';
-    $escreve = fwrite($cmd);  
-    fclose($fp);
-    shell_exec($cmd);
-    #abaixo, criamos uma variavel que terá como conteúdo o endereço para onde haverá o redirecionamento:  
-    //$redirect = "http://ec2-54-191-247-48.us-west-2.compute.amazonaws.com/times/index.php?id=1";
-
-    #abaixo, chamamos a função header() com o atributo location: apontando para a variavel $redirect, que por 
-    #sua vez aponta para o endereço de onde ocorrerá o redirecionamento
-   // header("location:$redirect");
+        $cmd = './mode.sh '.$video.' '.$inicio.' 10 '.$campo.' 0  '.$craque.'  '.$equipe.' 2>&1';
+        //$escreve = fwrite($cmd);  
+        shell_exec($cmd);
+    }else {
+        $sql_update = "UPDATE plays SET available = 0 WHERE video_id = ".$video;
+        //$escreve = fwrite($sql_update);  
+        $sqlgeral = mysqli_query($mysqli,$sql_update);
+        
+        #Aqui, criamos uma variavel que terá como conteúdo o endereço para onde haverá o redirecionamento:  
+        $redirect = "http://www.esportes.co/times/index.php?id=".$equipe;
+        #abaixo, chamamos a função header() com o atributo location: apontando para a variavel $redirect, que por 
+        #sua vez aponta para o endereço de onde ocorrerá o redirecionamento
+        header("location:$redirect");
+    }
+    //fclose($fp);
 ?>
