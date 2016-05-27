@@ -64,9 +64,8 @@
      <!-- jQuery -->
     <script src="./js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/app.js"></script>
-    <script src="../js/Chart.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/Chart.js"></script>
 		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
 		<style>
 			canvas{
@@ -83,16 +82,13 @@
     <![endif]-->
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
-    <?php 
-        include_once("../admin/analyticstracking.php");
-        include('../navbar.php');
-    ?>
-   <section class="content-header">
-      <h1>
-        <?php echo $dados['teams_name']; ?>
-      </h1>
-    </section>
+<body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
+    <?php include_once("../admin/analyticstracking.php") ?>
+       <section class="content-header">
+          <h1>
+            <?php echo $dados['teams_name']; ?>
+          </h1>
+        </section>
     
     <div class="row" style="margin-top:15px;">
         <div class="col-lg-3 col-xs-6">
@@ -234,13 +230,17 @@
         
         <?php 
 
+<<<<<<< HEAD
         $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by datetime DESC LIMIT 15") or die(mysqli_error($mysqli)); 
+=======
+        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by date DESC LIMIT 15") or die(mysqli_error($mysqli)); 
+>>>>>>> 17b308232cac366a41e5bbc6d004fbcd2cb5bd37
         
         while ($plays = mysqli_fetch_assoc($query_plays)) {
             echo '
                 <div class="box box-widget" id="'. $plays['video_id'] .'">
                     <div class="box-header with-border">
-                     <button class="btn btn-box-tool" onclick=\'deletar("'. $plays['video_id'] .'")\' data-widget="remove" style="float:right; margin-top:-5px;"><i class="fa fa-remove"></i></button>
+                     <button class="btn btn-box-tool" onclick=\'deletar("'. $plays['video_id'] .'")\' style="float:right; margin-top:-5px;"><i class="fa fa-remove"></i></button>
                      <button class="btn btn-box-tool" data-widget="collapse" style="float:right; margin-top:-5px;"><i class="fa fa-minus"></i></button>
                       <div class="user-block">
                         <img class="img-circle" src="img/jogadores/0.png" alt="user image">
@@ -273,12 +273,18 @@
         $.post("acoes.php",{acao: "marcar",video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})
     }
         
-    function deletar(strVideo) {    
+    function deletar(strVideo) {     
+        swal({title: "Tem certeza?", text: "Seguindo em frente, você removerá o arquivo da base de dados!", type: "warning", showCancelButton: true,   confirmButtonColor: "#DD6B55", confirmButtonText: "Sim, deletar!", closeOnConfirm: false }, 
+            function(){swal("Deletado!", "O vídeo foi removido com sucesso.", "success"); 
+            $.post("acoes.php",{acao: "deletar", video: strVideo, equipe: $id},function(data){})  
+        });
+    }
         
-        swal({   title: "Are you sure?",   text: "You will not be able to recover this imaginary file!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, delete it!",   closeOnConfirm: false }, function(){   swal("Deleted!", "Your imaginary file has been deleted.", "success"); });
-       //swal({   title: "Deseja deletar o arquivo permanentemente?",   text: "Ele será removido da base de dados!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Sim, deletar!",   cancelButtonText: "Não, cancelar!",   closeOnConfirm: false }, function(isConfirm){   if (isConfirm) {
-        //   $.post("acoes.php",{acao: "deletar", video: strVideo, equipe: $id},function(data){});
-       //} else {     swal("Cancelado", "O arquivo continua na base :)", "error");   } });
+    function deletar(strVideo) {     
+        swal({title: "Tem certeza?", text: "Seguindo em frente, você removerá o arquivo da base de dados!", type: "warning", showCancelButton: true,   confirmButtonColor: "#DD6B55", confirmButtonText: "Sim, deletar!", closeOnConfirm: false }, 
+            function(){swal("Deletado!", "O vídeo foi removido com sucesso.", "success"); 
+            //$.post("acoes.php",{video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})  
+        });
     }
     </script>
     <!-- Footer -->

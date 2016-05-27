@@ -53,7 +53,7 @@
     <![endif]-->
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
+<body class="skin-blue sidebar-collapse" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
     <?php 
         include_once("./admin/analyticstracking.php");
         include('./navbar.php');
@@ -86,7 +86,35 @@
         ?>
     </div><!-- /.col -->
     </div>
- 
+    <!-- Footer -->
+   <footer>
+        <nav class="navbar navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="landing.html" class="navbar-brand"><b>Esportes.Co</b></a>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                <i class="fa fa-bars"></i>
+              </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="./times/id=1">Amigos de Quinta</a></li>
+                <li class="active"><a href="./times/?id=2">Peladeiros de Sexta</a></li>
+                <li><a href="./times/?id=3">Poka Yoke</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+        <div class="row">   
+            <div class="container" id="contact">
+                <hr class="large">
+                <div class="col-lg-10 col-lg-offset-1 text-center">  
+                    <p class="text-muted"><b><i class="fa fa-whatsapp" style="margin-left:10px;"></i> (19)99975-0044</b><i class="fa fa-envelope-o fa-fw" style="margin-left:10px;"></i>  <b><a href="mailto:contato@esportes.co">contato@esportes.co</a></b></p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- jQuery -->
     <script src="./times/js/jquery.js"></script>

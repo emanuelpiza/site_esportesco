@@ -85,11 +85,8 @@
     </style>
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
-    <?php 
-        include_once("./admin/analyticstracking.php");
-        include('../navbar.php');
-    ?>
+<body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
+    <?php include_once("../admin/analyticstracking.php") ?>
             <div class="col-md-4">
               <!-- Widget: user widget style 1 -->
               <div class="box box-widget widget-user">
@@ -143,7 +140,11 @@
 
          <ul class="timeline">
              
+<<<<<<< HEAD
                 <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where available = 1 and plays_players_id='$jogador' order by datetime DESC");
+=======
+                <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where available = 1 and plays_players_id='$jogador' order by date DESC");
+>>>>>>> 17b308232cac366a41e5bbc6d004fbcd2cb5bd37
                     while ($data2 = mysqli_fetch_assoc($sqltime)) {
                         echo '
                          <li class="time-label">
@@ -184,10 +185,10 @@
     </footer>
 
     <!-- jQuery -->
-    <script src="../js/jquery.js"></script>
+    <script src="./js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script>

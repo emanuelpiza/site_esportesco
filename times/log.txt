@@ -9,3 +9,10 @@
 2016-05-23 17:05:23 arquivo= 4pC16C-vT9I inicio= 00:04  duracao= 10  lado= 0  jogada= 0  jogador= 27  equipe= 3
 2016-05-23 17:05:41 arquivo= 4pC16C-vT9I inicio= 00:00:05  duracao= 10  lado= 0  jogada= 0  jogador= 27  equipe= 3
 2016-05-23 17:05:58 arquivo= 4pC16C-vT9I inicio= 00:00:6  duracao= 10  lado= 0  jogada= 0  jogador= 27  equipe= 3
+2016-05-23 17:30:29 arquivo= 4pC16C-vT9I inicio= 0:03  duracao= 10  lado= 0  jogada= 0  jogador= 27  equipe= 3
+2016-05-24 11:51:23 arquivo= 3NzZDC1wczo inicio= 00:00:10  duracao= 10  lado= 0  jogada= 0  jogador= 69  equipe= 5
+2016-05-25 09:41:30 arquivo= 4pC16C-vT9I inicio= 00:00:01  duracao= 10  lado= 0  jogada= 0  jogador= 27  equipe= 3
+2016-05-25 10:09:47 arquivo= 4pC16C-vT9I inicio= 00:00:02  duracao= 10  lado= 0  jogada= 0  jogador= 27  equipe= 3
+2016-05-25 10:13:29 arquivo= 4pC16C-vT9I inicio= 00:00:03  duracao= 10  lado= 0  jogada= 0  jogador= 27  equipe= 3
+2016-05-25 10:15:20 arquivo= 4pC16C-vT9I inicio= 00:00:04  duracao= 10  lado= 0  jogada= 0  jogador= 27  equipe= 3
+2016-05-25 10:16:33 arquivo= 4pC16C-vT9I inicio= 00:00:06  duracao= 10  lado= 0  jogada= 0  jogador= 27  equipe= 3
