@@ -34,6 +34,13 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="./css/_all-skins.min.css">
+    
+  <link type='text/css' href='css/style.css' rel='stylesheet'>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="/fancybox/jquery.fancybox.pack.js"></script>
+    
     <!-- Ícones -->
     <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16" />
@@ -53,38 +60,34 @@
     <![endif]-->
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
+<body style="padding:10px;padding-top: 70px;
+    background: #000 url(./img/bola.jpg) no-repeat center; background-size: cover;">
     <?php 
         include_once("./admin/analyticstracking.php");
-        include('./navbar.php');
     ?>
-    <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <!-- Box Comment -->
-        
-        <?php 
-
-        $query = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 order by datetime DESC LIMIT 10") or die(mysqli_error($mysqli)); 
-        
-        while ($data2 = mysqli_fetch_assoc($query)) {
-            echo '
-                <div class="box box-widget">
-                    <div class="box-header with-border">
-                      <div class="user-block">
-                        <img class="img-circle" src="times/img/jogadores/0.png" alt="user image">
-                        <span class="username"><a href="times/jogador.php?id=' . $data2['plays_players_id'] . '">' . $data2['players_name'] . '</a></span>
-                        <span class="description">' . $data2['teams_name'] . ' - ' . $data2['datetime'] . '</span>
-                      </div><!-- /.user-block -->
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <video width="100%" loop onclick="this.paused?this.play():this.pause();">
-                          <source src="times/lances/' . $data2['video_id'] . '.mp4" type="video/mp4" />
-                            Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
-                        </video>
-                    </div><!-- /.box-body -->
-                  </div><!-- /.box -->';}
-        ?>
-    </div><!-- /.col -->
+    <div class="row" >
+        <div class="col-md-6" style="text-align:center; margin-top:-50px;">
+            <br><br><br>
+            <h1 class="section-title"style="text-shadow: 1px 1px #000; ">
+              Prepare seus equipamentos
+            </h1>
+            <p class="section-sub-title"style="color:#fa225b; text-shadow: 1px 1px #000;">
+             Futebol society nunca mais será o mesmo.
+             <li style="color:#fa225b; text-shadow: 1px 1px #000; font-weight: bold; ">Grave e transmita suas partidas.</li>
+             <li style="color:#fa225b; text-shadow: 1px 1px #000; font-weight: bold; ">Salve e compartilhe melhores momentos.</li>
+             <li style="color:#fa225b; text-shadow: 1px 1px #000; font-weight: bold; ">Acompanhe suas estatísticas e de sua equipe.</li> 
+            </p>
+            <a href="./galeria.php"><button type="button" class="btn btn-primary btn-lg">Entrar</button></a>
+        </div>
+        <div class="col-md-6" style="margin-top:50px;">
+                <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: 
+                    hidden; max-width: 100%; height: auto; } .embed-container iframe, .embed-container 
+                    object, .embed-container embed { position: absolute; top: 0; left: 1%; width: 98%; height: 98%;}
+                </style>
+                <div class='embed-container'><iframe src="https://www.youtube.com/embed/yzXyyvr5hAk" frameborder='1' 
+                    allowfullscreen></iframe>
+                </div>
+        </div>
     </div>
  
 

@@ -20,8 +20,8 @@
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     $sql_anos = mysqli_query($mysqli,"SELECT YEAR(teams_schedule_date) as year FROM teams WHERE id_teams='$id'");
     $anos = mysqli_fetch_assoc($sql_anos);
-    $sql_jogadores = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id'");
-    $sql_jogadores2 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id'");
+    $sql_jogadores = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id' order by players_name");
+    $sql_jogadores2 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id' order by players_name");
     while ($data4 = mysqli_fetch_assoc($sql_jogadores2)) {
         $selecoes .= "<option value=".$data4['id_players'].">".$data4['players_name']."</option>" ;
     }
@@ -29,7 +29,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 
 <head>
 
@@ -64,8 +64,12 @@
      <!-- jQuery -->
     <script src="./js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="./js/bootstrap.min.js"></script>
-    <script src="./js/Chart.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/Chart.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="./app.js"></script>
+    
 		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
 		<style>
 			canvas{
@@ -82,13 +86,16 @@
     <![endif]-->
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
-    <?php include_once("../admin/analyticstracking.php") ?>
-       <section class="content-header">
-          <h1>
-            <?php echo $dados['teams_name']; ?>
-          </h1>
-        </section>
+<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
+    <?php 
+        include_once("../admin/analyticstracking.php");
+        include('../navbar.php');
+    ?>
+   <section class="content-header">
+      <h1>
+        <?php echo $dados['teams_name']; ?>
+      </h1>
+    </section>
     
     <div class="row" style="margin-top:15px;">
         <div class="col-lg-3 col-xs-6">
@@ -96,7 +103,7 @@
             <div class="small-box bg-aqua">
                 <div class="inner">
                     <h3><?php echo $count_players['total']; ?></h3>
-                    <p>Jogadores Ativos</p>
+                    <p>Integrantes</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -120,7 +127,7 @@
             <div class="small-box bg-yellow">
                 <div class="inner">
                     <h3><?php echo $count_videos['total']; ?></h3>
-                    <p>Partidas Registradas</p>
+                    <p>Publicações</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-videocamera"></i>
@@ -146,7 +153,7 @@
           <!-- USERS LIST -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Jogadores</h3>
+              <h3 class="box-title">Equipe</h3>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
               <ul class="users-list clearfix">
@@ -154,9 +161,9 @@
                     echo '
                     <li>
                         <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">
-                      <img class="img-circle" src="img/jogadores/' . $data2['player_picture'] . '.png" alt="User Image" style="height:80px; width:80px;"></a>
+                      <img class="img-circle" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image" style="height:80px; width:80px;"></a>
                       <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">' . $data2['players_name'] . '</a>
-                      <span class="users-list-date">Today</span>
+                      <span class="users-list-date">' . $data2['player_position'] . '</span>
                     </li>';}
                 ?>
               </ul><!-- /.users-list -->
@@ -168,11 +175,12 @@
           <!-- USERS LIST -->
           <div class="box box-warning">
             <div class="box-header with-border">
-              <h3 class="box-title">Vídeos</h3>
+              <h3 class="box-title">Publicações</h3>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
                 <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' order by date DESC LIMIT 5");
                     while ($data3 = mysqli_fetch_assoc($sqltime)) {
+                      if ($data3['type'] != 'p') {
                         if ($data3['available'] != 1) {
                             $marcador = ""; // Vídeo não está disponível
                         } else{
@@ -218,43 +226,41 @@
                         '.$marcador.'
                         </div>
                     </form>';}
-                ?>
+                    else {
+                        echo'
+                        <div style="width: 95%; margin:10px auto; 10px; auto;" >
+                        <img src="./img/' . $data3['webaddress'] . '" style="width:100%;">
+                        </div>';
+                    }
+                }?>
             </div><!-- /.box-body -->
           </div><!--/.box -->
         </div><!-- /.col -->
     </div>
+  
     
     <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      <!-- Box Comment -->
-        
-        <?php 
-
-<<<<<<< HEAD
-        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by datetime DESC LIMIT 15") or die(mysqli_error($mysqli)); 
-=======
-        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by date DESC LIMIT 15") or die(mysqli_error($mysqli)); 
->>>>>>> 17b308232cac366a41e5bbc6d004fbcd2cb5bd37
-        
-        while ($plays = mysqli_fetch_assoc($query_plays)) {
-            echo '
-                <div class="box box-widget" id="'. $plays['video_id'] .'">
-                    <div class="box-header with-border">
-                     <button class="btn btn-box-tool" onclick=\'deletar("'. $plays['video_id'] .'")\' style="float:right; margin-top:-5px;"><i class="fa fa-remove"></i></button>
-                     <button class="btn btn-box-tool" data-widget="collapse" style="float:right; margin-top:-5px;"><i class="fa fa-minus"></i></button>
-                      <div class="user-block">
-                        <img class="img-circle" src="img/jogadores/0.png" alt="user image">
-                        <span class="username"><a href="jogador.php?id=' . $plays['plays_players_id'] . '">' . $plays['players_name'] . '</a></span>
-                        <span class="description">' . $plays['teams_name'] . ' - ' . $plays['date'] . '</span></div><!-- /.user-block -->
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <video width="100%" loop onclick="this.paused?this.play():this.pause();">
-                          <source src="lances/' . $plays['video_id'] . '.mp4" type="video/mp4" />
-                            Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
-                        </video>
-                    </div><!-- /.box-body -->
-                  </div><!-- /.box -->';}
-        ?>
+        <div ng-controller="pessoasCtrl">
+            <div ng-repeat="pessoa in pessoas">
+            <div class="box box-widget" id="{{pessoa.video_id}}">
+                <div class="box-header with-border">
+                 <button class="btn btn-box-tool" style="float:right; margin-top:-5px;"><i class="fa fa-remove"></i></button>
+                 <button class="btn btn-box-tool" data-widget="collapse" style="float:right; margin-top:-5px;"><i class="fa fa-minus"></i></button>
+                  <div class="user-block">
+                    <img class="img-circle" src="img/jogadores/0.png" alt="user image">
+                    <span class="username"><a href="jogador.php?id={{pessoa.plays_players_id}}">{{pessoa.players_name}}</a></span>
+                    <span class="description">{{pessoa.teams_name}} - {{pessoa.date}}</span></div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <video width="100%" loop onclick="this.paused?this.play():this.pause();">
+                      <source src="./lances/{{pessoa.video_id}}.mp4" type="video/mp4" />
+                        Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
+                    </video>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div>
+        </div>
     </div><!-- /.col -->
     </div>
     
@@ -273,49 +279,14 @@
         $.post("acoes.php",{acao: "marcar",video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})
     }
         
-    function deletar(strVideo) {     
-        swal({title: "Tem certeza?", text: "Seguindo em frente, você removerá o arquivo da base de dados!", type: "warning", showCancelButton: true,   confirmButtonColor: "#DD6B55", confirmButtonText: "Sim, deletar!", closeOnConfirm: false }, 
-            function(){swal("Deletado!", "O vídeo foi removido com sucesso.", "success"); 
-            $.post("acoes.php",{acao: "deletar", video: strVideo, equipe: $id},function(data){})  
-        });
-    }
+    //function deletar(strVideo) {    
         
-    function deletar(strVideo) {     
-        swal({title: "Tem certeza?", text: "Seguindo em frente, você removerá o arquivo da base de dados!", type: "warning", showCancelButton: true,   confirmButtonColor: "#DD6B55", confirmButtonText: "Sim, deletar!", closeOnConfirm: false }, 
-            function(){swal("Deletado!", "O vídeo foi removido com sucesso.", "success"); 
-            //$.post("acoes.php",{video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})  
-        });
-    }
+       // swal({   title: "Are you sure?",   text: "You will not be able to recover this imaginary file!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, delete it!",   closeOnConfirm: false }, function(){   swal("Deleted!", "Your imaginary file has been deleted.", "success"); });
+       //swal({   title: "Deseja deletar o arquivo permanentemente?",   text: "Ele será removido da base de dados!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Sim, deletar!",   cancelButtonText: "Não, cancelar!",   closeOnConfirm: false }, function(isConfirm){   if (isConfirm) {
+        //   $.post("acoes.php",{acao: "deletar", video: strVideo, equipe: $id},function(data){});
+       //} else {     swal("Cancelado", "O arquivo continua na base :)", "error");   } });
+    //}
     </script>
-    <!-- Footer -->
-   <footer>
-        <nav class="navbar navbar-static-top">
-          <div class="container">
-            <div class="navbar-header">
-              <a href="landing.html" class="navbar-brand"><b>Esportes.Co</b></a>
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-                <i class="fa fa-bars"></i>
-              </button>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="./?id=1">Amigos de Quinta</a></li>
-               <li class="active"><a href="./?id=2">Peladeiros de Sexta</a></li>
-                <li><a href="./?id=3">Poka Yoke</a></li>
-              </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-        <div class="row">   
-            <div class="container" id="contact">
-                <hr class="large">
-                <div class="col-lg-10 col-lg-offset-1 text-center">  
-                    <p class="text-muted">Copyright © Esportes.Company 2016 <i class="fa fa-envelope-o fa-fw" style="margin-left:10px;"></i>  <a href="mailto:contato@esportes.co">contato@esportes.co</a></p>
-                </div>
-            </div>
-        </div>
-    </footer>
 </body>
 
 </html>

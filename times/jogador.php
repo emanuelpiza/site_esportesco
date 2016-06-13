@@ -99,7 +99,7 @@
                   <h5 class="widget-user-desc" style="text-decoration: underline;"><a href="./index.php?id=<?php echo $dados['players_team_id']; ?>">Time</a></h5>
                 </div>
                 <div class="widget-user-image">
-                  <img class="img-circle" src="img/jogadores/<?php echo $dados['player_picture']; ?>.png" alt="User Avatar" style="max-height:100px;">
+                  <img class="img-circle" src="img/jogadores/<?php echo $dados['player_picture']; ?>" alt="User Avatar" style="max-height:100px;">
                 </div>
                 <div class="box-footer">
                   <div class="row">

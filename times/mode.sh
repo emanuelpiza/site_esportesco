@@ -1,5 +1,5 @@
 #!/bin/bash -x
-#exec > ./log.txt 2>&1
+#exec >> ./log.txt 2>&1
 set -x
 
 #Log
@@ -24,7 +24,7 @@ video="${arquivo}_${gol}_${h}h${m}m${s}s_${duracao}"
 echo "$now_ini arquivo= $1 inicio= $2  duracao= $3  lado= $4  jogada= $5  jogador= $6  equipe= $7" >> log.txt
 if (( $equipe == 3 )); then filters=""; else filters="-vf crop=1400:787:${direita[$lado]}:150 -movflags faststart"; fi
 
-/home/ubuntu/bin/ffmpeg -i ../../../videos/${arquivo}.mp4 -ss $inicio -t $duracao $filters ./lances/${video}.mp4 2>&1  & wait
+ffmpeg -i ../../../videos/${arquivo}.mp4 -ss $inicio -t $duracao $filters ./lances/${video}.mp4 2>&1  & wait
 
 mysql --host=localhost --user=root --password=k1llersql Esportes << EOF
 insert into plays 
@@ -50,6 +50,6 @@ values
 EOF
 
 
-#now_fim=$(date +"%Y%m%d %T")
-#echo "\n${video}, $dia_pasta,Inicio: $now_ini Final : $now_fim" >> log.txt
+now_fim=$(date +"%Y%m%d %T")
+echo "\n${video}, $dia_pasta,Inicio: $now_ini Final : $now_fim" >> log.txt
 
