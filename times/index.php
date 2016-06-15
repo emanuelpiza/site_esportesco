@@ -98,7 +98,7 @@
     <div class="row" style="margin-top:15px;">
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-light-blue" style="background-color:#1976D2">
+            <div class="small-box bg-light-blue-active" style="background-color:#1976D2">
                 <div class="inner">
                     <h3><?php echo $count_players['total']; ?></h3>
                     <p>Integrantes</p>
@@ -122,7 +122,7 @@
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-light-blue" style="background-color:#BBDEFB">
+            <div class="small-box bg-aqua-active" style="background-color:#BBDEFB">
                 <div class="inner">
                     <h3><?php echo $count_videos['total']; ?></h3>
                     <p>Publicações</p>
@@ -134,7 +134,7 @@
             </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-light-blue">
+            <div class="small-box bg-aqua">
                 <div class="inner">
                     <h3><?php echo $anos['year']; ?></h3>
                     <p>Ano de Criação</p>
@@ -183,7 +183,7 @@
                             $marcador = ""; // Vídeo não está disponível
                         } else{
                             $marcador = '
-                             <div class="row">
+                            <div class="row">
                      <div class="form-group col-xs-4 col-md-4">
                         <input type="text" name="momento" id="'.$data3['webaddress'].'_mom" class="form-control col-xs-2 col-md-2" placeholder="Momento: (hh:mm:ss)" style="margin-top:20px;" />
                       </div>
@@ -203,16 +203,9 @@
                             </label>
                           </div>
                         </div>
-                        <div class="col-xs-3 col-md-3" style="margin-top:20px;">
-                            <select id="'.$data3['webaddress'].'_craq" class="form-control">
-                                <option value="45">Craque</option>
-                                '. $selecoes .'
-                            </select>
+                        <div class="col-xs-4 col-md-4" style="margin-top:20px;">
+                            <button class="btn btn-sm btn-success"  style="margin: 10 auto;" onclick=\'marcacao("'.$data3['webaddress'].'")\'>Salvar Marcação</button>
                         </div>
-                    </div>
-                    
-                    <div class=row" style="text-align:center;">
-                        <button class="btn btn-sm btn-success"  style="margin: 10 auto;" onclick=\'marcacao("'.$data3['webaddress'].'")\'>Salvar Marcação</button>
                     </div>';};
                     echo '
                     <form name="f" id="f" onSubmit="return false">
@@ -235,25 +228,6 @@
           </div><!--/.box -->
         </div><!-- /.col -->
     </div>
-    <!--<div class="row">  
-        php if (isset($dados['manager_picture'])){echo '
-        <div class="col-md-3">
-          <div class="box box-warning">
-            <div class="box-header with-border">
-              <h3 class="box-title">Técnico</h3>
-            </div>
-            <div class="box-body no-padding">
-                <ul class="users-list clearfix">
-                    <li>
-                        <img class="img-circle" src="img/jogadores/' . $dados['manager_picture'] . '.png" alt="User Image" style="height:80px; width:80px;">'. $dados['manager_name'] . '
-                    </li>
-              </ul>
-            </div>
-          </div>
-        </div>';
-        }?>
-    </div>-->
-    
     
     <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -267,12 +241,38 @@
             echo '
                 <div class="box box-widget" id="'. $plays['video_id'] .'">
                     <div class="box-header with-border">
-                    <a href="lances/' . $plays['video_id'] . '.mp4" download="Lance ' . $plays['players_name'] .'.mp4"> <button class="btn btn-box-tool") style="float:right; margin-top:-5px;"><i class="fa fa-download"></i></button></a>
-                     <button class="btn btn-box-tool" data-widget="collapse" style="float:right; margin-top:-5px;"><i class="fa fa-minus"></i></button>
-                      <div class="user-block">
+                    
+                    <button type="button" class="btn btn-box-tool" style="float:right; margin-top:-5px;" 
+                    onclick=\'deletar("' . $plays['video_id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
+                    
+                    <a href="lances/' . $plays['video_id'] . '.mp4" download="Lance ' . $plays['players_name'] .'.mp4"> <button class="btn btn-box-tool" style="float:right; margin-top:-5px;"  title="Download"><i class="fa fa-download"></i></button></a>
+
+                     
+                    <div class="form-group col-xs-3 col-md-3" style="float:right; margin-top:-5px; margin-bottom:-5px;">
+                        <select id="' . $plays['video_id'] . '_assist" class="form-control">
+                            <option value="45">Assistência</option>
+                            '. $selecoes .'
+                        </select>
+                        <button class="btn btn-sm btn-success" style="float:right; margin-top:2px; width:100%;" onclick=\'estatisticas("' . $plays['video_id'] . '")\'>Salvar</button>
+                    </div>
+                    <div class="form-group col-xs-3 col-md-3" style="float:right; margin-top:-5px; margin-bottom:-5px;">
+                        <select id="' . $plays['video_id'] . '_craq" class="form-control">
+                            <option value="45">Autor</option>
+                            '. $selecoes .'
+                        </select>
+                        <select id="' . $plays['video_id'] . '_tipo" class="form-control">
+                            <option value="0">Tipo</option>
+                            <option value="1">Gol</option>
+                            <option value="2">Defesa</option>
+                            <option value="3">Caneta</option>
+                            <option value="4">Chapéu</option>
+                            <option value="5">Bola Mucha</option>
+                        </select>
+                    </div>
+                    <div class="user-block">
                         <img class="img-circle" src="img/jogadores/0.png" alt="user image">
                         <span class="username"><a href="jogador.php?id=' . $plays['plays_players_id'] . '">' . $plays['players_name'] . '</a></span>
-                        <span class="description">' . $plays['teams_name'] . ' - ' . $plays['date'] . '</span></div><!-- /.user-block -->
+                    </div>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <video width="100%" loop onclick="this.paused?this.play():this.pause();">
@@ -296,17 +296,32 @@
             camp_esq = 1;
         }
         var strMomento = (document.getElementById(strVideo + "_mom").value); 
-
+        
         $.post("acoes.php",{acao: "marcar",video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})
     }
         
-    //function deletar(strVideo) {    
+    function estatisticas(strVideo) {
+        swal("Marcação realizada!", "As estatísticas dos jogadores envolvidos estão sendo atualizadas.", "success");
         
-       // swal({   title: "Are you sure?",   text: "You will not be able to recover this imaginary file!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, delete it!",   closeOnConfirm: false }, function(){   swal("Deleted!", "Your imaginary file has been deleted.", "success"); });
-       //swal({   title: "Deseja deletar o arquivo permanentemente?",   text: "Ele será removido da base de dados!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Sim, deletar!",   cancelButtonText: "Não, cancelar!",   closeOnConfirm: false }, function(isConfirm){   if (isConfirm) {
-        //   $.post("acoes.php",{acao: "deletar", video: strVideo, equipe: $id},function(data){});
-       //} else {     swal("Cancelado", "O arquivo continua na base :)", "error");   } });
-    //}
+        var craq = document.getElementById(strVideo + "_craq");
+        var strCraq = craq.options[craq.selectedIndex].value;
+        var assist = document.getElementById(strVideo + "_assist");
+        var strAssist = assist.options[assist.selectedIndex].value;
+        var tipo = document.getElementById(strVideo + "_tipo");
+        var strTipo = tipo.options[tipo.selectedIndex].value;
+        
+        $.post("acoes.php",{acao: "estatisticas",video: strVideo, craque: strCraq, assistencia: strAssist, tipo: strTipo, time: <?php echo $id?>},function(data){})
+    }
+        
+    function deletar(strVideo) {
+       if (confirm('Tem certeza que deseja deletar esta marcação?')) {
+            $(document.getElementById(strVideo)).hide(2000);
+            $.post("acoes.php",{acao: "deletar",video: strVideo},function(data){});  
+            alert('A marcação e suas estatísticas foram deletas.');
+        } else {
+            alert('Cancelado!');
+        }
+    }
     </script>
 </body>
 

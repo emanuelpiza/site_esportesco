@@ -214,7 +214,7 @@
     </script>
     <script>
 	var radarChartData = {
-		labels: ["Vitorias", "Artilharia", "Assistencia", "Resistencia", "Defesa", "Disciplina"],
+		labels: ["Vitorias", "Artilharia", "Assistencia", "Dribles", "Defesa", "Frequência"],
 		datasets: [
 		{
 				label: "My Second dataset",
@@ -224,7 +224,7 @@
 				pointStrokeColor: "#fff",
 				pointHighlightFill: "#fff",
 				pointHighlightStroke: "rgba(151,187,205,1)",
-				data: [0,0,0,0,0,0]
+				data: [<?php echo $dados['players_stats1']; ?>,<?php echo $dados['players_stats2']; ?>,<?php echo $dados['players_stats3']; ?>,<?php echo $dados['players_stats4']; ?>,<?php echo $dados['players_stats5']; ?>,<?php echo $dados['players_stats6']; ?>]
 			}
 		]
 	};
