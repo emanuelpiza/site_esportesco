@@ -250,7 +250,7 @@
                      
                     <div class="form-group col-xs-3 col-md-3" style="float:right; margin-top:-5px; margin-bottom:-5px;">
                         <select id="' . $plays['video_id'] . '_assist" class="form-control">
-                            <option value="45">Assistência</option>
+                            <option value="45">Participação</option>
                             '. $selecoes .'
                         </select>
                         <button class="btn btn-sm btn-success" style="float:right; margin-top:2px; width:100%;" onclick=\'estatisticas("' . $plays['video_id'] . '")\'>Salvar</button>
@@ -263,9 +263,9 @@
                         <select id="' . $plays['video_id'] . '_tipo" class="form-control">
                             <option value="0">Tipo</option>
                             <option value="1">Gol</option>
-                            <option value="2">Defesa</option>
-                            <option value="3">Caneta</option>
-                            <option value="4">Chapéu</option>
+                            <option value="4">Defesa</option>
+                            <option value="2">Caneta</option>
+                            <option value="3">Chapéu</option>
                             <option value="5">Bola Mucha</option>
                         </select>
                     </div>
@@ -289,15 +289,13 @@
     function marcacao(strVideo) {
         swal("Marcação realizada!", "Vídeo em processamento.\nO resultado será exibido na página principal e na página do jogador.", "success");
 
-        var craq = document.getElementById(strVideo + "_craq");
-        var strCraq = craq.options[craq.selectedIndex].value;
         var camp_esq = 0;
         if (document.getElementById(strVideo + "_campEsq").checked) {
             camp_esq = 1;
         }
         var strMomento = (document.getElementById(strVideo + "_mom").value); 
         
-        $.post("acoes.php",{acao: "marcar",video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, craque: strCraq, equipe: document.getElementById(strVideo + "_equip").value},function(data){})
+        $.post("acoes.php",{acao: "marcar",video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, equipe: document.getElementById(strVideo + "_equip").value},function(data){})
     }
         
     function estatisticas(strVideo) {
@@ -316,8 +314,7 @@
     function deletar(strVideo) {
        if (confirm('Tem certeza que deseja deletar esta marcação?')) {
             $(document.getElementById(strVideo)).hide(2000);
-            $.post("acoes.php",{acao: "deletar",video: strVideo},function(data){});  
-            alert('A marcação e suas estatísticas foram deletas.');
+            $.post("acoes.php",{acao: "deletar",video: strVideo},function(data){});
         } else {
             alert('Cancelado!');
         }

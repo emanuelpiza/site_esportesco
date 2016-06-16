@@ -143,7 +143,7 @@
 
          <ul class="timeline">
              
-                <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where available = 1 and plays_players_id='$jogador' order by datetime DESC");
+                <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where ( assistance = '$id' or plays_players_id='$id') and available in (1,2) order by datetime DESC");
                     while ($data2 = mysqli_fetch_assoc($sqltime)) {
                         echo '
                          <li class="time-label">
@@ -214,7 +214,7 @@
     </script>
     <script>
 	var radarChartData = {
-		labels: ["Vitorias", "Artilharia", "Assistencia", "Dribles", "Defesa", "Frequência"],
+		labels: ["Vitorias", "Artilharia", "Participações", "Dribles", "Defesa", "Frequência"],
 		datasets: [
 		{
 				label: "My Second dataset",
@@ -224,7 +224,7 @@
 				pointStrokeColor: "#fff",
 				pointHighlightFill: "#fff",
 				pointHighlightStroke: "rgba(151,187,205,1)",
-				data: [<?php echo $dados['players_stats1']; ?>,<?php echo $dados['players_stats2']; ?>,<?php echo $dados['players_stats3']; ?>,<?php echo $dados['players_stats4']; ?>,<?php echo $dados['players_stats5']; ?>,<?php echo $dados['players_stats6']; ?>]
+				data: [<?php echo $dados['players_stats0']; ?>,<?php echo $dados['players_stats1']; ?>,<?php echo $dados['players_stats2']; ?>,<?php echo $dados['players_stats3']; ?>,<?php echo $dados['players_stats4']; ?>,<?php echo $dados['players_stats5']; ?>]
 			}
 		]
 	};
