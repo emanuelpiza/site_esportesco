@@ -17,7 +17,7 @@
     $sqlcount_videos = mysqli_query($mysqli,"SELECT count(*) as total FROM videos  where team_id='$id'");
     $count_videos = mysqli_fetch_assoc($sqlcount_videos);
     $nome = $dados['teams_name'];
-    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available = 1 and teams_name LIKE '%".$nome."%' ");
+    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available in (1,2) and teams_name LIKE '%".$nome."%' ");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     $sql_anos = mysqli_query($mysqli,"SELECT YEAR(teams_schedule_date) as year FROM teams WHERE id_teams='$id'");
     $anos = mysqli_fetch_assoc($sql_anos);
@@ -85,20 +85,40 @@
 </head>
 
 <body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=1510121465959695";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <?php 
         include_once("../admin/analyticstracking.php");
         include('../navbar.php');
     ?>
-   <section class="content-header">
-      <h1>
-        <?php echo $dados['teams_name']; ?>
-      </h1>
-    </section>
-    
+    <div class="row">
+   <div class="col-xl-offset-5 col-xl-2 center-block">
+        <img src="./img/equipes/<?php echo $id; ?>.png" style="width:100px; display: block; margin-left: auto; margin-right: auto;">
+    </div>
+    </div>
     <div class="row" style="margin-top:15px;">
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-light-blue-active" style="background-color:#1976D2">
+            <div class="small-box bg-light-blue-active">
+                <div class="inner">
+                    <h3><?php echo $dados['teams_formation']; ?></h3>
+                    <p>Posição</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ribbon-a"></i>
+                </div>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-light-blue-active">
                 <div class="inner">
                     <h3><?php echo $count_players['total']; ?></h3>
                     <p>Integrantes</p>
@@ -108,39 +128,27 @@
                 </div>
             </div>
         </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+          <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-light-blue" style="background-color:#2196F3">
-                <div class="inner">
-                    <h3><?php echo $count_plays['total']; ?></h3>
-                    <p>Pinturas</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-easel"></i>
-                </div>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua-active" style="background-color:#BBDEFB">
+            <div class="small-box bg-light-blue-active">
                 <div class="inner">
                     <h3><?php echo $count_videos['total']; ?></h3>
-                    <p>Publicações</p>
+                    <p>Jogos Publicados</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-videocamera"></i>
                 </div>
             </div>
-            </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+            </div><!-- ./col --> 
+                <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-aqua">
+            <div class="small-box bg-light-blue-active">
                 <div class="inner">
-                    <h3><?php echo $anos['year']; ?></h3>
-                    <p>Ano de Criação</p>
+                    <h3><?php echo $count_plays['total']; ?></h3>
+                    <p>Marcações</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-ios-flame"></i>
+                    <i class="ion ion-checkmark-round"></i>
                 </div>
             </div>
         </div><!-- ./col -->
@@ -149,7 +157,7 @@
     <div class="row">
          <div class="col-md-6">
           <!-- USERS LIST -->
-          <div class="box box-info">
+          <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Equipe</h3>
             </div><!-- /.box-header -->
@@ -171,61 +179,71 @@
 
         <div class="col-md-6">
           <!-- USERS LIST -->
-          <div class="box box-info">
+            
+          <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Publicações</h3>
+              <h3 class="box-title">Jogos Completos</h3>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
-                <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' order by date DESC LIMIT 5");
-                    while ($data3 = mysqli_fetch_assoc($sqltime)) {
-                      if ($data3['type'] != 'p') {
+                <?php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' and type = 'v' order by date DESC LIMIT 1");
+                    while ($data3 = mysqli_fetch_assoc($sqlpartida)) {
                         if ($data3['available'] != 1) {
                             $marcador = ""; // Vídeo não está disponível
                         } else{
                             $marcador = '
                             <div class="row">
-                     <div class="form-group col-xs-4 col-md-4">
-                        <input type="text" name="momento" id="'.$data3['webaddress'].'_mom" class="form-control col-xs-2 col-md-2" placeholder="Momento: (hh:mm:ss)" style="margin-top:20px;" />
-                      </div>
-                    
-                        <!-- radio -->
-                        <div class="form-group col-xs-4 col-md-4">
-                          <div class="radio">
-                            <label>
-                              <input class="col-xs-4 col-md-4" type="radio" name="radio_campo" value="1" checked>
-                              Gol do Bar
-                              </label>
-                          </div>
-                          <div class="radio">
-                            <label>
-                              <input class="form-group col-xs-3 col-md-3 control-label" type="radio" name="radio_campo" id="'.$data3['webaddress'].'_campEsq" value="0">
-                              Gol do Fundo
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col-xs-4 col-md-4" style="margin-top:20px;">
-                            <button class="btn btn-sm btn-success"  style="margin: 10 auto;" onclick=\'marcacao("'.$data3['webaddress'].'")\'>Salvar Marcação</button>
-                        </div>
-                    </div>';};
+                                <div class="col-xs-6 col-md-6" style="margin-top:20px;">
+                                    <button class="btn btn-sm btn-success"  style="margin: 10 auto; float:right; width:140px;" onclick=\'marcacao("'.$data3['webaddress'].'", "0")\'>Marcar Lado Esquerdo</button>
+                                </div>
+                                <div class="col-xs-6 col-md-6" style="margin-top:20px;float:right;">
+                                    <button class="btn btn-sm btn-success"  style="margin: 10 auto; width:140px;" onclick=\'marcacao("'.$data3['webaddress'].'", "1")\'>Marcar Lado Direito</button>
+                                </div>
+                            </div>';};
                     echo '
                     <form name="f" id="f" onSubmit="return false">
                     <input type="hidden" name="video" value="' . $data3['webaddress'] . '">
                     <input type="hidden" id="'.$data3['webaddress'].'_equip" name="equipe" value="' . $id . '">
                     
-                        <div style="width: 95%; margin:10px auto; 10px; auto;" ><iframe width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '" frameborder="0" allowfullscreen></iframe>
+                        <div style="width: 95%; margin:10px auto; 10px; auto;" ><iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
                     
                         '.$marcador.'
                         </div>
-                    </form>';}
-                    else {
-                        echo'
-                        <div style="width: 95%; margin:10px auto; 10px; auto;" >
-                        <img src="./img/' . $data3['webaddress'] . '" style="width:100%;">
-                        </div>';
-                    }
-                }?>
+                    </form>';}?>
             </div><!-- /.box-body -->
           </div><!--/.box -->
+            
+            <?php $sqlfoto = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' and type = 'p' order by date DESC LIMIT 1");
+                while ($datafoto = mysqli_fetch_assoc($sqlfoto)) {
+                    echo'
+                <!-- Fotos LIST -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Álbum</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        <div style="width: 95%; height:95%; margin:10px auto; 10px; auto;" >
+                            <img src="./img/' . $datafoto['webaddress'] . '" style="width:100%;">
+                            <div class="fb-share-button" style="position:absolute;bottom:14px;right:3%;" data-href="http://www.esportes.co/times/img/' . $datafoto['webaddress'] . '" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.esportes.co%2Ftimes%2Fimg%2' . $datafoto['webaddress'] . '&amp;src=sdkpreparse"> </a></div>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!--/.box -->    ';
+            }?>
+            
+            
+              <?php $sqlmelhores = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' and type = 'm' order by date DESC LIMIT 1");
+                while ($datamelhores = mysqli_fetch_assoc($sqlmelhores)) {
+                    echo'
+                <!-- Fotos LIST -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Melhores Momentos</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body no-padding">
+                         <div style="width: 95%; height:95%; margin:10px auto; 10px; auto;" ><iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $datamelhores['webaddress'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
+                    </div><!-- /.box-body -->
+                </div><!--/.box -->    ';
+            }?>
+            
         </div><!-- /.col -->
     </div>
     
@@ -240,38 +258,42 @@
         while ($plays = mysqli_fetch_assoc($query_plays)) {
             echo '
                 <div class="box box-widget" id="'. $plays['video_id'] .'">
-                    <div class="box-header with-border">
+                    <div class="box-header with-border" style="height:78px;">
                     
                     <button type="button" class="btn btn-box-tool" style="float:right; margin-top:-5px;" 
                     onclick=\'deletar("' . $plays['video_id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
                     
                     <a href="lances/' . $plays['video_id'] . '.mp4" download="Lance ' . $plays['players_name'] .'.mp4"> <button class="btn btn-box-tool" style="float:right; margin-top:-5px;"  title="Download"><i class="fa fa-download"></i></button></a>
-
+                    
+                   <button class="btn btn-box-tool" style="float:right; margin-top:-5px;"  title="Categorizar" onclick=\'toggleDiv("' . $plays['video_id'] . '_categ")\'><span class="label label-danger"><i class="fa fa-bar-chart"></i> Estatística Pendente</span></button>
                      
-                    <div class="form-group col-xs-3 col-md-3" style="float:right; margin-top:-5px; margin-bottom:-5px;">
-                        <select id="' . $plays['video_id'] . '_assist" class="form-control">
-                            <option value="45">Participação</option>
-                            '. $selecoes .'
-                        </select>
-                        <button class="btn btn-sm btn-success" style="float:right; margin-top:2px; width:100%;" onclick=\'estatisticas("' . $plays['video_id'] . '")\'>Salvar</button>
-                    </div>
-                    <div class="form-group col-xs-3 col-md-3" style="float:right; margin-top:-5px; margin-bottom:-5px;">
-                        <select id="' . $plays['video_id'] . '_craq" class="form-control">
-                            <option value="45">Autor</option>
-                            '. $selecoes .'
-                        </select>
-                        <select id="' . $plays['video_id'] . '_tipo" class="form-control">
-                            <option value="0">Tipo</option>
-                            <option value="1">Gol</option>
-                            <option value="4">Defesa</option>
-                            <option value="2">Caneta</option>
-                            <option value="3">Chapéu</option>
-                            <option value="5">Bola Mucha</option>
-                        </select>
+                    <div class="form-group col-xs-6 col-md-6" style="float:right; margin-top:-5px; margin-bottom:-20px; display: none;" id="' . $plays['video_id'] . '_categ">
+                        <div class="form-group col-xs-6 col-md-6">
+                            <select id="' . $plays['video_id'] . '_craq" class="form-control">
+                                <option value="45">Autor</option>
+                                '. $selecoes .'
+                            </select>
+                            <select id="' . $plays['video_id'] . '_tipo" class="form-control">
+                                <option value="0">Tipo</option>
+                                <option value="1">Gol</option>
+                                <option value="4">Defesa</option>
+                                <option value="2">Caneta</option>
+                                <option value="3">Chapéu</option>
+                                <option value="5">Bola Mucha</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-6 col-md-6">
+                            <select id="' . $plays['video_id'] . '_assist" class="form-control">
+                                <option value="45">Participação</option>
+                                '. $selecoes .'
+                            </select>
+                            <button class="btn btn-sm btn-success" style="float:right; margin-top:2px; width:100%;" onclick=\'estatisticas("' . $plays['video_id'] . '")\'>Categorizar</button>
+                        </div>
                     </div>
                     <div class="user-block">
                         <img class="img-circle" src="img/jogadores/0.png" alt="user image">
                         <span class="username"><a href="jogador.php?id=' . $plays['plays_players_id'] . '">' . $plays['players_name'] . '</a></span>
+                        <span class="description"><i class="fa fa-clock-o" aria-hidden="true"></i> ' . $plays['initial_time'] . '</span>
                     </div>
                     </div><!-- /.box-header -->
                     <div class="box-body">
@@ -286,20 +308,55 @@
     </div>
     
     <script>
-    function marcacao(strVideo) {
-        swal("Marcação realizada!", "Vídeo em processamento.\nO resultado será exibido na página principal e na página do jogador.", "success");
-
-        var camp_esq = 0;
-        if (document.getElementById(strVideo + "_campEsq").checked) {
-            camp_esq = 1;
-        }
-        var strMomento = (document.getElementById(strVideo + "_mom").value); 
+        //import YouTube API script
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
         
-        $.post("acoes.php",{acao: "marcar",video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, equipe: document.getElementById(strVideo + "_equip").value},function(data){})
+         //create the YouTube Player
+          var player;
+
+          function onYouTubeIframeAPIReady() {
+            console.log("API  is Ready");
+            player = new YT.Player("video_iframe", { 
+            events : {
+              'onReady': onPlayerReady(),
+              'onStateChange': onStateChangeEvent()
+              } 
+            });
+          }
+          function onPlayerReady() {
+            console.log("My plaer is onReady" );
+
+          }
+          function onStateChangeEvent(){
+            setInterval(function(){
+               var time = player.getCurrentTime();
+              //var volume = player.getVolume();
+              console.log("Get Current Time: " + time);
+            },1000); 
+
+          }
+        
+    function marcacao(strVideo, camp_esq) {
+        var time = player.getCurrentTime();
+        if (time < 9){
+            swal("Não foi possível identificar o momento.", "Pressione o botão apenas quando assistir algum lance no vídeo acima.", "warning");
+        } else{
+        var hours = parseInt( time / 3600 ) % 24;
+        var minutes = parseInt( time / 60 ) % 60;
+        var seconds = (time % 60).toFixed(0);
+        var strMomento = hours+":"+minutes+":"+seconds;
+        
+        swal("Marcação Realizada em "+strMomento, "Vídeo em processamento. Isso pode levar alguns minutos.", "success");
+        
+        $.post("acoes.php",{acao: "marcar",video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, equipe: document.getElementById(strVideo + "_equip").value},function(data){});    
+        }
     }
         
     function estatisticas(strVideo) {
-        swal("Marcação realizada!", "As estatísticas dos jogadores envolvidos estão sendo atualizadas.", "success");
+        swal("Categorização realizada!", "As estatísticas dos jogadores envolvidos estão sendo atualizadas.", "success");
         
         var craq = document.getElementById(strVideo + "_craq");
         var strCraq = craq.options[craq.selectedIndex].value;
@@ -308,16 +365,18 @@
         var tipo = document.getElementById(strVideo + "_tipo");
         var strTipo = tipo.options[tipo.selectedIndex].value;
         
-        $.post("acoes.php",{acao: "estatisticas",video: strVideo, craque: strCraq, assistencia: strAssist, tipo: strTipo, time: <?php echo $id?>},function(data){})
+        $.post("acoes.php",{acao: "estatisticas",video: strVideo, craque: strCraq, assistencia: strAssist, tipo: strTipo, time: <?php echo $id?>},function(data){});
+        $(document.getElementById(strVideo)).hide(500);
     }
         
     function deletar(strVideo) {
        if (confirm('Tem certeza que deseja deletar esta marcação?')) {
-            $(document.getElementById(strVideo)).hide(2000);
+            $(document.getElementById(strVideo)).hide(500);
             $.post("acoes.php",{acao: "deletar",video: strVideo},function(data){});
-        } else {
-            alert('Cancelado!');
         }
+    }
+    function toggleDiv(divId) {
+       $("#"+divId).toggle(500);
     }
     </script>
 </body>

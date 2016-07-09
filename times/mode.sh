@@ -16,7 +16,7 @@ direita=(0 1400)
 if (( $lado == 0 )); then gol="b"; else gol="f"; fi
 
 IFS=: read -r h m s <<<"$inicio"
-inicio_ss=$(((h * 60 + m) * 60 + s - 8 ))
+inicio_ss=$(((h * 60 + m) * 60 + s - 10 ))
 
 s=$(echo $2| cut -d : -f 3)
 m=$(echo $2| cut -d : -f 2)

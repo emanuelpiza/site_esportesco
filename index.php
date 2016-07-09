@@ -69,7 +69,7 @@
         <div class="col-md-6" style="text-align:center; margin-top:-50px;">
             <br><br><br>
             <h1 class="section-title"style="text-shadow: 1px 1px #000; ">
-              Prepare seus equipamentos
+              Seja o craque dos seus sonhos
             </h1>
             <p class="section-sub-title"style="color:#fa225b; text-shadow: 1px 1px #000;">
              Futebol society nunca mais será o mesmo.

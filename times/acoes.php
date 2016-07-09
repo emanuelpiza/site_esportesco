@@ -53,7 +53,7 @@
             $tipo_sql = " = ".$tipo;
         }
         
-        if ($tipo <> 5){// Bola mucha não tá contando nas stats
+        if ($tipo <> 5 && $tipo <> 0){// Bola mucha não tá contando nas stats
             //STATS BASE
             $stats = "
                 UPDATE players AS t
