@@ -96,7 +96,7 @@
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-aqua-active banner" style="color:white;">
                   <h3 class="widget-user-username"><?php echo $dados['players_name']; ?></h3>
-                  <h5 class="widget-user-desc" style="text-decoration: underline;"><a href="./index.php?id=<?php echo $dados['players_team_id']; ?>">Time</a></h5>
+                  <h5 class="widget-user-desc" style="text-decoration: underline;"><a href="./index.php?id=<?php echo $dados['players_team_id']; ?>">Equipe</a></h5>
                 </div>
                 <div class="widget-user-image">
                   <img class="img-circle" src="img/jogadores/<?php echo $dados['player_picture']; ?>" alt="User Avatar" style="max-height:100px;">

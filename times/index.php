@@ -12,9 +12,9 @@
     $id = $_GET['id'];
     $sqlgeral = mysqli_query($mysqli,"SELECT * FROM teams where id_teams='$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
-    $sqlcount_players = mysqli_query($mysqli,"SELECT count(*) as total FROM players  where players_team_id='$id'");
+    $sqlcount_players = mysqli_query($mysqli,"SELECT points FROM teams where id_teams='$id'");
     $count_players = mysqli_fetch_assoc($sqlcount_players);
-    $sqlcount_videos = mysqli_query($mysqli,"SELECT count(*) as total FROM videos  where team_id='$id'");
+    $sqlcount_videos = mysqli_query($mysqli,"SELECT goals_balance FROM teams where id_teams='$id'");
     $count_videos = mysqli_fetch_assoc($sqlcount_videos);
     $nome = $dados['teams_name'];
     $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available in (1,2) and teams_name LIKE '%".$nome."%' ");
@@ -120,11 +120,11 @@
             <!-- small box -->
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
-                    <h3><?php echo $count_players['total']; ?></h3>
-                    <p>Integrantes</p>
+                    <h3><?php echo $count_players['points']; ?></h3>
+                    <p>Pontos</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-person-add"></i>
+                    <i class="ion ion-stats-bars"></i>
                 </div>
             </div>
         </div><!-- ./col -->
@@ -132,11 +132,11 @@
             <!-- small box -->
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
-                    <h3><?php echo $count_videos['total']; ?></h3>
-                    <p>Jogos Publicados</p>
+                    <h3><?php echo $count_videos['goals_balance']; ?></h3>
+                    <p>Saldo de Gols</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-videocamera"></i>
+                    <i class="ion ion-ios-football"></i>
                 </div>
             </div>
             </div><!-- ./col --> 
@@ -175,6 +175,33 @@
               </ul><!-- /.users-list -->
             </div><!-- /.box-body -->
           </div><!--/.box -->
+             
+               
+            <div class="box">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Artilharia Interna</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-bordered">
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Nome</th>
+                      <th style="width: 40px">Gols</th>
+                    </tr>
+                    <tr>
+                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where goals > 0 and t.id_teams = ".$id." order by goals DESC LIMIT 5");
+                        $posicao = 1;
+                    while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
+                    echo '
+                    <tr>
+                      <td>'.$posicao.'</td>
+                      <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
+                      <td><span>'.$data8['goals'].'</span></td>
+                    </tr>';
+                    $posicao = $posicao+1;}?>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
         </div><!-- /.col -->
 
         <div class="col-md-6">
@@ -182,7 +209,7 @@
             
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Jogos Completos</h3>
+              <h3 class="box-title">Partidas</h3>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
                 <?php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' and type = 'v' order by date DESC LIMIT 1");
@@ -193,10 +220,10 @@
                             $marcador = '
                             <div class="row">
                                 <div class="col-xs-6 col-md-6" style="margin-top:20px;">
-                                    <button class="btn btn-sm btn-success"  style="margin: 10 auto; float:right; width:140px;" onclick=\'marcacao("'.$data3['webaddress'].'", "0")\'>Marcar Lado Esquerdo</button>
+                                    <button class="btn btn-sm btn-success"  style="margin: 10 auto; float:right; width:140px;" onclick=\'marcacao("'.$data3['webaddress'].'", "0"," '.$data3['field_id'].'")\'>Marcar Lado Esquerdo</button>
                                 </div>
                                 <div class="col-xs-6 col-md-6" style="margin-top:20px;float:right;">
-                                    <button class="btn btn-sm btn-success"  style="margin: 10 auto; width:140px;" onclick=\'marcacao("'.$data3['webaddress'].'", "1")\'>Marcar Lado Direito</button>
+                                    <button class="btn btn-sm btn-success"  style="margin: 10 auto; width:140px;" onclick=\'marcacao("'.$data3['webaddress'].'", "1"," '.$data3['field_id'].'")\'>Marcar Lado Direito</button>
                                 </div>
                             </div>';};
                     echo '
@@ -243,8 +270,8 @@
                     </div><!-- /.box-body -->
                 </div><!--/.box -->    ';
             }?>
-            
-        </div><!-- /.col -->
+          
+        </div><!-- /.col --> 
     </div>
     
     <div class="row">
@@ -339,7 +366,7 @@
 
           }
         
-    function marcacao(strVideo, camp_esq) {
+    function marcacao(strVideo, lado_esq, campo) {
         var time = player.getCurrentTime();
         if (time < 9){
             swal("Não foi possível identificar o momento.", "Pressione o botão apenas quando assistir algum lance no vídeo acima.", "warning");
@@ -351,7 +378,7 @@
         
         swal("Marcação Realizada em "+strMomento, "Vídeo em processamento. Isso pode levar alguns minutos.", "success");
         
-        $.post("acoes.php",{acao: "marcar",video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, equipe: document.getElementById(strVideo + "_equip").value},function(data){});    
+        $.post("acoes.php",{acao: "marcar",video: strVideo, momento: strMomento, radio_lado: lado_esq, jogada: 0, equipe: document.getElementById(strVideo + "_equip").value, campo: campo},function(data){});    
         }
     }
         

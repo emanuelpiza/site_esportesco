@@ -12,9 +12,9 @@ lado="$4"
 jogada="$5"
 jogador="$6"
 equipe="$7"
+campo="$8"
 direita=(0 1400)
-if (( $lado == 0 )); then gol="b"; else gol="f"; fi
-
+altura=(x 150 50)
 IFS=: read -r h m s <<<"$inicio"
 inicio_ss=$(((h * 60 + m) * 60 + s - 10 ))
 
@@ -25,7 +25,7 @@ if [ -z "$s" ]; then s=$m; m=$h; h=0; fi
 
 video="${arquivo}_${gol}_${h}h${m}m${s}s_${duracao}"
 echo "$now_ini arquivo= $1 inicio= $inicio_ss  duracao= $3  lado= $4  jogada= $5  jogador= $6  equipe= $7" >> log.txt
-if (( $equipe == 3 )); then filters=""; else filters="-vf crop=1400:787:${direita[$lado]}:150 -movflags faststart"; fi
+if (( $equipe == 3 )); then filters=""; else filters="-vf crop=1400:787:${direita[$lado]}:${altura[$campo]} -movflags faststart"; fi
 
 ffmpeg -i ../../../videos/${arquivo}.mp4 -ss $inicio_ss -t $duracao $filters ./lances/${video}.mp4 2>&1  & wait
 
