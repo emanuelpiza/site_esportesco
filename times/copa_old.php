@@ -12,11 +12,11 @@
     $id = $_GET['id'];
     $sqlgeral = mysqli_query($mysqli,"SELECT * FROM teams where id_teams='$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
-    $sqlcount_players = mysqli_query($mysqli,"SELECT count(*) as total FROM players  where players_team_id='$id'");
+    $sqlcount_players = mysqli_query($mysqli,"SELECT count(*) as total FROM players  where players_team_id > 9 and players_team_id < 24");
     $count_players = mysqli_fetch_assoc($sqlcount_players);
-    $sqlcount_videos = mysqli_query($mysqli,"SELECT count(*) as total FROM videos  where team_id='$id'");
+    $sqlcount_videos = mysqli_query($mysqli,"SELECT count(*) as total FROM videos where team_id > 9 and team_id < 24 and type='v'");
     $count_videos = mysqli_fetch_assoc($sqlcount_videos);
-    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available in (1,2) and teams_id > 7;");
+    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays p join teams t on t.`teams_name` = p.`teams_name` where available in (1,2) and id_teams between 9 and 24;");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     $sql_anos = mysqli_query($mysqli,"SELECT YEAR(teams_schedule_date) as year FROM teams WHERE id_teams='$id'");
     $anos = mysqli_fetch_assoc($sql_anos);
@@ -61,6 +61,8 @@
     <!-- Ícones -->
     <link rel="icon" type="image/png" href="../img/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="../img/favicon-16x16.png" sizes="16x16" />
+    <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
      <!-- jQuery -->
     <script src="./js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
@@ -98,57 +100,121 @@
         include('../navbar.php');
     ?>
    <section class="content-header">
-      <h1>
-        <?php echo $dados['teams_name']; ?>
-      </h1>
     </section>
     
         <div class="row" style="background-color:#003366; text-align:center; margin:-25px -10px 25px -10px;">
-        <h1 style="color:white; margin-top:5px;">15ª COPA BENTELER<br>de Futebol Society</h1>
+        <h1 style="color:white; margin-top:5px; font-size: 40px;"><b>15ª COPA</b> <img src="./img/benteler.png" style="width:200px; margin-top:-7px;"></h1><h1 style=" color:white; margin-top:-10px;">de Futebol Society</h1>
         </div>
-    
-    
-    
-    
+            <div class="row">
+            <div class="col-sm-6">
+            <div class="box">
+                <div class="box-header">
+                  <h1 class="box-title" style="float:middle;">Classificatórias Grupo A</h1>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <div class="col-md-10 col-md-offset-1">
+                        <?php $matchesA = mysqli_query($mysqli,"SELECT m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where t1.`teamd_fields_id` = 1 order by m.datetime LIMIT 3;");
+                        while ($data5 = mysqli_fetch_assoc($matchesA)) {  
+                        echo '<hr style="margin-top:0px;"></hr>
+                        <div class="row">
+                            <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;">
+                                <span style="font-family: Roboto, Arial, serif; font-size:12px;">'.$data5['date'].' às '.$data5['hour'].'</span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px;">
+                              <a href="./index.php?id='.$data5['team1'].'">
+                              
+                                    <div class="col-xs-4" style="text-align:right; padding:0;">
+                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; margin-right:10px; color:black;">'.$data5['team1_name'].'</span>
+                                        
+                                        <img src="./img/equipes/'.$data5['team1'].'.png" style="width:30px; margin-top: -10px; margin-right:5px;">
+                                    </div>
+                                
+                                    <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
+                                        <span style="font-family: Arial, serif; font-size:25px;text-align:left; margin-right:-25px; color:black;font-weight:bolder;">'.$data5['score1'].'</span>
+                                    </div>
+                                </a>
+                                
+                              <div  class="col-xs-2 center-block" style="text-align:center; font-size:15px; margin-top:10px;"><i class="fa fa-times" aria-hidden="true"></i></div>
+                              
+                              
+                              <a href="./index.php?id='.$data5['team2'].'">
+                                    <div  class="col-xs-1" style="text-align:center; font-size:15px; padding:0;">
+                                        <span style="font-family: Arial, serif; font-size:25px;text-align:left; margin-left:-25px; color:black;font-weight:bolder;">'.$data5['score2'].'</span>
+                                    </div>
+                                    
+                                    <div  class="col-xs-4" style="padding:0;">
+                                        <img src="./img/equipes/'.$data5['team2'].'.png" style="width:30px; margin-top: -10px; margin-left:5px">
+                                        
+                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
+                                  </div>
+                              </a>
+                            </div>';}?>
+                    </div><!-- /.box-body -->
+                </div>
+              </div><!-- /.box -->
+            </div>
+                
+<div class="col-sm-6">
+            <div class="box">
+                <div class="box-header">
+                  <h1 class="box-title" style="float:middle;">Classificatórias Grupo B</h1>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <div class="col-md-10 col-md-offset-1">
+                        <?php $matchesA = mysqli_query($mysqli,"SELECT m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where t1.`teamd_fields_id` = 2 order by m.datetime LIMIT 3;");
+                        while ($data5 = mysqli_fetch_assoc($matchesA)) {
+                        echo '<hr style="margin-top:0px;"></hr>
+                        <div class="row">
+                            <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;">
+                                <span style="font-family: Roboto, Arial, serif; font-size:12px;">'.$data5['date'].' às '.$data5['hour'].'</span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px;">
+                              <a href="./index.php?id='.$data5['team1'].'">
+                              
+                                    <div class="col-xs-4" style="text-align:right; padding:0;">
+                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; margin-right:10px; color:black;">'.$data5['team1_name'].'</span>
+                                        
+                                        <img src="./img/equipes/'.$data5['team1'].'.png" style="width:30px; margin-top: -10px; margin-right:5px;">
+                                    </div>
+                                
+                                    <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
+                                        <span style="font-family: Arial, serif; font-size:25px;text-align:left; margin-right:-25px; color:black;font-weight:bolder;">'.$data5['score1'].'</span>
+                                    </div>
+                                </a>
+                                
+                              <div  class="col-xs-2 center-block" style="text-align:center; font-size:15px; margin-top:10px;"><i class="fa fa-times" aria-hidden="true"></i></div>
+                              
+                              
+                              <a href="./index.php?id='.$data5['team2'].'">
+                                    <div  class="col-xs-1" style="text-align:center; font-size:15px; padding:0;">
+                                        <span style="font-family: Arial, serif; font-size:25px;text-align:left; margin-left:-25px; color:black;font-weight:bolder;">'.$data5['score2'].'</span>
+                                    </div>
+                                    
+                                    <div  class="col-xs-4" style="padding:0;">
+                                        <img src="./img/equipes/'.$data5['team2'].'.png" style="width:30px; margin-top: -10px; margin-left:5px">
+                                        
+                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
+                                  </div>
+                              </a>
+                            </div>';}?>
+                    </div><!-- /.box-body -->
+                </div>
+              </div><!-- /.box -->
+            </div>
+                
+                
+                
+                
+                
+        </div>
     
         <div class="row">
             <div class="col-md-6">
             <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Grupo A</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body no-padding">
-                  <table class="table table-striped">
-                    <tr>
-                      <th style="width: 10px">#</th>
-                      <th>Equipe</th>
-                      <th style="width: 50px">P</th>
-                      <th style="width: 50px">V</th>
-                      <th style="width: 50px">E</th>
-                      <th style="width: 50px">D</th>
-                      <th style="width: 50px">SG</th>
-                    </tr>
-                        <?php $sqlgrupoa = mysqli_query($mysqli,"SELECT * FROM teams where teams_match_duration = 40 and teamd_fields_id = 1 order by teams_formation");
-                    while ($data4 = mysqli_fetch_assoc($sqlgrupoa)) {
-                    echo '
-                    <tr>
-                      <td>'.$data4['teams_formation'].'</td>
-                      <td><a href="./index.php?id=' . $data4['id_teams'] . '">'.$data4['teams_name'].'</a></td>
-                      <td><b>'.$data4['points'].'</b></td>
-                      <td>'.$data4['victories'].'</td>
-                      <td>'.$data4['draws'].'</td>
-                      <td>'.$data4['losses'].'</td>
-                      <td>'.$data4['goals_balance'].'</td>
-                    </tr>';}?>
-                  </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div>
-            
-            <div class="col-md-6">
-            <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">Grupo B</h3>
+                  <h3 class="box-title">Tabela Grupo A</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
                   <table class="table table-striped">
@@ -161,18 +227,55 @@
                       <th style="width: 70px">D</th>
                       <th style="width: 70px">SG</th>
                     </tr>
-                        <?php $sqlgrupob = mysqli_query($mysqli,"SELECT * FROM teams where teams_match_duration = 40 and teamd_fields_id = 2 order by teams_formation");
+                        <?php $sqlgrupoa = mysqli_query($mysqli,"SELECT * FROM teams where teams_match_duration = 40 and teamd_fields_id = 1 order by points DESC, goals_balance DESC");
+                        $posicao = 1;
+                    while ($data4 = mysqli_fetch_assoc($sqlgrupoa)) {
+                    echo '
+                    <tr>
+                      <td>'.$posicao.'</td>
+                      <td><a href="./index.php?id=' . $data4['id_teams'] . '"><span style="font-family: \'Source Sans Pro\', Arial, serif; font-size:16px; color:black;">'.$data4['teams_name'].'</span></a></td>
+                      <td><b>'.$data4['points'].'</b></td>
+                      <td>'.$data4['victories'].'</td>
+                      <td>'.$data4['draws'].'</td>
+                      <td>'.$data4['losses'].'</td>
+                      <td>'.$data4['goals_balance'].'</td>
+                    </tr>';
+                    $posicao = $posicao+1;}?>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div>
+            
+            <div class="col-md-6">
+            <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Tabela Grupo B</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                  <table class="table table-striped">
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Equipe</th>
+                      <th style="width: 70px">P</th>
+                      <th style="width: 70px">V</th>
+                      <th style="width: 70px">E</th>
+                      <th style="width: 70px">D</th>
+                      <th style="width: 70px">SG</th>
+                    </tr>
+                        <?php $sqlgrupob = mysqli_query($mysqli,"SELECT * FROM teams where teams_match_duration = 40 and teamd_fields_id = 2 order by points DESC, goals_balance DESC");
+                       $posicao = 1;
                     while ($data5 = mysqli_fetch_assoc($sqlgrupob)) {
                     echo '
                     <tr>
-                      <td>'.$data5['teams_formation'].'</td>
-                      <td><a href="./index.php?id=' . $data5['id_teams'] . '">'.$data5['teams_name'].'</a></td>
+                      <td>'.$posicao.'</td>
+                      <td><a href="./index.php?id=' . $data5['id_teams'] . '"><span style="font-family: \'Source Sans Pro\', Arial, serif; font-size:16px; color:black;">'.$data5['teams_name'].'</span></a></td>
                       <td><b>'.$data5['points'].'</b></td>
                       <td>'.$data5['victories'].'</td>
                       <td>'.$data5['draws'].'</td>
                       <td>'.$data5['losses'].'</td>
                       <td>'.$data5['goals_balance'].'</td>
-                    </tr>';}?>
+                    </tr>';
+                    $posicao = $posicao+1;}?>
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
@@ -180,10 +283,10 @@
         </div>
     
     
-    <div class="row">
+    <!--<div class="row">
         
         <div class="col-md-6">
-                <?php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id = 5 and type = 'v' order by date DESC LIMIT 1");
+                php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id = 5 and type = 'v' order by date DESC LIMIT 1");
                     while ($data3 = mysqli_fetch_assoc($sqlpartida)) {
                     echo '
                     <form name="f" id="f" onSubmit="return false">
@@ -193,10 +296,10 @@
                         <div style="width: 100%; margin:10px auto; 20px; auto;" ><iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
                         </div>
                     </form>';}?>
-        </div><!-- /.col -->
+        </div><!-- /.col -
         
          <div class="col-md-6">
-                <?php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id = 5 and type = 'v' order by date DESC LIMIT 1");
+                php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id = 5 and type = 'v' order by date DESC LIMIT 1");
                     while ($data3 = mysqli_fetch_assoc($sqlpartida)) {
                     echo '
                     <form name="f" id="f" onSubmit="return false">
@@ -206,8 +309,8 @@
                         <div style="width: 100%; margin:10px auto; 20px; auto;" ><iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
                         </div>
                     </form>';}?>
-        </div><!-- /.col --> 
-    </div>
+        </div><!-- /.col 
+    </div>--> 
     
     <div class="row">    
          <div class="col-md-6">
@@ -220,50 +323,69 @@
                     <tr>
                       <th style="width: 10px">#</th>
                       <th>Nome</th>
-                      <th>Time</th>
-                      <th style="width: 40px">Gols</th>
+                      <th>Equipe</th>
+                      <th style="width: 50px">Gols</th>
                     </tr>
+                    <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where goals > 0 order by goals DESC LIMIT 10");
+                        $posicao = 1;
+                    while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
+                    echo '
                     <tr>
-                       <!--<td>1.</td>
-                      <td>João</td>
-                      <td>
-                          <span>INDEPENDIENTE</span>
-                        </td>
-                      <td><span>0.2</span></td>-->
-                    </tr>
+                      <td>'.$posicao.'</td>
+                      <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
+                      <td><a href="./index.php?id='.$data8['id_teams'].'"><span style="color:black;">'.$data8['teams_name'].'<span></a></td>
+                      <td><span>'.$data8['goals'].'</span></td>
+                    </tr>';
+                    $posicao = $posicao+1;}?>
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
         </div><!-- /.col --> 
         
-        <div class="col-md-6">
+    <div class="col-md-6">
                        <div class="box">
                 <div class="box-header with-border">
                   <h3 class="box-title">Goleiros Menos Vazados</h3>
-                </div><!-- /.box-header -->
+                </div>
                 <div class="box-body">
                   <table class="table table-bordered">
                     <tr>
                       <th style="width: 10px">#</th>
                       <th>Nome</th>
-                      <th>Time</th>
-                      <th style="width: 40px">Índice</th>
+                      <th>Equipe</th>
+                      <th style="width: 50px">Gols Sof.</th>
                     </tr>
+                    <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals_taken, p.players_name, t.teams_name, id_players, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where goals_taken > 0 order by goals_taken LIMIT 10");
+                        $posicao = 1;
+                    while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
+                        
+                    echo '
                     <tr>
-                      <!--<td>1.</td>
-                      <td>João</td>
-                      <td>
-                          <span>INDEPENDIENTE</span>
-                        </td>
-                      <td><span>0.2</span></td>-->
-                    </tr>
+                      <td>'.$posicao.'</td>
+                      <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
+                      <td><a href="./index.php?id='.$data8['id_teams'].'"><span style="color:black;">'.$data8['teams_name'].'<span></a></td>
+                      <td><span>'.$data8['goals_taken'].'</span></td>
+                    </tr>';
+                    $posicao = $posicao+1;}?>
                   </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
+                </div>
+              </div>
         </div><!-- /.col --> 
     </div>
     
-        <div class="row" style="margin-top:15px;">
+    <div class="row" style="margin-top:15px;">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-light-blue-active">
+                <div class="inner">
+                    <h3>2016</h3>
+                    <p>Edição</p>
+                </div>
+                <div class="icon">  
+                    <i class="ion ion-ios-calendar"></i>
+                </div>
+            </div>
+        </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-light-blue-active">
@@ -277,38 +399,26 @@
             </div>
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-light-blue-active">
-                <div class="inner">
-                    <h3><?php echo $count_plays['total']; ?></h3>
-                    <p>Pinturas</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-easel"></i>
-                </div>
+        <!-- small box -->
+        <div class="small-box bg-light-blue-active">
+            <div class="inner">
+                <h3><?php echo $count_videos['total']/2; ?></h3>
+                <p>Jogos Publicados</p>
             </div>
+            <div class="icon">
+                <i class="ion ion-videocamera"></i>
+            </div>
+        </div>
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
-                    <h3><?php echo $count_videos['total']; ?></h3>
-                    <p>Publicações</p>
+                    <h3><?php echo $count_plays['total']; ?></h3>
+                    <p>Marcações</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-videocamera"></i>
-                </div>
-            </div>
-            </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-light-blue-active">
-                <div class="inner">
-                    <h3>2016</h3>
-                    <p>Edição</p>
-                </div>
-                <div class="icon">  
-                    <i class="ion ion-ios-calendar"></i>
+                    <i class="ion ion-checkmark-round"></i>
                 </div>
             </div>
         </div><!-- ./col -->

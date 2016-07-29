@@ -1,0 +1,4 @@
+[12-Feb-2016 13:16:00] PHP Parse error:  syntax error, unexpected T_CASE in /home/sport162/public_html/esportes.co/marcador/mark2/escolhas.php on line 3
+[12-Feb-2016 13:16:03] PHP Parse error:  syntax error, unexpected T_CASE in /home/sport162/public_html/esportes.co/marcador/mark2/escolhas.php on line 3
+[12-Feb-2016 13:16:27] PHP Warning:  Invalid argument supplied for foreach() in /home/sport162/public_html/esportes.co/marcador/mark2/escolhas.php on line 4
+[18-Feb-2016 16:37:19] PHP Parse error:  syntax error, unexpected ')' in /home/sport162/public_html/esportes.co/marcador/mark4/jogadores.php on line 16

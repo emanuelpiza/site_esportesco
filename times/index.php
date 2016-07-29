@@ -108,7 +108,7 @@
             <!-- small box -->
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
-                    <h3><?php echo $dados['teams_formation']; ?></h3>
+                    <h3><?php echo $dados['rank']; ?></h3>
                     <p>Posição</p>
                 </div>
                 <div class="icon">
@@ -280,7 +280,7 @@
         
         <?php 
 
-        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by id_plays DESC LIMIT 15") or die(mysqli_error($mysqli)); 
+        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by id_plays DESC LIMIT 25") or die(mysqli_error($mysqli)); 
         
         while ($plays = mysqli_fetch_assoc($query_plays)) {
             echo '

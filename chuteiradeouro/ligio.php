@@ -5,9 +5,9 @@
     ob_start();
     include('../admin/dbcon/dbcon.php');
 
-    $sqlgeral = mysqli_query($mysqli,"SELECT teams_formation FROM teams where id_teams=8");
+    $sqlgeral = mysqli_query($mysqli,"SELECT rank FROM teams where id_teams=8");
     $geral = mysqli_fetch_assoc($sqlgeral);
-    $status = $geral['teams_formation']; 
+    $status = $geral['rank']; 
 
     if ($status == '1') {
         $status = "Aberta";
@@ -48,7 +48,10 @@
     <form action="marcador.php" method="POST">
         <input type="hidden" name="status" value="<?php echo $status;?>">
 		<div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6" style="text-align:center; margin-top:50px;">
-            <h1>Escola <?php echo $status;?>
+            <h1 style="  font-size: 72px;
+  background: -webkit-linear-gradient(-45deg,#888, #000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;">Escola <?php echo $status;?>
  </h1>
             <button class="btn btn-lg  btn-<?php echo $cor;?>" type="submit"><?php echo $acao;?> Escola</button>
         </div>

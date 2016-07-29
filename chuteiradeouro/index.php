@@ -25,9 +25,9 @@
         $selecoes .= "<option value=".$data4['id_players'].">".$data4['players_name']."</option>" ;
     }
 
-    $sqlstatus = mysqli_query($mysqli,"SELECT teams_formation FROM teams where id_teams=8");
+    $sqlstatus = mysqli_query($mysqli,"SELECT rank FROM teams where id_teams=8");
     $geral2 = mysqli_fetch_assoc($sqlstatus);
-    $status = $geral2['teams_formation']; 
+    $status = $geral2['rank']; 
 
     if ($status == '1') {
         $status = "Aberta";

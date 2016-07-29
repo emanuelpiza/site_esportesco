@@ -69,15 +69,15 @@
         <div class="col-md-6" style="text-align:center; margin-top:-50px;">
             <br><br><br>
             <h1 class="section-title"style="text-shadow: 1px 1px #000; ">
-              Você é o craque
+              Sua plataforma esportiva
             </h1>
+              <a href="http://www.esportes.co/times/copa.php"><button type="button" class="btn btn-primary btn-lg">Entrar</button></a>
             <p class="section-sub-title"style="color:#fa225b; text-shadow: 1px 1px #000;">
-             Futebol society nunca mais será o mesmo.
+             Tudo sobre seus esportes em um só lugar.
              <li style="color:#fa225b; text-shadow: 1px 1px #000; font-weight: bold; ">Receba os vídeos de suas partidas.</li>
              <li style="color:#fa225b; text-shadow: 1px 1px #000; font-weight: bold; ">Salve e compartilhe seus momentos.</li>
              <li style="color:#fa225b; text-shadow: 1px 1px #000; font-weight: bold; ">Acompanhe suas estatísticas e de sua equipe.</li> 
             </p>
-            <a href="http://www.esportes.co/times/copa.php"><button type="button" class="btn btn-primary btn-lg">Entrar</button></a>
         </div>
         <div class="col-md-6" style="margin-top:50px;">
                 <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: 

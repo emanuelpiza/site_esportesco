@@ -42,7 +42,7 @@
         die("Connection failed: " . $conn->connect_error);
     } 
 
-    $sql = "UPDATE teams SET teams_formation=".$new_status." WHERE id_teams=8";
+    $sql = "UPDATE teams SET rank=".$new_status." WHERE id_teams=8";
 
     if ($conn->query($sql) === TRUE) {
         echo "<div style='text-align:center;'><h1>Escola ".$acao." com sucesso!<h1> <br> <a href='./ligio.php'><button class='btn btn-lg  btn-info' onclick='myFunction()'>Voltar</button></a></div>";

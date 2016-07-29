@@ -25,6 +25,24 @@
     while ($data4 = mysqli_fetch_assoc($sql_jogadores2)) {
         $selecoes .= "<option value=".$data4['id_players'].">".$data4['players_name']."</option>" ;
     }
+    // PAGINATION
+    $total = 21;
+    $limit = 3;
+    $pages = ceil($total / $limit);
+    $page = min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
+        'options' => array(
+            'default'   => 4,
+            'min_range' => 1,
+        ),
+    )));
+    // Calculate the offset for the query
+    $offset = ($page - 1)  * $limit;
+    // Some information to display to the user
+    $start = $offset + 1;
+    $end = min(($offset + $limit), $total);
+         
+    $dbh = new PDO('mysql:host=localhost;dbname=Esportes', $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+                            
 ?>
 
 
@@ -63,6 +81,7 @@
     <link rel="icon" type="image/png" href="../img/favicon-16x16.png" sizes="16x16" />
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
      <!-- jQuery -->
     <script src="./js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
@@ -107,15 +126,37 @@
         </div>
             <div class="row">
             <div class="col-sm-6">
-            <div class="box">
+            <div class="box" id="class_grupoA">
                 <div class="box-header">
                   <h1 class="box-title" style="float:middle;">Classificatórias Grupo A</h1>
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="col-md-10 col-md-offset-1">
-                        <?php $matchesA = mysqli_query($mysqli,"SELECT m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where t1.`teamd_fields_id` = 1 order by m.datetime LIMIT 3;");
-                        while ($data5 = mysqli_fetch_assoc($matchesA)) {  
-                        echo '<hr style="margin-top:0px;"></hr>
+                          <?php
+                            try {
+
+ 
+                            // Prepare the paged query
+                            $stmt = $dbh->prepare("SELECT m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where t1.`teamd_fields_id` = 1 order by m.datetime LIMIT 
+                                    :limit
+                                OFFSET
+                                    :offset
+                            ");
+
+                            // Bind the query params
+                            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+                            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+                            $stmt->execute();
+
+                            // Do we have any results?
+                            if ($stmt->rowCount() > 0) {
+                                // Define how we want to fetch the results
+                                $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                                $iterator = new IteratorIterator($stmt);
+
+                                // Display the results
+                                foreach ($iterator as $data5) {
+                                     echo '<hr style="margin-top:-2px;"></hr>
                         <div class="row">
                             <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;">
                                 <span style="font-family: Roboto, Arial, serif; font-size:12px;">'.$data5['date'].' às '.$data5['hour'].'</span>
@@ -149,22 +190,66 @@
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
                                   </div>
                               </a>
-                            </div>';}?>
+                            </div>';   
+                                }
+
+                            } else {
+                                echo '<p>Não foi possível exibir resultados.</p>';
+                            }  
+                                
+                            // The "back" link
+                            $prevlink = ($page > 1) ? '<a href="?page=' . ($page - 1) . '#class_grupoA" title="Previous page"><span style="color:black; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span></a>' : '<span class="disabled"></span>';
+
+                            // The "forward" link
+                            $nextlink = ($page < $pages) ? '<a href="?page=' . ($page + 1) . '#class_grupoA" title="Next page"><span style="color:black; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>' : '<span class="disabled"></span>';
+
+                            // Display the paging information
+                            echo '
+                                 <hr style="margin-top:-5px;"></hr>
+                                 <div id="paging" class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-17px;">
+                                ', $prevlink, '<span style="font-family: \'Lalezar\', cursive; font-size:20px; font-wigth:bold; margin-top:-15px;">RODADA ', $page,"</span>", $nextlink, '
+                            </div>     ';
+                                
+                                
+                        } catch (Exception $e) {
+                            echo '<p>', $e->getMessage(), '</p>';
+                        }?> 
                     </div><!-- /.box-body -->
                 </div>
               </div><!-- /.box -->
             </div>
                 
 <div class="col-sm-6">
-            <div class="box">
+            <div class="box" id="class_grupoB">
                 <div class="box-header">
                   <h1 class="box-title" style="float:middle;">Classificatórias Grupo B</h1>
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="col-md-10 col-md-offset-1">
-                        <?php $matchesA = mysqli_query($mysqli,"SELECT m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where t1.`teamd_fields_id` = 2 order by m.datetime LIMIT 3;");
-                        while ($data5 = mysqli_fetch_assoc($matchesA)) {
-                        echo '<hr style="margin-top:0px;"></hr>
+                        <?php
+                            try {
+
+                            // Prepare the paged query
+                            $stmt = $dbh->prepare("SELECT m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where t1.`teamd_fields_id` = 2 order by m.datetime LIMIT
+                                    :limit
+                                OFFSET
+                                    :offset
+                            ");
+
+                            // Bind the query params
+                            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+                            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+                            $stmt->execute();
+
+                            // Do we have any results?
+                            if ($stmt->rowCount() > 0) {
+                                // Define how we want to fetch the results
+                                $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                                $iterator = new IteratorIterator($stmt);
+
+                                // Display the results
+                                foreach ($iterator as $data5) {
+                                     echo '<hr style="margin-top:-2px;"></hr>
                         <div class="row">
                             <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;">
                                 <span style="font-family: Roboto, Arial, serif; font-size:12px;">'.$data5['date'].' às '.$data5['hour'].'</span>
@@ -198,16 +283,35 @@
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
                                   </div>
                               </a>
-                            </div>';}?>
+                            </div>';   
+                                }
+
+                            } else {
+                                echo '<p>Não foi possível exibir resultados.</p>';
+                            }  
+                                
+                            // The "back" link
+                            $prevlink = ($page > 1) ? '<a href="?page=' . ($page - 1) . '#class_grupoB" title="Previous page"><span style="color:black; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span></a>' : '<span class="disabled"></span>';
+
+                            // The "forward" link
+                            $nextlink = ($page < $pages) ? '<a href="?page=' . ($page + 1) . '#class_grupoB" title="Next page"><span style="color:black; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>' : '<span class="disabled"></span>';
+
+                            // Display the paging information
+                            echo '
+                                 <hr style="margin-top:-5px;"></hr>
+                                 <div id="paging" class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-17px;">
+                                ', $prevlink, '<span style="font-family: \'Lalezar\', cursive; font-size:20px; font-wigth:bolder; margin-top:-15px;">RODADA ', $page,"</span>", $nextlink, '
+                            </div>     ';
+                                
+                                
+                        } catch (Exception $e) {
+                            echo '<p>', $e->getMessage(), '</p>';
+                        }?> 
+                        
                     </div><!-- /.box-body -->
                 </div>
               </div><!-- /.box -->
             </div>
-                
-                
-                
-                
-                
         </div>
     
         <div class="row">
@@ -232,7 +336,7 @@
                     while ($data4 = mysqli_fetch_assoc($sqlgrupoa)) {
                     echo '
                     <tr>
-                      <td>'.$posicao.'</td>
+                      <td>'.$data4['rank'].'</td>
                       <td><a href="./index.php?id=' . $data4['id_teams'] . '"><span style="font-family: \'Source Sans Pro\', Arial, serif; font-size:16px; color:black;">'.$data4['teams_name'].'</span></a></td>
                       <td><b>'.$data4['points'].'</b></td>
                       <td>'.$data4['victories'].'</td>
@@ -267,7 +371,7 @@
                     while ($data5 = mysqli_fetch_assoc($sqlgrupob)) {
                     echo '
                     <tr>
-                      <td>'.$posicao.'</td>
+                      <td>'.$data5['rank'].'</td>
                       <td><a href="./index.php?id=' . $data5['id_teams'] . '"><span style="font-family: \'Source Sans Pro\', Arial, serif; font-size:16px; color:black;">'.$data5['teams_name'].'</span></a></td>
                       <td><b>'.$data5['points'].'</b></td>
                       <td>'.$data5['victories'].'</td>
@@ -283,10 +387,10 @@
         </div>
     
     
-    <!--<div class="row">
+    <div class="row">
         
         <div class="col-md-6">
-                php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id = 5 and type = 'v' order by date DESC LIMIT 1");
+                <?php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id > 9 and type = 'm' order by date DESC LIMIT 1");
                     while ($data3 = mysqli_fetch_assoc($sqlpartida)) {
                     echo '
                     <form name="f" id="f" onSubmit="return false">
@@ -296,10 +400,10 @@
                         <div style="width: 100%; margin:10px auto; 20px; auto;" ><iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
                         </div>
                     </form>';}?>
-        </div><!-- /.col -
+        </div>
         
-         <div class="col-md-6">
-                php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id = 5 and type = 'v' order by date DESC LIMIT 1");
+        <div class="col-md-6">
+                <?php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id > 9 and type = 't' order by date DESC LIMIT 1");
                     while ($data3 = mysqli_fetch_assoc($sqlpartida)) {
                     echo '
                     <form name="f" id="f" onSubmit="return false">
@@ -309,8 +413,8 @@
                         <div style="width: 100%; margin:10px auto; 20px; auto;" ><iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
                         </div>
                     </form>';}?>
-        </div><!-- /.col 
-    </div>--> 
+        </div>
+    </div>
     
     <div class="row">    
          <div class="col-md-6">
@@ -324,7 +428,7 @@
                       <th style="width: 10px">#</th>
                       <th>Nome</th>
                       <th>Equipe</th>
-                      <th style="width: 50px">Gols</th>
+                      <th style="width: 50px; height:57px;">Gols</th>
                     </tr>
                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where goals > 0 order by goals DESC LIMIT 10");
                         $posicao = 1;
@@ -425,6 +529,16 @@
     </div><!-- /.row -->
     
     <script>
+        // Javascript to enable link to tab
+        var url = document.location.toString();
+        if (url.match('#')) {
+            $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+        } 
+
+        // Change hash for page-reload
+        $('.nav-tabs a').on('shown.bs.tab', function (e) {
+            window.location.hash = e.target.hash;
+        })
         //import YouTube API script
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
