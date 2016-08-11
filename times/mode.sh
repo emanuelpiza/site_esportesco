@@ -11,8 +11,9 @@ duracao="$3"
 lado="$4"
 jogada="$5"
 jogador="$6"
-equipe="$7"
+partida="$7"
 campo="$8"
+is_two_cameras="$9"
 direita=(0 1400)
 canal=$(($lado+(($campo-1)*2)))
 altura=(250 215 130 130) 
@@ -26,7 +27,7 @@ if [ -z "$s" ]; then s=$m; m=$h; h=0; fi
 
 video="${arquivo}_${gol}_${h}h${m}m${s}s_${duracao}"
 echo "$now_ini arquivo= $1 inicio= $inicio_ss  duracao= $3  lado= $4  jogada= $5  jogador= $6  equipe= $7" >> log.txt
-if (( $equipe == 3 )); then filters=""; else filters="-vf crop=1400:787:${direita[$lado]}:${altura[$canal]} -movflags faststart"; fi
+if (( $is_two_cameras == 0 )); then filters=""; else filters="-vf crop=1400:787:${direita[$lado]}:${altura[$canal]} -movflags faststart"; fi
 ffmpeg -i ../../../videos/${arquivo}.mp4 -ss $inicio_ss -t $duracao $filters ./lances/${video}.mp4 2>&1  & wait
 
 mysql --host=localhost --user=root --password=k1llersql Esportes << EOF
@@ -34,7 +35,7 @@ insert into plays
 	(video_id,
 	plays_players_id,
 	players_name, 
-	teams_name, 
+	match_id, 
 	plays_play_types_id, 
 	plays_left_side, 
 	plays_duration, 
@@ -44,7 +45,7 @@ values
 	('$video', 
 	'$jogador', 
 	(select players_name from players where id_players='$jogador'),
-	(select teams_name from teams where id_teams='$equipe'),
+	'$partida',
 	'$jogada',
 	'$lado',
 	'$duracao',

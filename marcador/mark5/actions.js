@@ -8,9 +8,11 @@ var ul_atual;
 $(document).ready(function () 
 {
     $("#envia_gol").click(function(){envia("1")})
+    $("#envia_falta").click(function(){envia("0")})
     $("#envia_amarelo").click(function(){envia("2")})
     $("#envia_vermelho").click(function(){envia("3")})
     $("#envia_contra").click(function(){envia("4")})
+    $("#envia_defesa").click(function(){envia("3")})
     $("#atualiza").click(function(){envia_times("atualiza")})
 })
     
@@ -77,7 +79,7 @@ function selecionar_jogador(ojogador){
     li.setAttribute('data-toggle', 'modal'); 
     remover = document.getElementById("remover");
     ul_atual = li.parentNode;
-    remover.setAttribute('onclick', 'document.getElementById("'+ojogador+'").parentNode.removeChild(document.getElementById("'+ojogador+'"));');  
+    //remover.setAttribute('onclick', 'document.getElementById("'+ojogador+'").parentNode.removeChild(document.getElementById("'+ojogador+'"));');  
 }
 
 
@@ -150,7 +152,7 @@ function envia(p_type)
     fid = global_id;
     
     $.post("acoes.php",
-           {type: p_type, player: fjogador, match:fid, field:0, side:0, nome:fnome},
+           {acao:"marcar", type: p_type, player: fjogador, match:fid, field:0, side:0, nome:fnome},
            function(data)
            {
                 // se nao retornou 1 entao os dados foram enviados

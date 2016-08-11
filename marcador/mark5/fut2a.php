@@ -17,12 +17,6 @@
     $sqlgols = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = ".$dados['team2'].") or (type = 4 and p.`players_team_id` = ".$dados['team1']."));");
     $gols2 = mysqli_fetch_assoc($sqlgols);
 
-    $sqlfaltas = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type = 0 and p.`players_team_id` = ".$dados['team1'].";");
-    $faltas1 = mysqli_fetch_assoc($sqlfaltas);    
-    $sqlfaltas = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type = 0 and p.`players_team_id` = ".$dados['team2'].";");
-    $faltas2 = mysqli_fetch_assoc($sqlfaltas);
-
-
     $sqlteam1 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id=".$dados['team1']);
     $sqlteam2 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id=".$dados['team2']);
     $sql_notes = mysqli_query($mysqli,"select p1.*, p2.`players_name` from (
@@ -108,61 +102,24 @@
          <div class="col-md-6 col-md-offset-3">
       <a href="./index.php?id=<?php echo $dados['team1']; ?>">
 
-            <div class="col-xs-4" style="text-align:right; padding:0;">
-                <img src="../../times/img/equipes/<?php echo $dados['team1']; ?>.png" style="width:80px; margin-right:5px;">
+            <div class="col-xs-4 col-xs-offset-4" style="text-align:center; padding:0;">
+                <span style="font-family: Arial, serif; font-size:20px; color:black;font-weight:bolder;">Fut 2 A<br>Amistoso<br>Interno<br>07/08/2016</span>
             </div>
 
-            <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
-                <span style="font-family: Arial, serif; font-size:60px;text-align:left; margin-right:-25px; margin-left:-15px; color:black;font-weight:bolder;"><?php echo $gols1['total']; ?></span>
-            </div>
+          
         </a>
-
-      <div  class="col-xs-2 center-block" style="text-align:center; font-size:30px; margin-top:20px;">X</div>
-
-      <a href="./index.php?id=<?php echo $dados['team2']; ?>">
-            <div  class="col-xs-1" style="text-align:center; font-size:15px; padding:0;">
-                <span style="font-family: Arial, serif; font-size:60px;text-align:left; margin-left:-25px; color:black;font-weight:bolder;"><?php echo $gols2['total']; ?></span>
-            </div>
-
-            <div  class="col-xs-4" style="padding:0;">
-                <img src="../../times/img/equipes/<?php echo $dados['team2']; ?>.png" style="width:80px; margin-left:5px">
-          </div>
-      </a>
     </div>
     </div>
-    
-    
-           <div class="row" style="margin-bottom:10px;">
-         <div class="col-md-6 col-md-offset-3">
-
-            <div  class="col-xs-1 col-xs-offset-2" style="text-align:center; font-size:15px;padding:0;">
-                <span style="font-family: Arial, serif; font-size:12px;text-align:left; margin-right:-25px; margin-left:-15px; color:black;font-weight:bolder;">Faltas: <?php echo $faltas1['total']; ?></span>
-            </div>
-
-            <div  class="col-xs-2 col-xs-offset-6" style="text-align:center; font-size:15px; padding:0;">
-                <span style="font-family: Arial, serif; font-size:12px;text-align:left; margin-left:-25px; color:black;font-weight:bolder; margin-left:-15px; ">Faltas: <?php echo $faltas2['total']; ?></span>
-            </div>
-    </div>
-    </div>
-    
-    
-    
     
     
     <div class="row">
     <form name="f" id="f" onSubmit="return false">
 		<div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 cfeature infos col-lg-offset-3 col-lg-6">
             <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
                 <ul class="options" id="ul_esq">
                     <?php while ($team1 = mysqli_fetch_assoc($sqlteam1)) {
                     echo "<li onclick=\x22selecionar_jogador(&quot;" . $team1['id_players'] . "&quot;)\x22 id='" . $team1['id_players'] . "' value='" . $team1['id_players'] . "'>" . $team1['shirt'] . " - " . $team1['players_name'] ."</option>";} ?>
-                </ul>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                 <ul class="options" id="ul_esq">
-                    <?php while ($team2 = mysqli_fetch_assoc($sqlteam2)) {
-                    echo "<li onclick=\x22selecionar_jogador(&quot;" . $team2['id_players'] . "&quot;)\x22 id='" . $team2['id_players'] . "' value='" . $team2['id_players'] . "'>" . $team2['shirt'] . " - " . $team2['players_name'] ."</option>";} ?>
                 </ul>
             </div>
         </div>
@@ -204,7 +161,7 @@
                             <div class="timeline-item">
                              <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
-                            <h3 class="timeline-header">Falta de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                            <h3 class="timeline-header">Drible de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
                             </div>
                             </li>';
                     } else if ($notes['type'] == 1){
@@ -221,15 +178,15 @@
                             <div class="timeline-item">
                              <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
-                            <h3 class="timeline-header">Cartão amarelo para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                            <h3 class="timeline-header">Lance duvidoso de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
                             </div>
                             </li>';
                     } else if ($notes['type'] == 3){
-                        echo ' <li>
-                        <i class="fa fa-square  bg-gray" style="color:red;"></i>
+                        echo '<li><i class="fa fa-square-o bg-white" style="color:black;"></i>
                         <div class="timeline-item">
                          <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
-                        <h3 class="timeline-header">Cartão vermelho para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                           <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
+                        <h3 class="timeline-header">Bela defesa de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
                         </div>
                         </li>';
                     } else if ($notes['type'] == 4){
@@ -279,9 +236,6 @@
         </section>
             </div>
     </div>
-          <div  class="col-md-4 text-center col-md-offset-4" style="text-align:center; font-size:30px; margin-top:20px;">
-          <button type="button" class="btn btn-danger" onclick='encerrar()' style="width:270px; margin-bottom:50px;" title="Encerrar">Encerrar partida e atualizar classificação</button>
-    </div>
     
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -295,10 +249,10 @@
       </div>
       <div class="modal-body">
         <button id="envia_gol" class="btn btn-success" data-dismiss="modal">Gol</button>
-        <button id="envia_falta" class="btn btn-primary" data-dismiss="modal">Falta</button>
-        <button id="envia_amarelo" class="btn btn-warning" data-dismiss="modal">Cartão Amarelo</button>
-        <button id="envia_vermelho" class="btn btn-danger" data-dismiss="modal">Cartão Vermelho</button>
+        <button id="envia_falta" class="btn btn-primary" data-dismiss="modal">Drible</button>
+        <button id="envia_amarelo" class="btn btn-warning" data-dismiss="modal">Lance duvidoso</button>
         <button id="envia_contra" class="btn btn-primary" data-dismiss="modal">Gol Contra</button>
+        <button id="envia_defesa" class="btn btn-primary" data-dismiss="modal">Bela Defesa</button>
         <!--<button id="remover" class="btn btn-primary" data-dismiss="modal">Substituído</button>-->
         <div id="d_modal" class="row" style="margin-left:20px"></div>	
       </div>
@@ -317,11 +271,6 @@
         function deletar(strId) {
            if (confirm('Tem certeza que deseja deletar esta marcação?')) {
                 $.post("acoes.php",{acao: "deletar",id: strId},function(data){});
-            }
-        }
-        function encerrar() {
-           if (confirm('Tem certeza que deseja encerrar esta partida?')) {
-                $.post("acoes.php",{acao: "encerrar",id: global_id, team1: global_team1, team2: global_team2},function(data){});
             }
         }
     </script>

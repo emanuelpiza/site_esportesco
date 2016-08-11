@@ -135,7 +135,7 @@
                     <div class="col-md-10 col-md-offset-1">
                           <?php
                             try {
-                            $campo1 = mysqli_query($mysqli,"SELECT m.id, m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where date_format(m.datetime,'%Y-%d-%m') = '2016-24-07' order by m.datetime");
+                            $campo1 = mysqli_query($mysqli,"SELECT m.id, m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where date_format(m.datetime,'%Y-%d-%m') = '2016-07-08' order by m.datetime");// date_format(NOW(),'%Y-%d-%m') ou '2016-31-07'
                             while ($data5 = mysqli_fetch_assoc($campo1)) {
                                 echo '<hr style="margin-top:-2px;"></hr>
                         <div class="row">

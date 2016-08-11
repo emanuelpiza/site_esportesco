@@ -23,12 +23,13 @@
         
         $inicio = $_POST['momento']; 
         $lado = $_POST['radio_lado']; 
-        $equipe = $_POST['equipe']; 
+        $partida = $_POST['partida']; 
         $tempo = date("H:i:s");
         $campo =  $_POST['campo']; 
+        $is_two_cameras =  $_POST['is_two_cameras']; 
 
         //$cmd = "./mode.sh o2wVpTDW15g 00:00:09 10 0 0 45 1 2>&1";// Duracao padrao agora é 10
-        $cmd = './mode.sh '.$video.' '.$inicio.' 10 '.$lado.' 0 45 '.$equipe.' '.$campo.' 2>&1';
+        $cmd = './mode.sh '.$video.' '.$inicio.' 10 '.$lado.' 0 45 '.$partida.' '.$campo.' '.$is_two_cameras.' 2>&1';
         shell_exec($cmd);  
         
     } else if ($acao == "estatisticas"){
