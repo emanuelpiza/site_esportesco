@@ -1376,3 +1376,61 @@
 \nGmvjlsyJ5rA__1h5m22s_10, ,Inicio: 2016-08-11 14:46:15 Final : 20160811 14:51:16
 2016-08-11 17:06:47 arquivo= ahoGWaanxk0 inicio= 54  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 46
 \nahoGWaanxk0__0h1m3s_10, ,Inicio: 2016-08-11 17:06:47 Final : 20160811 17:06:56
+2016-08-11 20:58:25 arquivo= MSX_WtTQkbY inicio= 1873  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 45
+\nMSX_WtTQkbY__0h31m22s_10, ,Inicio: 2016-08-11 20:58:25 Final : 20160811 21:00:49
+2016-08-11 21:07:59 arquivo= MSX_WtTQkbY inicio= 4940  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 45
+2016-08-11 21:11:13 arquivo= MSX_WtTQkbY inicio= 5276  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 45
+2016-08-11 21:12:04 arquivo= MSX_WtTQkbY inicio= 5315  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 45
+2016-08-11 21:13:44 arquivo= MSX_WtTQkbY inicio= 5371  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 45
+2016-08-11 21:16:45 arquivo= MSX_WtTQkbY inicio= 5547  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 45
+2016-08-11 21:20:13 arquivo= MSX_WtTQkbY inicio= 5749  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 45
+\nMSX_WtTQkbY__1h22m29s_10, ,Inicio: 2016-08-11 21:07:59 Final : 20160811 21:24:54
+\nMSX_WtTQkbY__1h28m5s_10, ,Inicio: 2016-08-11 21:11:13 Final : 20160811 21:42:01
+\nMSX_WtTQkbY__1h28m44s_10, ,Inicio: 2016-08-11 21:12:04 Final : 20160811 21:42:51
+\nMSX_WtTQkbY__1h29m40s_10, ,Inicio: 2016-08-11 21:13:44 Final : 20160811 21:44:18
+\nMSX_WtTQkbY__1h32m36s_10, ,Inicio: 2016-08-11 21:16:45 Final : 20160811 21:46:00
+\nMSX_WtTQkbY__1h35m58s_10, ,Inicio: 2016-08-11 21:20:13 Final : 20160811 21:46:58
+2016-08-11 22:27:27 arquivo= ahoGWaanxk0 inicio= 4374  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 46
+2016-08-11 22:27:34 arquivo= ahoGWaanxk0 inicio= 4374  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 46
+\nahoGWaanxk0__1h13m3s_10, ,Inicio: 2016-08-11 22:27:34 Final : 20160811 22:27:35
+2016-08-11 22:32:03 arquivo= ahoGWaanxk0 inicio= 4405  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 46
+\nahoGWaanxk0__1h13m3s_10, ,Inicio: 2016-08-11 22:27:27 Final : 20160811 22:33:55
+\nahoGWaanxk0__1h13m34s_10, ,Inicio: 2016-08-11 22:32:03 Final : 20160811 22:38:26
+2016-08-11 22:39:59 arquivo= MSX_WtTQkbY inicio= 2093  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 45
+\nMSX_WtTQkbY__0h35m2s_10, ,Inicio: 2016-08-11 22:39:59 Final : 20160811 22:42:37
+2016-08-11 23:43:52 arquivo= wnEIrauhoFU inicio= 434  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 16
+2016-08-11 23:44:03 arquivo= wnEIrauhoFU inicio= 444  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 16
+\nwnEIrauhoFU__0h7m23s_10, ,Inicio: 2016-08-11 23:43:52 Final : 20160811 23:44:56
+\nwnEIrauhoFU__0h7m33s_10, ,Inicio: 2016-08-11 23:44:03 Final : 20160811 23:45:03
+2016-08-12 18:27:12 arquivo= aCZFleMVpvQ inicio= 3027  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 36
+\naCZFleMVpvQ__0h50m36s_10, ,Inicio: 2016-08-12 18:27:12 Final : 20160812 18:30:56
+2016-08-12 19:18:26 arquivo= wnEIrauhoFU inicio= 1753  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 16
+\nwnEIrauhoFU__0h29m22s_10, ,Inicio: 2016-08-12 19:18:26 Final : 20160812 19:20:44
+2016-08-14 20:44:17 arquivo= Zd7xr9v48jI inicio= 33  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 34
+\nZd7xr9v48jI__0h0m42s_10, ,Inicio: 2016-08-14 20:44:17 Final : 20160814 20:44:25
+2016-08-15 09:09:15 arquivo= eYnNU5BgIfM inicio= 5  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 60
+\neYnNU5BgIfM__0h0m14s_10, ,Inicio: 2016-08-15 09:09:15 Final : 20160815 09:09:47
+2016-08-15 18:04:55 arquivo= iA4oFA7ySoE inicio= 246  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 62
+\niA4oFA7ySoE__0h4m15s_10, ,Inicio: 2016-08-15 18:04:55 Final : 20160815 18:06:16
+2016-08-15 18:08:57 arquivo= iA4oFA7ySoE inicio= 419  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 62
+2016-08-15 18:09:52 arquivo= eYnNU5BgIfM inicio= 186  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 60
+\niA4oFA7ySoE__0h7m8s_10, ,Inicio: 2016-08-15 18:08:57 Final : 20160815 18:11:47
+\neYnNU5BgIfM__0h3m15s_10, ,Inicio: 2016-08-15 18:09:52 Final : 20160815 18:11:58
+2016-08-15 18:12:37 arquivo= iA4oFA7ySoE inicio= 596  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 62
+\niA4oFA7ySoE__0h10m5s_10, ,Inicio: 2016-08-15 18:12:37 Final : 20160815 18:15:02
+2016-08-15 18:25:43 arquivo= eYnNU5BgIfM inicio= 1281  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 60
+2016-08-15 18:25:50 arquivo= eYnNU5BgIfM inicio= 1288  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 60
+2016-08-15 18:26:59 arquivo= eYnNU5BgIfM inicio= 1283  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 60
+2016-08-15 18:28:28 arquivo= eYnNU5BgIfM inicio= 1287  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 60
+2016-08-15 18:28:43 arquivo= eYnNU5BgIfM inicio= 1281  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 60
+\neYnNU5BgIfM__0h21m30s_10, ,Inicio: 2016-08-15 18:28:43 Final : 20160815 18:28:44
+2016-08-15 18:28:50 arquivo= eYnNU5BgIfM inicio= 1288  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 60
+\neYnNU5BgIfM__0h21m37s_10, ,Inicio: 2016-08-15 18:28:50 Final : 20160815 18:28:50
+2016-08-15 18:29:59 arquivo= eYnNU5BgIfM inicio= 1283  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 60
+\neYnNU5BgIfM__0h21m32s_10, ,Inicio: 2016-08-15 18:29:59 Final : 20160815 18:29:59
+2016-08-15 18:31:28 arquivo= eYnNU5BgIfM inicio= 1287  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 60
+\neYnNU5BgIfM__0h21m36s_10, ,Inicio: 2016-08-15 18:31:28 Final : 20160815 18:31:28
+\neYnNU5BgIfM__0h21m37s_10, ,Inicio: 2016-08-15 18:25:50 Final : 20160815 18:44:14
+\neYnNU5BgIfM__0h21m30s_10, ,Inicio: 2016-08-15 18:25:43 Final : 20160815 18:44:15
+\neYnNU5BgIfM__0h21m32s_10, ,Inicio: 2016-08-15 18:26:59 Final : 20160815 18:44:35
+\neYnNU5BgIfM__0h21m36s_10, ,Inicio: 2016-08-15 18:28:28 Final : 20160815 18:44:44

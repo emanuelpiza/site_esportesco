@@ -237,10 +237,10 @@
                         </div>
                      <div class="row">
                             <div class="col-xs-6 col-md-6" style="margin-top:20px;">
-                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; float:right; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "0"," '.$data3['field_id'].'")\'>Marcar Lado Esquerdo</button>
+                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; float:right; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "0"," '.$data3['field_id'].'")\'>Recortar Últimos 10s<br>Lado Esquerdo</button>
                             </div>
                             <div class="col-xs-6 col-md-6" style="margin-top:20px;float:right;">
-                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "1"," '.$data3['field_id'].'")\'>Marcar Lado Direito</button>
+                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "1"," '.$data3['field_id'].'")\'>Recortar Últimos 10s<br>Lado Direito</button>
                             </div>
                         </div>';};
                     echo '

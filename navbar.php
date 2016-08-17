@@ -16,12 +16,12 @@
                     <li class="dropdown-header">Equipes Avulsas</li>
                     
                     
-                    <li><a href="http://www.esportes.co/times/?id=1">Amigos de Quinta</a></li>
+                   <!-- <li><a href="http://www.esportes.co/times/?id=1">Amigos de Quinta</a></li>
                     <li><a href="http://www.esportes.co/times/?id=6">Febre de Bola</a></li>
                     <li><a href="http://www.esportes.co/times/?id=7">Falcatruas</a></li>
                     <li><a href="http://www.esportes.co/times/?id=2">Peladeiros de Sexta</a></li>
                     <li><a href="http://www.esportes.co/times/?id=4">Pinga Bola</a></li>
-                    <li><a href="http://www.esportes.co/times/?id=3">Poka Yoke</a></li>
+                    <li><a href="http://www.esportes.co/times/?id=3">Poka Yoke</a></li>-->
                     <li><a href="http://www.esportes.co/times/?id=5">Fut/2ª</a></li>
                 </ul>
           </li>

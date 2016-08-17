@@ -9,7 +9,7 @@
         header("Location: index.php");
     }
     $id = $_GET['id'];
-    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM players where id_players='$id'");
+    $sqlgeral = mysqli_query($mysqli,"SELECT *, (red_cards + yellow_cards) as cartoes FROM players where id_players='$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
     $jogador = $dados['id_players'];
 ?>
@@ -34,13 +34,14 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../css/AdminLTE.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../css/_all-skins.min.css">
     <!-- Ícones -->
     <link rel="icon" type="image/png" href="../img/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="../img/favicon-16x16.png" sizes="16x16" />
+    <link href="https://fonts.googleapis.com/css?family=Denk+One" rel="stylesheet">
     
     <script src="./js/Chart.js"></script>
 		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
@@ -90,36 +91,32 @@
         include_once("./admin/analyticstracking.php");
         include('../navbar.php');
     ?>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-0 col-lg-4" style="max-width:450px">
               <!-- Widget: user widget style 1 -->
               <div class="box box-widget widget-user">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-aqua-active banner" style="color:white;">
-                  <h3 class="widget-user-username"><?php echo $dados['players_name']; ?></h3>
-                  <h5 class="widget-user-desc" style="text-decoration: underline;"><a href="./index.php?id=<?php echo $dados['players_team_id']; ?>">Equipe</a></h5>
-                </div>
+                <div class="widget-user-header bg-light-blue-gradient banner" style="color:white; text-align:center;">
+                    <div class="col-xs-offset-5 col-xs-7">
+                        <h3 class="widget-user-username"><?php echo $dados['players_name']; ?></h3>
+                        <h2 style="font-family: 'Denk One', sans-serif; margin-top:0px;"><?php echo $dados['shirt']; ?></h2>
+                        <!--<h5 class="widget-user-desc" style="text-decoration: underline;"><a href="./index.php?id=<?php echo $dados['players_team_id']; ?>">Equipe</a></h5>-->
+                    </div>
+                  </div>
                 <div class="widget-user-image">
-                  <img class="img-circle" src="img/jogadores/<?php echo $dados['player_picture']; ?>" alt="User Avatar" style="max-height:100px;">
+                  <img class="figurinha_img" style="margin-left:-10px; margin-top:-10px;" src="img/jogadores/<?php echo $dados['player_picture']; ?>">
                 </div>
                 <div class="box-footer">
                   <div class="row">
-                    <div class="col-sm-4 border-right">
+                    <div class="col-xs-3 col-xs-offset-6 border-right" style="margin-top:-20px;">
                       <div class="description-block">
-                        <span class="description-text">Altura</span>
-                        <h5 class="description-header"><?php echo $dados['player_height']; ?></h5>
+                        <span class="description-text">Cartões</span>
+                        <h5 class="description-header"><?php echo $dados['cartoes']; ?></h5>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
-                    <div class="col-sm-4 border-right">
+                    <div class="col-xs-3 border-right" style="margin-top:-20px;">
                       <div class="description-block">
-                        <span class="description-text">Idade</span>
-                        <h5 class="description-header"><?php echo $dados['player_age']; ?></h5> 
-                      </div><!-- /.description-block -->
-                    </div><!-- /.col -->
-                    <div class="col-sm-4">
-                      <div class="description-block">
-                        <div class="embed-responsive" style="width:100%; height:100%;">
-                          <img src="img/chuteiras_<?php echo $dados['player_strongfoot']; ?>.png" class="img-responsive" style="display:block;margin:auto;">
-                        </div>
+                        <span class="description-text">Gols</span>
+                        <h5 class="description-header"><?php echo $dados['goals']; ?></h5> 
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                   </div><!-- /.row -->
@@ -127,9 +124,9 @@
               </div><!-- /.widget-user -->
 
             <!-- DONUT CHART -->
-              <div class="box box-success">
+              <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Estilo de Jogo</h3>
+                  <h3 class="box-title">Perfil</h3>
                 </div>
                 <div class="box-body">
                     <canvas id="canvas" style="height:250px"></canvas>
@@ -143,16 +140,19 @@
 
          <ul class="timeline">
              
-                <?php $sqltime = mysqli_query($mysqli,"SELECT * FROM plays where ( assistance = '$id' or plays_players_id='$id') and available in (1,2) order by datetime DESC");
+                <?php $sqltime = mysqli_query($mysqli,"SELECT p.*, CONCAT(t1.`teams_name`, ' vs ', t2.`teams_name`, ' - ', date_format(m.datetime,'%d/%m')) as partida FROM plays p left join matches m on p.`match_id` = m.`id` left join teams t1 on m.`team1` = t1.`id_teams` left join teams t2 on m.team2 = t2.`id_teams` where ( assistance = '$id' or plays_players_id='$id') and available in (1,2) order by datetime DESC");
                     while ($data2 = mysqli_fetch_assoc($sqltime)) {
+                        if ($partida <> $data2['match_id']){
+                            echo '
+                                <li class="time-label">
+                                <span class="bg-light-blue">
+                                    <a href="./partida.php?id=' . $data2['match_id'] . '"   style="color:white">' . $data2['partida'] . '</a>
+                                </span>
+                                </li>';    
+                        }
                         echo '
-                         <li class="time-label">
-                            <span class="bg-red">
-                               ' . $data2['datetime'] . '
-                            </span>
-                        </li>
                          <li>
-                          <i class="fa fa-video-camera bg-maroon"></i>
+                          <i class="fa fa-video-camera bg-gray"></i>
                           <div class="timeline-item">
                             <div class="timeline-body">
                               <div class="embed-responsive embed-responsive-16by9">
@@ -163,7 +163,8 @@
                               </div>
                             </div>
                           </div>
-                        </li>';}
+                        </li>';
+                    $partida = $data2['match_id'];}
                 ?>
                 <li>
                   <i class="fa fa-clock-o bg-gray"></i>
@@ -214,7 +215,7 @@
     </script>
     <script>
 	var radarChartData = {
-		labels: ["Vitorias", "Artilharia", "Participações", "Dribles", "Defesa", "Frequência"],
+		labels: ["Vitorias", "Ataque", "Lances", "Fair Play", "Defesa", "Participação"],
 		datasets: [
 		{
 				label: "My Second dataset",

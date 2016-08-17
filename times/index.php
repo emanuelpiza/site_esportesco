@@ -264,7 +264,7 @@
                     echo '
                     <li>
                         <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">
-                      <img class="img-circle" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image" style="height:80px; width:80px;"></a>
+                      <img class="img-circle" src="img/jogadores/0.png" alt="User Image" style="height:80px; width:80px;"></a>
                       <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">' . $data2['players_name'] . '</a>
                       <span class="users-list-date">' . $data2['player_position'] . '</span>
                     </li>';}

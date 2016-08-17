@@ -55,7 +55,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../css/AdminLTE.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../css/_all-skins.min.css">
@@ -82,6 +82,15 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="../js/raphael-min.js"></script>
+    <script src="../js/morris.min.js"></script>
+    <link rel="stylesheet" href="../css/morris.css">
+    
+    <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
+     <!-- jQuery -->
 </head>
 
 <body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
@@ -98,10 +107,22 @@
         include_once("../admin/analyticstracking.php");
         include('../navbar.php');
     ?>
+
     <div class="row">
-   <div class="col-xl-offset-5 col-xl-2 center-block">
-        <img src="./img/equipes/<?php echo $id; ?>.png" style="width:100px; display: block; margin-left: auto; margin-right: auto;">
-    </div>
+        <?php 
+            if ($dados['teams_picture'] <> null){
+                echo '
+                <div class="col-xl-offset-5 col-xl-2 center-block">
+                    <img src="./img/equipes/'.$id.'.png" style="width:100px; display: block; margin-left: auto; margin-right: auto;">
+                </div>';
+                }
+        else {
+            echo ' 
+                <div class="col-sm-6 col-sm-offset-3" style="text-align:center; height: 80px; line-height: 80px; margin-bottom:10px;">
+                    <span style="font-family: \'Poiret One\', Arial, serif; font-size:40px; color:black;">'.$dados['teams_name'].'</span> 
+                </div>';}
+        ?>
+   
     </div>
     <div class="row" style="margin-top:15px;">
         <div class="col-lg-3 col-xs-6">
@@ -155,28 +176,106 @@
     </div><!-- /.row -->
     
     <div class="row">
-         <div class="col-md-6">
+
+        <div class="col-md-6">
+            
+            
+               <div class="box" id="class_grupoA">
+                <div class="box-header">
+                  <h1 class="box-title" style="float:middle;">Campanha</h1>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <div class="col-md-10 col-md-offset-1">
+                          <?php
+                            // Prepare the paged query
+                            $sqlpartidas = mysqli_query($mysqli,"SELECT m.id, m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where (m.team1 = '$id' or m.team2 = '$id') order by m.datetime");
+
+                            while ($data5 = mysqli_fetch_assoc($sqlpartidas)) {
+                                echo '
+                                <hr style="margin-top:-2px;"></hr>
+                                 <a href="./partida.php?id='.$data5['id'].'">
+                                <div class="row">';
+                              if ($data5['team2'] <> null) {
+                                  echo '
+                                    <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;  color:black;">
+                                        <span style="font-family: Roboto, Arial, serif; font-size:12px;">'.$data5['date'].' às '.$data5['hour'].'</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom:10px;">
+                                    <div class="col-xs-4" style="text-align:right; padding:0;">
+                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; margin-right:10px; color:black;">'.$data5['team1_name'].'</span>
+                                        
+                                        <img src="./img/equipes/'.$data5['team1'].'.png" style="width:30px; margin-top: -10px; margin-right:5px;">
+                                    </div>
+                                
+                                    <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
+                                        <span style="font-family: Arial, serif; font-size:25px;text-align:left; margin-right:-25px; color:black;font-weight:bolder;">'.$data5['score1'].'</span>
+                                    </div>
+                                
+                              <div  class="col-xs-2 center-block" style="text-align:center; font-size:15px; margin-top:10px;  color:black;"><i class="fa fa-times" aria-hidden="true"></i></div>
+                              
+                              
+                                    <div  class="col-xs-1" style="text-align:center; font-size:15px; padding:0;">
+                                        <span style="font-family: Arial, serif; font-size:25px;text-align:left; margin-left:-25px; color:black;font-weight:bolder;">'.$data5['score2'].'</span>
+                                    </div>
+                                    
+                                    <div  class="col-xs-4" style="padding:0;">
+                                        <img src="./img/equipes/'.$data5['team2'].'.png" style="width:30px; margin-top: -10px; margin-left:5px">
+                                        
+                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
+                                  </div>';}
+                                else {
+                                 echo '
+                                    <div class="col-sm-6 col-sm-offset-3" style="text-align:center; height: 20px; line-height: 20px; margin-top:-10px; margin-bottom:10px;">
+                                        <span style="font-family: Roboto, Arial, serif; font-size:18px; color:black;">'.$data5['date'].'</span>
+                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:15px; color:black;">- Amistoso interno</span> 
+                                    </div>
+                                ';}
+                                echo '</div></a>';
+                        }?> 
+                    </div><!-- /.box-body -->
+                </div>
+              </div><!-- /.box -->
+            
+             <div class="box box-solid bg-light-blue-gradient">
+                <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">Gols por Partida</h3>
+                </div>
+                <div class="box-body border-radius-none">
+
+                    <div id="tabs-1" class="tab-pane fade in active">
+                        <div class="chart" id="line-chart-gols-pro" style="height: 250px;"></div>
+                    </div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+          
+        </div><!-- /.col --> 
+        
+                 <div class="col-md-6">
           <!-- USERS LIST -->
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Equipe</h3>
+              <h3 class="box-title">Jogadores</h3>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
-              <ul class="users-list clearfix">
+              <ul class="users-list">
                 <?php while ($data2 = mysqli_fetch_assoc($sql_jogadores)) {
                     echo '
                     <li>
-                        <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">
-                      <img class="img-circle" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image" style="height:80px; width:80px;"></a>
-                      <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">' . $data2['players_name'] . '</a>
-                      <span class="users-list-date">' . $data2['player_position'] . '</span>
+                        <a href="./jogador.php?id=' . $data2['id_players'] . '">
+                        <div class="figurinha">
+                        <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image">
+                        <span class="users-list-name">' . $data2['players_name'] . '</span>
+                      </div>
+                      </a>
+                      
                     </li>';}
                 ?>
               </ul><!-- /.users-list -->
             </div><!-- /.box-body -->
           </div><!--/.box -->
              
-               
             <div class="box">
                 <div class="box-header with-border">
                   <h3 class="box-title">Artilharia Interna</h3>
@@ -203,133 +302,10 @@
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
         </div><!-- /.col -->
-
-        <div class="col-md-6">
-          <!-- USERS LIST -->
-            
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Partidas</h3>
-            </div><!-- /.box-header -->
-            <div class="box-body no-padding">
-                <?php 
-                $sqlpartida = mysqli_query($mysqli,"SELECT field_id, match_video_id FROM matches where (team1 = '$id' or team2 = '$id' ) and match_video_id is not null order by datetime DESC LIMIT 1;");
-                $data3 = mysqli_fetch_assoc($sqlpartida);
-                echo '
-                <form name="f" id="f" onSubmit="return false">
-                <input type="hidden" name="video" value="' . $data3['match_video_id'] . '">
-                <input type="hidden" id="'.$data3['match_video_id'].'_equip" name="equipe" value="' . $id . '">
-                    <div style="width: 95%; margin:10px auto; 10px; auto;" ><iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $data3['match_video_id'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
-
-                     <div class="row">
-                            <div class="col-xs-6 col-md-6" style="margin-top:20px;">
-                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; float:right; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "0"," '.$data3['field_id'].'")\'>Marcar Lado Esquerdo</button>
-                            </div>
-                            <div class="col-xs-6 col-md-6" style="margin-top:20px;float:right;">
-                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "1"," '.$data3['field_id'].'")\'>Marcar Lado Direito</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>';?>
-            </div><!-- /.box-body -->
-          </div><!--/.box -->
-            
-            <?php $sqlfoto = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' and type = 'p' order by date DESC LIMIT 1");
-                while ($datafoto = mysqli_fetch_assoc($sqlfoto)) {
-                    echo'
-                <!-- Fotos LIST -->
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Álbum</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body no-padding">
-                        <div style="width: 95%; height:95%; margin:10px auto; 10px; auto;" >
-                            <img src="./img/' . $datafoto['webaddress'] . '" style="width:100%;">
-                            <div class="fb-share-button" style="position:absolute;bottom:14px;right:3%;" data-href="http://www.esportes.co/times/img/' . $datafoto['webaddress'] . '" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.esportes.co%2Ftimes%2Fimg%2' . $datafoto['webaddress'] . '&amp;src=sdkpreparse"> </a></div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!--/.box -->    ';
-            }?>
-            
-            
-              <?php $sqlmelhores = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' and type = 'm' order by date DESC LIMIT 1");
-                while ($datamelhores = mysqli_fetch_assoc($sqlmelhores)) {
-                    echo'
-                <!-- Fotos LIST -->
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Melhores Momentos</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body no-padding">
-                         <div style="width: 95%; height:95%; margin:10px auto; 10px; auto;" ><iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $datamelhores['webaddress'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
-                    </div><!-- /.box-body -->
-                </div><!--/.box -->    ';
-            }?>
-          
-        </div><!-- /.col --> 
-    </div>
-    
-    <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <!-- Box Comment -->
-        
-        <?php 
-
-        $query_plays = mysqli_query($mysqli, "SELECT * FROM plays where available = 1 and teams_name = '".$dados['teams_name']."' order by id_plays DESC LIMIT 25") or die(mysqli_error($mysqli)); 
-        
-        while ($plays = mysqli_fetch_assoc($query_plays)) {
-            echo '
-                <div class="box box-widget" id="'. $plays['video_id'] .'">
-                    <div class="box-header with-border" style="height:78px;">
-                    
-                    <button type="button" class="btn btn-box-tool" style="float:right; margin-top:-5px;" 
-                    onclick=\'deletar("' . $plays['video_id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
-                    
-                    <a href="lances/' . $plays['video_id'] . '.mp4" download="Lance ' . $plays['players_name'] .'.mp4"> <button class="btn btn-box-tool" style="float:right; margin-top:-5px;"  title="Download"><i class="fa fa-download"></i></button></a>
-                    
-                   <button class="btn btn-box-tool" style="float:right; margin-top:-5px;"  title="Categorizar" onclick=\'toggleDiv("' . $plays['video_id'] . '_categ")\'><span class="label label-danger"><i class="fa fa-bar-chart"></i> Estatística Pendente</span></button>
-                     
-                    <div class="form-group col-xs-6 col-md-6" style="float:right; margin-top:-5px; margin-bottom:-20px; display: none;" id="' . $plays['video_id'] . '_categ">
-                        <div class="form-group col-xs-6 col-md-6">
-                            <select id="' . $plays['video_id'] . '_craq" class="form-control">
-                                <option value="45">Autor</option>
-                                '. $selecoes .'
-                            </select>
-                            <select id="' . $plays['video_id'] . '_tipo" class="form-control">
-                                <option value="0">Tipo</option>
-                                <option value="1">Gol</option>
-                                <option value="4">Defesa</option>
-                                <option value="2">Caneta</option>
-                                <option value="3">Chapéu</option>
-                                <option value="5">Bola Mucha</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-xs-6 col-md-6">
-                            <select id="' . $plays['video_id'] . '_assist" class="form-control">
-                                <option value="45">Participação</option>
-                                '. $selecoes .'
-                            </select>
-                            <button class="btn btn-sm btn-success" style="float:right; margin-top:2px; width:100%;" onclick=\'estatisticas("' . $plays['video_id'] . '")\'>Categorizar</button>
-                        </div>
-                    </div>
-                    <div class="user-block">
-                        <img class="img-circle" src="img/jogadores/0.png" alt="user image">
-                        <span class="username"><a href="jogador.php?id=' . $plays['plays_players_id'] . '">' . $plays['players_name'] . '</a></span>
-                        <span class="description"><i class="fa fa-clock-o" aria-hidden="true"></i> ' . $plays['initial_time'] . '</span>
-                    </div>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <video width="100%" loop onclick="this.paused?this.play():this.pause();">
-                          <source src="lances/' . $plays['video_id'] . '.mp4" type="video/mp4" />
-                            Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
-                        </video>
-                    </div><!-- /.box-body -->
-                  </div><!-- /.box -->';}
-        ?>
-    </div><!-- /.col -->
     </div>
     
     <script>
+        
         //import YouTube API script
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -400,6 +376,52 @@
     function toggleDiv(divId) {
        $("#"+divId).toggle(500);
     }
+    var strJson = "json_gols_pro.php?id=<?php echo $id; ?>";   
+    $.get( strJson, function( json ) {
+        var graph_pro = Morris.Line({
+            element: 'line-chart-gols-pro',
+            resize: 'true',
+            data: json,
+            xkey: 'day',
+            ykeys: ['goals'],
+            labels: ['Gols'],
+            lineColors: ['#efefef'],
+            lineWidth: 2,
+            hideHover: 'auto',
+            gridTextColor: "#fff",
+            gridStrokeWidth: 0.4,
+            pointSize: 4,
+            pointStrokeColors: ["#efefef"],
+            gridLineColor: "#efefef",
+            gridTextFamily: "Open Sans",
+            gridTextSize: 10,
+            parseTime: false
+        });
+    });
+        
+    var strJson = "json_gols_contra.php?id=<?php echo $id; ?>";   
+    $.get( strJson, function( json ) {
+        var graph_contra = Morris.Line({
+            element: 'line-chart-gols-contra',
+            resize: 'true',
+            data: json,
+            xkey: 'day',
+            ykeys: ['goals'],
+            labels: ['Gols'],
+            lineColors: ['#efefef'],
+            lineWidth: 2,
+            hideHover: 'auto',
+            gridTextColor: "#fff",
+            gridStrokeWidth: 0.4,
+            pointSize: 4,
+            pointStrokeColors: ["#efefef"],
+            gridLineColor: "#efefef",
+            gridTextFamily: "Open Sans",
+            gridTextSize: 10,
+            parseTime: false
+        });
+    });
+        
     </script>
 </body>
 

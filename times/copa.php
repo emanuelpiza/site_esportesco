@@ -142,7 +142,7 @@
 
  
                             // Prepare the paged query
-                            $stmt = $dbh->prepare("SELECT m.id,  m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where t1.`teamd_fields_id` = 1 and m.cup_id = 1 order by m.datetime LIMIT 
+                            $stmt = $dbh->prepare("SELECT m.id,  m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where t1.`groups` = 'A' and m.cup_id = 1 order by m.datetime LIMIT 
                                     :limit
                                 OFFSET
                                     :offset
@@ -233,7 +233,7 @@
                             try {
 
                             // Prepare the paged query
-                            $stmt = $dbh->prepare("SELECT m.id, m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where t1.`teamd_fields_id` = 2 order by m.datetime LIMIT
+                            $stmt = $dbh->prepare("SELECT m.id, m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where t1.`groups` = 'B' order by m.datetime LIMIT
                                     :limit
                                 OFFSET
                                     :offset
@@ -391,7 +391,7 @@
             </div>
         </div>
     
-    
+    <!--
     <div class="row">
         
         <div class="col-md-6">
@@ -419,7 +419,7 @@
                         </div>
                     </form>';}?>
         </div>
-    </div>
+    </div>-->
     
     <div class="row">    
          <div class="col-md-6">
@@ -529,6 +529,14 @@
             </div>
         </div><!-- ./col -->
     </div><!-- /.row -->
+    <div class="row">
+    <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center">
+        <h4 style="color:#555;">Arbitragem:</h4>
+        <a href="http://www.gestecarbitragem.com.br/site" target="_blank">
+        <img src="../img/gestec.png" style="display: block; margin-left: auto; margin-right: auto;">
+        </a>
+    </div>
+    </div>
     
     <script>
         // Javascript to enable link to tab
