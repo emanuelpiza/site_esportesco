@@ -21,10 +21,24 @@
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     $sql_anos = mysqli_query($mysqli,"SELECT YEAR(teams_schedule_date) as year FROM teams WHERE id_teams='$id'");
     $anos = mysqli_fetch_assoc($sql_anos);
-    $sql_jogadores = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id' order by players_name");
+    $sql_jogadores = mysqli_query($mysqli,"select p.id_players, p.players_name, n.available, n.datetime, p.player_picture from players p left join (select player, available, n.datetime from notes n right join matches m on m.id = n.match_id where DATE_FORMAT(m.datetime,'%Y-%m-%d') = '$id' and cup_id = 1) n on p.id_players = n.player where (p.players_team_id in (select team1 from matches where DATE_FORMAT(datetime,'%Y-%m-%d') = '$id' and cup_id = 1) OR p.players_team_id in (select team2 from matches where DATE_FORMAT(datetime,'%Y-%m-%d') = '$id' and cup_id = 1)) and n.available is null;");
     $sql_jogadores2 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id' order by players_name");
     while ($data4 = mysqli_fetch_assoc($sql_jogadores2)) {
         $selecoes .= "<option value=".$data4['id_players'].">".$data4['players_name']."</option>" ;
+    }
+    $sqlnav = mysqli_query($mysqli,"select max(id_teams) as maximo, min(id_teams) as minimo from teams where cup_id =".$dados['cup_id']);
+    $fetch_nav = mysqli_fetch_assoc($sqlnav);
+    $max_teamid = $fetch_nav['maximo'];  
+    $min_teamid = $fetch_nav['minimo'];
+    if ($id == $max_teamid){
+        $nextteam = $min_teamid;
+    } else {    
+        $nextteam = ($id+1);
+    }
+    if ($id == $min_teamid){
+        $prevteam = $max_teamid;
+    } else {
+        $prevteam = ($id-1);
     }
 ?>
 
@@ -90,7 +104,24 @@
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
-     <!-- jQuery -->
+    		<style>
+			canvas{
+			}
+            #estrela_content{
+                display:-moz-box;
+                -moz-box-pack:center;
+                -moz-box-align:center;
+                display:-webkit-box;
+                -webkit-box-pack:center;
+                -webkit-box-align:center;
+                display:box;
+                box-pack:center;
+                box-align:center;
+            }   
+            .estrela {
+                width:50%;
+            }
+		</style>
 </head>
 
 <body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
@@ -107,156 +138,13 @@
         include_once("../admin/analyticstracking.php");
         include('../navbar.php');
     ?>
-
-    <div class="row">
-        <?php 
-            if ($dados['teams_picture'] <> null){
-                echo '
-                <div class="col-xl-offset-5 col-xl-2 center-block">
-                    <img src="./img/equipes/'.$id.'.png" style="width:100px; display: block; margin-left: auto; margin-right: auto;">
-                </div>';
-                }
-        else {
-            echo ' 
-                <div class="col-sm-6 col-sm-offset-3" style="text-align:center; height: 80px; line-height: 80px; margin-bottom:10px;">
-                    <span style="font-family: \'Poiret One\', Arial, serif; font-size:40px; color:black;">'.$dados['teams_name'].'</span> 
-                </div>';}
-        ?>
-   
-    </div>
-    <div class="row" style="margin-top:15px;">
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-light-blue-active">
-                <div class="inner">
-                    <h3><?php echo $dados['rank']; ?></h3>
-                    <p>Posição</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-ribbon-a"></i>
-                </div>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-light-blue-active">
-                <div class="inner">
-                    <h3><?php echo $count_players['points']; ?></h3>
-                    <p>Pontos</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-            </div>
-        </div><!-- ./col -->
-          <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-light-blue-active">
-                <div class="inner">
-                    <h3><?php echo $count_videos['goals_balance']; ?></h3>
-                    <p>Saldo de Gols</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-ios-football"></i>
-                </div>
-            </div>
-            </div><!-- ./col --> 
-                <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-light-blue-active">
-                <div class="inner">
-                    <h3><?php echo $count_plays['total']; ?></h3>
-                    <p>Marcações</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-checkmark-round"></i>
-                </div>
-            </div>
-        </div><!-- ./col -->
-    </div><!-- /.row -->
     
     <div class="row">
-
-        <div class="col-md-6">
-            
-            
-               <div class="box" id="class_grupoA">
-                <div class="box-header">
-                  <h1 class="box-title" style="float:middle;">Campanha</h1>
-                </div><!-- /.box-header -->
-                <div class="box-body no-padding">
-                    <div class="col-md-10 col-md-offset-1">
-                          <?php
-                            // Prepare the paged query
-                            $sqlpartidas = mysqli_query($mysqli,"SELECT m.id, m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where (m.team1 = '$id' or m.team2 = '$id') order by m.datetime");
-
-                            while ($data5 = mysqli_fetch_assoc($sqlpartidas)) {
-                                echo '
-                                <hr style="margin-top:-2px;"></hr>
-                                 <a href="./partida.php?id='.$data5['id'].'">
-                                <div class="row">';
-                              if ($data5['team2'] <> null) {
-                                  echo '
-                                    <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;  color:black;">
-                                        <span style="font-family: Roboto, Arial, serif; font-size:12px;">'.$data5['date'].' às '.$data5['hour'].'</span>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-bottom:10px;">
-                                    <div class="col-xs-4" style="text-align:right; padding:0;">
-                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; margin-right:10px; color:black;">'.$data5['team1_name'].'</span>
-                                        
-                                        <img src="./img/equipes/'.$data5['team1'].'.png" style="width:30px; margin-top: -10px; margin-right:5px;">
-                                    </div>
-                                
-                                    <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
-                                        <span style="font-family: Arial, serif; font-size:25px;text-align:left; margin-right:-25px; color:black;font-weight:bolder;">'.$data5['score1'].'</span>
-                                    </div>
-                                
-                              <div  class="col-xs-2 center-block" style="text-align:center; font-size:15px; margin-top:10px;  color:black;"><i class="fa fa-times" aria-hidden="true"></i></div>
-                              
-                              
-                                    <div  class="col-xs-1" style="text-align:center; font-size:15px; padding:0;">
-                                        <span style="font-family: Arial, serif; font-size:25px;text-align:left; margin-left:-25px; color:black;font-weight:bolder;">'.$data5['score2'].'</span>
-                                    </div>
-                                    
-                                    <div  class="col-xs-4" style="padding:0;">
-                                        <img src="./img/equipes/'.$data5['team2'].'.png" style="width:30px; margin-top: -10px; margin-left:5px">
-                                        
-                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
-                                  </div>';}
-                                else {
-                                 echo '
-                                    <div class="col-sm-6 col-sm-offset-3" style="text-align:center; height: 20px; line-height: 20px; margin-top:-10px; margin-bottom:10px;">
-                                        <span style="font-family: Roboto, Arial, serif; font-size:18px; color:black;">'.$data5['date'].'</span>
-                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:15px; color:black;">- Amistoso interno</span> 
-                                    </div>
-                                ';}
-                                echo '</div></a>';
-                        }?> 
-                    </div><!-- /.box-body -->
-                </div>
-              </div><!-- /.box -->
-            
-             <div class="box box-solid bg-light-blue-gradient">
-                <div class="box-header">
-                  <i class="fa fa-th"></i>
-                  <h3 class="box-title">Gols por Partida</h3>
-                </div>
-                <div class="box-body border-radius-none">
-
-                    <div id="tabs-1" class="tab-pane fade in active">
-                        <div class="chart" id="line-chart-gols-pro" style="height: 250px;"></div>
-                    </div>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-          
-        </div><!-- /.col --> 
-        
-                 <div class="col-md-6">
+        <div class="col-md-6 col-md-offset-3">
           <!-- USERS LIST -->
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Jogadores</h3>
+              <h3 class="box-title">Jogadores Ausentes - <?php echo $id ?></h3>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
               <ul class="users-list">
@@ -275,32 +163,6 @@
               </ul><!-- /.users-list -->
             </div><!-- /.box-body -->
           </div><!--/.box -->
-             
-            <div class="box">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Artilharia Interna</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <table class="table table-bordered">
-                    <tr>
-                      <th style="width: 10px">#</th>
-                      <th>Nome</th>
-                      <th style="width: 40px">Gols</th>
-                    </tr>
-                    <tr>
-                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where p.goals > 0 and t.id_teams = ".$id." order by p.goals DESC LIMIT 5");
-                        $posicao = 1;
-                    while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
-                    echo '
-                    <tr>
-                      <td>'.$posicao.'</td>
-                      <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
-                      <td><span>'.$data8['goals'].'</span></td>
-                    </tr>';
-                    $posicao = $posicao+1;}?>
-                  </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
         </div><!-- /.col -->
     </div>
     

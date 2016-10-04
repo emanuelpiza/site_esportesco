@@ -34,28 +34,27 @@
         
     } else if ($acao == "estatisticas"){
         
-        $craque = $_POST['craque'];
-        $tipo = $_POST['tipo']; 
-        $assist = $_POST['assistencia']; 
-        $time = $_POST['time'];
+        $match = $_POST['match'];
+        $player = $_POST['player'];
         
         //JOGADA EM SI
-        $sql = "UPDATE plays SET plays_players_id=".$craque.", assistance=".$assist.", plays_play_types_id=".$tipo.", teams_id=".$time.", players_name=(select players_name from players where id_players = ".$craque."), assist_name=(select players_name from players where id_players = ".$assist."), available = 2 WHERE video_id='".$video."'";
-
+        $sql = "INSERT INTO plays SET video_id='".$video."', datetime=NOW(), match_id=".$match.", plays_players_id=".$player.", plays_play_types_id=-1, available=1";
+        //Setamos plays_play_types_id como -1 pra filtrar na hora de mostrar na página da partida, pra evitar mostrar repetido.
+        
         if ($conn->query($sql) === TRUE) {
             echo "";
         } else {
             echo "Erro na base de dados: " . $conn->error;
         }
        
-        if ($tipo == 2 || $tipo == 3){
-            $tipo = "3";
-            $tipo_sql = "in (2,3)";
-        } else {
-            $tipo_sql = " = ".$tipo;
-        }
+        //if ($tipo == 2 || $tipo == 3){
+        //    $tipo = "3";
+        //    $tipo_sql = "in (2,3)";
+        //} else {
+        //    $tipo_sql = " = ".$tipo;
+        //}
         
-        if ($tipo <> 5 && $tipo <> 0){// Bola mucha não tá contando nas stats
+        //if ($tipo <> 5 && $tipo <> 0){// Bola mucha não tá contando nas stats
             //STATS BASE
             $stats = "
                 UPDATE players AS t
@@ -76,12 +75,12 @@
                     #Passa para a base 100
                     *100) where t.`players_team_id`= ".$time.";";
 
-            if ($conn->query($stats) === TRUE) {
-                echo "";
-            } else {
-                echo "Erro na base de dados: " . $conn->error;
-            } 
-        }
+           // if ($conn->query($stats) === TRUE) {
+          //      echo "";
+          //  } else {
+           //     echo "Erro na base de dados: " . $conn->error;
+           // } 
+        //}
         
         //STATS 2 - PARTICIPAÇÕES - Para todo tipo de lance
         $stats2 = "
@@ -104,11 +103,11 @@
                 #Passa para a base 100
                 *100) where t.`players_team_id`= ".$time.";";
 
-        if ($conn->query($stats2) === TRUE) {
-            echo "";
-        } else {
-            echo "Erro na base de dados: " . $conn->error;
-        }   
+      //  if ($conn->query($stats2) === TRUE) {
+       //     echo "";
+      //  } else {
+      //      echo "Erro na base de dados: " . $conn->error;
+      //  }   
     } else if ($acao == "deletar"){
         $sql = "UPDATE plays SET available=0 WHERE video_id='".$video."'";
 

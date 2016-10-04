@@ -13,6 +13,8 @@ $(document).ready(function ()
     $("#envia_vermelho").click(function(){envia("3")})
     $("#envia_contra").click(function(){envia("4")})
     $("#envia_defesa").click(function(){envia("3")})
+    $("#envia_campo").click(function(){envia("8")})
+    $("#envia_banco").click(function(){envia("9")})
     $("#atualiza").click(function(){envia_times("atualiza")})
 })
     

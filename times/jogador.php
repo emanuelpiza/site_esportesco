@@ -9,9 +9,16 @@
         header("Location: index.php");
     }
     $id = $_GET['id'];
-    $sqlgeral = mysqli_query($mysqli,"SELECT *, (red_cards + yellow_cards) as cartoes FROM players where id_players='$id'");
+    $sqlgeral = mysqli_query($mysqli,"SELECT p.*, players_stats_average, t.`teams_picture` FROM players p left join teams t on p.`players_team_id` = t.`id_teams` where id_players='$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
     $jogador = $dados['id_players'];
+
+// Lances
+    $sqllances = mysqli_query($mysqli,"SELECT p.*, CONCAT(t1.`teams_name`, ' vs ', t2.`teams_name`, ' - ', date_format(m.datetime,'%d/%m')) as partida FROM plays p left join matches m on p.`match_id` = m.`id` left join teams t1 on m.`team1` = t1.`id_teams` left join teams t2 on m.team2 = t2.`id_teams` where ( assistance = '$id' or plays_players_id='$id') and available in (1,2) order by datetime DESC");
+
+    $sql_count = mysqli_query($mysqli,"SELECT count(1) as total FROM plays p left join matches m on p.`match_id` = m.`id` left join teams t1 on m.`team1` = t1.`id_teams` left join teams t2 on m.team2 = t2.`id_teams` where ( assistance = '$id' or plays_players_id='$id') and available in (1,2)");
+    $dados3 = mysqli_fetch_assoc($sql_count);
+    $count = $dados3['total'];
 ?>
 
 
@@ -48,6 +55,22 @@
 		<style>
 			canvas{
 			}
+            .estrela {
+                width:50%;
+            }
+            #estrela_content{
+                font-size:50px; color:#CCC; opacity: 0.8; filter: alpha(opacity=80); 
+                display:-moz-box;
+                -moz-box-pack:center;
+                -moz-box-align:center;
+                display:-webkit-box;
+                -webkit-box-pack:center;
+                -webkit-box-align:center;
+                display:box;
+                box-pack:center;
+                box-align:center;
+                margin-left: -50px;
+            }
 		</style>
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -84,39 +107,85 @@
     color: #f8f8f8;
 }
     </style>
+    <!-- Hotjar Tracking Code for http://www.esportes.co -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:280196,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
 </head>
 
 <body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
     <?php 
         include_once("./admin/analyticstracking.php");
         include('../navbar.php');
-    ?>
-            <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-0 col-lg-4" style="max-width:450px">
+    ?> 
+    
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Fórmulas</h4>
+      </div>
+      <div class="modal-body">
+        <p><b>Vitórias:</b> Coletivo. Aumenta em 15 pontos para cada vitória da equipe.</p>
+        <p><b>Ataque:</b> Coletivo. Aumenta em 2,5 pontos para cada gol da equipe.</p>
+        <p><b>Defesa:</b> Coletivo. Aumenta em 15 pontos para cada partida disputada. Diminui em 2,5 pontos para cada gol sofrido pela equipe.</p>
+        <p><b>Futebol arte:</b> Individual. Aumenta em 10 pontos para cada lance atribuído ao jogador.</p>
+        <p><b>Na bola:</b> Individual. Aumenta em 15 pontos para cada partida disputada. Diminui em 5 pontos para cada infração (faltas ou cartões).</p>
+        <p><b>Comprometimento:</b> Individual. É a base para os demais. Aumenta em 20 pontos para cada partida da equipe em que o jogador esteve presente (em campo ou no banco).</p>
+        <p>Obs.: Valores entre 10 e 99, atualizados no encerramento de cada partida, com base nas anotações da arbitragem.</p>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
+    
+        <div class="col-md-4">
+            <div class="row">
+            <div class="center-block" style="max-width:450px;">
               <!-- Widget: user widget style 1 -->
-              <div class="box box-widget widget-user">
+              <div class="box box-widget widget-user" style=" overflow: hidden;">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-light-blue-gradient banner" style="color:white; text-align:center;">
+                <div class="widget-user-header bg-light-blue-gradient banner" style="color:white; text-align:center; margin-bottom:3px;">
+                    <a href="./index.php?id=<?php echo $dados['players_team_id']; ?>">
+                    <img src="img/equipes/<?php echo $dados['teams_picture']; ?>.png" style="
+                        position: absolute; top: -10px; right:-70px; width:150px;   opacity: 0.5; filter: alpha(opacity=50); -webkit-filter: grayscale(100%); filter:grayscale(100%);  -ms-transform: rotate(10deg); -webkit-transform: rotate(10deg); transform: rotate(10deg);">
                     <div class="col-xs-offset-5 col-xs-7">
                         <h3 class="widget-user-username"><?php echo $dados['players_name']; ?></h3>
                         <h2 style="font-family: 'Denk One', sans-serif; margin-top:0px;"><?php echo $dados['shirt']; ?></h2>
-                        <!--<h5 class="widget-user-desc" style="text-decoration: underline;"><a href="./index.php?id=<?php echo $dados['players_team_id']; ?>">Equipe</a></h5>-->
-                    </div>
+                    </div></a>
                   </div>
                 <div class="widget-user-image">
                   <img class="figurinha_img" style="margin-left:-10px; margin-top:-10px;" src="img/jogadores/<?php echo $dados['player_picture']; ?>">
                 </div>
                 <div class="box-footer">
                   <div class="row">
-                    <div class="col-xs-3 col-xs-offset-6 border-right" style="margin-top:-20px;">
-                      <div class="description-block">
-                        <span class="description-text">Cartões</span>
-                        <h5 class="description-header"><?php echo $dados['cartoes']; ?></h5>
-                      </div><!-- /.description-block -->
-                    </div><!-- /.col -->
-                    <div class="col-xs-3 border-right" style="margin-top:-20px;">
+                    <div class="col-xs-2 col-xs-offset-6 border-right" style="margin-top:-20px;">
                       <div class="description-block">
                         <span class="description-text">Gols</span>
-                        <h5 class="description-header"><?php echo $dados['goals']; ?></h5> 
+                        <h5 class="description-header"><?php echo $dados['goals']; ?></h5>
+                      </div><!-- /.description-block -->
+                    </div><!-- /.col -->
+                    <div class="col-xs-4 border-right" style="margin-top:-20px;">
+                      <div class="description-block">
+                        <span class="description-text">NOTA MÉDIA</span>
+                        <h5 class="description-header"><?php echo intval($dados['players_stats_average']); ?></h5>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                   </div><!-- /.row -->
@@ -126,64 +195,77 @@
             <!-- DONUT CHART -->
               <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Perfil</h3>
+                    <a data-toggle="modal" data-target="#myModal" style="color:#666; cursor:pointer;"><span style="float:right; width:20px; text-align:center; margin-right:-4px;"><i class="fa fa-info" aria-hidden="true"></i></span></a>
+                  <h3 class="box-title">Notas</h3>
                 </div>
                 <div class="box-body">
                     <canvas id="canvas" style="height:250px"></canvas>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
- 
-            </div><!-- /.col -->
-    
-            <div class="col-md-8">
-    
-
-         <ul class="timeline">
-             
-                <?php $sqltime = mysqli_query($mysqli,"SELECT p.*, CONCAT(t1.`teams_name`, ' vs ', t2.`teams_name`, ' - ', date_format(m.datetime,'%d/%m')) as partida FROM plays p left join matches m on p.`match_id` = m.`id` left join teams t1 on m.`team1` = t1.`id_teams` left join teams t2 on m.team2 = t2.`id_teams` where ( assistance = '$id' or plays_players_id='$id') and available in (1,2) order by datetime DESC");
-                    while ($data2 = mysqli_fetch_assoc($sqltime)) {
-                        if ($partida <> $data2['match_id']){
-                            echo '
-                                <li class="time-label">
-                                <span class="bg-light-blue">
-                                    <a href="./partida.php?id=' . $data2['match_id'] . '"   style="color:white">' . $data2['partida'] . '</a>
-                                </span>
-                                </li>';    
-                        }
-                        echo '
-                         <li>
-                          <i class="fa fa-video-camera bg-gray"></i>
-                          <div class="timeline-item">
-                            <div class="timeline-body">
-                              <div class="embed-responsive embed-responsive-16by9">
-                                <video width="100%" loop onclick="this.paused?this.play():this.pause();">
-                                  <source src="lances/' . $data2['video_id'] . '.mp4" type="video/mp4" />
-                                  Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
-                                    </video>
-                              </div>
-                            </div>
-                          </div>
-                        </li>';
-                    $partida = $data2['match_id'];}
-                ?>
-                <li>
-                  <i class="fa fa-clock-o bg-gray"></i>
-                </li>
-              </ul>        
-      </div><!-- /.col -->
-    
-    <!-- Footer -->
-   <footer>
-        <div class="container" id="contact">
-            <div class="row">            
-                    <hr class="large">
-                <div class="col-lg-10 col-lg-offset-1 text-center">  
-                    <p class="text-muted">Copyright © Esportes.Company 2016 <i class="fa fa-envelope-o fa-fw" style="margin-left:10px;"></i>  <a href="mailto:contato@esportes.co">contato@esportes.co</a></p>
-                </div>
             </div>
-        </div>
-    </footer>
+            </div><!-- /.col -->
+    </div>
+            <div class="col-md-8" style="margin-left:20px; margin-right:-20px;">
+    
 
+        <div class="row">
+            
+                <?php
+                      
+                    if ($count == 0){
+                        echo '
+                        <div class="col-xl-offset-5 col-xl-2 center-block">
+                            <span id="estrela_content">
+                            <i class="fa fa-star" aria-hidden="true" class="estrela"></i>
+                            <i class="fa fa-star" aria-hidden="true" class="estrela"></i>
+                            <i class="fa fa-star" aria-hidden="true" class="estrela"></i>
+                            <i class="fa fa-star" aria-hidden="true" class="estrela"></i>
+                            <i class="fa fa-star-half-o" aria-hidden="true" class="estrela"></i>
+                            </span>
+                            <h4 style="color:#CCC; opacity: 0.8; filter: alpha(opacity=80); width:90%;" align="center">
+                                Para completar este perfil, <a href="./index.php?id='.$dados['players_team_id'].'" style="color:#CCC; text-decoration: underline;">assista as partidas</a> e indique lances para este jogador.
+                            </h4>
+                        </div>';
+                    }else {
+                        echo ' <section class="content-header" style="margin-bottom:10px; margin-top:-10px;">
+                          <h1>
+                            Lances
+                          </h1>
+                        </section>
+                         <ul class="timeline">';
+                        while ($data2 = mysqli_fetch_assoc($sqllances)) {
+                            if ($partida <> $data2['match_id']){
+                                echo '
+                                    <li class="time-label">
+                                    <span class="bg-light-blue">
+                                        <a href="./partida.php?id=' . $data2['match_id'] . '"   style="color:white">' . $data2['partida'] . '</a>
+                                    </span>
+                                    </li>';    
+                            }
+                            echo '
+                             <li>
+                              <i class="fa fa-video-camera bg-gray"></i>
+                              <div class="timeline-item">
+                                <div class="timeline-body">
+                                  <div class="embed-responsive embed-responsive-16by9">
+                                    <video width="100%" loop onclick="this.paused?this.play():this.pause();">
+                                      <source src="lances/' . $data2['video_id'] . '.mp4" type="video/mp4" />
+                                      Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
+                                        </video>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>';
+                        $partida = $data2['match_id'];}
+                        echo '
+                    <li>
+                      <i class="fa fa-clock-o bg-gray"></i>
+                    </li>
+                  </ul>        
+                </div>';
+                    }?>
+        </div><!-- /.col -->
+    </div>
     <!-- jQuery -->
     <script src="../js/jquery.js"></script>
 
@@ -215,7 +297,7 @@
     </script>
     <script>
 	var radarChartData = {
-		labels: ["Vitorias", "Ataque", "Lances", "Fair Play", "Defesa", "Participação"],
+		labels: ["Vitórias", "Ataque", "Futebol arte", "Comprometimento", "Na bola", "Defesa"],
 		datasets: [
 		{
 				label: "My Second dataset",

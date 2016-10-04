@@ -145,38 +145,35 @@
     </div>
     </div>
     
-    
-    
-    
-    
     <div class="row">
-    <form name="f" id="f" onSubmit="return false">
-		<div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 cfeature infos col-lg-offset-3 col-lg-6">
-            <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <ul class="options" id="ul_esq">
-                    <?php while ($team1 = mysqli_fetch_assoc($sqlteam1)) {
-                    echo "<li onclick=\x22selecionar_jogador(&quot;" . $team1['id_players'] . "&quot;)\x22 id='" . $team1['id_players'] . "' value='" . $team1['id_players'] . "'>" . $team1['shirt'] . " - " . $team1['players_name'] ."</option>";} ?>
-                </ul>
+        <form name="f" id="f" onSubmit="return false">
+            <div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 cfeature infos col-lg-offset-3 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <ul class="options" id="ul_esq">
+                            <?php while ($team1 = mysqli_fetch_assoc($sqlteam1)) {
+                            echo "<li onclick=\x22selecionar_jogador(&quot;" . $team1['id_players'] . "&quot;)\x22 id='" . $team1['id_players'] . "' value='" . $team1['id_players'] . "'>" . $team1['shirt'] . " - " . $team1['players_name'] ."</option>";} ?>
+                        </ul>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                         <ul class="options" id="ul_esq">
+                            <?php while ($team2 = mysqli_fetch_assoc($sqlteam2)) {
+                            echo "<li onclick=\x22selecionar_jogador(&quot;" . $team2['id_players'] . "&quot;)\x22 id='" . $team2['id_players'] . "' value='" . $team2['id_players'] . "'>" . $team2['shirt'] . " - " . $team2['players_name'] ."</option>";} ?>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row" class="col-xs-6 col-sm-offset-5 col-sm-2 col-md-offset-5 col-md-3" style="text-align:center;">
+                   <!-- <button id="atualiza" class="btn btn-lg btn-success">Atualizar Times</button>-->
+                </div>
+                <div class="row" class="col-xs-6 col-sm-offset-5 col-sm-2 col-md-offset-5 col-md-3" style="text-align:center;">
+                    <div id="d" class="row" style="margin-left:20px"></div>	
+                </div>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                 <ul class="options" id="ul_esq">
-                    <?php while ($team2 = mysqli_fetch_assoc($sqlteam2)) {
-                    echo "<li onclick=\x22selecionar_jogador(&quot;" . $team2['id_players'] . "&quot;)\x22 id='" . $team2['id_players'] . "' value='" . $team2['id_players'] . "'>" . $team2['shirt'] . " - " . $team2['players_name'] ."</option>";} ?>
-                </ul>
-            </div>
-        </div>
-            
-        <div class="row" class="col-xs-6 col-sm-offset-5 col-sm-2 col-md-offset-5 col-md-3" style="text-align:center;">
-           <!-- <button id="atualiza" class="btn btn-lg btn-success">Atualizar Times</button>-->
-        </div>
-        <div class="row" class="col-xs-6 col-sm-offset-5 col-sm-2 col-md-offset-5 col-md-3" style="text-align:center;">
-            <div id="d" class="row" style="margin-left:20px"></div>	
-        </div>
+        </form>   
     </div>
-</form>   
-    </div>
-        <div class="row">  
+    
+    <div class="row">  
         <div class="col-md-8 col-md-offset-2">
              <section class="content-header">
           <h1>
@@ -279,36 +276,92 @@
         </section>
             </div>
     </div>
-          <div  class="col-md-4 text-center col-md-offset-4" style="text-align:center; font-size:30px; margin-top:20px;">
-          <button type="button" class="btn btn-danger" onclick='encerrar()' style="width:270px; margin-bottom:50px;" title="Encerrar">Encerrar partida e atualizar classificação</button>
+    
+    <div  class="col-md-4 text-center col-md-offset-4" style="text-align:center; font-size:30px; margin-top:20px;">
+        <button type="button" class="btn btn-danger" onclick='encerrar()' style="width:270px; margin-bottom:50px;" title="Encerrar">Encerrar partida e atualizar classificação</button>
     </div>
     
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body">
-        <button id="envia_gol" class="btn btn-success" data-dismiss="modal">Gol</button>
-        <button id="envia_falta" class="btn btn-primary" data-dismiss="modal">Falta</button>
-        <button id="envia_amarelo" class="btn btn-warning" data-dismiss="modal">Cartão Amarelo</button>
-        <button id="envia_vermelho" class="btn btn-danger" data-dismiss="modal">Cartão Vermelho</button>
-        <button id="envia_contra" class="btn btn-primary" data-dismiss="modal">Gol Contra</button>
-        <!--<button id="remover" class="btn btn-primary" data-dismiss="modal">Substituído</button>-->
-        <div id="d_modal" class="row" style="margin-left:20px"></div>	
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+            <button id="envia_gol" class="btn btn-success" data-dismiss="modal">Gol</button>
+            <button id="envia_falta" class="btn btn-primary" data-dismiss="modal">Falta</button>
+            <button id="envia_amarelo" class="btn btn-warning" data-dismiss="modal">Cartão Amarelo</button>
+            <button id="envia_vermelho" class="btn btn-danger" data-dismiss="modal">Cartão Vermelho</button>
+            <button id="envia_contra" class="btn btn-primary" data-dismiss="modal">Gol Contra</button>
+            <button id="remover" class="btn btn-primary" data-dismiss="modal">Substituído</button>
+            <button id="envia_campo" class="btn btn-success" data-dismiss="modal">Começou jogando</button>
+            <button id="envia_banco" class="btn btn-primary" data-dismiss="modal">Começou no banco</button>
+            <div id="d_modal" class="row" style="margin-left:20px"></div>	
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
       </div>
     </div>
-
-  </div>
-</div>
+    
+    <!--
+      <form name="f2" id="f2" onSubmit="return false">
+		<h3>Times em Campo</h3>
+        <h3>Esquerda</h3>
+        <ul class="options" id="ul2_esq">
+        </ul>
+        <select onchange="time_esquerda(this);">
+            <option value="Diego">Selecionar</option>
+            <option value="Diego">Diego</option>
+            <option value="Emanuel">Emanuel</option>
+            <option value="Hermando">Hermando</option>
+            <option value="Joinha">Joiinha</option>
+            <option value="Juninho">Juninho</option>
+            <option value="Marquinho">Marquinho</option>
+            <option value="Digao">Digao</option>
+            <option value="Luciano">Luciano</option>
+            <option value="Leandro">Leandro</option>
+            <option value="Giba">Giba</option>
+            <option value="Edson">Edson</option>
+            <option value="Kanu">Kanu</option>
+            <option value="Miguel">Miguel</option>
+            <option value="DJ">DJ</option>
+        </select>
+        
+        <h3>Direita</h3>
+        <ul class="options" id="ul2_dir">
+        </ul>
+        <select onchange="time_direita(this);">
+            <option value="Diego">Selecionar</option>
+            <option value="Diego">Diego</option>
+            <option value="Emanuel">Emanuel</option>
+            <option value="Hermando">Hermando</option>
+            <option value="Joinha">Joiinha</option>
+            <option value="Juninho">Juninho</option>
+            <option value="Marquinho">Marquinho</option>
+            <option value="Digao">Digao</option>
+            <option value="Luciano">Luciano</option>
+            <option value="Leandro">Leandro</option>
+            <option value="Giba">Giba</option>
+            <option value="Edson">Edson</option>
+            <option value="Kanu">Kanu</option>
+            <option value="Miguel">Miguel</option>
+            <option value="DJ">DJ</option>
+        </select>
+        <br><br>
+		<button id="atualiza">Atualizar</button>
+    </form>
+    
+		<p>&nbsp;</p>
+	<div id="d2"></div>	
+    
+    -->
     <script>
         var global_id = <?php echo $id; ?>;
         var global_team1 = <?php echo $dados['team1']; ?>;

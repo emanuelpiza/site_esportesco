@@ -20,12 +20,43 @@
                     <li><a href="http://www.esportes.co/times/?id=6">Febre de Bola</a></li>
                     <li><a href="http://www.esportes.co/times/?id=7">Falcatruas</a></li>
                     <li><a href="http://www.esportes.co/times/?id=2">Peladeiros de Sexta</a></li>
-                    <li><a href="http://www.esportes.co/times/?id=4">Pinga Bola</a></li>
-                    <li><a href="http://www.esportes.co/times/?id=3">Poka Yoke</a></li>-->
+                    <li><a href="http://www.esportes.co/times/?id=4">Pinga Bola</a></li>-->
+                    <li><a href="http://www.esportes.co/times/?id=3">Poka Yoke</a></li>
                     <li><a href="http://www.esportes.co/times/?id=5">Fut/2ª</a></li>
+                    
+            <li>
+        
+        <button type="button" data-toggle="modal" data-target="#myModal_navbar" class="btn btn-primary" style="float:right; margin-top:10px; margin-right:5px; width:160px; position:absolute;">Faça seu Campeonato</button></li>
                 </ul>
           </li>
       </ul>
       </div>
   </div><!-- /.container-fluid -->
 </nav>
+
+ <!-- Modal -->
+  <div class="modal fade" id="myModal_navbar" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Fale Conosco</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <span style="width:90%;">Oferecemos súmulas eletrônicas e a gravação de jogos. Entre em contato para saber mais.
+                        <br><br>(19) 99975-0044 - contato@esportes.co<br>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>

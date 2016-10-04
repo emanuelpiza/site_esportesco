@@ -58,6 +58,17 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- Hotjar Tracking Code for http://www.esportes.co -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:280196,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
 </head>
 
 <body style="padding:10px;padding-top: 70px;
@@ -69,9 +80,9 @@
         <div class="col-md-6" style="text-align:center; margin-top:-50px;">
             <br><br><br>
             <h1 class="section-title"style="text-shadow: 1px 1px #000; ">
-              Sua plataforma esportiva
+              Competições reais, Atletas reais.
             </h1>
-              <a href="http://www.esportes.co/times/copa.php"><button type="button" class="btn btn-primary btn-lg">Entrar</button></a>
+              <a href="http://www.esportes.co/competicoes.php"><button type="button" class="btn btn-primary btn-lg">Entrar</button></a>
             <p class="section-sub-title"style="color:#fa225b; text-shadow: 1px 1px #000;">
              Tudo sobre seus esportes em um só lugar.
              <li style="color:#fa225b; text-shadow: 1px 1px #000; font-weight: bold; ">Receba os vídeos de suas partidas.</li>

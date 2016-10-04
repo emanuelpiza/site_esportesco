@@ -26,6 +26,20 @@
     while ($data4 = mysqli_fetch_assoc($sql_jogadores2)) {
         $selecoes .= "<option value=".$data4['id_players'].">".$data4['players_name']."</option>" ;
     }
+    $sqlnav = mysqli_query($mysqli,"select max(id_teams) as maximo, min(id_teams) as minimo from teams where cup_id =".$dados['cup_id']);
+    $fetch_nav = mysqli_fetch_assoc($sqlnav);
+    $max_teamid = $fetch_nav['maximo'];  
+    $min_teamid = $fetch_nav['minimo'];
+    if ($id == $max_teamid){
+        $nextteam = $min_teamid;
+    } else {    
+        $nextteam = ($id+1);
+    }
+    if ($id == $min_teamid){
+        $prevteam = $max_teamid;
+    } else {
+        $prevteam = ($id-1);
+    }
 ?>
 
 
@@ -55,7 +69,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../css/AdminLTE.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../css/_all-skins.min.css">
@@ -90,7 +104,35 @@
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
-     <!-- jQuery -->
+    		<style>
+			canvas{
+			}
+            #estrela_content{
+                display:-moz-box;
+                -moz-box-pack:center;
+                -moz-box-align:center;
+                display:-webkit-box;
+                -webkit-box-pack:center;
+                -webkit-box-align:center;
+                display:box;
+                box-pack:center;
+                box-align:center;
+            }   
+            .estrela {
+                width:50%;
+            }
+		</style>
+    <!-- Hotjar Tracking Code for http://www.esportes.co -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:280196,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
 </head>
 
 <body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
@@ -110,10 +152,12 @@
 
     <div class="row">
         <?php 
-            if ($dados['teams_picture'] <> null){
+            if ($dados['teams_picture'] <> 0){
                 echo '
-                <div class="col-xl-offset-5 col-xl-2 center-block">
-                    <img src="./img/equipes/'.$id.'.png" style="width:100px; display: block; margin-left: auto; margin-right: auto;">
+                <div id="estrela_content">
+                    <a href="index.php?id='.$prevteam.'" style="color:black"><i class="fa fa-angle-double-left" aria-hidden="true" class="estrela"></i></a>
+                    <img src="./img/equipes/'.$dados['teams_picture'].'.png" class="estrela" style="width:100px;margin-left:30px; margin-right:30px;">
+                    <a href="index.php?id='.$nextteam.'" style="color:black"><i class="fa fa-angle-double-right" aria-hidden="true" class="estrela"></i></a>
                 </div>';
                 }
         else {
@@ -182,7 +226,7 @@
             
                <div class="box" id="class_grupoA">
                 <div class="box-header">
-                  <h1 class="box-title" style="float:middle;">Campanha</h1>
+                  <h1 class="box-title" style="float:middle;">Partidas</h1>
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="col-md-10 col-md-offset-1">
@@ -256,17 +300,20 @@
           <!-- USERS LIST -->
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Equipe</h3>
+              <h3 class="box-title">Jogadores</h3>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
-              <ul class="users-list clearfix">
+              <ul class="users-list">
                 <?php while ($data2 = mysqli_fetch_assoc($sql_jogadores)) {
                     echo '
                     <li>
-                        <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">
-                      <img class="img-circle" src="img/jogadores/0.png" alt="User Image" style="height:80px; width:80px;"></a>
-                      <a class="users-list-name" href="./jogador.php?id=' . $data2['id_players'] . '">' . $data2['players_name'] . '</a>
-                      <span class="users-list-date">' . $data2['player_position'] . '</span>
+                        <a href="./jogador.php?id=' . $data2['id_players'] . '">
+                        <div class="figurinha">
+                        <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image">
+                        <span class="users-list-name">' . $data2['players_name'] . '</span>
+                      </div>
+                      </a>
+                      
                     </li>';}
                 ?>
               </ul><!-- /.users-list -->
@@ -275,61 +322,30 @@
              
             <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Artilharia Interna</h3>
+                  <h3 class="box-title">Ranking Interno</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table class="table table-bordered">
                     <tr>
                       <th style="width: 10px">#</th>
                       <th>Nome</th>
-                      <th style="width: 40px">Gols</th>
+                      <th style="width: 90px; text-align:center;">Nota Média</th>
                     </tr>
                     <tr>
-                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where p.goals > 0 and t.id_teams = ".$id." order by p.goals DESC LIMIT 5");
+                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.players_stats_average, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." order by p.players_stats_average DESC LIMIT 5");
                         $posicao = 1;
                     while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
                     echo '
                     <tr>
                       <td>'.$posicao.'</td>
                       <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
-                      <td><span>'.$data8['goals'].'</span></td>
+                      <td style="text-align:center;"><span>'.$data8['players_stats_average'].'</span></td>
                     </tr>';
                     $posicao = $posicao+1;}?>
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
         </div><!-- /.col -->
-        
-        <div class="col-md-8 col-md-offset-2">
-            
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Álbum</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <div id="carousel-example-generic" class="carousel slide" >
-                    <div class="carousel-inner">
-                    <?php 
-                        $sqlfoto = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' and type = 'p' order by date");
-                        $active = "active";
-                        while ($datafoto = mysqli_fetch_assoc($sqlfoto)) {
-                            echo'
-                            <div class="item '. $active .'">
-                                <img src="./img/' . $datafoto['webaddress'] . '" style="width:100%;">
-                              </div>';
-                            $active = "";
-                        }?>
-                    </div>
-                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                      <span class="fa fa-angle-left"></span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                      <span class="fa fa-angle-right"></span>
-                    </a>
-                  </div>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div><!-- /.col -->
     </div>
     
     <script>

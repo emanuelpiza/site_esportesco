@@ -17,26 +17,36 @@
     $sqlcount_videos = mysqli_query($mysqli,"SELECT goals_balance FROM teams where id_teams='$id'");
     $count_videos = mysqli_fetch_assoc($sqlcount_videos);
     $nome = $dados['teams_name'];
+    $team1 = $dados['team1'];
+    $team2 = $dados['team2'];
     $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available in (1,2) and teams_name LIKE '%".$nome."%' ");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     $sql_anos = mysqli_query($mysqli,"SELECT YEAR(teams_schedule_date) as year FROM teams WHERE id_teams='$id'");
     $anos = mysqli_fetch_assoc($sql_anos);
-    $sql_jogadores = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id' order by players_name");
-    $sql_notes = mysqli_query($mysqli,"select p1.*, p2.`players_name` from (SELECT t1.`match_id`,
-        t1.`initial_time`,
-        t1.`type`,
-        t1.`player`, 
-        '' as detail
+    $sql_jogadores = mysqli_query($mysqli,"SELECT * FROM players where players_team_id in ('$team1', '$team2') order by players_name");
+    while ($data4 = mysqli_fetch_assoc($sql_jogadores)) {
+        $selecoes .= "<option value=".$data4['id_players'].">".$data4['players_name']."</option>" ;
+    }
+
+    $sql_notes = mysqli_query($mysqli,"select p1.*, p2.`players_name` from (
+        SELECT  t1.`id`,
+        	t1.`match_id`,
+            t1.`initial_time`,
+            t1.`type`,
+            t1.`player`, 
+            '' as detail
         FROM notes t1
         LEFT JOIN plays t2 ON t2.`datetime` = t1.`datetime`
         UNION
-        SELECT t2.`match_id`,
+        SELECT   t2.`id_plays` as id,
+         	t2.`match_id`,
             t2.`initial_time`,
             (6) as type , 
             t2.`plays_players_id` as player,
             t2.`video_id` as detail
         FROM notes t1
-        RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where t2.`available` in (1,2) ) p1 left join players p2 on p1.player = p2.`id_players` where match_id ='$id'  order by p1.`initial_time` DESC;");
+        RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where t2.`available` in (1,2)  and plays_play_types_id > -1 ) p1 
+    left join players p2 on p1.player = p2.`id_players` where match_id ='$id' order by p1.`initial_time` DESC;");
     $titulo = $dados['team1_name'] . ' vs ' . $dados['team2_name'] . ' - EsportesCo';
 ?>
 
@@ -103,10 +113,10 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
-    .scrolloff {
-        pointer-events: none;
-    }
-</style>
+        .scrolloff {
+            pointer-events: none;
+        }
+    </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -129,6 +139,17 @@
         });
         
     });
+</script>
+    <!-- Hotjar Tracking Code for http://www.esportes.co -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:280196,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
 </head>
 
@@ -203,7 +224,7 @@
         else {
             echo '
                 <div class="col-sm-6 col-sm-offset-3" style="text-align:center; height: 80px; line-height: 80px; margin-bottom:10px;">
-                    <span style="font-family: \'Poiret One\', Arial, serif; font-size:40px; color:black;">'.$dados['team1_full_name'].' - '. $dados['date'].' </span> 
+                     <a href="./index.php?id='.$dados['team1'].'"><span style="font-family: \'Poiret One\', Arial, serif; font-size:40px; color:black;">'.$dados['team1_full_name'].' - '. $dados['date'].' </span> </a>
                 </div> ';
         } ?>
    
@@ -327,6 +348,7 @@
                         echo ' <li>
                         <i class="fa fa-square  bg-gray" style="color:red;"></i>
                         <div class="timeline-item">
+                         <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['initial_time'].'</span>
                         <h3 class="timeline-header">Cartão vermelho para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
                         </div>
                         </li>';
@@ -348,27 +370,40 @@
                 </li>';
                     } else if ($notes['type'] == 6){
                         echo ' <li id="'. $notes['detail'] .'">
-                          <i class="fa fa-video-camera bg-gray"></i>
-                          <div class="timeline-item">
-                          
-                            <a href="lances/' .$detail. $notes['detail'] . '.mp4" download="Lance ' . $titulo .'.mp4"> <button class="btn btn-box-tool" style="float:right; margin-top:4px;"  title="Download"><i class="fa fa-download"></i></button></a>
-                                              
-                            <button type="button" class="btn btn-box-tool" style="float:right; margin-top:4px;" onclick=\'deletar("' . $notes['detail'] . '")\' title="Remover">
-                             
-                             <i class="fa fa-times"></i></button>
-                            <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['initial_time'].'</span>
+                    <i class="fa fa-video-camera bg-gray"></i>
+                    <div class="timeline-item">
+                  
+                        <button type="button" class="btn btn-box-tool" style="float:right; margin-top:4px;" onclick=\'deletar("' . $notes['detail'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
                             
-                            <h3 class="timeline-header">Vídeo</h3>
-                            <div class="timeline-body">
-                              <div class="embed-responsive embed-responsive-16by9">
+                        <a href="lances/' .$detail. $notes['detail'] . '.mp4" download="Lance ' . $titulo .'.mp4"> <button class="btn btn-box-tool" style="float:right; margin-top:4px;"  title="Download"><i class="fa fa-download"></i></button></a>
+                          
+                        <span class="time"><i class="fa fa-clock-o"></i>
+                        '.$detail.$notes['initial_time'].'
+                        </span>
+                        
+                    <h3 class="timeline-header">Vídeo</h3>
+                    <div class="timeline-body">
+                      <div class="embed-responsive embed-responsive-16by9">
                                <video width="100%" loop onclick="this.paused?this.play():this.pause();">
                                   <source src="lances/'.$detail.$notes['detail'].'.mp4" type="video/mp4" />
                                     Seu navegador não suporta este formato de vídeos. Atualize seu navegador.
                                 </video>
                               </div>
+                    </div>
+                    <div class="timeline-footer" style="height:30px;">
+
+                        
+                        <div class="form-group col-xs-6" style="float:right; width:100%; margin-top:-5px;" id="' . $notes['detail'] . '_categ">
+                            <div class="form-group">
+                                <a class="btn btn-xs btn-success" style="float:right; width:60px; margin-top:-7px;  margin-right:-10px;" onclick=\'estatisticas("' . $notes['detail'] . '")\'>Salvar</a>
+                                <select id="' . $notes['detail'] . '_craq" class="form-control bg-white" style="float:right; margin-top:-7px; width:120px; margin-right:10px; height: auto; line-height: 14px;">
+                                    <option value="45">Atribuir</option>
+                                    '. $selecoes .'
+                                </select>
                             </div>
-                          </div>
-                        </li>';
+                        </div>
+                    </div>
+                </li>';
                     }
                 }?>
                 <li class="time-label">
@@ -432,17 +467,18 @@
     }
         
     function estatisticas(strVideo) {
-        swal("Categorização realizada!", "As estatísticas dos jogadores envolvidos estão sendo atualizadas.", "success");
         
         var craq = document.getElementById(strVideo + "_craq");
-        var strCraq = craq.options[craq.selectedIndex].value;
-        var assist = document.getElementById(strVideo + "_assist");
-        var strAssist = assist.options[assist.selectedIndex].value;
-        var tipo = document.getElementById(strVideo + "_tipo");
-        var strTipo = tipo.options[tipo.selectedIndex].value;
+        var strPlayer = craq.options[craq.selectedIndex].value;
         
-        $.post("acoes.php",{acao: "estatisticas",video: strVideo, craque: strCraq, assistencia: strAssist, tipo: strTipo, time: <?php echo $id?>},function(data){});
-        $(document.getElementById(strVideo)).hide(500);
+        if (strPlayer == 45){
+            swal("Quem participou desta jogada?", "Pressione 'Salvar' após atribuir um jogador.", "warning");
+        } else{
+            
+        swal("Atribuição Realizada!", "Você ainda pode escolher mais de um jogador para a mesma jogada.", "success");
+        
+        $.post("acoes.php",{acao: "estatisticas",video: strVideo, player: strPlayer, match: <?php echo $id;?>},function(data){});
+        }
     }
         
     function deletar(strVideo) {

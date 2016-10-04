@@ -266,7 +266,6 @@
     <script>
         var global_id = <?php echo $id; ?>;
         var global_team1 = <?php echo $dados['team1']; ?>;
-        var global_team2 = <?php echo $dados['team2']; ?>;
             
         function deletar(strId) {
            if (confirm('Tem certeza que deseja deletar esta marcação?')) {
