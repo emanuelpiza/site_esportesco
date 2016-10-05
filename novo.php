@@ -10,7 +10,7 @@
 	
 		$servername = "localhost";
 		$username = "root";
-		$password = "root";
+		$password = "k1llersql";
 		$dbname = "Esportes";
 
 		// Create connection
