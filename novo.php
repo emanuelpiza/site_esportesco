@@ -10,6 +10,7 @@
 	
 		$servername = "localhost";
 		$username = "root";
+		#$password = "root";
 		$password = "k1llersql";
 		$dbname = "Esportes";
 
@@ -29,11 +30,8 @@
 		$target_file = $target_dir . basename($_FILES["image"]["name"]);
 		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 		
-		if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-			//echo "Arquivo ". basename( $_FILES["image"]["name"]). " atualizado.";
-		} else {
-			//echo "<h3>É necessário carregar o arquivo antes de atualizar a base de dados.<br> <a href='http://www.esportes.co/painel.php'>Voltar</a></h3> ";
-		}
+		move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+
 		
 		//Getting data from request
 		$championshipName = $_POST['championshipName'];
@@ -139,69 +137,7 @@
 </head>
 
 <body style="background-color: #ecf0f5;">
-    
-<nav class="navbar navbar-default" style="margin: -70px -10px 10px -10px; background-color:#FFFFFE;">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-        <ul class="nav" style="height:100%;">
-            <li class="">
-                <a href="http://www.esportes.co/competicoes.php#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img alt="Brand" src="img/icone.png" style="width: 40px;">
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="http://www.esportes.co/">Início</a></li>
-                    <!--<li><a href="http://www.esportes.co/galeria.php">Galeria</a></li>
-                    <li><a href="http://www.esportes.co/img/disputas.jpg" class="fancybox" rel="gallery" title="Os lances marcados já estão participando.">Disputas</a></li>-->
-                    <li><a href="http://www.esportes.co/times/copa.php">Copa Benteler</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li class="dropdown-header">Equipes Avulsas</li>
-                    
-                    
-                   <!-- <li><a href="http://www.esportes.co/times/?id=1">Amigos de Quinta</a></li>
-                    <li><a href="http://www.esportes.co/times/?id=6">Febre de Bola</a></li>
-                    <li><a href="http://www.esportes.co/times/?id=7">Falcatruas</a></li>
-                    <li><a href="http://www.esportes.co/times/?id=2">Peladeiros de Sexta</a></li>
-                    <li><a href="http://www.esportes.co/times/?id=4">Pinga Bola</a></li>-->
-                    <li><a href="http://www.esportes.co/times/?id=3">Poka Yoke</a></li>
-                    <li><a href="http://www.esportes.co/times/?id=5">Fut/2ª</a></li>
-                    
-            <li>
-        
-        <button type="button" data-toggle="modal" data-target="#myModal_navbar" class="btn btn-primary" style="float:right; margin-top:10px; margin-right:5px; width:160px; position:absolute;">Faça seu Campeonato</button></li>
-                </ul>
-          </li>
-      </ul>
-      </div>
-  </div><!-- /.container-fluid -->
-</nav>
-
- <!-- Modal -->
-  <div class="modal fade" id="myModal_navbar" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4 class="modal-title">Fale Conosco</h4>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-lg-6">
-                    <span style="width:90%;">Oferecemos súmulas eletrônicas e a gravação de jogos. Entre em contato para saber mais.
-                        <br><br>(19) 99975-0044 - contato@esportes.co<br>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>    
+     
   
   <!-- Page Content -->
   
@@ -229,7 +165,7 @@
 							}
 						?>
 
-						<form method="post" role="form"  action="novo.php" enctype="multipart/form-data">
+						<form method="post" role="form"  action="" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="form-group">
 								  <label for="championshipName">Nome do Campeonato</label>
