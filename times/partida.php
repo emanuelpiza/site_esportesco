@@ -10,7 +10,12 @@
         header("Location: index.php");
     }
     $id = $_GET['id'];
-    $sqlgeral = mysqli_query($mysqli,"SELECT m.*, LEFT(t1.`teams_name` , 3) as team1_name, t1.`teams_name` as team1_full_name, LEFT(t2.`teams_name` , 3) as team2_name, date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches m left join teams t1 on m.team1 = t1.`id_teams` left join teams t2 on m.`team2` = t2.id_teams where id = '$id'");
+    $sqlgeral = mysqli_query($mysqli,"
+        SELECT 
+            m.*, LEFT(t1.`teams_name` , 3) as team1_name, f.fields_coordinates,
+            f.fields_name, t1.`teams_name` as team1_full_name, LEFT(t2.`teams_name` , 3) as team2_name, t1.teams_picture as t1_picture, t2.teams_picture as t2_picture, date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date 
+        FROM matches m left join teams t1 on m.team1 = t1.`id_teams` left join teams t2 on      m.`team2` = t2.id_teams left join fields as f on f.id_fields = m.field_id 
+        WHERE id = '$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
     $sqlcount_players = mysqli_query($mysqli,"SELECT points FROM teams where id_teams='$id'");
     $count_players = mysqli_fetch_assoc($sqlcount_players);
@@ -179,7 +184,7 @@
         <div class="modal-body">
             <div style="width: 95%; height:95%; margin:10px auto; 10px; auto;" >
                 <div id="overlay" class="map">
-                    <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1120.5819119138064!2d-47.08022816004687!3d-22.93064555236723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c8c8e0ce769bdb%3A0x2cc9c2b2577c28fc!2sAndr%C3%A9+Cruz!5e1!3m2!1spt-BR!2sbr!4v1470247772629" width="100%" height="350" frameborder="0" ></iframe>
+                    <iframe id="map" src="<?php echo $dados['fields_coordinates'] ?>" width="100%" height="350" frameborder="0" ></iframe>
                 </div>
             </div>
         </div>
@@ -192,7 +197,7 @@
             <div class="row">
                 <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;">
                     <span style="font-family: Roboto, Arial, serif; font-size:12px;">'. $dados['date'].' às '.$dados['hour'].'
-                    <br> <b>Local: <a href="#" data-toggle="modal" data-target="#myModal">André Cruz - Campo '.$dados['field_id'].'.</a></b></span>
+                    <br> <b>Local: <a href="#" data-toggle="modal" data-target="#myModal">'.$dados['fields_name'].'.</a></b></span>
                 </div>
             </div>
          <div class="row" style="margin-bottom:10px;">
@@ -200,7 +205,7 @@
           <a href="./index.php?id='.$dados['team1'].'">
 
                 <div class="col-xs-4" style="text-align:right; padding:0;">
-                    <img src="./img/equipes/'.$dados['team1'].'.png" style="width:80px; margin-right:5px;">
+                    <img src="./img/equipes/'.$dados['t1_picture'].'.png" style="width:80px; margin-right:5px;">
                 </div>
 
                 <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
@@ -216,7 +221,7 @@
                 </div>
 
                 <div  class="col-xs-4" style="padding:0;">
-                    <img src="./img/equipes/'.$dados['team2'].'.png" style="width:80px; margin-left:5px">
+                    <img src="./img/equipes/'.$dados['t2_picture'].'.png" style="width:80px; margin-left:5px">
               </div>
           </a>
         </div>

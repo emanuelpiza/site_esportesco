@@ -15,6 +15,9 @@ $(document).ready(function ()
     $("#envia_defesa").click(function(){envia("3")})
     $("#envia_campo").click(function(){envia("8")})
     $("#envia_banco").click(function(){envia("9")})
+    $("#inicio_1").click(function(){envia("10")})
+    $("#fim_1").click(function(){envia("11")})
+    $("#inicio_2").click(function(){envia("12")})
     $("#atualiza").click(function(){envia_times("atualiza")})
 })
     
@@ -72,9 +75,11 @@ $(document).ready(function ()
     ul.appendChild(li);
 }
 
-function selecionar_jogador(ojogador){
+function selecionar_jogador(ojogador, camisa){
     global_jogador = ojogador;
+    global_camisa = camisa;
     li = document.getElementById(ojogador);    
+    document.getElementById("camisa").value = global_camisa;   
     global_nome_jogador = document.getElementById(ojogador).textContent;
     document.getElementsByClassName('modal-title')[0].innerHTML = (global_nome_jogador);
     li.setAttribute('data-target', '#myModal');      
@@ -146,15 +151,21 @@ function envia_times(evento)
       )
 }
 
+
 function envia(p_type)
 {    
         
     fjogador = global_jogador;
     fnome = global_nome_jogador;
     fid = global_id;
-    
+    global_nova_camisa = document.getElementById("camisa").value;
+    global_atualiza = 0;
+    if (global_nova_camisa != global_camisa){
+        global_atualiza = 1;
+    }
+        
     $.post("acoes.php",
-           {acao:"marcar", type: p_type, player: fjogador, match:fid, field:0, side:0, nome:fnome},
+           {acao:"marcar", type: p_type, player: fjogador, match: fid, field:0, side:0, nome:fnome, camisa:global_nova_camisa, atualiza:global_atualiza},
            function(data)
            {
                 // se nao retornou 1 entao os dados foram enviados

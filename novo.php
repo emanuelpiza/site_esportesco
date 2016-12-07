@@ -10,7 +10,6 @@
 	
 		$servername = "localhost";
 		$username = "root";
-		#$password = "root";
 		$password = "k1llersql";
 		$dbname = "Esportes";
 
@@ -46,15 +45,15 @@
 		$limitDate = $_POST['limitDate'];
 		
 		//SQL
-		$sql = "INSERT INTO CUPS (IS_ACTIVE, NAME, cathegory, entry_fee, date_limit, matches_timeofweek, location_details, email, cell, image)	VALUES (0, ? ,? ,? ,? ,? ,? ,?, ?, ?);";
-
+		$sql = "INSERT INTO cups (IS_ACTIVE, NAME, cathegory, entry_fee, date_limit, matches_timeofweek, location_details, email, cell, image)	VALUES (0, '".$championshipName."','". $category."','". $cost ."','". $limitDate."','". $days ."','". $address ."','". $contact ."','". $phone ."','". $image."');";
+        
 		// prepare and bind
-		$stmt = $conn->prepare($sql);
-		$stmt->bind_param("sssssssss", $championshipName, $category, $cost , $limitDate, $days, $address, $contact, $phone, $image);
+		//$stmt = $conn->prepare($sql);
+		//$stmt->bind_param("sssssssss", $championshipName, $category, $cost , $limitDate, $days, $address, $contact, $phone, $image);
 
-		$stmt->execute();
-		
-		$stmt->close();
+		//$stmt->execute();
+		mysqli_query($conn, $sql);
+		//$stmt->close();
 		$conn->close();
 	
 		$renderMessage = true;
@@ -137,9 +136,29 @@
 </head>
 
 <body style="background-color: #ecf0f5;">
-     
-  
-  <!-- Page Content -->
+    
+    <?php 
+    if ( !empty($_POST)) {
+        echo 
+            '<!-- Google Code for Convers&atilde;o site Esportes.Co Conversion Page -->
+            <script type="text/javascript">
+            /* <![CDATA[ */
+            var google_conversion_id = 1011268021;
+            var google_conversion_language = "en";
+            var google_conversion_format = "3";
+            var google_conversion_color = "ffffff";
+            var google_conversion_label = "GzU7CN_1jWsQtfOa4gM";
+            var google_remarketing_only = false;
+            /* ]]> */
+            </script>
+            <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+            </script>
+            <noscript>
+            <div style="display:inline;">
+            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1011268021/?label=GzU7CN_1jWsQtfOa4gM&amp;guid=ON&amp;script=0"/>
+            </div>
+            </noscript>';
+    }?>
   
     <div class="container" >
 

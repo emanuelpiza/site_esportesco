@@ -9,9 +9,9 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="http://www.esportes.co">Início</a></li>
+                    <li><a href="http://www.esportes.co/novo/">Novo Campeonato</a></li>
                     <!--<li><a href="http://www.esportes.co/galeria.php">Galeria</a></li>
                     <li><a href="http://www.esportes.co/img/disputas.jpg" class="fancybox" rel="gallery" title="Os lances marcados já estão participando.">Disputas</a></li>-->
-                    <li><a href="http://www.esportes.co/times/copa.php">Copa Benteler</a></li>
                     <li role="separator" class="divider"></li>
                     <li class="dropdown-header">Equipes Avulsas</li>
                     
@@ -23,10 +23,6 @@
                     <li><a href="http://www.esportes.co/times/?id=4">Pinga Bola</a></li>-->
                     <li><a href="http://www.esportes.co/times/?id=3">Poka Yoke</a></li>
                     <li><a href="http://www.esportes.co/times/?id=5">Fut/2ª</a></li>
-                    
-            <li>
-        
-        <button type="button" data-toggle="modal" data-target="#myModal_navbar" class="btn btn-primary" style="float:right; margin-top:10px; margin-right:5px; width:160px; position:absolute;">Faça seu Campeonato</button></li>
                 </ul>
           </li>
       </ul>

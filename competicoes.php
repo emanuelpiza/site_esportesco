@@ -10,7 +10,7 @@
         header("Location: index.php");
     }
 
-    $sql_cups = mysqli_query($mysqli,"select * from cups order by `date_limit`;");
+    $sql_cups = mysqli_query($mysqli,"select * from cups where approved = 1 order by `date_limit`;");
     while ($row = mysqli_fetch_assoc($sql_cups)) {
         $cups[] = $row;
     }
@@ -79,20 +79,14 @@
                 } 
                echo '
                     <!-- Project One -->
-                    <div class="row">
+                    <div class="row" style=" text-align:center; ">
                         <div class="col-md-7">
                             <a href="./times/copa.php?id='.$row['id'].'">
-                                <img class="img-responsive" src="./img/competicoes/'.$row['id'].'.jpg" alt="">
+                                <img class="img-responsive" src="./img/competicoes/'.$row['image'].'" alt="">
                             </a>
                         </div>
                         <div class="col-md-5">
                             <h3>'.$row['name'].'</h3>
-                            <h4>'.$row['location'].'</h4>
-                            <p><b>Categorias: </b>'.$row['cathegory'].'</p>
-                            <p><b>Inscrições: </b>Encerradas</p>
-                            <p><b>Jogos: </b>'.$row['matches_timeofweek'].'</p>
-                            <p><b>Custo de inscrição:</b>  R$'.$row['entry_fee'].'</p>  
-                            '.$match_fee.' 
                             <a class="btn btn-primary" href="./times/copa.php?id='.$row['id'].'">Acompanhar</a>
                         </div>
                     </div>
@@ -124,10 +118,10 @@
                     <!-- Project One -->
                     <div class="row">
                         <div class="col-md-7">
-                                <img class="img-responsive" src="./img/competicoes/'.$row['id'].'.jpg" alt="">
+                                <img class="img-responsive" src="./img/competicoes/'.$row['image'].'" alt="">
                         </div>
                         <div class="col-md-5">
-                            <h3>'.$row['name'].'</h3>
+                            <h3  style=" text-align:center; ">'.$row['name'].'</h3>
                             <h4>'.$row['location'].'</h4>
                             <p><b>Categorias: </b>'.$row['cathegory'].'</p>
                             <p><b>Jogos: </b>'.$row['matches_timeofweek'].'</p>

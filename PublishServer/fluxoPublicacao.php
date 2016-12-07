@@ -30,7 +30,7 @@
             m.field_id, 
             m.is_two_cameras, 
             m.datetime, 
-            t1.teams_match_duration as duration, 
+            c.match_duration as duration, 
             t1.`teams_name` as team1_name, 
             LEFT(t1.`teams_name`, 3) as team1_abrev, 
             t2.`teams_name` as team2_name, 
@@ -38,6 +38,7 @@
         from matches m 
             left join teams t1 on m.team1 = t1.id_teams 
             left join teams t2 on m.team2 = t2.id_teams 
+            left join cups c on m.cup_id = c.id
         where datetime < NOW() and status is null
         order by datetime;");
     while ($row = mysqli_fetch_assoc($sql_ftp_teste)) {
@@ -62,13 +63,13 @@
 
   // Após arquivos ok, inicia o processamento, um por vez
   $sql_processamento = mysqli_query($mysqli,"
-        select 
+       select 
             m.id, 
             m.status, 
             m.field_id, 
             m.is_two_cameras, 
             m.datetime, 
-            t1.teams_match_duration as duration, 
+            c.match_duration as duration, 
             t1.`teams_name` as team1_name, 
             LEFT(t1.`teams_name`, 3) as team1_abrev, 
             t2.`teams_name` as team2_name, 
@@ -76,6 +77,7 @@
         from matches m 
             left join teams t1 on m.team1 = t1.id_teams 
             left join teams t2 on m.team2 = t2.id_teams 
+            left join cups c on m.cup_id = c.id
         where datetime < NOW() and status in (1, 2)
         order by status DESC, datetime LIMIT 1;");
     while ($row = mysqli_fetch_assoc($sql_processamento)) {
@@ -119,7 +121,7 @@
             m.field_id, 
             m.is_two_cameras, 
             m.datetime, 
-            t1.teams_match_duration as duration, 
+            c.match_duration as duration, 
             t1.`teams_name` as team1_name, 
             LEFT(t1.`teams_name`, 3) as team1_abrev, 
             t2.`teams_name` as team2_name, 
@@ -127,6 +129,7 @@
         from matches m 
             left join teams t1 on m.team1 = t1.id_teams 
             left join teams t2 on m.team2 = t2.id_teams 
+            left join cups c on m.cup_id = c.id
         where datetime < NOW() and status in (6, 7)
         order by status DESC, datetime LIMIT 1;");
     while ($row = mysqli_fetch_assoc($sql_publicarYT)) {
@@ -166,7 +169,7 @@
             m.field_id, 
             m.is_two_cameras, 
             m.datetime,
-            t1.teams_match_duration as duration, 
+            c.match_duration as duration, 
             t1.`teams_name` as team1_name, 
             LEFT(t1.`teams_name`, 3) as team1_abrev, 
             t2.`teams_name` as team2_name, 
@@ -174,6 +177,7 @@
         from matches m 
             left join teams t1 on m.team1 = t1.id_teams 
             left join teams t2 on m.team2 = t2.id_teams 
+            left join cups c on m.cup_id = c.id
         where m.`datetime` < ADDDATE(NOW(), -4) and status in (8, 9)
         order by status DESC, datetime DESC LIMIT 1");
     while ($row = mysqli_fetch_assoc($sql_Melhores)) {

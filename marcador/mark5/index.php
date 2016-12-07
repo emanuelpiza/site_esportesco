@@ -10,21 +10,37 @@
         header("Location: index.php");
     }
     $id = $_GET['id'];
-    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM matches where id='$id'");
+    $sqlgeral = mysqli_query($mysqli,"SELECT *, 
+                                    t1.teams_picture as t1_picture, 
+                                    t2.teams_picture as t2_picture FROM matches as m 
+                                    left join teams t1 
+                                        on m.team1 = t1.`id_teams` 
+                                    left join teams as t2 
+                                    on m.team2 = t2.id_teams where m.id='$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
-    $sqlgols = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = ".$dados['team1'].") or (type = 4 and p.`players_team_id` = ".$dados['team2']."));");
+    $id_team1 = $dados['team1'];
+    $id_team2 = $dados['team2'];
+    $sqlgols = mysqli_query($mysqli,"select IF((select score1 from matches where id = '$id') is not null, (select score1 from matches where id = '$id'), (select count(*) from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = ".$id_team1.") or (type = 4 and p.`players_team_id` = ".$id_team2.")))) as total;");
     $gols1 = mysqli_fetch_assoc($sqlgols);    
-    $sqlgols = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = ".$dados['team2'].") or (type = 4 and p.`players_team_id` = ".$dados['team1']."));");
+    $sqlgols = mysqli_query($mysqli,"select IF((select score2 from matches where id = '$id') is not null, (select score2 from matches where id = '$id'), (select count(*) from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = ".$id_team2.") or (type = 4 and p.`players_team_id` = ".$id_team1.")))) as total;");
     $gols2 = mysqli_fetch_assoc($sqlgols);
 
-    $sqlfaltas = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type = 0 and p.`players_team_id` = ".$dados['team1'].";");
+    $sqlfaltas = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type in (0,2,3) and p.`players_team_id` = ".$id_team1." and datetime < (select if(EXISTS( SELECT * FROM notes n where match_id = '$id' and type = 11), (select datetime from notes where match_id = '$id' and type = 11), NOW()));");
     $faltas1 = mysqli_fetch_assoc($sqlfaltas);    
-    $sqlfaltas = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type = 0 and p.`players_team_id` = ".$dados['team2'].";");
+    $sqlfaltas = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type in (0,2,3) and p.`players_team_id` = ".$id_team2." and datetime < (select if(EXISTS( SELECT * FROM notes n where match_id = '$id' and type = 11), (select datetime from notes where match_id = '$id' and type = 11), NOW()));");
     $faltas2 = mysqli_fetch_assoc($sqlfaltas);
 
+    $sqlfaltas = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type in (0,2,3) and p.`players_team_id` = ".$id_team1." and datetime > (select datetime from notes where match_id = '$id' and type = 11);");
+    $faltas1_seg = mysqli_fetch_assoc($sqlfaltas);    
+    $sqlfaltas = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type in (0,2,3) and p.`players_team_id` = ".$id_team2." and datetime > (select datetime from notes where match_id = '$id' and type = 11);");
+    $faltas2_seg = mysqli_fetch_assoc($sqlfaltas);
 
-    $sqlteam1 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id=".$dados['team1']);
-    $sqlteam2 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id=".$dados['team2']);
+
+    $sql_inicio_fim = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type = 0 and p.`players_team_id` = ".$id_team1.";");
+    $inicio_fim = mysqli_fetch_assoc($sql_inicio_fim);  
+
+    $sqlteam1 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id=".$id_team1);
+    $sqlteam2 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id=".$id_team2);
     $sql_notes = mysqli_query($mysqli,"select p1.*, p2.`players_name` from (
 	SELECT t1.`id`, t1.`match_id`,
         DATE_FORMAT(t1.`datetime`,'%H:%i:%s') as datetime,
@@ -45,6 +61,29 @@
         t2.`available`
     FROM notes t1
     RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where t2.`available` in (1,2) ) p1 left join players p2 on p1.player = p2.`id_players` where match_id ='$id' and available = 1 and type < 6 order by p1.`datetime` DESC;");
+
+    $sql_fase = mysqli_query($mysqli,"select IF(MAX(type) is null, 0, MAX(type)) as maximo from notes n where match_id = '$id';");
+    $fase = mysqli_fetch_assoc($sql_fase)['maximo'];
+
+    if ($fase < 10){
+        $estilo_btn_fase = "btn-success";
+        $texto_btn_fase = "Iniciar partida";
+        $momento = "inicio_1";
+        $botao_wo_t1 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team1)'>Equipe Ausente.<br>Indicar W.O.</button>";
+        $botao_wo_t2 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team2)'>Equipe Ausente.<br>Indicar W.O.</button>";
+    }else if ($fase == 10){
+        $estilo_btn_fase = "btn-danger";
+        $texto_btn_fase = "Encerrar primeiro tempo";
+        $momento = "fim_1";
+    } else if ($fase == 11){
+        $estilo_btn_fase = "btn-success";
+        $texto_btn_fase = "Iniciar segundo tempo";
+        $momento = "inicio_2";
+    } else {
+        $estilo_btn_fase = "btn-danger";
+        $texto_btn_fase = "Encerrar partida e Atualizar Classificações";
+        $momento = "encerrar";
+    }
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -106,29 +145,35 @@
 <body id="<?php echo $id;?>">
        <div class="row" style="margin-bottom:10px;">
          <div class="col-md-6 col-md-offset-3">
-      <a href="./index.php?id=<?php echo $dados['team1']; ?>">
 
             <div class="col-xs-4" style="text-align:right; padding:0;">
-                <img src="../../times/img/equipes/<?php echo $dados['team1']; ?>.png" style="width:80px; margin-right:5px;">
+                <img src="../../times/img/equipes/<?php echo $dados['t1_picture']; ?>.png" style="width:80px; margin-right:5px;">
             </div>
 
             <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
                 <span style="font-family: Arial, serif; font-size:60px;text-align:left; margin-right:-25px; margin-left:-15px; color:black;font-weight:bolder;"><?php echo $gols1['total']; ?></span>
             </div>
-        </a>
 
       <div  class="col-xs-2 center-block" style="text-align:center; font-size:30px; margin-top:20px;">X</div>
 
-      <a href="./index.php?id=<?php echo $dados['team2']; ?>">
             <div  class="col-xs-1" style="text-align:center; font-size:15px; padding:0;">
                 <span style="font-family: Arial, serif; font-size:60px;text-align:left; margin-left:-25px; color:black;font-weight:bolder;"><?php echo $gols2['total']; ?></span>
             </div>
 
             <div  class="col-xs-4" style="padding:0;">
-                <img src="../../times/img/equipes/<?php echo $dados['team2']; ?>.png" style="width:80px; margin-left:5px">
+                <img src="../../times/img/equipes/<?php echo $dados['t2_picture']; ?>.png" style="width:80px; margin-left:5px">
           </div>
-      </a>
     </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div  class="col-xs-1 col-xs-offset-1" style="text-align:center; font-size:15px;padding:0;">
+                <?php echo $botao_wo_t1; ?>
+            </div>
+            <div  class="col-xs-1 col-xs-offset-5" style="text-align:center; font-size:15px;padding:0;">
+                <?php echo $botao_wo_t2; ?>
+            </div>
+        </div>
     </div>
     
     
@@ -136,11 +181,17 @@
          <div class="col-md-6 col-md-offset-3">
 
             <div  class="col-xs-1 col-xs-offset-2" style="text-align:center; font-size:15px;padding:0;">
-                <span style="font-family: Arial, serif; font-size:12px;text-align:left; margin-right:-25px; margin-left:-15px; color:black;font-weight:bolder;">Faltas: <?php echo $faltas1['total']; ?></span>
+                <span style="font-family: Arial, serif; font-size:12px;text-align:center; margin-right:-25px; margin-left:-15px; color:black;font-weight:bolder;">
+                    Faltas<br>
+                    T1: <?php echo $faltas1['total']; ?><br>
+                    T2: <?php echo $faltas1_seg['total']; ?><br></span>
             </div>
 
-            <div  class="col-xs-2 col-xs-offset-6" style="text-align:center; font-size:15px; padding:0;">
-                <span style="font-family: Arial, serif; font-size:12px;text-align:left; margin-left:-25px; color:black;font-weight:bolder; margin-left:-15px; ">Faltas: <?php echo $faltas2['total']; ?></span>
+            <div  class="col-xs-1 col-xs-offset-5" style="text-align:center; font-size:15px; padding:0;">
+                <span style="font-family: Arial, serif; font-size:12px;text-align:left; margin-right:-25px; color:black;font-weight:bolder; margin-left:-15px; ">
+                    Faltas<br>
+                    T1: <?php echo $faltas2['total']; ?><br>
+                    T2: <?php echo $faltas2_seg['total']; ?><br></span>
             </div>
     </div>
     </div>
@@ -150,15 +201,15 @@
             <div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 cfeature infos col-lg-offset-3 col-lg-6">
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <ul class="options" id="ul_esq">
+                        <ul class="options" id="ul_esq" style=" text-align:center;">
                             <?php while ($team1 = mysqli_fetch_assoc($sqlteam1)) {
-                            echo "<li onclick=\x22selecionar_jogador(&quot;" . $team1['id_players'] . "&quot;)\x22 id='" . $team1['id_players'] . "' value='" . $team1['id_players'] . "'>" . $team1['shirt'] . " - " . $team1['players_name'] ."</option>";} ?>
+                            echo "<button type='button' class='btn btn-primary btn-sm' style='width:150px;' onclick=\x22selecionar_jogador(&quot;" . $team1['id_players'] . "&quot;, &quot;" . $team1['shirt'] . "&quot;)\x22 id='" . $team1['id_players'] . "' value='" . $team1['id_players'] . "'>" . $team1['shirt'] . " - " . $team1['players_name'];} ?>
                         </ul>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                         <ul class="options" id="ul_esq">
+                         <ul class="options" id="ul_esq" style="text-align:center;">
                             <?php while ($team2 = mysqli_fetch_assoc($sqlteam2)) {
-                            echo "<li onclick=\x22selecionar_jogador(&quot;" . $team2['id_players'] . "&quot;)\x22 id='" . $team2['id_players'] . "' value='" . $team2['id_players'] . "'>" . $team2['shirt'] . " - " . $team2['players_name'] ."</option>";} ?>
+                            echo "<button type='button' class='btn btn-primary btn-sm'  style='width:150px;'  onclick=\x22selecionar_jogador(&quot;" . $team2['id_players'] . "&quot;, &quot;" . $team2['shirt'] . "&quot;)\x22 id='" . $team2['id_players'] . "' value='" . $team2['id_players'] . "'>" . $team2['shirt'] . " - " . $team2['players_name'];} ?>
                         </ul>
                     </div>
                 </div>
@@ -171,6 +222,10 @@
                 </div>
             </div>
         </form>   
+    </div>
+    
+      <div  class="col-md-4 text-center col-md-offset-4" style="text-align:center; font-size:30px; margin-top:20px;">
+        <button type="button" class="btn <?php echo $estilo_btn_fase ?>" style="width:270px; margin-bottom:50px;" title="Encerrar" onclick='<?php echo $momento ?>()'><?php echo $texto_btn_fase ?></button>
     </div>
     
     <div class="row">  
@@ -277,9 +332,7 @@
             </div>
     </div>
     
-    <div  class="col-md-4 text-center col-md-offset-4" style="text-align:center; font-size:30px; margin-top:20px;">
-        <button type="button" class="btn btn-danger" onclick='encerrar()' style="width:270px; margin-bottom:50px;" title="Encerrar">Encerrar partida e atualizar classificação</button>
-    </div>
+  
     
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
@@ -299,7 +352,9 @@
             <button id="envia_contra" class="btn btn-primary" data-dismiss="modal">Gol Contra</button>
             <button id="remover" class="btn btn-primary" data-dismiss="modal">Substituído</button>
             <button id="envia_campo" class="btn btn-success" data-dismiss="modal">Começou jogando</button>
-            <button id="envia_banco" class="btn btn-primary" data-dismiss="modal">Começou no banco</button>
+            <button id="envia_banco" class="btn btn-primary" data-dismiss="modal">Começou no banco</button><br>
+            <label for="usr"><h4>Camisa:</h4></label>
+            <input type="text" class="form-control" id="camisa" style="width:100px;"> 
             <div id="d_modal" class="row" style="margin-left:20px"></div>	
           </div>
           <div class="modal-footer">
@@ -310,72 +365,103 @@
       </div>
     </div>
     
-    <!--
-      <form name="f2" id="f2" onSubmit="return false">
-		<h3>Times em Campo</h3>
-        <h3>Esquerda</h3>
-        <ul class="options" id="ul2_esq">
-        </ul>
-        <select onchange="time_esquerda(this);">
-            <option value="Diego">Selecionar</option>
-            <option value="Diego">Diego</option>
-            <option value="Emanuel">Emanuel</option>
-            <option value="Hermando">Hermando</option>
-            <option value="Joinha">Joiinha</option>
-            <option value="Juninho">Juninho</option>
-            <option value="Marquinho">Marquinho</option>
-            <option value="Digao">Digao</option>
-            <option value="Luciano">Luciano</option>
-            <option value="Leandro">Leandro</option>
-            <option value="Giba">Giba</option>
-            <option value="Edson">Edson</option>
-            <option value="Kanu">Kanu</option>
-            <option value="Miguel">Miguel</option>
-            <option value="DJ">DJ</option>
-        </select>
-        
-        <h3>Direita</h3>
-        <ul class="options" id="ul2_dir">
-        </ul>
-        <select onchange="time_direita(this);">
-            <option value="Diego">Selecionar</option>
-            <option value="Diego">Diego</option>
-            <option value="Emanuel">Emanuel</option>
-            <option value="Hermando">Hermando</option>
-            <option value="Joinha">Joiinha</option>
-            <option value="Juninho">Juninho</option>
-            <option value="Marquinho">Marquinho</option>
-            <option value="Digao">Digao</option>
-            <option value="Luciano">Luciano</option>
-            <option value="Leandro">Leandro</option>
-            <option value="Giba">Giba</option>
-            <option value="Edson">Edson</option>
-            <option value="Kanu">Kanu</option>
-            <option value="Miguel">Miguel</option>
-            <option value="DJ">DJ</option>
-        </select>
-        <br><br>
-		<button id="atualiza">Atualizar</button>
-    </form>
-    
-		<p>&nbsp;</p>
-	<div id="d2"></div>	
-    
-    -->
     <script>
+        var global_copa = <?php echo $dados['cup_id']; ?>;
         var global_id = <?php echo $id; ?>;
-        var global_team1 = <?php echo $dados['team1']; ?>;
-        var global_team2 = <?php echo $dados['team2']; ?>;
             
         function deletar(strId) {
            if (confirm('Tem certeza que deseja deletar esta marcação?')) {
-                $.post("acoes.php",{acao: "deletar",id: strId},function(data){});
+                $.post("acoes.php",{acao: "deletar",nota: strId, match: global_id},function(data){});
+            }
+        }
+        function inicio_1() {
+           if (confirm('Tem certeza que iniciar a partida?')) {
+                $.post("acoes.php",{acao:"marcar", type: 10, player: 0, match: global_id, field:0, side:0, nome:"", camisa:0, atualiza:0},
+                   function(data)
+                   {
+                        // se nao retornou 1 entao os dados foram enviados
+                        // remove a classe error da div
+                        $("#d").removeClass("error");
+                        // adiciona a classe sucess na div 
+                        $("#d").addClass("sucess");
+                        // insere o conteudo vindo do data.php na div
+                        $("#d").html("Partida iniciada.");
+                        console.log(data);
+                        //}
+                        // torna a div invisivel
+                        $("#d").css("display","none");
+                        // torna a div visivel usando o efeito show com a slow de parametro
+                        $("#d").show("slow");
+                    }
+                )
+            }
+        }
+        function fim_1() {
+            if (confirm('Tem certeza que encerrar o primeiro tempo?')) {
+                $.post("acoes.php",{acao:"marcar", type: 11, player: 0, match: global_id, field:0, side:0, nome:"", camisa:0, atualiza:0},
+                   function(data)
+                   {
+                        // se nao retornou 1 entao os dados foram enviados
+                        // remove a classe error da div
+                        $("#d").removeClass("error");
+                        // adiciona a classe sucess na div 
+                        $("#d").addClass("sucess");
+                        // insere o conteudo vindo do data.php na div
+                        $("#d").html("Primeiro tempo encerrado.");
+                        console.log(data);
+                        //}
+                        // torna a div invisivel
+                        $("#d").css("display","none");
+                        // torna a div visivel usando o efeito show com a slow de parametro
+                        $("#d").show("slow");
+                    }
+                )
+            }
+        }
+        function inicio_2() {
+           if (confirm('Tem certeza que deseja iniciar o segundo tempo?')) {
+                $.post("acoes.php",{acao:"marcar", type: 12, player: 0, match: global_id, field:0, side:0, nome:"", camisa:0, atualiza:0},
+                   function(data)
+                   {
+                        // se nao retornou 1 entao os dados foram enviados
+                        // remove a classe error da div
+                        $("#d").removeClass("error");
+                        // adiciona a classe sucess na div 
+                        $("#d").addClass("sucess");
+                        // insere o conteudo vindo do data.php na div
+                        $("#d").html("Segundo tempo iniciado.");
+                        console.log(data);
+                        //}
+                        // torna a div invisivel
+                        $("#d").css("display","none");
+                        // torna a div visivel usando o efeito show com a slow de parametro
+                        $("#d").show("slow");
+                    }
+                )
             }
         }
         function encerrar() {
            if (confirm('Tem certeza que deseja encerrar esta partida?')) {
-                $.post("acoes.php",{acao: "encerrar",id: global_id, team1: global_team1, team2: global_team2},function(data){});
+                $.post("acoes.php",{acao: "encerrar", match: global_id, copa: global_copa},function(data){
+                        // se nao retornou 1 entao os dados foram enviados
+                        // remove a classe error da div
+                        $("#d").removeClass("error");
+                        // adiciona a classe sucess na div 
+                        $("#d").addClass("sucess");
+                        // insere o conteudo vindo do data.php na div
+                        $("#d").html("Partida encerrada com sucesso!");
+                        console.log(data);
+                        //}
+                        // torna a div invisivel
+                        $("#d").css("display","none");
+                        // torna a div visivel usando o efeito show com a slow de parametro
+                        $("#d").show("slow");
+                    });
             }
+        }
+        function encerrar_wo(perdedor_wo){
+            $.post("acoes.php",{acao: "encerrar_wo", match: global_id, copa: global_copa, perdedor_wo: perdedor_wo},function(data){}); 
+            encerrar();
         }
     </script>
 </body>

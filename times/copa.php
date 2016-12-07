@@ -9,44 +9,49 @@
         $_SESSION["error1"] = "Please Sign in";
         header("Location: index.php");
     }
-    $id = $_GET['id'];
-    $copa = 1; // atualizar ao escalar
+    $copa = $_GET['id'];
+
+    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM cups where id='$copa'");
+    $dados = mysqli_fetch_assoc($sqlgeral);
     
+    $sql_max = mysqli_query($mysqli,"select MAX(DATE_FORMAT(m.datetime,'%Y-%m-%d')) as data from matches m where cup_id = '$copa';");
+    $max = mysqli_fetch_assoc($sql_max)['data'];
+
+    $sql_min = mysqli_query($mysqli,"select MIN(DATE_FORMAT(m.datetime,'%Y-%m-%d')) as data from matches m where cup_id = '$copa';");
+    $min = mysqli_fetch_assoc($sql_min)['data'];
+
     $data = $_GET['data'];
     //Data da última partida
     if ($data == null){
-        $sql_data = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = 1 and datetime <= now() and cup_id = 1 order by datetime DESC LIMIT 1;");
+        $sql_data = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$copa' and datetime <= now() order by datetime DESC LIMIT 1;");
         $data = mysqli_fetch_assoc($sql_data)['data'];
+        if($data == null){
+            $data = $min;
+        }
     }
     $mons = array(1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril", 5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto", 9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro");
     $month = date_parse_from_format('Y-m-d', $data)['month'];
     $month_name = $mons[$month];
     $day = date_parse_from_format('Y-m-d', $data)['day'];
 
-    $sql_fase = mysqli_query($mysqli,"select name from cup_phases where cup_id = 1 and start_date <= '$data' order by start_date DESC limit 1");
+    $sql_fase = mysqli_query($mysqli,"select name from cup_phases where cup_id = '$copa' and start_date <= '$data' order by start_date DESC limit 1");
     $fase = mysqli_fetch_assoc($sql_fase)['name'];
 
-    $sql_last = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = 1 and datetime <= '$data' and cup_id = 1 order by datetime DESC LIMIT 1;");
+    $sql_last = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$copa' and datetime <= '$data' and cup_id = '$copa' order by datetime DESC LIMIT 1;");
     $last = mysqli_fetch_assoc($sql_last)['data'];
 
-    $sql_next = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = 1 and DATE_FORMAT(m.datetime,'%Y-%m-%d') > '$data' and cup_id = 1 order by datetime LIMIT 1;");
+    $sql_next = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$copa' and DATE_FORMAT(m.datetime,'%Y-%m-%d') > '$data' and cup_id = '$copa' order by datetime LIMIT 1;");
     $next = mysqli_fetch_assoc($sql_next)['data'];
 
-    $sql_max = mysqli_query($mysqli,"select MAX(DATE_FORMAT(m.datetime,'%Y-%m-%d')) as data from matches m where cup_id = 1;");
-    $max = mysqli_fetch_assoc($sql_max)['data'];
-
-    $sql_min = mysqli_query($mysqli,"select MIN(DATE_FORMAT(m.datetime,'%Y-%m-%d')) as data from matches m where cup_id = 1;");
-    $min = mysqli_fetch_assoc($sql_min)['data'];
-
     // Total de jogadores
-    $sqlcount_players = mysqli_query($mysqli,"SELECT count(*) as total FROM players  where players_team_id > 9 and players_team_id < 24");
+    $sqlcount_players = mysqli_query($mysqli,"SELECT count(*) as total FROM players  where players_team_id in (select id_teams from teams where cup_id = '$copa')");
     $count_players = mysqli_fetch_assoc($sqlcount_players);
 
     // Total de partidas gravadas
     $sqlcount_videos = mysqli_query($mysqli,"SELECT count(*) as total FROM matches where match_video_id is not null and cup_id = '$copa'");
     $count_videos = mysqli_fetch_assoc($sqlcount_videos);
     // Total de marcações
-    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays p join teams t on t.`teams_name` = p.`teams_name` where available in (1,2) and id_teams between 9 and 24;");
+    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays p join teams t on t.`teams_name` = p.`teams_name` where available in (1,2) and id_teams in (select id_teams from teams where cup_id = '$copa');");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     
         // PAGINATION
@@ -54,7 +59,7 @@
         $limit = 3;
         $pages = ceil($total / $limit);
 
-        $sqlcount_inicio = mysqli_query($mysqli,"select round(count(1) / 6) as inicio from matches where cup_id = 1 and datetime < now()");
+        $sqlcount_inicio = mysqli_query($mysqli,"select round(count(1) / 6) as inicio from matches where cup_id = '$copa' and datetime < now()");
         $count_inicio = mysqli_fetch_assoc($sqlcount_inicio);
         $inicio = $count_inicio['inicio'];
         $page = min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
@@ -92,7 +97,7 @@
     <script src="../../js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../css/sweetalert.css">
     
-    <title>Copa Benteler - EsportesCo</title>
+    <title><?php echo $dados['name']; ?> - EsportesCo</title>
 
    <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -162,12 +167,12 @@
     </section>
     
         <div class="row" style="background-color:#003366; text-align:center; margin:-25px -10px 25px -10px;">
-        <h1 style="color:white; margin-top:5px; font-size: 40px;"><b>15ª COPA</b> <img src="./img/benteler.png" style="width:200px; margin-top:-7px;"></h1><h1 style=" color:white; margin-top:-10px;">de Futebol Society</h1>
+        <h1 style="color:white; margin-top:5px; font-size: 40px;"><b><?php echo $dados['name']; ?></b></h1>
         </div>
     
     
         <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
+            <div class="col-md-6 col-md-offset-3">
             <div class="box" id="class_partidas">
                 <div class="box-header">
                   <h1 class="box-title" style="float:middle;"><?php echo $fase ?></h1>
@@ -183,7 +188,10 @@
                                 SELECT 
                                     m.id, 
                                     m.field_id, 
+                                    f.fields_name,
                                     m.`team1`,
+                                    t1.teams_picture as t1_picture, 
+                                    t2.teams_picture as t2_picture, 
                                     left(t1.`teams_name`,3) as 'team1_name', 
                                     m.`team2`, 
                                     m.`score1`, 
@@ -197,9 +205,10 @@
                                     on m.team1 = t1.`id_teams` 
                                 left join teams as t2 
                                     on m.team2 = t2.id_teams
+                                left join fields as f
+                                    on f.id_fields = m.field_id
                                 where
-                                DATE_FORMAT(m.datetime,'%Y-%m-%d') = '$data'
-                                order by m.datetime");
+                                DATE_FORMAT(m.datetime,'%Y-%m-%d') = '$data' and m.cup_id = '$copa'  order by m.datetime");
 
                             // Bind the query params
                             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -217,7 +226,7 @@
                                      echo '<hr style="margin-top:-2px;"></hr>
                         <div class="row">
                             <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;">
-                                <span style="font-family: Roboto, Arial, serif; font-size:12px;">Campo '.$data5['field_id'].' às '.$data5['hour'].'</span>
+                                <span style="font-family: Roboto, Arial, serif; font-size:12px;">'.$data5['fields_name'].' às '.$data5['hour'].'</span>
                             </div>
                         </div>
                         <div class="row" style="margin-bottom:10px;">
@@ -226,7 +235,7 @@
                                     <div class="col-xs-4" style="text-align:right; padding:0;">
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; margin-right:10px; color:black;">'.$data5['team1_name'].'</span>
                                         
-                                        <img src="./img/equipes/'.$data5['team1'].'.png" style="width:30px; margin-top: -10px; margin-right:5px;">
+                                        <img src="./img/equipes/'.$data5['t1_picture'].'.png" style="width:30px; margin-top: -10px; margin-right:5px;">
                                     </div>
                                 
                                     <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
@@ -241,7 +250,7 @@
                                     </div>
                                     
                                     <div  class="col-xs-4" style="padding:0;">
-                                        <img src="./img/equipes/'.$data5['team2'].'.png" style="width:30px; margin-top: -10px; margin-left:5px">
+                                        <img src="./img/equipes/'.$data5['t2_picture'].'.png" style="width:30px; margin-top: -10px; margin-left:5px">
                                         
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
                                   </div>
@@ -254,10 +263,10 @@
                             }  
                                 
                             // The "back" link
-                            $prevlink = ($data > $min) ? '<a href="?data=' . $last . '#class_partidas" title="Previous page"><span style="color:black; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span></a>' : '<span style="color:white; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span>';
+                            $prevlink = ($data > $min) ? '<a href="?id='.$copa.'&data=' . $last . '#class_partidas" title="Previous page"><span style="color:black; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span></a>' : '<span style="color:white; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span>';
 
                             // The "forward" link
-                            $nextlink = ($data < $max) ? '<a href="?data=' . $next . '#class_partidas" title="Next page"><span style="color:black; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>' : '<span style="color:white; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span>';
+                            $nextlink = ($data < $max) ? '<a href="?id='.$copa.'&data=' . $next . '#class_partidas" title="Next page"><span style="color:black; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>' : '<span style="color:white; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span>';
 
                             // Display the paging information
                             echo '
@@ -277,112 +286,50 @@
         </div>
     
         <div class="row">
+            <?php 
+            $sql_groups = mysqli_query($mysqli,"SELECT distinct(groups) as nome FROM teams where cup_id = $copa");
+             while ($data_grupos = mysqli_fetch_assoc($sql_groups)) {
+                 $nome_grupo = $data_grupos['nome'];
+            echo '
             <div class="col-md-6">
-            <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">Tabela Grupo A</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body no-padding">
-                  <table class="table table-striped">
-                    <tr>
-                      <th style="width: 10px">#</th>
-                      <th>Equipe</th>
-                      <th style="width: 70px">P</th>
-                      <th style="width: 70px">J</th>
-                      <th style="width: 70px">V</th>
-                      <th style="width: 70px">E</th>
-                      <th style="width: 70px">D</th>
-                      <th style="width: 70px">SG</th>
-                    </tr>
-                        <?php $sqlgrupoa = mysqli_query($mysqli,"SELECT * FROM teams where cup_id = 1 and groups = 'A' order by points DESC, goals_balance DESC");
-                        $posicao = 1;
-                    while ($data4 = mysqli_fetch_assoc($sqlgrupoa)) {
-                    echo '
-                    <tr>
-                      <td>'.$data4['rank'].'</td>
-                      <td><a href="./index.php?id=' . $data4['id_teams'] . '"><span style="font-family: \'Source Sans Pro\', Arial, serif; font-size:16px; color:black;">'.$data4['teams_name'].'</span></a></td>
-                      <td><b>'.$data4['points'].'</b></td>
-                      <td>'.$data4['matches'].'</td>
-                      <td>'.$data4['victories'].'</td>
-                      <td>'.$data4['draws'].'</td>
-                      <td>'.$data4['losses'].'</td>
-                      <td>'.$data4['goals_balance'].'</td>
-                    </tr>';
-                    $posicao = $posicao+1;}?>
-                  </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div>
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Tabela Grupo ' .$nome_grupo. '</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body no-padding">
+                      <table class="table table-striped">
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>Equipe</th>
+                          <th style="width: 70px">P</th>
+                          <th style="width: 70px">J</th>
+                          <th style="width: 70px">V</th>
+                          <th style="width: 70px">E</th>
+                          <th style="width: 70px">D</th>
+                          <th style="width: 70px">SG</th>
+                        </tr>';
+                        $sqltimes = mysqli_query($mysqli,"SELECT * FROM teams where cup_id = '$copa' and groups = '$nome_grupo' order by points DESC, goals_balance DESC");
             
-            <div class="col-md-6">
-            <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">Tabela Grupo B</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body no-padding">
-                  <table class="table table-striped">
-                    <tr>
-                      <th style="width: 10px">#</th>
-                      <th>Equipe</th>
-                      <th style="width: 70px">P</th>
-                      <th style="width: 70px">J</th>
-                      <th style="width: 70px">V</th>
-                      <th style="width: 70px">E</th>
-                      <th style="width: 70px">D</th>
-                      <th style="width: 70px">SG</th>
-                    </tr>
-                        <?php $sqlgrupob = mysqli_query($mysqli,"SELECT * FROM teams where  cup_id = 1 and groups = 'B' order by points DESC, goals_balance DESC");
-                       $posicao = 1;
-                    while ($data5 = mysqli_fetch_assoc($sqlgrupob)) {
-                    echo '
-                    <tr>
-                      <td>'.$data5['rank'].'</td>
-                      <td><a href="./index.php?id=' . $data5['id_teams'] . '"><span style="font-family: \'Source Sans Pro\', Arial, serif; font-size:16px; color:black;">'.$data5['teams_name'].'</span></a></td>
-                      <td><b>'.$data5['points'].'</b></td>
-                      <td>'.$data5['matches'].'</td>
-                      <td>'.$data5['victories'].'</td>
-                      <td>'.$data5['draws'].'</td>
-                      <td>'.$data5['losses'].'</td>
-                      <td>'.$data5['goals_balance'].'</td>
-                    </tr>';
-                    $posicao = $posicao+1;}?>
-                  </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div>
-        </div>
+                        while ($data4 = mysqli_fetch_assoc($sqltimes)) {
+                        echo '
+                        <tr>
+                          <td>'.$data4['rank'].'</td>
+                          <td><a href="./index.php?id=' . $data4['id_teams'] . '"><span style="font-family: \'Source Sans Pro\', Arial, serif; font-size:16px; color:black;">'.$data4['teams_name'].'</span></a></td>
+                          <td><b>'.$data4['points'].'</b></td>
+                          <td>'.$data4['matches'].'</td>
+                          <td>'.$data4['victories'].'</td>
+                          <td>'.$data4['draws'].'</td>
+                          <td>'.$data4['losses'].'</td>
+                          <td>'.$data4['goals_balance'].'</td>
+                        </tr>';
+                        }
+                        echo '
+                      </table>
+                    </div>
+                </div>
+            </div>';}
+                ?>
     
-    <!--
-    <div class="row">
-        
-        <div class="col-md-6">
-                <?php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id > 9 and type = 'm' order by date DESC LIMIT 1");
-                    while ($data3 = mysqli_fetch_assoc($sqlpartida)) {
-                    echo '
-                    <form name="f" id="f" onSubmit="return false">
-                    <input type="hidden" name="video" value="' . $data3['webaddress'] . '">
-                    <input type="hidden" id="'.$data3['webaddress'].'_equip" name="equipe" value="' . $id . '">
-                    
-                        <div style="width: 100%; margin:10px auto; 20px; auto;" ><iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </form>';}?>
-        </div>
-        
-        <div class="col-md-6">
-                <?php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM videos where team_id > 9 and type = 't' order by date DESC LIMIT 1");
-                    while ($data3 = mysqli_fetch_assoc($sqlpartida)) {
-                    echo '
-                    <form name="f" id="f" onSubmit="return false">
-                    <input type="hidden" name="video" value="' . $data3['webaddress'] . '">
-                    <input type="hidden" id="'.$data3['webaddress'].'_equip" name="equipe" value="' . $id . '">
-                    
-                        <div style="width: 100%; margin:10px auto; 20px; auto;" ><iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $data3['webaddress'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </form>';}?>
-        </div>
-    </div>-->
-    
-    <div class="row">    
          <div class="col-md-6">
                        <div class="box">
                 <div class="box-header with-border">
@@ -396,7 +343,7 @@
                       <th>Equipe</th>
                       <th style="width: 50px; height:57px;">Gols</th>
                     </tr>
-                    <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where p.goals > 0 order by p.goals DESC LIMIT 10");
+                    <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where players_team_id in (select id_teams from teams where cup_id = '$copa') order by p.goals DESC LIMIT 3");
                         $posicao = 1;
                     while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
                     echo '
@@ -412,8 +359,8 @@
               </div><!-- /.box -->
         </div><!-- /.col --> 
         
-    <div class="col-md-6">
-                       <div class="box">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="box">
                 <div class="box-header with-border">
                   <h3 class="box-title">Equipe Menos Vazada</h3>
                 </div>
@@ -422,22 +369,24 @@
                     <tr>
                       <th style="width: 10px">#</th>
                       <th>Nome</th>
+                      <th style="width: 50px">Jogos</th>
                       <th style="width: 50px">Gols Sof.</th>
                     </tr>
-                    <?php $sqldefesa = mysqli_query($mysqli,"select id_teams, teams_name, goals_taken from teams where cup_id = 1 and id_teams in (12, 13, 17, 22) order by goals_taken LIMIT 10");
+                    <?php $sqldefesa = mysqli_query($mysqli,"select id_teams, teams_name, goals_taken, matches from teams where cup_id = '$copa' order by matches DESC, goals_taken LIMIT 5");
                         $posicao = 1;
                     while ($data8 = mysqli_fetch_assoc($sqldefesa)) {
                     echo '
                     <tr>
                       <td>'.$posicao.'</td>
                       <td><a href="./index.php?id='.$data8['id_teams'].'"><span style="color:black;">'.$data8['teams_name'].'<span></a></td>
+                      <td><span>'.$data8['matches'].'</span></td>
                       <td><span>'.$data8['goals_taken'].'</span></td>
                     </tr>';
                     $posicao = $posicao+1;}?>
                   </table>
                 </div>
               </div>
-        </div><!-- /.col --> 
+        </div>
     </div>
     
     <div class="row" style="margin-top:15px;">
@@ -510,76 +459,6 @@
         $('.nav-tabs a').on('shown.bs.tab', function (e) {
             window.location.hash = e.target.hash;
         })
-        //import YouTube API script
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        
-         //create the YouTube Player
-          var player;
-
-          function onYouTubeIframeAPIReady() {
-            console.log("API  is Ready");
-            player = new YT.Player("video_iframe", { 
-            events : {
-              'onReady': onPlayerReady(),
-              'onStateChange': onStateChangeEvent()
-              } 
-            });
-          }
-          function onPlayerReady() {
-            console.log("My plaer is onReady" );
-
-          }
-          function onStateChangeEvent(){
-            setInterval(function(){
-               var time = player.getCurrentTime();
-              //var volume = player.getVolume();
-              console.log("Get Current Time: " + time);
-            },1000); 
-
-          }
-        
-    function marcacao(strVideo, camp_esq) {
-        var time = player.getCurrentTime();
-        if (time < 9){
-            swal("Não foi possível identificar o momento.", "Pressione o botão apenas quando assistir algum lance no vídeo acima.", "warning");
-        } else{
-        var hours = parseInt( time / 3600 ) % 24;
-        var minutes = parseInt( time / 60 ) % 60;
-        var seconds = (time % 60).toFixed(0);
-        var strMomento = hours+":"+minutes+":"+seconds;
-        
-        swal("Marcação Realizada em "+strMomento, "Vídeo em processamento. Isso pode levar alguns minutos.", "success");
-        
-        $.post("acoes.php",{acao: "marcar",video: strVideo, momento: strMomento, radio_campo: camp_esq, jogada: 0, equipe: document.getElementById(strVideo + "_equip").value},function(data){});    
-        }
-    }
-        
-    function estatisticas(strVideo) {
-        swal("Categorização realizada!", "As estatísticas dos jogadores envolvidos estão sendo atualizadas.", "success");
-        
-        var craq = document.getElementById(strVideo + "_craq");
-        var strCraq = craq.options[craq.selectedIndex].value;
-        var assist = document.getElementById(strVideo + "_assist");
-        var strAssist = assist.options[assist.selectedIndex].value;
-        var tipo = document.getElementById(strVideo + "_tipo");
-        var strTipo = tipo.options[tipo.selectedIndex].value;
-        
-        $.post("acoes.php",{acao: "estatisticas",video: strVideo, craque: strCraq, assistencia: strAssist, tipo: strTipo, time: <?php echo $id?>},function(data){});
-        $(document.getElementById(strVideo)).hide(500);
-    }
-        
-    function deletar(strVideo) {
-       if (confirm('Tem certeza que deseja deletar esta marcação?')) {
-            $(document.getElementById(strVideo)).hide(500);
-            $.post("acoes.php",{acao: "deletar",video: strVideo},function(data){});
-        }
-    }
-    function toggleDiv(divId) {
-       $("#"+divId).toggle(500);
-    }
     </script>
 </body>
 

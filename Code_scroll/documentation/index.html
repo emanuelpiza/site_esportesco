@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6 ie-lt10 ie-lt9 ie-lt8 ie-lt7 no-js" lang="en"><![endif]-->
+<!--[if IE 7 ]><html class="ie ie7 ie-lt10 ie-lt9 ie-lt8 no-js" lang="en"><![endif]-->
+<!--[if IE 8 ]><html class="ie ie8 ie-lt10 ie-lt9 no-js" lang="en"><![endif]-->
+<!--[if IE 9 ]><html class="ie ie9 ie-lt10 no-js" lang="en"><![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+  <title>Scroll - Document</title>
+  <link type='text/css' href='css/bootstrap.min.css' rel='stylesheet'>
+  <link type='text/css' href='css/style.css' rel='stylesheet'>
+  <!--[if lt IE 9]>
+  <script type="text/javascript" src="js/ie/html5shiv.min.js"></script>
+  <![endif]-->
+  </head>
+  <body data-spy="scroll" data-target="#scroll-spy">
+
+  <div class="page-wrapper">
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-3" id="scroll-spy">
+        <ul class="nav nav-stacked sidebar-nav affix" id="sidebar-affix">
+
+          <li>
+            <a href="#intro">intro</a>
+            <ul class="nav">
+              <li><a href="#feature">feature</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="#start">getting started</a>
+            <ul class="nav">
+              <li><a href="#file">file structure</a></li>
+              <li><a href="#install">installation</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#basic">Basic</a>
+            <ul class="nav">
+              <li><a href="#preloader">Preloader</a></li>
+              <li><a href="#font">Font</a></li>
+              <li><a href="#icon-font">Icon Font</a></li>
+              <li><a href="#color">Color</a></li>
+              <li><a href="#logo">Logo</a></li>
+              <li><a href="#content">Title and Content</a></li>
+              <li><a href="#animation">Animation Delay</a></li>
+              <li><a href="#menu-bg">menu background</a></li>
+              <li><a href="#menu-text">menu text and anchor</a></li>
+              <li><a href="#side">Side Nav</a></li>
+              <li><a href="#countdown">Countdown</a></li>
+              <li><a href="#add-remove">Add / Remove Section</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="#background">Background</a>
+            <ul class="nav">
+              <li><a href="#static-background">Static Background</a></li>
+              <li><a href="#single-background">Single Static Background</a></li>
+              <li><a href="#slideshow-background">Slideshow Background</a></li>
+              <li><a href="#video-background">Video Background</a></li>
+              <li><a href="#bg-overlay">background overlay</a></li>
+              <li><a href="#audio">Audio</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#skill-bar">skill bar</a></li>
+          <li><a href="#work">work</a></li>
+          <li><a href="#pricing">pricing</a></li>
+          <li><a href="#social">Social</a></li>
+          <li><a href="#contact">contact</a></li>
+          <li><a href="#subscribe">subscribe</a></li>
+          <li><a href="#mailchimp">mailchimp</a></li>
+          <li><a href="#credits">Credits</a></li>
+          <li><a href="#history">History</a></li>
+          
+
+        </ul>
+      </div>
+
+      <div class="col-md-9">
+
+        <div class="doc-section" id="intro">
+          <img src="img/thumb.jpg" class="thumb">
+          <h2 id="intro">intro</h2>
+          <p>First of all, thanks for choose our item, this document will help you customization the item, if you need any help, please contact us by email bonefishcode@gmail.com , free support</p>
+          <p>Some of effect wont active at old broswer and mobile, will replace with other function, for example video will replace with a image on mobile</p>
+        </div>
+
+        <div class="doc-section" id="feature">
+          <h2>feature</h2>
+          <ul>
+            <li>Build with Bootstrap 3.3.4</li>
+            <li>HTML5 valid clean code</li>
+            <li>Fully Responsive</li>
+            <li>Cross browser support from IE9+</li>
+            <li>config js file</li>
+            <li>FontAwesome font icon</li>
+            <li>4 style header background (all demo image and video not include at template file)</li>
+            <li>Static section image background</li>
+            <li>Static single image background</li>
+            <li>Slideshow background with animate and static fade /* disable animate on mobile/table */</li>
+            <li>Youtube video background with control /* show image on mobile/table */</li>
+            <li>Overlay</li>
+            <li>Background music /* play with a button on mobile/table */</li>
+            <li>Switch to other header style, just one value at config js file</li>
+            <li>Simple countdown</li>
+            <li>Mailchimp ready</li>
+            <li>Working contact form</li>
+            <li>Working subscribe form (auto enable if you disable mailchimp function)</li>
+            <li>Some function disable on mobile/table for better Performance, page wont show down mobile/table</li>
+            <li>Alot of options, very easy customize</li>
+          </ul>
+        </div>
+
+        <div class="doc-section" id="start">
+          <h2>getting started</h2>
+          <p class="notice success">setting true = enable, false = disable</p>
+        </div>
+
+        <div class="doc-section" id="file">
+          <h2>file structure</h2>
+          <p>Item come with 4 version with alot of custom setting, choose your version to start by folder name below</p>
+          <ul>
+            <li>documentation - help document</li>
+            <li>static - static background</li>
+            <li>single-static - single static background</li>
+            <li>slideshow - slideshow background</li>
+            <li>video - youtube video background</li>
+          </ul>
+          <p>inside each version folder have below file</p>
+          <ul>
+            <li>audio - audio file (not include)</li>
+            <li>css - style file</li>
+            <li>fonts - font</li>
+            <li>img - image</li>
+            <li>js - javescript file</li>
+            <li>php - working contact form and subscribe form</li>
+            <li>index.html - main html file</li>
+          </ul>
+          <p class="notice success">you can switch to any version at anytime by change some of variable</p>
+        </div>
+
+        <div class="doc-section" id="install">
+          <h2>installation</h2>
+          <p>choose one version first, then open <code>index.html</code> find</p>
+          <pre class="brush: html">
+            <meta name="description" content="">
+            <meta name="keywords" content="">
+            <meta name="author" content="">
+            <title>WEB_SITE_TITLE_HERE</title> <!-- website title -->
+          </pre>
+          <p>edit above code for seo, for example</p>
+          <pre class="brush: html">
+            <meta name="description" content="we offer web development and graphic design services for business">
+            <meta name="keywords" content="web development, graphic design">
+            <meta name="author" content="bonefishcode">
+            <title>Bonefish Code - Web Development and Graphic Design</title>
+          </pre>
+        </div>
+
+        <div class="doc-section" id="basic">
+          <h2>basic</h2>
+        </div>
+
+        <div class="doc-section" id="preloader">
+          <h2>preloader</h2>
+          <p>open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __preloaderFadeOut = 1200; // fadeout
+            var __preloaderDelay = 800; // delay
+          </pre>
+          <p>change the preloader time, for preloader image, open <code>css/style.css</code> find</p>
+          <pre class="brush: css">
+            background: #000; /* preloader background color */
+          </pre>
+          <p>change preloader background color</p>
+          <p>and find</p>
+          <pre class="brush: css">
+            #preloader-img {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              background: url("../img/preloader.gif") no-repeat center; /* preloader image */
+              width: 60px; /* preloader image width */
+              height: 60px; /* preloader image height */
+              margin-top: -30px; /* half of preloader image height */
+              margin-left: -30px; /* half of preloader image width */
+            }
+          </pre>
+          <p>preloader image place at <code>img/preloader.gif</code>, follow above comment to change the preloader image size, for example if your preloader image is 100 width, 260 height, then change css like below</p>
+          <pre class="brush: css">
+              background: url("../img/preloader.gif") no-repeat center; /* preloader image */
+              width: 100px; /* preloader image width */
+              height: 260px; /* preloader image height */
+              margin-top: -50px; /* half of preloader image height */
+              margin-left: -130px; /* half of preloader image width */
+            }
+          </pre>
+        </div>
+
+        <div class="doc-section" id="font">
+          <h2>font</h2>
+          <p>template use 3 font style, open <code>css/style.css</code> find</p>
+          <pre class="brush: css">
+            /* google font */
+            @import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800");
+            @import url("http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,300,700");
+            /* /google font */
+          </pre>
+          <p>edit google font if need, and search <code>style.css</code> find below font name to change</p>
+          <pre class="brush: css">
+            "Open Sans"
+            "Roboto Condensed"
+            Georgia
+          </pre>
+        </div>
+
+        <div class="doc-section" id="icon-font">
+          <h2>icon font</h2>
+          <p>template use two icon font</p>
+          <p>for font icon list please view <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank">font awesome</a>, contact us if you need any support, thanks :)</p>
+        </div>
+
+        <div class="doc-section" id="color">
+          <h2>color</h2>
+          <p>template style is dark background, so we choose white color for font, if you want custom other color, please follow below step</p>
+          <p>open <code>css/color.css</code> you will see some of style for color and background, we have comment it, edit it or create a new css file to add style</p>
+        </div>
+
+        <div class="doc-section" id="logo">
+          <h2>logo</h2>
+          <p>place logo at <code>img/logo.png</code> height is 50px, max-height is 80px</p>
+          <p>if logo height not 50px, for example, 70px, open <code>css/style.css</code> find</p>
+          <pre class="brush: css">
+            .logo {
+              position: fixed;
+              top: 15px;
+              left: 15px;
+              height: 50px;
+              z-index: 1000;
+              display: block;
+            }
+          </pre>
+          <p>change to</p>
+          <pre class="brush: css">
+            .logo {
+              position: fixed;
+              top: 5px;
+              left: 5px;
+              height: 70px;
+              z-index: 1000;
+              display: block;
+            }
+          </pre>
+          <p class="notice danger">logo max-height is 80px, so 70px + 5px + 5px = 80px</p>
+        </div>
+
+        <div class="doc-section" id="content">
+          <h2>title and content</h2>
+          <p>to change title and content, open <code>index.html</code> search the text you want to change, edit it direct</p>
+        </div>
+
+        <div class="doc-section" id="animation">
+          <h2>animation delay</h2>
+          <p>open<code>index.html</code> find</p>
+          <pre class="brush: html">
+            data-delay=
+          </pre>
+          <p>you will find result more than one at each section</p>
+          <p>you can change the delay time, for example</p>
+          <pre class="brush: html">
+            data-delay="300"
+          </pre>
+          <p>each section first animate element start from deta-delay="0" , i add 50+ delay per element, to add element delay, element need a class name <code>animate</code> and a data name <code>data-delay=""</code>, to remove delay just set delay to 0</p>
+          <p>do not set delay too high, max delay time about 500 for better fadein timing</p>
+        </div>
+
+        <div class="doc-section" id="menu-bg">
+          <h2>menu background</h2>
+          <p>to cahnge menu background and overlay, open <code>css/color.css</code> find</p>
+          <pre class="brush: js">
+            .nav-menu{
+              background: url(../img/bg/menu.jpg) no-repeat center center / cover; /* menu background */
+            }
+
+            .nav-menu:before {
+              background: rgba(0, 0, 0, 0.55); /* menu overlay background */
+            }
+          </pre>
+          <p>we have comment the code, normally dont need change the image path, just replace the image with same name, to change overlay, change the <code>:before</code> rgba value, last number is opacity, to disable overlay, set to 0, set highter number for more dark, the opacity valus from 0 to 1</p>
+          <p></p>
+        </div>
+
+        <div class="doc-section" id="menu-text">
+          <h2>menu text and anchor</h2>
+          <p>to cahnge menu text, open <code>index.html</code> find</p>
+          <pre class="brush: js">
+            <ul id="menu">
+              <li data-menuanchor="home-section" class="active"><a href="#home-section">Home</a></li> <!-- home -->
+              <li data-menuanchor="about-section"><a href="#about-section">About</a></li> <!-- about -->
+              <li data-menuanchor="service-section"><a href="#service-section">Service</a></li> <!-- service -->
+              <li data-menuanchor="work-section"><a href="#work-section">Work</a></li> <!-- work -->
+              <li data-menuanchor="pricing-section"><a href="#pricing-section">Pricing</a></li> <!-- pricing -->
+              <li data-menuanchor="contact-section"><a href="#contact-section">Contact</a></li> <!-- contact -->
+            </ul>
+          </pre>
+          <p>edit the menu text direct, and when scroll page, url will cahnge, that what anchor function doing, to change the anchor name please edit <code>data-menuanchor="home-section"</code> and <code>href="#home-section"</code> with same valus, and remember the valus can not same as other element name or id, for example i dont like the home name, i want home section change to intro section</p>
+          <p>change from</p>
+          <pre class="brush: html">
+              <li data-menuanchor="home-section" class="active"><a href="#home-section">Home</a></li> <!-- home -->
+          </pre>
+          <p>change to</p>
+          <pre class="brush: html">
+              <li data-menuanchor="intro-section" class="active"><a href="#intro-section">Intro</a></li> <!-- intro -->
+          </pre>
+          <p>and first <code>li</code> have <code>class="active"</code>, dont miss it :)</p>
+          <p class="notice danger">be careful, wrong data-menuanchor setting will stop the page run, contact us for support</p>
+        </div>
+
+        <div class="doc-section" id="side">
+          <h2>side nav</h2>
+          <p>side nav disable on mobile, for desktop, open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __navigationToggle = true; // side nav toggle
+          </pre>
+        </div>
+
+        <div class="doc-section" id="countdown">
+          <h2>countdown</h2>
+          <p>open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __countdown = true; // countdown toggle
+            var __countdownDate = '12/24/2015 23:59:59'; // countdown date
+            var __countdownTimezone = '-8'; // timezone
+          </pre>
+          <p>follow the comment to set countdown time, remember set the timezone :) false to disable countdown</p>
+        </div>
+
+        <div class="doc-section" id="add-remove">
+          <h2>add section</h2>
+          <p>if need to add a custom section</p>
+          <p>open <code>index.html</code> find</p>
+          <pre class="brush: html">
+            <!-- menu -->
+            <ul id="menu">
+              <li data-menuanchor="home-section"><a href="#home-section">Home</a></li> <!-- home -->
+              <li data-menuanchor="about-section"><a href="#about-section">About</a></li> <!-- about -->
+              <li data-menuanchor="service-section"><a href="#service-section">Service</a></li> <!-- service -->
+              <li data-menuanchor="work-section"><a href="#work-section">Work</a></li> <!-- work -->
+              <li data-menuanchor="pricing-section"><a href="#pricing-section">Pricing</a></li> <!-- pricing -->
+              <li data-menuanchor="contact-section"><a href="#contact-section">Contact</a></li> <!-- contact -->
+            </ul>
+            <!-- /menu -->
+          </pre>
+          <p>for example, we need add a section name call <code>promote</code>, first add it to menu, if we want <code>promote</code> at 2nd section, change above code menu to</p>
+          <pre class="brush: html">
+            <!-- menu -->
+            <ul id="menu">
+              <li data-menuanchor="home-section"><a href="#home-section">Home</a></li> <!-- home -->
+              <li data-menuanchor="promote-section"><a href="#promote-section">Promote</a></li> <!-- we add promote at 2nd section-->
+              <li data-menuanchor="about-section"><a href="#about-section">About</a></li> <!-- about -->
+              <li data-menuanchor="service-section"><a href="#service-section">Service</a></li> <!-- service -->
+              <li data-menuanchor="work-section"><a href="#work-section">Work</a></li> <!-- work -->
+              <li data-menuanchor="pricing-section"><a href="#pricing-section">Pricing</a></li> <!-- pricing -->
+              <li data-menuanchor="contact-section"><a href="#contact-section">Contact</a></li> <!-- contact -->
+            </ul>
+            <!-- menu -->
+          </pre>
+          <p>now we add the section after <code>home</code> section, find</p>
+          <pre class="brush: html">
+            <!-- home end -->
+          </pre>
+          <p>add below code after it</p>
+          <pre class="brush: html">
+            <!-- promote start -->
+            <div class="section" id="promote">
+              <div class="section-entry">
+                <!-- build a new layout here -->
+              </div>
+            </div>
+            <!-- promote end -->
+          </pre>
+          <p>build a new layout from above code, or use below basic layout code</p>
+          </pre>
+          <pre class="brush: html">
+            <!-- promote start -->
+            <div class="section" id="promote">
+              <div class="section-entry">
+                <div class="section-heading">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-12"> <!-- bootstrap col -->
+                        <h1 class="section-title animate"
+                        data-delay="0"> <!-- first element delay = 0 -->
+                          Title
+                        </h1>
+                        <p class="section-sub-title animate"
+                        data-delay="50"> <!-- 2nd element delay + 50 = 50 -->
+                          Subtitle
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="section-content">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-12"> <!-- bootstrap col -->
+                        Content
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- promote end -->
+          </pre>
+          <h2>remove section</h2>
+          <p>if need to remove a section</p>
+          <p>for example, we need to remove <code>home</code> section, open <code>index.html</code> find</p>
+          <pre class="brush: html">
+            <!-- menu -->
+            <ul id="menu">
+              <li data-menuanchor="home-section"><a href="#home-section">Home</a></li> <!-- home -->
+              <li data-menuanchor="about-section"><a href="#about-section">About</a></li> <!-- about -->
+              <li data-menuanchor="service-section"><a href="#service-section">Service</a></li> <!-- service -->
+              <li data-menuanchor="work-section"><a href="#work-section">Work</a></li> <!-- work -->
+              <li data-menuanchor="pricing-section"><a href="#pricing-section">Pricing</a></li> <!-- pricing -->
+              <li data-menuanchor="contact-section"><a href="#contact-section">Contact</a></li> <!-- contact -->
+            </ul>
+            <!-- /menu -->
+          </pre>
+          <p>cahnge to below code</p>
+          <pre class="brush: html">
+            <!-- menu -->
+            <ul id="menu">
+              <li data-menuanchor="about-section"><a href="#about-section">About</a></li> <!-- about -->
+              <li data-menuanchor="service-section"><a href="#service-section">Service</a></li> <!-- service -->
+              <li data-menuanchor="work-section"><a href="#work-section">Work</a></li> <!-- work -->
+              <li data-menuanchor="pricing-section"><a href="#pricing-section">Pricing</a></li> <!-- pricing -->
+              <li data-menuanchor="contact-section"><a href="#contact-section">Contact</a></li> <!-- contact -->
+            </ul>
+            <!-- /menu -->
+          </pre>
+          <p><code>home</code> menu have been deleted</p>
+          <p>now we going delete the home section content, find</p>
+          <pre class="brush: html">
+            <!-- home start -->
+            .
+            .
+            .
+            <!-- home end -->
+          </pre>
+          <p>delete all code inside the tag, finish</p>
+        </div>
+
+        <div class="doc-section" id="background">
+          <h2>background and overlay</h2>
+          <p>item come with 4 header version</p>
+        </div> 
+
+        <div class="doc-section" id="static-background">
+          <h2>static background</h2>
+          <p>open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __staticBackground = true; // set background image by css
+            var __videoHeader = false; // video background toggle
+            var __slideshowHeader = false; // image background toggle
+          </pre>
+          set the config just like above, section static header will be enable
+          <p>for example, we are going change #home section background now, open <code>css/color.css</code> find</p>
+          <pre class="brush: js">
+            #home{
+              background: url(../img/bg/home.jpg) no-repeat center center / cover; /* home background */
+            }
+
+            #home:before {
+              background: rgba(0, 0, 0, 0.55); /* home overlay background */
+            }
+          </pre>
+          <p>we have comment the code, normally dont need change the image path, just replace the image with same name, to change overlay, change the <code>:before</code> rgba value, last number is opacity, to disable overlay, set to 0, set highter number for more dark, the opacity valus from 0 to 1</p>
+        </div>
+
+        <div class="doc-section" id="single-background">
+          <h2>single static background</h2>
+          <p>open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __staticBackground = false; // set background image by css
+            var __videoHeader = false; // video background toggle
+            var __slideshowHeader = true; // image background toggle
+          </pre>
+          <p>and find</p>
+          <pre class="brush: js">
+            var __imageNumber = 1; // how many slideshow image to show, 1 for static image
+          </pre>
+          <p>set to 1 mean single image, image place at <code>img/bg-01.jpg</code></p>
+        </div>
+
+        <div class="doc-section" id="slideshow-background">
+          <h2>slideshow background</h2>
+          <p>open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __staticBackground = false; // set background image by css
+            var __videoHeader = false; // video background toggle
+            var __slideshowHeader = true; // image background toggle
+          </pre>
+          <p>set the config just like above</p>
+          <p>and find</p>
+          <pre class="brush: js">
+            var __imageNumber = 3; // how many slideshow image to show, 1 for static image
+          </pre>
+          <p>__imageNumber mean how many slideshow image to show, set to more than 1 mean slideshow enable, image place at <code>img/bg-01.jpg</code> if you need more than one image, place image name as <code>bg-02.jpg</code><code>bg-03.jpg</code><code>bg-04.jpg</code>...<code>bg-10.jpg</code><code>bg-11.jpg</code> something like that :)</p>
+          <p>and find</p>
+          <pre class="brush: js">
+            var __slideshowStatic = false; // true for fade effect slideshow, false for css3 effect slideshow
+            var __slideshowShuffle = false; // random image
+            var __slideshowDelay = 8000; // slideshow delay
+            var __slideshowTransitionDuration = 2500; // transition duration
+            var __slideshowAnimationDuration = 12000; // animation duration, __slideshowDelay + 2000 for better fadeout timing
+          </pre>
+          <p>follow the comment to config slideshow effect, and if you want change the effect, find</p>
+          <pre class="brush: js">
+            var __slideshowAnimationSet = [ // animation effect set
+                    'kenburnsUp',
+                    'kenburnsDown',
+                    'kenburnsLeft',
+                    'kenburnsRight'
+                  ];
+            var __slideshowTransitionSet = [ // transition effect set
+                    'fade'
+                  ];
+          </pre>
+          <p>you can change the effect name, for more info, please view <a href="http://vegas.jaysalvat.com/documentation/transitions/" target="_blank">vegas.js</a>, the page have live demo to show effect and effect name, contact us if you need any help, thanks :)</p>
+        </div>
+
+        <div class="doc-section" id="video-background">
+          <h2>youtube video background</h2>
+          <p>open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __staticBackground = false; // set background image by css
+            var __videoHeader = true; // video background toggle
+            var __slideshowHeader = false; // image background toggle
+          </pre>
+          <p>set the config just like above, video header will be enable</p>
+          <p>and find</p>
+          <pre class="brush: js">
+            var __youtubeUrl = 'https://www.youtube.com/watch?v=ZBVZAeGHIv8'; // youtube video url
+            var __videoStartTime = 1; // video start time, 70 mean 70 seconds
+            var __videoEndTime = 0; // video end time, 180 mean 180 seconds, 0 mean play to end
+            var __videoMute = false; // mute video on start
+          </pre>
+          <p>change the url to your youtube video link, start time and end time 1 mean 1 seconds, video mute mean mute at video start</p>
+          <p>video wont active at mobile, place a image at <code>img/bg/video-mobile.jpg</code> for mobile, and set a image before video loaded, place at <code>img/bg/video-desktop.jpg</code></p>
+        </div>
+
+        <div class="doc-section" id="bg-overlay">
+          <h2>background overlay</h2>
+          <p>to set overlay (not static image version), please open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __overlay = true; // overlay
+          </pre>
+          <p>set true to enable overlay</p>
+          <p>open <code>css/color.css</code> find</p>
+          <pre class="brush: css">
+            .overlay {
+              background: rgba(0, 0, 0, 0.55); /* overlay background color and opacity for non-css background */
+            }
+          </pre>
+          <p>to change overlay, change the rgba value, last number is opacity, to disable overlay, set to 0, set highter number for more dark, the opacity valus from 0 to 1</p>
+        </div>
+
+        <div class="doc-section" id="audio">
+          <h2>audio</h2>
+          <p>open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __audio = false; // audio background toggle
+          </pre>
+          <p>set true to enable background music, audio file place at <code>audio/01.mp3</code>, audio file not include at item</p>
+          <p class="notice danger">audio only active when youtube video background disable, because html5 reason, mobile cant play audio auto start, will play with a button.</p>
+        </div>
+
+        <div class="doc-section" id="skill-bar">
+          <h2>skill bar</h2>
+          <p>open <code>index.html</code> find</p>
+          <pre class="brush: js">
+            <!-- pregress bar -->
+            <div class="progress progress-lite">
+              <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                <h6>HTML <span>90%</span></h6>
+              </div>
+            </div>
+
+            <div class="progress progress-lite">
+              <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                <h6>PHP <span>80%</span></h6>
+              </div>
+            </div>
+
+            <div class="progress progress-lite">
+              <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+                <h6>Javascript <span>85%</span></h6>
+              </div>
+            </div>
+            <!-- /pregress bar -->
+          </pre>
+          <p>edit the skill text direct, 0 and 100 do not need edit, for example</p>
+          <pre class="brush: js">
+            <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+              <h6>Photoshop <span>85%</span></h6>
+            </div>
+          </pre>
+        </div>
+
+        <div class="doc-section" id="work">
+          <h2>work</h2>
+          <p>open <code>index.html</code> find</p>
+          <pre class="brush: html">
+            <!-- work list -->
+            <div class="col-md-4 work-col">
+              <a href="img/work/work-01.jpg" title="title" class="animate"
+              data-delay="100"> <!-- work large image -->
+                <img src="img/work/work-01.jpg" alt="work"> <!-- work thumb image -->
+                <div class="meta">
+                    <h6><span>work-01</span></h6> <!-- work name -->
+                    <span>velit massa</span> <!-- work desc -->
+                </div>
+              </a>
+            </div>
+            <!-- /work list -->
+          </pre>
+          <p>as comment, large image to set a large image for work, thumb image set a small image for work, the work page will show thumb image first, when user click it, large image pop-up, and remember set the link title, image alt and work text</p>
+          <p class="notice danger">recomment thumb size 500px x 500px, all thumb size must same</p>
+        </div>
+
+        <div class="doc-section" id="pricing">
+          <h2>pricing</h2>
+          <p>open <code>index.html</code> find</p>
+          <pre class="brush: html">
+              <!-- pricing table -->
+              <div class="col-md-4">
+                <div class="pricing-table animate"
+                data-delay="100">
+                  <div class="pricing-heading">
+                    <span class="plan">Standard</span>
+                    <span class="price">$29</span>
+                    <span class="sub">/ mo</span>
+                  </div>
+                  <ul>
+                    <li>20 Pages</li>
+                    <li>Personal Support</li>
+                    <li>Map Your Domain</li>
+                    <li>Fully Customize</li>
+                  </ul>
+                  <div class="pricing-footer">
+                    <a href="#" class="btn btn-cs btn-pricing">More Info</a>
+                  </div>
+                </div>
+              </div>
+              <!-- /pricing table -->
+          </pre>
+          <p>change the text direct, add only one <code>active</code> class to pricing table for css effect, just like 2nd pricing table below</p>
+          <pre class="brush: html">
+            class="pricing-table active animate"
+          </pre>
+        </div>
+
+        <div class="doc-section" id="social">
+          <h2>social</h2>
+          <p>open <code>index.html</code> find</p>
+          <pre class="brush: html">
+            <li><a href="#" title="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li> <!-- change the link to social page and edit title-->
+            <li><a href="#" title="twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#" title="google plus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+            <li><a href="#" title="linkedin" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="#" title="behance" target="_blank"><i class="fa fa-behance"></i></a></li>
+          </pre>
+          <p>change the href to your social page and edit the title valus</p>
+        </div>
+
+        <div class="doc-section" id="contact">
+          <h2>contact</h2>
+          <p>open <code>php/contact.php</code> find</p>
+          <pre class="brush: php">
+            $address = 'YOUR_EMAIL_ADDRESS'; // your email address
+          </pre>
+          <p>enter your email address, for example</p>
+          <pre class="brush: php">
+            $address = 'email@example.com'; // your email address
+          </pre>
+        </div>
+
+        <div class="doc-section" id="subscribe">
+          <h2>subscribe (PHP)</h2>
+          <p>open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __mailChimpVersion = false; // mailchimp toggle, if disable, php version will enable
+          </pre>
+          <p>set to false, then php version subscribe form will work</p>
+          <p>open <code>php/subscribe.php</code> find</p>
+          <pre class="brush: php">
+            $address = 'YOUR_EMAIL_ADDRESS'; // your email address
+          </pre>
+          <p>enter your email address, for example</p>
+          <pre class="brush: php">
+            $address = 'email@example.com'; // your email address
+          </pre>
+          <p>when people subscribe, you will get a email</p>
+        </div>
+
+        <div class="doc-section" id="mailchimp">
+          <h2>subscribe (mailchimp)</h2>
+          <ul>
+            <li>1. first you need a mailchimp account, api, and list id, for more info please view http://mailchimp.com/</li>
+            <li>2. and then find your mailchimp form id, login mailchimp, select your list, click Signforms > Embedded forms > find Copy/paste onto your site</li>
+            <li>3. now search</li>
+          </ul>
+          <pre class="brush: html">
+            form action=
+          </pre>
+          <p>you will see something like that</p>
+          <pre class="brush: html">
+            xxx.xxx.list-manage.com/subscribe/post?u=xxxxxx&id=xxxxxx
+          </pre>
+          <p>that link is your mailchimp post url, then next step</p>
+          
+          <p>open <code>js/variable.js</code> find</p>
+          <pre class="brush: js">
+            var __mailChimpVersion = false; // mailchimp toggle, if disable, php version will enable
+            var __mailChimpUrl = 'MAILCHIMP_POST_URL_HERE'; // mailchimp post url
+          </pre>
+          <p>set to true to enable mailchimp subscribe form, then edit the url to your mailchimp post url</p>
+        </div>
+
+        <div class="doc-section" id="credits">
+          <h2>credits</h2>
+          <ul>
+            <li>jquery - http://jquery.com/</li>
+            <li>bootstrap - http://getbootstrap.com/</li>
+            <li>font awesome - http://fortawesome.github.io/Font-Awesome/</li>
+            <li>vegas - http://vegas.jaysalvat.com/</li>
+            <li>downCount - https://github.com/sonnyt/downCount</li>
+            <li>backstretch - https://github.com/srobbin/jquery-backstretch</li>
+            <li>html5shiv - https://github.com/aFarkas/html5shiv</li>
+            <li>jquery.mb.ytplayer - http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer</li>
+            <li>jquery.placeholder - https://github.com/mathiasbynens/jquery-placeholder</li>
+            <li>jquery.fullPage.min - https://github.com/alvarotrigo/fullPage.js</li>
+            <li>jquery.slimscroll.min - https://github.com/rochal/jQuery-slimScroll</li>
+            <li>appear - https://github.com/bas2k/jquery.appear/</li>
+            <li>jquery count to - https://github.com/mhuggins/jquery-countTo</li>
+            <li>jquery.magnific-popup - https://github.com/dimsemenov/Magnific-Popup</li>
+            <li>ajaxchimp - https://github.com/scdoshi/jquery-ajaxchimp</li>
+            <li>jqueryui jquery.easings - http://jqueryui.com/</li>
+            <li>Youtube Video, not include at template file - https://www.youtube.com/watch?v=ZBVZAeGHIv8</li>
+            <li>placehold.it - http://placehold.it/</li>
+            <li>demo audio - https://www.youtube.com/watch?v=9qk-vZ1qicI (not include at template file, please visit the links for more info)</li>
+          </ul>
+          <p>image - not include, for more info about licenses, please view flickr link as below</p>
+          <ul>
+            <li>https://unsplash.com/</li>
+            <li>http://graphicburger.com - mockup image</li>
+            <li>https://www.flickr.com/photos/42843806@N00/8540949104</li>
+            <li>https://www.flickr.com/photos/mrconguito/<li>
+            <li>https://www.flickr.com/photos/99429139@N06/<li>
+            <li>https://www.flickr.com/photos/downhilldom1984/5887638870</li>
+            <li>https://www.flickr.com/photos/pedrosimoes7/10391061166/in/photostream/</li>
+            <li>https://www.flickr.com/photos/magdalenaroeseler/11911419676</li>
+            <li>https://www.flickr.com/photos/42843806@N00/8540949104</li>
+            <li>https://www.flickr.com/photos/nalejandro/16780530325/</li>
+            <li>https://www.flickr.com/photos/sevlaordep/16277752128</li>
+            <li>https://www.flickr.com/photos/paulisson_miura/16476274862</li>
+            <li>https://www.flickr.com/photos/ileohidalgo/8438319727</li>
+          </ul>
+          <p>below image licenses https://creativecommons.org/licenses/by-sa/2.0/</p>
+          <ul>
+            <li>
+            https://www.flickr.com/photos/macabrephotographer/
+            </li>
+          </ul>
+        </div>
+
+        <div class="doc-section" id="history">
+          <h2>history</h2>
+          <p>2015/04/07 - v1.0</p>
+          <ul>
+            <li>initial release</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="col-md-12 footer">
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+
+  <!-- script -->
+  <script type='text/javascript' src='js/jquery-1.11.2.min.js'></script>
+  <script type='text/javascript' src='js/bootstrap.min.js'></script>
+  <!--[if lt IE 10]>
+  <script type='text/javascript' src='js/ie/jquery.placeholder.js'></script>
+  <script type='text/javascript' src='js/ie/ie.js'></script>
+  <![endif]-->
+  <script type='text/javascript' src='js/jquery.easing.1.3.min.js'></script>
+  <script type='text/javascript' src='js/XRegExp.js'></script>
+  <script type='text/javascript' src='js/shCore.js'></script>
+  <script type='text/javascript' src='js/shBrushCss.js'></script>
+  <script type='text/javascript' src='js/shBrushJScript.js'></script>
+  <script type='text/javascript' src='js/shBrushPhp.js'></script>
+  <script type='text/javascript' src='js/shBrushXml.js'></script>
+  <script type='text/javascript' src='js/main.js'></script>
+  <!-- /script -->
+
+  </body>
+</html>

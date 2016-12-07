@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6 ie-lt10 ie-lt9 ie-lt8 ie-lt7 no-js" lang="en"><![endif]-->
+<!--[if IE 7 ]><html class="ie ie7 ie-lt10 ie-lt9 ie-lt8 no-js" lang="en"><![endif]-->
+<!--[if IE 8 ]><html class="ie ie8 ie-lt10 ie-lt9 no-js" lang="en"><![endif]-->
+<!--[if IE 9 ]><html class="ie ie9 ie-lt10 no-js" lang="en"><![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Emanuel Piza" >
+  <title>SportsTech</title> <!-- website title -->
+  <link type='text/css' href='css/bootstrap.min.css' rel='stylesheet'>
+  <link type='text/css' href='css/style.css' rel='stylesheet'>
+  <link type='text/css' href='css/color.css' rel='stylesheet'>
+  <!--[if lt IE 9]>
+  <script type="text/javascript" src="js/ie/html5shiv.min.js"></script>
+  <![endif]-->
+  <link rel="icon" href="img/favicon.ico"> <!-- website icon -->
+</head>
+
+<body class="gutter">
+
+  <div class="overlay"></div> <!-- overlay -->
+  <div class="pattern"></div> <!-- pattern -->
+
+  <!-- preloader -->
+  <div id="preloader">
+    <div id="preloader-img"></div>
+  </div>
+  <!-- /preloader -->
+
+    <nav class="nav-menu">
+      <div class="menu-wrapper">
+
+        <!-- subscribe form --
+        <form id="subscribe-form">
+          <p class="subscribe-heading">Para mais informações, digite seu email ou telefone. Entraremos em contato.</p>
+          <div class="form-group">
+            <div class="input-group">
+              <input type="email" name="email" class="form-control" id="subscribe-email" placeholder="Digite aqui">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-subscribe">
+                  <i class="fa fa-fw fa-paper-plane submit"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+          <label class="subscribe-notice" for="subscribe-email"></label>
+        </form>
+        <!-- /subscribe-form -->
+			
+			<p class="subscribe-heading">Serviço atualmente disponível apenas para grupos que jogam no Campo 1 da Chuteira de Ouro. 
+				Grupos de outras localidades, favor entrar em contato.</p>
+			<!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
+			<form action="https://pagseguro.uol.com.br/v2/pre-approvals/request.html" method="post">
+				<!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
+				<input type="hidden" name="code" value="63FAAEE01D1D316664763F907AD4678D" />
+				<input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/assinaturas/209x48-contratar-assina.gif"
+				 name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+			</form>
+			<!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
+
+        <!-- menu-->
+        <ul id="menu">
+          <li data-menuanchor="home-section"><a href="#home-section">Início</a></li> 
+          <li data-menuanchor="service-section"><a href="#service-section">Outros Esportes</a></li> 
+          <li data-menuanchor="contact-section"><a href="#contact-section">Contato</a></li> 
+        </ul>
+        <!-- /menu -->
+
+      </div>
+    </nav>
+
+   <!-- <img src="img/logo_sports.png" alt="logo" class="logo"> <!-- logo image -->
+
+    <!-- nav toggle -->
+    <div id="nav-toggle">
+      <i class="fa fa-bars"></i>
+    </div>
+    <!-- /nav toggle -->
+
+  <!-- fullpage -->
+  <div id="fullpage">
+
+    <!-- home start -->
+    <div class="section" id="home" data-tooltip="home">
+      <div class="section-entry">
+        <div class="section-heading">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <h1 class="section-title "
+                data-delay="0">
+                  Prepare Seus Equipamentos
+                </h1>
+                <p class="section-sub-title "
+                data-delay="50">
+                 A Tecnologia Está Chegando aos Esportes Amadores e à Chuteira de Ouro.
+                 <li>Grave suas partidas.</li>
+                 <li>Acompanhe jogos ao vivo.</li>
+                 <li>Monte vídeos com seus momentos.</li>
+                </p>
+						<br>
+              </div>
+                <div class="col-md-6">
+              <div>
+      					<style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: 
+							hidden; max-width: 100%; height: auto; } .embed-container iframe, .embed-container 
+							object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style>
+							<div class='embed-container'><iframe src="https://www.youtube.com/embed/ZzcwZkvLYXk" frameborder='0' 
+							allowfullscreen></iframe></div>
+							<br>
+						<div id="saibaMais"> <button type="button" 
+							class="btn btn-success btn-lg" data-delay="50"> Assine agora</button>
+						</div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-content">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <!-- countdown 
+                <ul id="countdown" class="row">
+                  <li class="time-wrap col-xs-6 col-sm-3 animate"
+                  data-delay="100">
+                    <span class="time days">--</span>
+                    <p class="unit" >dias</p>
+                  </li>
+                  <li class="time-wrap col-xs-6 col-sm-3 animate"
+                  data-delay="150">
+                    <span class="time hours">--</span>
+                    <p class="unit" >horas</p>
+                  </li>
+                  <li class="time-wrap col-xs-6 col-sm-3 animate"
+                  data-delay="200">
+                    <span class="time minutes" >--</span>
+                    <p class="unit" >minutos</p>
+                  </li>
+                  <li class="time-wrap col-xs-6 col-sm-3 animate"
+                  data-delay="250">
+                    <span class="time seconds">--</span>
+                    <p class="unit" >segundos</p>
+                  </li>
+                </ul><!-- /countdown -->
+						
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- home end -->
+
+    <!-- service start -->
+    <div class="section" id="service">
+      <div class="section-entry">
+        <div class="section-heading">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <h2 class="section-title animate"
+                data-delay="0" style="color:#fa225b;">
+                  Esportes
+                </h2>
+              </div>
+              <div class="col-md-6">
+                <p class="section-sub-title animate"
+                data-delay="50">
+                  Veja como a tecnologia pode mudar a forma como praticamos esportes:
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-content text-center">
+          <div class="container">
+            <div class="row gutter-row">
+
+              <!-- service list -->
+              <div class="col-md-4 service-col animate"
+              data-delay="100">
+                <div class="service-grid">
+                  <div class="service-icon">
+                    <i class="fa fa-futbol-o"></i>
+                  </div>
+                  <a href="./ps/index.php" target="_blank"><h3 class="service-title">
+                    Futebol Society
+                  </h3></a>
+                  <p class="service-content">
+                    Duas câmeras por campo, registrando as melhores jogadas e revolucionando a pelada com os amigos.
+                  </p>
+                </div>
+              </div>
+              <!-- /service list -->
+
+              <!-- service list -->
+              <div class="col-md-4 service-col animate"
+              data-delay="200">
+                <div class="service-grid">
+                  <div class="service-icon">
+                    <i class="fa fa-flag-checkered"></i>
+                  </div>
+                  <a href="https://www.youtube.com/watch?v=7DCLeEkf2RY" target="_blank"><h3 class="service-title">
+                    Kart
+                  </h3></a>
+                  <p class="service-content">
+                    Se velocidade é o seu esporte, agora você também pode reviver e estudar suas corridas.
+                  </p>
+                </div>
+              </div>
+              <!-- /service list -->
+              
+             <!-- service list -->
+              <div class="col-md-4 service-col animate"
+              data-delay="150">
+                <div class="service-grid">
+                  <div class="service-icon">
+                    <i class="fa fa-line-chart"></i>
+                  </div>
+                  <a href="https://www.youtube.com/watch?v=vlXZDaFsuEY" target="_blank"><h3 class="service-title">
+                    Tennis
+                  </h3></a>
+                  <p class="service-content">
+                    Compare suas batidas com as de profissionais e aumente sua curva de aprendizado. Ah! Os rallies também ficam salvos. ;)
+                  </p>
+                </div>
+              </div>
+              <!-- /service list -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- service end -->
+
+    <!-- contact start -->
+    <div class="section" id="contact">
+      <div class="section-entry">
+        <div class="section-heading">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <h2 class="section-title animate"
+                data-delay="0" style="color: #fa225b;">
+                  Contato
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-content">
+          <div class="container">
+            <div class="row gutter-row">
+              <div class="col-md-6 contact-info">
+                <address class="animate"
+                data-delay="150">
+                  
+                  <span>WhatsApp: (19) 99975 0044 <i class="fa fa-mobile"></i></span>
+                </address>
+                </address>
+                <address class="animate"
+                data-delay="200">
+                  <span>Email: contato@sportstech.com.br <i class="fa fa-envelope-o"></i></span>
+                </address>
+                
+
+              </div>
+              
+              <div class="col-md-6 contact-col">
+              <!-- social link -->
+                <p class="animate"
+                data-delay="300">
+                 Redes sociais:
+                </p>
+                <ul class="social-icon animate"  data-delay="350">
+                  <li><a href="https://www.facebook.com/pages/SportsTech/295544220637495?fref=ts" title="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li> <!-- change the link to social page and edit title-->
+                  <li><a href="https://www.youtube.com/channel/UCh5g-ao_nfFDPSd7CknPHng" title="youtube" target="_blank"><i class="fa fa-youtube"></i></a></li>
+                </ul>
+                <!-- /social link -->
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- contact end -->
+
+  </div>
+  <!-- /fullpage -->
+
+
+<!-- script start -->
+<script type='text/javascript' src='js/jquery-1.11.2.min.js'></script>
+<script type='text/javascript' src='js/bootstrap.min.js'></script>
+<!--[if lt IE 10]>
+<script type='text/javascript' src='js/ie/jquery.placeholder.js'></script>
+<script type='text/javascript' src='js/ie/ie.js'></script>
+<![endif]-->
+<script type='text/javascript' src='js/plugin.js'></script>
+<script type='text/javascript' src='js/variable.js'></script>
+<script type='text/javascript' src='js/main.js'></script>
+<!-- script end -->
+
+</body>
+</html>

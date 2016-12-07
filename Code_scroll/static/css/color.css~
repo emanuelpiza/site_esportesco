@@ -1,0 +1,330 @@
+/*========================================
+section background
+to hide overlay, set overlay last number to 0
+for example : background: rgba(255, 255, 255, 0);
+========================================*/
+
+
+/* placeholder color */
+.form-control::-webkit-input-placeholder {color: #eee;}
+.form-control:-moz-placeholder {color: #eee; opacity:  1;}
+.form-control::-moz-placeholder {color: #eee; opacity:  1;}
+.form-control:-ms-input-placeholder {color: #eee;}
+.placeholder {color: #eee;} /* ie9 placeholder color */
+/* /placeholder color */
+
+.overlay {
+  background: rgba(0, 0, 0, 0.55); /* overlay background color and opacity for non-css background */
+}
+
+.nav-menu{
+  background: #000 url(../img/bg/menu.jpg) no-repeat center; /* menu background */
+  background-size: cover;
+}
+
+.nav-menu:before {
+  background: rgba(0, 0, 0, 0.55); /* menu overlay background */
+}
+
+.static-bg #home{
+  background: #000 url(../img/home.jpg) no-repeat center; /* home background */
+  background-size: cover;
+}
+
+.static-bg #home:before {
+  background: rgba(0, 0, 0, 0.55); /* home overlay background */
+}
+
+.static-bg #about{
+  background: #000 url(../img/bg/about.jpg) no-repeat center; /* about background */
+  background-size: cover;
+}
+
+.static-bg #about:before {
+  background: rgba(0, 0, 0, 0.55); /* about overlay background */
+}
+
+.static-bg #service{
+  background: #000 url(../img/mix.jpg) no-repeat center; /* service background */
+  background-size: cover;
+}
+
+.static-bg #service:before {
+  background: rgba(0, 0, 0, 0.55); /* service overlay background */
+}
+
+.static-bg #work{
+  background: #000 url(../img/bg/work.jpg) no-repeat center; /* work background */
+  background-size: cover;
+}
+
+.static-bg #work:before {
+  background: rgba(0, 0, 0, 0.55); /* work overlay background */
+}
+
+.static-bg #pricing{
+  background: #000 url(../img/bg/pricing.jpg) no-repeat center; /* pricing background */
+  background-size: cover;
+}
+
+.static-bg #pricing:before {
+  background: rgba(0, 0, 0, 0.55); /* pricing overlay background */
+}
+
+.static-bg #contact{
+  background: #000 url(../img/tennis2.jpg) no-repeat center; /* service background */
+  background-size: cover;
+}
+
+.static-bg #contact:before {
+  background: rgba(0, 0, 0, 0.55); /* contact overlay background */
+}
+
+/*========================================
+basic
+========================================*/
+
+body {
+  color: #fff; /* font color */
+}
+
+a {
+  color: #fff; /* link color */
+}
+
+a:focus,
+a:hover {
+  color: #fff; /* link hover / focus color */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #fff; /* h1-h6 color */
+}
+
+blockquote {
+  border-color: #fff; /* blockquote border color */
+}
+
+blockquote .small,
+blockquote footer,
+blockquote small {
+  color: #fff; /* blockquote footer color */
+}
+
+p,
+span,
+ .form-control {
+  color: #fff; /* element color */
+}
+
+/*========================================
+nav toggle
+========================================*/
+
+#nav-toggle {
+  background: #111; /* nav toggle background color */
+}
+
+/*========================================
+nav menu
+========================================*/
+
+.nav-menu:before {
+  background: rgba(0, 0, 0, 0.85); /* menu overlay color */
+}
+
+#menu li a:before {
+  background: #fff; /* menu link center line color */
+}
+
+/*========================================
+social
+========================================*/
+
+.social-icon a {
+  background: rgba(255, 255, 255, 0.85); /* social icon background color */
+  color: #000; /* social icon color */
+}
+
+.social-icon a:hover {
+  background: #fa225b; /* social icon hover background color */
+  color: #fff; /* social icon hover color */
+}
+
+/*========================================
+section heading
+========================================*/
+
+.section-title:after {
+  background: #fff; /* section title underline color */
+}
+
+/*========================================
+home
+========================================*/
+
+.progress{
+  background: #fff; /* progress bar background color */
+}
+
+.progress-bar {
+  background: #555; /* progress bar color */
+}
+
+/*========================================
+basic
+========================================*/
+
+.work-col h6,
+.work-col span {
+  color: #000; /* work image meta color */
+}
+
+.work-col span {
+  background: #fff; /* work image meta background color */
+}
+
+/*========================================
+pricing
+========================================*/
+
+.pricing-table {
+  background: rgba(0, 0, 0, 0.15); /* pricing table background color */
+  border-color: rgba(255, 255, 255, 0.85); /* pricing border color */
+}
+
+.pricing-table ul li {
+  border-color: #fff; /* pricing table inner border color */
+}
+
+/* pricing button style */
+.btn-pricing {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.btn-pricing.active, .btn-pricing.focus, .btn-pricing:active, .btn-pricing:focus, .btn-pricing:hover {
+  color: #000;
+  background-color: #fff;
+  border-color: #fff;
+}
+/* /pricing button style */
+
+/*========================================
+contact
+========================================*/
+
+.form-control {
+  border-color: #fff; /* contact form border color */
+}
+
+.form-control:focus {
+  border-color: #ccc; /* contact form focus border color */
+}
+
+.valid .fa,
+.fa.valid {
+  color: #65edc4; /* contact form valid status icon color */
+}
+
+.error .fa,
+.fa.error {
+  color: #ff5e5f; /* contact form error status icon color */
+}
+
+.valid-bg {
+  background: #65edc4; /* contact form valid status background color */
+}
+
+.error-bg {
+  background: #ff5e5f; /* contact form error status background color */
+}
+
+/* contact button style */
+.btn-contact {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.btn-contact.active, .btn-contact.focus, .btn-contact:active, .btn-contact:focus, .btn-contact:hover {
+  color: #000;
+  background-color: #fff;
+  border-color: #fff;
+}
+/* /contact button style */
+
+/*========================================
+subscribe form
+========================================*/
+
+#subscribe-form input {
+  border-color: #fa225b; /* subscribe form border color */
+  background: transparent; /* subscribe form background color */
+}
+
+.btn-subscribe {
+  border-color: #fa225b; /* subscribe form button border color */
+  background: transparent; /* subscribe form button background color */
+}
+
+.btn-subscribe:hover {
+  background: #fa225b; /* subscribe form button hover background color */
+}
+
+.btn-subscribe i {
+  color: #fa225b; /* subscribe form icon color */
+}
+
+.btn-subscribe:hover i {
+  color: #fff; /* subscribe form button hover icon color */
+}
+
+.btn-subscribe:focus {
+  color: #fa225b; /* subscribe form button focus color */
+  background: transparent; /* subscribe form button focus background color */
+}
+
+.subscribe-notice.valid .fa,
+.subscribe-notice .valid {
+  color: #43e5ba; /* subscribe form valid status color */
+}
+
+.subscribe-notice.error .fa,
+.subscribe-notice .error {
+  color: #ff5c5c; /* subscribe form error status color */
+}
+
+/*========================================
+audio and video control
+========================================*/
+
+#play {
+  background: #333;
+}
+
+#volume {
+  background: #222;
+}
+
+#audio-control {
+  background: #222;
+}
+
+.btn.btn-success {
+	color: #fa225b;
+	border: 1px solid #fa225b;
+	background: none
+}
+.btn.btn-success:hover {
+    color: #ffffff;
+    background-color: #fa225b;
+    background-image: linear-gradient(to bottom, #db1b4e, #fa225b);
+    border-color: #fc4173 #fc4173 #fc4173;
+}

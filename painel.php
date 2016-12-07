@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Emanuel Piza" >
 
-    <title>EsportesCo</title>
+    <title>Painel - EsportesCo</title>
 
    <link rel="stylesheet" href="./css/bootstrap.min.css">
     <!-- Font Awesome -->
