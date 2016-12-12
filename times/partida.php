@@ -38,7 +38,8 @@
         	t1.`match_id`,
             t1.`initial_time`,
             t1.`type`,
-            t1.`player`, 
+            t1.`player`,
+            t1.available,
             '' as detail
         FROM notes t1
         LEFT JOIN plays t2 ON t2.`datetime` = t1.`datetime`
@@ -48,10 +49,11 @@
             t2.`initial_time`,
             (6) as type , 
             t2.`plays_players_id` as player,
-            t2.`video_id` as detail
+            t2.`video_id` as detail,
+            t2.available
         FROM notes t1
-        RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where t2.`available` in (1,2)  and plays_play_types_id > -1 ) p1 
-    left join players p2 on p1.player = p2.`id_players` where match_id ='$id' order by p1.`initial_time` DESC;");
+        RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where plays_play_types_id > -1 ) p1 
+    left join players p2 on p1.player = p2.`id_players` where p1.`available` in (1,2) and match_id ='$id' order by p1.`initial_time` DESC;");
     $titulo = $dados['team1_name'] . ' vs ' . $dados['team2_name'] . ' - EsportesCo';
 ?>
 

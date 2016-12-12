@@ -1,43 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Blog | Esportes.Co</title>
-        <link rel="icon" type="image/x-icon" href="assets/images/favicons/favicon.ico" />
-        <link rel="icon" type="image/png" href="assets/images/favicons/favicon.png" />
-        <!-- For iPhone 4 Retina display: -->
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicons/apple-touch-icon-114x114-precomposed.png">
-        <!-- For iPad: -->
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicons/apple-touch-icon-72x72-precomposed.png">
-        <!-- For iPhone: -->
-        <link rel="apple-touch-icon-precomposed" href="assets/images/favicons/apple-touch-icon-60x60-precomposed.png">
-        <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,400italic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/theme.min.css">
-        <link rel="stylesheet" href="assets/css/color-defaults.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-beige-black.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-black-beige.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-black-white.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-black-yellow.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-blue-white.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-green-white.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-red-white.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-white-black.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-white-blue.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-white-green.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-white-red.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-yellow-black.min.css">
-        <link rel="stylesheet" href="assets/css/fonts.min.css" media="screen">
+   <head>
+        <title>Blog Esportes.Co</title>
+        <?php 
+        include_once("./head.html");
+        ?>
     </head>
     <body class="pace-on pace-dot">
+        <?php 
+        include_once("./admin/analyticstracking.php");
+        include_once("./navbar.html");
+        ?>
         <div class="pace-overlay"></div>
         <div id="content" role="main">
             <section class="section swatch-red-white">
                 <div class="container">
                     <header class="section-header no-underline">
-                        <h1 class="headline hyper hairline">Novidades</h1>
+                        <h1 class="headline hyper hairline">Nosso Blog</h1>
                     </header>
                 </div>
             </section>
@@ -108,7 +87,7 @@
                                 <div class="grid-post swatch-red-white">
                                     <article class="post post-showinfo">
                                         <div class="post-media overlay">
-                                            <a class="feature-image magnific hover-animate" href="../img/mulecada.jpeg" title="Professor">
+                                            <a class="feature-image magnific hover-animate" href="../img/mulecada.jpeg" title="Professor falando com os meninos e a Sophia">
                                                 <img alt="some image" src="../img/molecada2.jpg">
                                                 <i class="fa fa-search-plus"></i>
                                             </a>
@@ -120,7 +99,7 @@
                                                 </a>
                                             </h2>
                                             <small class="post-author">
-                                                Emanuel Piza,22 de Outubro de 2016
+                                                Emanuel Piza, 22 de Outubro de 2016
                                             </small>
                                             <div class="post-icon flat-shadow flat-hex">
                                                 <div class="hex hex-big">
@@ -139,7 +118,7 @@
                                         </div>
                                     </article>
                                 </div>
-                            </li>
+                            </li><!--
                             <li class="col-md-4 post-item filter-images isotope-item">
                                 <div class="grid-post swatch-red-white">
                                     <article class="post post-showinfo">
@@ -148,10 +127,10 @@
                                             data-flex-controlsposition="" data-flex-directions-type="">
                                                 <ul class="slides">
                                                     <li>
-                                                        <img src="assets/images/design/vector/img-5-800x600.png" alt="some image">
+                                                        <img src="novo/assets/images/design/vector/img-5-800x600.png" alt="some image">
                                                     </li>
                                                     <li>
-                                                        <img src="assets/images/design/vector/img-3-800x600.png" alt="some image">
+                                                        <img src="novo/assets/images/design/vector/img-3-800x600.png" alt="some image">
                                                     </li>
                                                 </ul>
                                             </div>
@@ -221,8 +200,8 @@
                                 <div class="grid-post swatch-red-white">
                                     <article class="post post-showinfo">
                                         <div class="post-media overlay">
-                                            <a class="feature-image magnific hover-animate" href="assets/images/design/vector/img-3-800x600.png" title="Thats a nice image">
-                                                <img alt="some image" src="assets/images/design/vector/img-3-800x600.png">
+                                            <a class="feature-image magnific hover-animate" href="novo/assets/images/design/vector/img-3-800x600.png" title="Thats a nice image">
+                                                <img alt="some image" src="novo/assets/images/design/vector/img-3-800x600.png">
                                                 <i class="fa fa-search-plus"></i>
                                             </a>
                                         </div>
@@ -422,7 +401,7 @@
                                     <article class="post post-showinfo">
                                         <div class="post-media overlay">
                                             <a class="feature-image magnific-youtube hover-animate" href="http://www.youtube.com/watch?v=cfOa1a8hYP8" title="">
-                                                <img alt="" src="assets/images/design/vector/img-2-800x600.png">
+                                                <img alt="" src="novo/assets/images/design/vector/img-2-800x600.png">
                                                 <i class="fa fa-play"></i>
                                             </a>
                                         </div>
@@ -493,7 +472,7 @@
                                     <article class="post post-showinfo">
                                         <div class="post-media overlay">
                                             <a class="feature-image magnific-youtube hover-animate" href="http://vimeo.com/20061744" title="">
-                                                <img alt="" src="assets/images/design/vector/img-7-800x600.png">
+                                                <img alt="" src="novo/assets/images/design/vector/img-7-800x600.png">
                                                 <i class="fa fa-play"></i>
                                             </a>
                                         </div>
@@ -626,7 +605,7 @@
                                         </div>
                                     </article>
                                 </div>
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
                 </div>
@@ -639,32 +618,38 @@
                         </svg>
                     </div>
                     <div class="container">
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                <div id="swatch_social-2" class="sidebar-widget  widget_swatch_social">
-                                    <ul class="unstyled inline small-screen-center social-icons social-background social-big">
-                                        <li>
-                                            <a target="_blank" href="http://www.oxygenna.com">
-                                                <i class="fa fa-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a target="_blank" href="http://www.oxygenna.com">
-                                                <i class="fa fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a target="_blank" href="http://www.oxygenna.com">
-                                                <i class="fa fa-google-plus"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div id="text-4" class="sidebar-widget widget_text">
-                                    <div class="textwidget">ANGLE 2014 ALL RIGHTS RESERVED
+                        <header class="section-header ">
+                            <h1 class="headline super hairline">Contato</h1>
+                        </header>
+                       <div class="row">
+                            <ul class="list-unstyled row box-list">
+                                <li class="col-md-3 col-md-offset-3" data-os-animation="fadeInUp" data-os-animation-delay=".0s">
+                                    <div class="box-round flat-shadow box-small">
+                                        <div class="box-dummy"></div>
+                                        <figure class="box-inner ">
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                            <figcaption class="box-caption">
+                                                <h4>Leva menos de<br> 5 minutos</h4>
+                                            </figcaption>
+                                        </figure>
                                     </div>
-                                </div>
-                            </div>
+                                    <h3 class="text-center">Email
+                                    </h3>
+                                    <p class="text-center">contato@esportes.co</p>
+                                </li>
+                                <li class="col-md-3 text-center" data-os-animation="fadeInUp" data-os-animation-delay=".3s">
+                                    <div class="box-round flat-shadow box-small">
+                                        <div class="box-dummy"></div>
+                                        <figure class="box-inner">
+                                            <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                        </figure>
+                                    </div>
+                                    <h3 class="text-center">
+                                        WhatsApp
+                                    </h3>
+                                    <p class="text-center ">+55 (19) 99975-0044</p>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </section>
@@ -673,7 +658,7 @@
         <a class="go-top hex-alt" href="javascript:void(0)">
             <i class="fa fa-angle-up"></i>
         </a>
-        <script src="assets/js/packages.min.js"></script>
-        <script src="assets/js/theme.min.js"></script>
+        <script src="novo/assets/js/packages.min.js"></script>
+        <script src="novo/assets/js/theme.min.js"></script>
     </body>
 </html>

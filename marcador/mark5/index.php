@@ -60,7 +60,7 @@
         t2.`video_id` as detail,
         t2.`available`
     FROM notes t1
-    RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where t2.`available` in (1,2) ) p1 left join players p2 on p1.player = p2.`id_players` where match_id ='$id' and available = 1 and type < 6 order by p1.`datetime` DESC;");
+    RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where t2.`available` in (1,2) ) p1 left join players p2 on p1.player = p2.`id_players` where match_id ='$id' and available = 1  order by p1.`datetime` DESC;");
 
     $sql_fase = mysqli_query($mysqli,"select IF(MAX(type) is null, 0, MAX(type)) as maximo from notes n where match_id = '$id';");
     $fase = mysqli_fetch_assoc($sql_fase)['maximo'];
@@ -318,6 +318,22 @@
                             </div>
                           </div>
                         </li>';
+                    } else if ($notes['type'] == 8){
+                        echo '<li><i class="fa fa-exchange bg-white" style="color:black;"></i>
+                            <div class="timeline-item">
+                             <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
+                            <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
+                            <h3 class="timeline-header"><a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a> presente, iniciou no banco.</h3>
+                            </div>
+                            </li>';
+                    } else if ($notes['type'] == 9){
+                         echo '<li><i class="fa fa-exchange bg-white" style="color:black;"></i>
+                            <div class="timeline-item">
+                             <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
+                            <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
+                            <h3 class="timeline-header"><a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a> presente, iniciou jogando.</h3>
+                            </div>
+                            </li>';
                     }
                 }?>
                 <li class="time-label">

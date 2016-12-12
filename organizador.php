@@ -1,223 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Launch | Angle HTML</title>
-        <link rel="icon" type="image/x-icon" href="assets/images/favicons/favicon.ico" />
-        <link rel="icon" type="image/png" href="assets/images/favicons/favicon.png" />
-        <!-- For iPhone 4 Retina display: -->
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicons/apple-touch-icon-114x114-precomposed.png">
-        <!-- For iPad: -->
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicons/apple-touch-icon-72x72-precomposed.png">
-        <!-- For iPhone: -->
-        <link rel="apple-touch-icon-precomposed" href="assets/images/favicons/apple-touch-icon-60x60-precomposed.png">
-        <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,400italic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/theme.min.css">
-        <link rel="stylesheet" href="assets/css/color-defaults.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-beige-black.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-black-beige.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-black-white.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-black-yellow.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-blue-white.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-green-white.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-red-white.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-white-black.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-white-blue.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-white-green.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-white-red.min.css">
-        <link rel="stylesheet" href="assets/css/swatch-yellow-black.min.css">
-        <link rel="stylesheet" href="assets/css/fonts.min.css" media="screen">
+        <title>Novo Campeonato Esportes.Co</title>
+        <?php 
+        include_once("./head.html");
+        ?>
     </head>
     <body class="pace-on pace-dot">
-        <div class="pace-overlay"></div>
-        <header id="masthead" class="navbar navbar-sticky swatch-red-white" role="banner">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".main-navbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="../index.html" class="navbar-brand">
-                        <img src="assets/images/logo.png" alt="One of the best themes ever">Esportes.Co
-                    </a>
-                </div>
-                <nav class="collapse navbar-collapse main-navbar" role="navigation">
-                    <div class="sidebar-widget widget_search pull-right">
-                        <form>
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Search here....">
-                                <span class="input-group-btn">
-                            <button class="btn" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                            </div>
-                        </form>
-                    </div>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown active">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="index.html">v1. Classic</a>
-                                </li>
-                                <li><a href="launch.html">v2. Product Launch</a>
-                                </li>
-                                <li><a href="about-us-home.html">v3. The team</a>
-                                </li>
-                                <li><a href="one-page.html">v4. One Page Style</a>
-                                </li>
-                                <li><a href="flexslider.html">v5. Flexslider</a>
-                                </li>
-                                <li><a href="revolution-slider.html">v6. Revolution SLider</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown menu-item-object-oxy_mega_menu ">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages</a>
-                            <ul class="dropdown-menu row">
-                                <li class="dropdown col-md-3 menu-item-object-oxy_mega_columns">
-                                    <strong>About Pages</strong>
-                                    <ul role="menu">
-                                        <li><a href="about-us.html">About us</a>
-                                        </li>
-                                        <li><a href="about-me.html">About Me</a>
-                                        </li>
-                                        <li><a href="office.html">Our Office</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown col-md-3 menu-item-object-oxy_mega_columns">
-                                    <strong>Services Pages</strong>
-                                    <ul role="menu">
-                                        <li><a href="services-page.html">Services</a>
-                                        </li>
-                                        <li><a href="services-alt-page.html">More Services</a>
-                                        </li>
-                                        <li><a href="single-service.html">Single Service</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown col-md-3 menu-item-object-oxy_mega_columns">
-                                    <strong>Misc Pages</strong>
-                                    <ul role="menu">
-                                        <li><a href="faq.html">FAQ</a>
-                                        </li>
-                                        <li><a href="404.html">404</a>
-                                        </li>
-                                        <li><a href="countdown.html">Coming Soon</a>
-                                        </li>
-                                        <li><a href="pricing.html">Pricing</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown col-md-3 menu-item-object-oxy_mega_columns">
-                                    <strong>Layout Pages & More</strong>
-                                    <ul role="menu">
-                                        <li><a href="sidebar-right.html">Right Sidebar</a>
-                                        </li>
-                                        <li><a href="sidebar-left.html">Left Sidebar</a>
-                                        </li>
-                                        <li><a href="header-alt.html">Alt Header</a>
-                                        </li>
-                                        <li><a href="footer-alt.html">Footer Columns</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown ">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Features</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="typography.html">Typography</a>
-                                </li>
-                                <li><a href="elements.html">Elements</a>
-                                </li>
-                                <li><a href="icons.html">Font Icons</a>
-                                </li>
-                                <li><a href="custom-icons.html">Custom Icons</a>
-                                </li>
-                                <li><a href="tables.html">Tables</a>
-                                </li>
-                                <li><a href="section-decorations.html">Section Decorations</a>
-                                </li>
-                                <li><a href="background-videos.html">Background Videos</a>
-                                </li>
-                                <li><a href="background-images.html">Background Images</a>
-                                </li>
-                                <li><a href="color-swatches.html">Color Swatches</a>
-                                </li>
-                                <li><a href="scroll-animation.html">Scroll Animations</a>
-                                </li>
-                                <li><a href="header-options.html">Header Options</a>
-                                </li>
-                                <li><a href="footer-options.html">Footer Options</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown ">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="blog.html">Normal Blog</a>
-                                </li>
-                                <li><a href="blog-fullwidth.html">Full Width Blog</a>
-                                </li>
-                                <li><a href="grid-blog.html">Grid Blog</a>
-                                </li>
-                                <li><a href="post.html">Single Post</a>
-                                </li>
-                                <li><a href="blog-styles.html">Blog Styles</a>
-                                </li>
-                                <li><a href="results.html">Search Results</a>
-                                </li>
-                                <li><a href="author.html">Author&#x27;s Page</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown [object Object]">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="portfolio-2col.html">Two Columns</a>
-                                </li>
-                                <li><a href="portfolio-3col.html">Three Columns</a>
-                                </li>
-                                <li><a href="portfolio-4col.html">Four Columns</a>
-                                </li>
-                                <li><a href="portfolio-3col-circles.html">Circled Portfolio</a>
-                                </li>
-                                <li><a href="portfolio-3col-rect.html">Rectangle Portfolio</a>
-                                </li>
-                                <li><a href="portfolio-3col-squares.html">Square Portfolio</a>
-                                </li>
-                                <li role="presentation" class="divider"></li>
-                                <li><a href="portfolio-item-big.html">Single Big</a>
-                                </li>
-                                <li><a href="portfolio-item-big-alt.html">Single Big Alt</a>
-                                </li>
-                                <li><a href="portfolio-item-small.html">Single Small</a>
-                                </li>
-                                <li><a href="portfolio-item-video.html">Single Video</a>
-                                </li>
-                                <li><a href="portfolio-item-gallery.html">Single Gallery</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown ">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="contact.html">Contact</a>
-                                </li>
-                                <li><a href="contact-alt.html">Contact Alt</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+        <?php 
+        include_once("./admin/analyticstracking.php");
+        include_once("./navbar.html");
+        ?>
         <div id="content" role="main">
             <section class="section swatch-red-white">
                 <div class="container">
@@ -229,21 +22,21 @@
                         </div>
                         <div class="col-md-6  text-default">
                             <h1 class="text-left super hairline bordered-header">
-                                Seus campeonatos, agora profissionais.
+                                Seus campeonatos, mais profissionais.
                                 </h1>
                             <p class="lead text-left">A Esportes.Co oferece a atletas não-profissionais tudo o que profissionais tem acesso nos esportes. 
                                 <br>
                             </p>
                             <p class="lead text-left">Com isso, organizadores, árbitros e jogadores recebem um maior reconhecimento pelo trabalho, dentro e fora de campo. 
                                 <br>
-                            </p>
+                            </p><!--
                             <div class="text-center">
                                 <a href="#" class="btn btn-primary btn-lg  btn-icon-right" target="_self">Quero saber mais
-                    <span class="hex-alt">
-                        <i class="fa fa-user" data-animation="swing"></i>
-                    </span>
-                </a>
-                            </div>
+                                    <span class="hex-alt">
+                                        <i class="fa fa-user" data-animation="swing"></i>
+                                    </span>
+                                </a>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -275,7 +68,7 @@
                                 <h3 class="text-center ">
                                     <a href="single-service.html">Engajar mais os jogadores</a>
                                 </h3>
-                                <p class="text-center">Para manter os jogadores envolvidos, dipsonibilizamos todas as informações para acompanhamento dos interessados, em tempo-real.</p>
+                                <p class="text-center">Para manter os jogadores envolvidos, disponibilizamos todas as informações para acompanhamento dos interessados, em tempo-real.</p>
                             </li>
                             <li class="col-md-3 text-center" data-os-animation="" data-os-animation-delay="">
                                 <div class="box-round box-medium">
@@ -393,7 +186,7 @@
                 </div>
                 <div class="container">
                     <header class="section-header ">
-                        <h1 class="headline super hairline">Próximo Lançamento</h1>
+                        <h1 class="headline super hairline">Novos Campeonatos</h1>
                         <p class="">Atualmente, as inscrições estão fechadas. Entre os dias 20 e 27 de Janeiro receberemos as inscrições para a primeira leva de campeonatos de 2017.</p>
                     </header>
                     <div class="row">
@@ -423,15 +216,15 @@
             </b>
           </div>
         </h1>
-                        <div class="col-md-12  text-default">
+                       <!-- <div class="col-md-12  text-default">
                             <div class="text-center">
                                 <a href="#" class="btn btn-danger btn-lg text-center btn-icon-right" target="_self">Quero saber mais
-                    <span class="hex-alt">
-                        <i class="fa fa-envelope" data-animation="tada"></i>
-                    </span>
-                </a>
+                                    <span class="hex-alt">
+                                        <i class="fa fa-envelope" data-animation="tada"></i>
+                                    </span>
+                                </a>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </section>
@@ -483,7 +276,7 @@
         <a class="go-top hex-alt" href="javascript:void(0)">
             <i class="fa fa-angle-up"></i>
         </a>
-        <script src="assets/js/packages.min.js"></script>
-        <script src="assets/js/theme.min.js"></script>
+        <script src="novo/assets/js/packages.min.js"></script>
+        <script src="novo/assets/js/theme.min.js"></script>
     </body>
 </html>
