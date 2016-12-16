@@ -228,55 +228,9 @@
                     </div>
                 </div>
             </section>
-            <footer id="footer" role="contentinfo">
-                <section class="section swatch-red-white has-top">
-                    <div class="decor-top">
-                        <svg class="decor" height="100%" preserveaspectratio="none" version="1.1" viewbox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 0 L50 100 L100 0 L100 100 L0 100" stroke-width="0"></path>
-                        </svg>
-                    </div>
-                    <div class="container">
-                        <header class="section-header ">
-                            <h1 class="headline super hairline">Contato</h1>
-                        </header>
-                       <div class="row">
-                            <ul class="list-unstyled row box-list">
-                                <li class="col-md-3 col-md-offset-3" data-os-animation="fadeInUp" data-os-animation-delay=".0s">
-                                    <div class="box-round flat-shadow box-small">
-                                        <div class="box-dummy"></div>
-                                        <figure class="box-inner ">
-                                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                                            <figcaption class="box-caption">
-                                                <h4>Leva menos de<br> 5 minutos</h4>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <h3 class="text-center">Email
-                                    </h3>
-                                    <p class="text-center">contato@esportes.co</p>
-                                </li>
-                                <li class="col-md-3 text-center" data-os-animation="fadeInUp" data-os-animation-delay=".3s">
-                                    <div class="box-round flat-shadow box-small">
-                                        <div class="box-dummy"></div>
-                                        <figure class="box-inner">
-                                            <i class="fa fa-whatsapp" aria-hidden="true"></i>
-                                        </figure>
-                                    </div>
-                                    <h3 class="text-center">
-                                        WhatsApp
-                                    </h3>
-                                    <p class="text-center ">+55 (19) 99975-0044</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-            </footer>
+            <?php 
+            include_once("./foot.html");
+            ?>
         </div>
-        <a class="go-top hex-alt" href="javascript:void(0)">
-            <i class="fa fa-angle-up"></i>
-        </a>
-        <script src="novo/assets/js/packages.min.js"></script>
-        <script src="novo/assets/js/theme.min.js"></script>
     </body>
 </html>

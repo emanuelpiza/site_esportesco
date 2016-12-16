@@ -50,16 +50,19 @@
                                 <div class="grid-post swatch-red-white">
                                     <article class="post post-showinfo">
                                         <div class="post-media overlay">
+                                            <a class="feature-image magnific" ></a>
+                                            <a href="post2.php">
                                                 <img alt="some image" src="../img/sweat3.jpg">
+                                            </a>
                                         </div>
                                         <div class="post-head small-screen-center">
                                             <h2 class="post-title">
-                                                <a href="post.html">
-                                                    Melhores práticas de RH relacionadas à Esportes
+                                                <a href="post2.php">
+                                                    Resultado da Pesquisa Sobre Esportes e o Ambiente Corporativo
                                                 </a>
                                             </h2>
                                             <small class="post-author">
-                                                Emanuel Piza, 17 de Novembro de 2016    </small>
+                                                16 de Dezembro de 2016    </small>
                                             <div class="post-icon flat-shadow flat-hex">
                                                 <div class="hex hex-big">
                                                     <i class="fa fa-file-text"></i>
@@ -68,13 +71,117 @@
                                         </div>
                                         <div class="post-body">
                                             <p>
-                                       Preparar... Apontar... Vai!
+                                                Um mês e mais de cem participações depois, reunimos as principais respostas em um infográfico para ter uma visão mais clara sobre como as empresas estão utilizando esportes para atingir seus objetivos.
+                                            </p>
+                                        </div>
+                                        <div class="bordered post-extras text-center"> 
+                                        </div>
+                                    </article>
+                                </div>
+                            </li>
+                            <li class="col-md-4 post-item filter-images isotope-item">
+                                <div class="grid-post swatch-red-white">
+                                    <article class="post post-showinfo">
+                                        <div class="post-media overlay">
+                                            <a class="feature-image magnific hover-animate" href="../img/lcf.jpg" title="Premiação">
+                                                <img alt="some image" src="../img/lcf.jpg">
+                                                <i class="fa fa-search-plus"></i>
+                                            </a>
+                                        </div>
+                                        <div class="post-head small-screen-center">
+                                            <h2 class="post-title">
+                                                 <a class="feature-image magnific hover-animate" href="../img/lcf.jpg" title="Premiação">
+                                                    Ligas Municipais
+                                                </a>
+                                            </h2>
+                                            <small class="post-author">
+                                                8 de Dezembro de 2016
+                                            </small>
+                                            <div class="post-icon flat-shadow flat-hex">
+                                                <div class="hex hex-big">
+                                                    <i class="fa fa-camera"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="post-body">
+                                            <p>
+                                                Ontem fomos convidados pelo Irdival para participar de um evento de premiação da LMC. Além das premiações, aproveitamos para conhecer um pouco mais sobre quem mantém essa galera unida.
+                                            </p>
+                                            <p>
+                                                Falamos tanto com presidentes de times quanto o pessoal da própria Liga. Em ambos os casos, vimos pessoas que fazem seu papel por que gostam, pelos outros, pra manter a coisa viva, apesar de todas as adversidades.
+                                            </p>
+                                            <p>
+                                               Saímos com o sentimento de que nossa parceria é muito bem-vinda, pois vai facilitar muito, principalmente o trabalho recorrente de atualizar informações dos campeonatos e divulgar para os jogadores... Enfim, tamo junto!
+                                            </p>
+                                        </div>
+                                        <div class="bordered post-extras text-center"> 
+                                        </div>
+                                    </article>
+                                </div>
+                            </li>
+                             <li class="col-md-4 post-item filter-quotes isotope-item">
+                                <div class="grid-post swatch-red-white">
+                                    <article class="post post-showinfo">
+                                        <div class="post-media"></div>
+                                        <div class="post-head small-screen-center">
+                                            <h2 class="post-title">
+                                                Missão Cumprida
+                                            </h2>
+                                            <small class="post-author">
+                                                19 de Novembro de 2016
+                                            </small>
+                                            <div class="post-icon flat-shadow flat-hex">
+                                                <div class="hex hex-big">
+                                                    <i class="fa fa-quote-left"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="post-body">
+                                            <blockquote>
+                                                <p>Graças a vocês, voltei a poder pescar de segunda-feira.</p>
+                                                <small>
+                                                    Bruno
+                                                    <cite title="Any Given Sunday"> Gestor, Projeto Bugrinho</cite>
+                                                </small>
+                                            </blockquote>
+                                        </div>
+                                        <div class="bordered post-extras text-center">
+                                        </div>
+                                    </article>
+                                </div>
+                            </li>
+                            <li class="col-md-4 post-item filter-text isotope-item">
+                                <div class="grid-post swatch-red-white">
+                                    <article class="post post-showinfo">
+                                        <div class="post-media overlay">
+                                            <a class="feature-image magnific" ></a>
+                                            <a href="post.php">
+                                                <img alt="some image" src="../img/sweat3.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="post-head small-screen-center">
+                                            <h2 class="post-title">
+                                                <a href="post.php">
+                                                    Esportes e o Ambiente Corporativo
+                                                </a>
+                                            </h2>
+                                            <small class="post-author">
+                                                17 de Novembro de 2016    </small>
+                                            <div class="post-icon flat-shadow flat-hex">
+                                                <div class="hex hex-big">
+                                                    <i class="fa fa-file-text"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="post-body">
+                                            <p>
+                                                Preparar... Apontar... Vai!
                                             </p>
                                             <p>
                                                 O ambiente corporativo possui uma relação próxima com os esportes. Aspectos como liderança, trabalho em equipe e superação são constantes em ambos. Porém, nem sempre essas semelhanças são aproveitadas como poderiam.
                                             </p>
                                             <p>
-                                                Uma das principais característica dos esportes é o conceito de "jogo". Nele, existem duas figuras essenciais...<a href="post.html"> continuar lendo </a>
+                                                Uma das principais característica dos esportes é o conceito de "jogo". Nele, existem duas figuras essenciais...<a href="post.php"> continuar lendo </a>
                                             </p>
                                             
                                         </div>
@@ -94,12 +201,12 @@
                                         </div>
                                         <div class="post-head small-screen-center">
                                             <h2 class="post-title">
-                                                <a href="post.html">
+                                                 <a class="feature-image magnific hover-animate" href="../img/mulecada.jpeg" title="Professor falando com os meninos e a Sophia">
                                                     Campeonato Interno - Projeto Bugrinho
                                                 </a>
                                             </h2>
                                             <small class="post-author">
-                                                Emanuel Piza, 22 de Outubro de 2016
+                                                22 de Outubro de 2016
                                             </small>
                                             <div class="post-icon flat-shadow flat-hex">
                                                 <div class="hex hex-big">
@@ -118,7 +225,49 @@
                                         </div>
                                     </article>
                                 </div>
-                            </li><!--
+                            </li>
+                            <li class="col-md-4 post-item filter-media isotope-item">
+                                <div class="grid-post swatch-red-white">
+                                    <article class="post post-showinfo">
+                                        <div class="post-media overlay">
+                                            <a class="feature-image magnific-youtube hover-animate" href="https://www.youtube.com/watch?v=gav6WqCola4" title="">
+                                                <img alt="" src="img/poka.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="post-head small-screen-center">
+                                            <h2 class="post-title">
+                                                <a href="post.html">
+                                                    Gravação de partidas com baixo custo
+                                                </a>
+                                            </h2>
+                                            <small class="post-author">14 de Agosto 2016
+                                            </small>
+                                            <div class="post-icon flat-shadow flat-hex">
+                                                <div class="hex hex-big">
+                                                    <i class="fa fa-film"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="post-body">
+                                            <p>
+                                               Ao longo de seus dois anos de existência, a Esportes.Co testou diferentes formas de captura de jogos amadores, passando por câmeras IP, câmeras analógicas, celulares  e câmeras 360°.
+                                            </p>
+                                            <p>
+                                                Uma das lições aprendidas é que o vídeo traz uma dimensão nova para os jogos. O orgulho de poder reproduzir um belo lance traz uma preocupação maior 
+                                            </p>
+                                            <p>
+                                                Saber que a imagem estará disponível é o sonho de muita gente e, quando isso é feito, gera um interesse genuíno e recorrente no material produzido. Observamos que 80% do tempo de acesso é direcionado para vídeos.
+                                            </p>
+                                            <p>
+                                                Para entregar isso, identificamos que a forma atual mais escalável é a utilização dos equipamentos eletrônicos que já estão disponíveis nos campos, como os celulares dos jogadores e torcedores. Uma vez capturada uma partida inteira, esse vídeo pode ser subido por meio da nossa plataforma, que disponibiliza um meio para que jogadores recortem e atribuam lances uns aos outros, montando um histórico de muito valor para o craque/autor.
+                                            </p>
+                                        </div>
+                                        <div class="bordered post-extras text-center">
+                                        </div>
+                                    </article>
+                                </div>
+                            </li>
+                            <!--
                             <li class="col-md-4 post-item filter-images isotope-item">
                                 <div class="grid-post swatch-red-white">
                                     <article class="post post-showinfo">
@@ -331,142 +480,7 @@
                                     </article>
                                 </div>
                             </li>
-                            <li class="col-md-4 post-item filter-quotes isotope-item">
-                                <div class="grid-post swatch-red-white">
-                                    <article class="post post-showinfo">
-                                        <div class="post-media"></div>
-                                        <div class="post-head small-screen-center">
-                                            <h2 class="post-title">
-      <a href="post.html">
-        Lose Like a Man
-      </a>
-    </h2>
-                                            <small class="post-author">
-      <a href="blog.html">Mary Doe,</a>
-    </small>
-                                            <small class="post-date">
-      <a href="post.html">31 December 2012</a>
-    </small>
-                                            <div class="post-icon flat-shadow flat-hex">
-                                                <div class="hex hex-big">
-                                                    <i class="fa fa-quote-left"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="post-body">
-                                            <blockquote>
-                                                <p>On Any Given Sunday You&#x27;re Gonna Win or You&#x27;re Gonna Lose. The Point Is, Can You Win or Lose Like a Man?</p>
-                                                <small>
-        Al Pacino
-        <cite title="Any Given Sunday">Any Given Sunday</cite>
-      </small>
-                                            </blockquote>
-                                        </div>
-                                        <div class="bordered post-extras text-center">
-                                            <div class="text-center">
-                                                <span class="post-category">
-      <a href="post.html">
-        <i class="fa fa-folder-open"></i>
-        Movies
-      </a>
-    </span>
-                                                <span class="post-tags">
-      <i class="fa fa-tags"></i>
-      
-        <a href="post.html">
-          Design,
-        </a>
-      
-      
-        <a href="post.html">
-          Flat
-        </a>
-      
-      
-      
-    </span>
-                                                <span class="post-link">
-      <a href="post.html">
-        <i class="fa fa-comments"></i>
-        4 comments
-      </a>
-    </span>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </li>
-                            <li class="col-md-4 post-item filter-media isotope-item">
-                                <div class="grid-post swatch-red-white">
-                                    <article class="post post-showinfo">
-                                        <div class="post-media overlay">
-                                            <a class="feature-image magnific-youtube hover-animate" href="http://www.youtube.com/watch?v=cfOa1a8hYP8" title="">
-                                                <img alt="" src="novo/assets/images/design/vector/img-2-800x600.png">
-                                                <i class="fa fa-play"></i>
-                                            </a>
-                                        </div>
-                                        <div class="post-head small-screen-center">
-                                            <h2 class="post-title">
-      <a href="post.html">
-        Everybody loves it
-      </a>
-    </h2>
-                                            <small class="post-author">
-      <a href="blog.html">Chris Pantazis,</a>
-    </small>
-                                            <small class="post-date">
-      <a href="post.html">17 January 2014</a>
-    </small>
-                                            <div class="post-icon flat-shadow flat-hex">
-                                                <div class="hex hex-big">
-                                                    <i class="fa fa-film"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="post-body">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, quo, veniam culpa maiores iure distinctio atque similique veritatis rem et adipisci eveniet aspernatur aut sapiente amet doloremque eos quasi numquam.In lobortis eget ipsum vestibulum
-                                                tristique. Donec luctus, dolor ut scelerisque luctus, erat elit consectetur arcu, eu pellentesque felis nulla sed massa. Nunc enim sem, ullamcorper ac tincidunt eget, euismod nec leo. Nunc imperdiet fringilla
-                                                erat, sit amet iaculis ipsum congue et. Vestibulum sapien metus, fermentum et accumsan nec, imperdiet sed ligula. Praesent semper vitae nisi quis egestas.
-                                            </p>
-                                            <a class="more-link" href="post.html">
-      read more
-    </a>
-                                        </div>
-                                        <div class="bordered post-extras text-center">
-                                            <div class="text-center">
-                                                <span class="post-category">
-      <a href="post.html">
-        <i class="fa fa-folder-open"></i>
-        News
-      </a>
-    </span>
-                                                <span class="post-tags">
-      <i class="fa fa-tags"></i>
-      
-        <a href="post.html">
-          Design,
-        </a>
-      
-      
-        <a href="post.html">
-          Blog
-        </a>
-      
-      
-      
-    </span>
-                                                <span class="post-link">
-      <a href="post.html">
-        <i class="fa fa-comments"></i>
-        2 comments
-      </a>
-    </span>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </li>
+                            
                             <li class="col-md-4 post-item filter-media isotope-item">
                                 <div class="grid-post swatch-red-white">
                                     <article class="post post-showinfo">
@@ -610,55 +624,9 @@
                     </div>
                 </div>
             </section>
-            <footer id="footer" role="contentinfo">
-                <section class="section swatch-red-white has-top">
-                    <div class="decor-top">
-                        <svg class="decor" height="100%" preserveaspectratio="none" version="1.1" viewbox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 0 L50 100 L100 0 L100 100 L0 100" stroke-width="0"></path>
-                        </svg>
-                    </div>
-                    <div class="container">
-                        <header class="section-header ">
-                            <h1 class="headline super hairline">Contato</h1>
-                        </header>
-                       <div class="row">
-                            <ul class="list-unstyled row box-list">
-                                <li class="col-md-3 col-md-offset-3" data-os-animation="fadeInUp" data-os-animation-delay=".0s">
-                                    <div class="box-round flat-shadow box-small">
-                                        <div class="box-dummy"></div>
-                                        <figure class="box-inner ">
-                                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                                            <figcaption class="box-caption">
-                                                <h4>Leva menos de<br> 5 minutos</h4>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <h3 class="text-center">Email
-                                    </h3>
-                                    <p class="text-center">contato@esportes.co</p>
-                                </li>
-                                <li class="col-md-3 text-center" data-os-animation="fadeInUp" data-os-animation-delay=".3s">
-                                    <div class="box-round flat-shadow box-small">
-                                        <div class="box-dummy"></div>
-                                        <figure class="box-inner">
-                                            <i class="fa fa-whatsapp" aria-hidden="true"></i>
-                                        </figure>
-                                    </div>
-                                    <h3 class="text-center">
-                                        WhatsApp
-                                    </h3>
-                                    <p class="text-center ">+55 (19) 99975-0044</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-            </footer>
+            <?php 
+            include_once("./foot.html");
+            ?>
         </div>
-        <a class="go-top hex-alt" href="javascript:void(0)">
-            <i class="fa fa-angle-up"></i>
-        </a>
-        <script src="novo/assets/js/packages.min.js"></script>
-        <script src="novo/assets/js/theme.min.js"></script>
     </body>
 </html>
