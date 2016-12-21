@@ -20,7 +20,7 @@
                 </div>
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <article class="post post-showinfo">
                                 <div class="post-head small-screen-center">
                                     <h2 class="post-title" style="color:#e74c3c;">
@@ -58,7 +58,7 @@
                                 </nav>
                             </article>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4 col-md-offset-2">
                             <div class="sidebar-widget widget_text">
                                 <h3 class="sidebar-header">Sobre Nós</h3>
                                 <p>
