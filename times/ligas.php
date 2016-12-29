@@ -10,7 +10,7 @@
         header("Location: index.php");
     }
     $id = $_GET['id'];
-    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM teams where id_teams='$id'");
+    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM leagues where id='$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
     $sqlcount_players = mysqli_query($mysqli,"SELECT points FROM teams where id_teams='$id'");
     $count_players = mysqli_fetch_assoc($sqlcount_players);
@@ -61,7 +61,7 @@
     <script src="../../js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../css/sweetalert.css">
     
-    <title><?php echo $dados['teams_name']; ?> - EsportesCo</title>
+    <title><?php echo $dados['name']; ?> - EsportesCo</title>
 
    <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -155,7 +155,7 @@
                 echo '
                 <div id="estrela_content">
                     <a href="index.php?id='.$prevteam.'" style="color:black"><i class="fa fa-angle-double-left" aria-hidden="true" class="estrela"></i></a>
-                    <img src="./img/equipes/'.$dados['teams_picture'].'.png" class="estrela" style="width:100px;margin-left:30px; margin-right:30px;">
+                    <img src="./img/ligas/'.$dados['picture'].'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px;">
                     <a href="index.php?id='.$nextteam.'" style="color:black"><i class="fa fa-angle-double-right" aria-hidden="true" class="estrela"></i></a>
                 </div>';
         ?>
@@ -166,8 +166,8 @@
             <!-- small box -->
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
-                    <h3><?php echo $dados['rank']; ?></h3>
-                    <p>Posição</p>
+                    <h3>1943</h3>
+                    <p>Fundação</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-ribbon-a"></i>
@@ -178,8 +178,8 @@
             <!-- small box -->
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
-                    <h3><?php echo $count_players['points']; ?></h3>
-                    <p>Pontos</p>
+                    <h3>13</h3>
+                    <p>Clubes Filiados</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -190,8 +190,8 @@
             <!-- small box -->
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
-                    <h3><?php echo $count_videos['goals_balance']; ?></h3>
-                    <p>Saldo de Gols</p>
+                    <h3>3300</h3>
+                    <p>Jogadores</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-ios-football"></i>
@@ -203,7 +203,7 @@
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
                     <h3><?php echo $count_plays['total']; ?></h3>
-                    <p>Marcações</p>
+                    <p>Lances</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-checkmark-round"></i>
@@ -293,7 +293,7 @@
           <!-- USERS LIST -->
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Jogadores</h3>
+              <h3 class="box-title">Diretoria</h3>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
               <ul class="users-list">
