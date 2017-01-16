@@ -12,6 +12,8 @@
     $id = $_GET['id'];
     $sqlgeral = mysqli_query($mysqli,"SELECT * FROM leagues where id='$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
+
+    $sqlcups = mysqli_query($mysqli,"SELECT * FROM cups where league='$id' order by date_limit DESC");
     $sqlcount_players = mysqli_query($mysqli,"SELECT points FROM teams where id_teams='$id'");
     $count_players = mysqli_fetch_assoc($sqlcount_players);
     $sqlcount_videos = mysqli_query($mysqli,"SELECT goals_balance FROM teams where id_teams='$id'");
@@ -121,6 +123,83 @@
             .estrela {
                 width:50%;
             }
+            .timeline_ano{
+                margin-left: 8px;
+                width: 50px;
+                height: 50px;
+                background: #DDDDDD; 
+                -moz-border-radius: 25px; 
+                -webkit-border-radius: 25px; 
+                border-radius: 25px;  
+                padding-top: 14px;
+                text-align: center;
+            }
+                
+            .timeline_ano span{
+                font-size: 15px;
+                color: black;
+                font-weight: 700;
+            }
+            .timeline_mes{
+                margin-left: 8px;
+                width: 50px;
+                height: 50px;
+                background: #BBBBBB; 
+                -moz-border-radius: 25px; 
+                -webkit-border-radius: 25px; 
+                border-radius: 25px;  
+                padding-top: 14px;
+                text-align: center;
+            }
+                
+            .timeline_mes span{
+                font-size: 15px;
+                color: black;
+                font-weight: 700;
+            }
+            .ion-trophy{
+                color:#c5b358;
+            }
+            .base-trofeu{
+                margin-top:-303px;
+                background-color:#855E42;
+                color: white;
+                font-weight:600;
+            }
+            .rubber_stamp {
+              font-family: 'Vollkorn', serif;
+              font-size: 9px;
+              line-height: 15px;
+              text-transform: uppercase;
+              font-weight: bold;
+              color: black;
+              border: 5px solid black;
+              padding: 10px 7px;
+              border-radius: 10px;
+
+              opacity: 0.8;
+              -webkit-transform: rotate(-10deg);
+              -o-transform: rotate(-10deg);
+              -moz-transform: rotate(-10deg);
+              -ms-transform: rotate(-10deg);
+              position:absolute;
+              margin-top:-140px; 
+              margin-left: auto; 
+              margin-right: auto;
+              margin-left:25px;
+              text-align:center;
+              filter:alpha(opacity=80);
+              opacity:0.8;
+              box-shadow: 0 0 2px black;
+            }
+            .rubber_stamp::after {
+              position: absolute;
+              content: " ";
+              width: 100%;
+              height: auto;
+              min-height: 100%;
+              padding: 10px;
+            }
 		</style>
     <!-- Hotjar Tracking Code for http://www.esportes.co -->
 <script>
@@ -135,7 +214,7 @@
 </script>
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
+<body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -145,18 +224,16 @@
         fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
-    <?php 
-        include_once("../admin/analyticstracking.php");
-        include('../navbar.php');
-    ?>
+    
+      <div class="row" style="background-color:#333333; text-align:center; margin:-10px -10px 10px -10px;">
+        <h1 style="color:white; margin-top:5px; font-size: 40px;"><b><?php echo $dados['name']; ?></b></h1>
+    </div>
 
     <div class="row">
         <?php 
                 echo '
                 <div id="estrela_content">
-                    <a href="index.php?id='.$prevteam.'" style="color:black"><i class="fa fa-angle-double-left" aria-hidden="true" class="estrela"></i></a>
-                    <img src="./img/ligas/'.$dados['picture'].'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px;">
-                    <a href="index.php?id='.$nextteam.'" style="color:black"><i class="fa fa-angle-double-right" aria-hidden="true" class="estrela"></i></a>
+                    <img src="../cadastro/uploads/'.$dados['image'].'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px;">
                 </div>';
         ?>
    
@@ -164,182 +241,194 @@
     <div class="row" style="margin-top:15px;">
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-light-blue-active">
+            <div class="small-box" style="background-color:#333333; color:white; margin-right:15px; margin-left:15px; height:110px;">
                 <div class="inner">
-                    <h3>1943</h3>
-                    <p>Fundação</p>
+                    <h3><?php echo $dados['competitions']; ?></h3>
+                    <p>Competições</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-ribbon-a"></i>
-                </div>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-light-blue-active">
-                <div class="inner">
-                    <h3>13</h3>
-                    <p>Clubes Filiados</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
+                    <i class="ion ion-trophy" style="color:#AAAAAA"></i>
                 </div>
             </div>
         </div><!-- ./col -->
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-light-blue-active">
+            <div class="small-box" style="background-color:#333333; color:white; margin-right:15px; margin-left:15px; height:110px;">
                 <div class="inner">
-                    <h3>3300</h3>
-                    <p>Jogadores</p>
+                    <h3><?php echo $dados['clubs']; ?></h3>
+                    <p>Clubes</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-ios-football"></i>
+                    <i class="ion ion-ios-people" style="color:#AAAAAA"></i>
                 </div>
             </div>
             </div><!-- ./col --> 
-                <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-light-blue-active">
+            <div class="small-box" style="background-color:#333333; color:white; margin-right:15px; margin-left:15px; height:110px;">
                 <div class="inner">
-                    <h3><?php echo $count_plays['total']; ?></h3>
+                    <h3><?php echo $dados['plays']; ?></h3>
                     <p>Lances</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-checkmark-round"></i>
+                    <i class="ion ion-film-marker" style="color:#AAAAAA"></i>
+                </div>
+            </div>
+        </div><!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box" style="background-color:#333333; color:white; margin-right:15px; margin-left:15px; height:110px;">
+                <div class="inner">
+                    <h3><?php echo $dados['foundation_year']; ?></h3>
+                    <p>Fundação</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-flame" style="color:#AAAAAA"></i>
                 </div>
             </div>
         </div><!-- ./col -->
     </div><!-- /.row -->
+
+    <div class="row" style="margin-top:50px;">
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+          
+            <!-- The time line -->
+              <?php
+                      
+                    if ($dados['competitions'] == 0){
+                        echo '
+                        <div class="col-xl-offset-5 col-xl-2 center-block">
+                            <span id="estrela_content">
+                            <i class="fa fa-star" aria-hidden="true" class="estrela"></i>
+                            <i class="fa fa-star" aria-hidden="true" class="estrela"></i>
+                            <i class="fa fa-star" aria-hidden="true" class="estrela"></i>
+                            <i class="fa fa-star" aria-hidden="true" class="estrela"></i>
+                            <i class="fa fa-star-half-o" aria-hidden="true" class="estrela"></i>
+                            </span>
+                            <h4 style="color:#CCC; opacity: 0.8; filter: alpha(opacity=80); width:90%;" align="center">
+                                Não existem competições cadastradas até o momento.
+                            </h4>
+                        </div>';
+                    }else {
+                        echo ' <section class="content-header" style="margin-bottom:10px; margin-top:-10px;">
+                          <h1>
+                            Competições
+                          </h1>
+                        </section>
+                         <ul class="timeline">';
+                        while ($data2 = mysqli_fetch_assoc($sqlcups)) {
+                            if  ($data2['status'] == 1){
+                                $enfeite = '
+                                <div style="width:100%; heigth:400px;">
+                                    <i class="ion ion-trophy">
+                                    <div class="rubber_stamp">Inscrições<br>Abertas</div></i>
+                                </div>';
+                                 $path = '../cadastro/clube.php';
+                            }else if ($data2['status'] == 2){
+                                 $enfeite ='';
+                            }else{
+                                 $enfeite = '  
+                                 <img src="./img/equipes/'.$data2['winner'].'.png" class="estrela" style="width:60px;position: absolute; margin-top:48px; margin-left: auto; margin-right: auto; left: 0; right: 0;">
+                                 <div style="width:100%; heigth:400px;">
+                                    <i class="ion ion-trophy"></i>
+                                 </div> 
+                                 ';
+                                 $path = 'copa.php';
+                            };
+                            echo '
+                             <li><a href="' . $path . '?id=' . $data2['id'] . '">
+                                 <div style="text-align:center; font-size:150px; height:300px;">
+                                         '.$enfeite.'
+                                     <button type="button" class="btn base-trofeu" style="margin-top:-303px;">' . $data2['name'] . '</button>
+                                 </div></a>
+                            </li>';
+                        }
+                        echo '
+                    <li>
+                      <i class="ion ion-ios-flame bg-gray"></i>
+                    </li>
+                  </ul>        
+                </div>';
+                    }?>
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+           <!-- <li>
+                
+                <div style="text-align:center; font-size:150px; margin-top:-85px; height:200px;">
+                    <div style="width:100%; heigth:400px;">
+                        <i class="ion ion-trophy">
+                        <div class="rubber_stamp">Inscrições<br>Abertas</div></i>
+                    </div>
+                     <a href="../cadastro/clube.php?id=16"><button type="button" class="btn base-trofeu" style="margin-top:-303px;">18º Copa Metropolitana</button></a>
+                </div>
+            </li>
+              
+              
+              
+              
+            <li class="timeline_ano">
+                  <span>
+                    2017
+                  </span>
+            </li>
+              
+            <li>
+                
+                <div style="text-align:center; font-size:150px; margin-top:-85px; height:200px;">
+                    
+                    <img src="./img/equipes/13.png" class="estrela" style="width:60px;position: absolute; margin-top:48px; margin-left: auto; margin-right: auto; left: 0; right: 0;">
+                    <div style="width:100%; heigth:400px;">
+                        <i class="ion ion-trophy"></i>
+                    </div>
+                    <a href="copa.php?id=1"><button type="button" class="btn base-trofeu" >XV Copa Benteler de Futebol Society</button></a>
+                </div>
+            </li>
+              
+            <li class="timeline_ano">
+                  <span>
+                    2016
+                  </span>
+            </li>
+              
+            <li>
+              <i class="ion ion-ios-flame bg-gray"></i>
+            </li>
+          </ul>-->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
     
     <div class="row">
-
-        <div class="col-md-6">
-            
-            
-               <div class="box" id="class_grupoA">
-                <div class="box-header">
-                  <h1 class="box-title" style="float:middle;">Partidas</h1>
-                </div><!-- /.box-header -->
-                <div class="box-body no-padding">
-                    <div class="col-md-10 col-md-offset-1">
-                          <?php
-                            // Prepare the paged query
-                            $sqlpartidas = mysqli_query($mysqli,"SELECT m.id,t1.teams_picture as t1_picture, t2.teams_picture as t2_picture, m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where (m.team1 = '$id' or m.team2 = '$id') order by m.datetime");
-
-                            while ($data5 = mysqli_fetch_assoc($sqlpartidas)) {
-                                echo '
-                                <hr style="margin-top:-2px;"></hr>
-                                 <a href="./partida.php?id='.$data5['id'].'">
-                                <div class="row">';
-                              if ($data5['team2'] <> null) {
-                                  echo '
-                                    <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;  color:black;">
-                                        <span style="font-family: Roboto, Arial, serif; font-size:12px;">'.$data5['date'].' às '.$data5['hour'].'</span>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-bottom:10px;">
-                                    <div class="col-xs-4" style="text-align:right; padding:0;">
-                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; margin-right:10px; color:black;">'.$data5['team1_name'].'</span>
-                                        
-                                        <img src="./img/equipes/'.$data5['t1_picture'].'.png" style="width:30px; margin-top: -10px; margin-right:5px;">
-                                    </div>
-                                
-                                    <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
-                                        <span style="font-family: Arial, serif; font-size:25px;text-align:left; margin-right:-25px; color:black;font-weight:bolder;">'.$data5['score1'].'</span>
-                                    </div>
-                                
-                              <div  class="col-xs-2 center-block" style="text-align:center; font-size:15px; margin-top:10px;  color:black;"><i class="fa fa-times" aria-hidden="true"></i></div>
-                              
-                              
-                                    <div  class="col-xs-1" style="text-align:center; font-size:15px; padding:0;">
-                                        <span style="font-family: Arial, serif; font-size:25px;text-align:left; margin-left:-25px; color:black;font-weight:bolder;">'.$data5['score2'].'</span>
-                                    </div>
-                                    
-                                    <div  class="col-xs-4" style="padding:0;">
-                                        <img src="./img/equipes/'.$data5['t2_picture'].'.png" style="width:30px; margin-top: -10px; margin-left:5px">
-                                        
-                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
-                                  </div>';}
-                                else {
-                                 echo '
-                                    <div class="col-sm-6 col-sm-offset-3" style="text-align:center; height: 20px; line-height: 20px; margin-top:-10px; margin-bottom:10px;">
-                                        <span style="font-family: Roboto, Arial, serif; font-size:18px; color:black;">'.$data5['date'].'</span>
-                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:15px; color:black;">- Amistoso interno</span> 
-                                    </div>
-                                ';}
-                                echo '</div></a>';
-                        }?> 
-                    </div><!-- /.box-body -->
-                </div>
-              </div><!-- /.box -->
-            
-             <div class="box box-solid bg-light-blue-gradient">
-                <div class="box-header">
-                  <i class="fa fa-th"></i>
-                  <h3 class="box-title">Gols por Partida</h3>
-                </div>
-                <div class="box-body border-radius-none">
-
-                    <div id="tabs-1" class="tab-pane fade in active">
-                        <div class="chart" id="line-chart-gols-pro" style="height: 250px;"></div>
-                    </div>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-          
-        </div><!-- /.col --> 
-        
-                 <div class="col-md-6">
-          <!-- USERS LIST -->
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Diretoria</h3>
-            </div><!-- /.box-header -->
-            <div class="box-body no-padding">
-              <ul class="users-list">
-                <?php while ($data2 = mysqli_fetch_assoc($sql_jogadores)) {
-                    echo '
-                    <li>
-                        <a href="./jogador.php?id=' . $data2['id_players'] . '">
-                        <div class="figurinha">
-                        <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image">
-                        <span class="users-list-name">' . $data2['players_name'] . '</span>
-                      </div>
-                      </a>
-                      
-                    </li>';}
-                ?>
-              </ul><!-- /.users-list -->
-            </div><!-- /.box-body -->
-          </div><!--/.box -->
+        <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center;">
+            <h4 style="color:#555;">Patrocinadores:</h4>
+            <div class="col-md-4" style="margin-top:30px;">
+              
+            </div>
+            <div class="col-md-4" style="margin-top:30px;">
+                <a href="http://www.gestecarbitragem.com.br/site" target="_blank">
+                    <img src="../img/gestec.png" style="display: block; margin-left: auto; margin-right: auto;">
+                </a>
+            </div>
+            <div class="col-md-4" style="margin-top:30px;">
              
-            <div class="box">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Ranking Interno</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <table class="table table-bordered">
-                    <tr>
-                      <th style="width: 10px">#</th>
-                      <th>Nome</th>
-                      <th style="width: 90px; text-align:center;">Nota Média</th>
-                    </tr>
-                    <tr>
-                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.players_stats_average, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." order by p.players_stats_average DESC LIMIT 5");
-                        $posicao = 1;
-                    while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
-                    echo '
-                    <tr>
-                      <td>'.$posicao.'</td>
-                      <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
-                      <td style="text-align:center;"><span>'.$data8['players_stats_average'].'</span></td>
-                    </tr>';
-                    $posicao = $posicao+1;}?>
-                  </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-        </div><!-- /.col -->
+            </div>
+        </div>
     </div>
+     
+  
     
     <script>
         

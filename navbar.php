@@ -35,7 +35,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="http://www.esportes.co/index.php" class="navbar-brand">
-                <img src="img/logo_transp.png">Esportes.Co
+                <img src="http://www.esportes.co/img/logo_transp.png" style="width:50px;">Esportes.Co
             </a>
         </div>
         <nav class="collapse navbar-collapse main-navbar" role="navigation">
@@ -44,17 +44,17 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="organizadores.php">Adicione sua Liga</a> 
                 </li>
-                <li><a href="blog.php">Blog</a> 
+                <li><a href="http://www.esportes.co/blog.php">Blog</a> 
                 </li>
                 <li>
                     <?php if ($_SESSION['FBID']): ?>      <!--  After user login  -->
-                    <a href="1353/logout.php">
+                    <a href="http://www.esportes.co/1353/logout.php">
                         <div class="image-cropper">
                             <img src="https://graph.facebook.com/<?php echo $_SESSION['FBID']; ?>/picture" class="img_perfil"/>
                         </div>
                     </a>
                     <?php else: ?>     <!-- Before login --> 
-                       <a href="./1353/fbconfig.php">Entrar</a>
+                       <a href="http://www.esportes.co/1353/fbconfig.php">Entrar</a>
                     <?php endif ?>
                 </li>
             </ul>

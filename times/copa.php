@@ -149,7 +149,7 @@
 </script>
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
+<body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];

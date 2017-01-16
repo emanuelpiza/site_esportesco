@@ -10,8 +10,8 @@ $(function() {
     };
     var dx = 0.3;
     var positions = [
-        { type: '<a href="http://www.esportes.co/ligas/campinas.php" style="text-decoration: none; color:black;"><h2 style="text-align: center; color:#e74c3c;">Liga<br>Campineira</h2></a>', LatLng: offsetCenter(-0.078, -0.0165) },
-        { type: '<a href="http://www.esportes.co/ligas/piracicaba.php" style="text-decoration: none; color:black; margin-bottom:-30px"><h2 style="text-align: center; color:#e74c3c;">Liga<br>Piracicabana</h2></a>', LatLng: offsetCenter(0.12, -0.6) }
+        { type: '<a href="http://www.esportes.co/times/liga.php?id=1" style="text-decoration: none; color:black;"><h1 style="text-align: center; color:#e74c3c;">LCF</h1></a><a href="http://www.esportes.co/times/liga.php?id=3" style="text-decoration: none; color:black;"><h1 style="text-align: center; color:#e74c3c; margin-top:-20px; margin-bottom:0px;">LIREDEP</h1></a>', LatLng: offsetCenter(-0.078, -0.0165) },
+        { type: '<a href="http://www.esportes.co/times/liga.php?id=2" style="text-decoration: none; color:black;"><h1 style="text-align: center; color:#e74c3c; margin-bottom:0px;">LPF</h1></a>', LatLng: offsetCenter(0.12, -0.6) }
     ];
 
     $.each(positions, function(i, e) {

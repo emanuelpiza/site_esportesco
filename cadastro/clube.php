@@ -8,28 +8,35 @@
     @header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");  
 	
 	$renderMessage = false;
-	
-	if ( !empty($_POST)) {
-	
-		$servername = "localhost";
-		$username = "root";
-		$password = "k1llersql";
-		$dbname = "Esportes";
 
-		// Create connection
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		$conn->query("SET NAMES 'utf8'");
-		mb_language('uni'); 
-		mb_internal_encoding('UTF-8');
+    $servername = "localhost";
+    $username = "root";
+    $password = "k1llersql";
+    $dbname = "Esportes";
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->query("SET NAMES 'utf8'");
+    mb_language('uni'); 
+    mb_internal_encoding('UTF-8');
+
+    $id = $_GET['id'];
+    $sqlgeral = mysqli_query($conn,"SELECT * FROM cups where id='$id'");
+    $dados = mysqli_fetch_assoc($sqlgeral);
+
+	if ( !empty($_POST)) {
 		
 		// Check connection
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
 		} 
 
+        
+        $rand = rand();
+        
 		//Saving file
 		$target_dir = "uploads/";
-		$target_file = $target_dir . basename($_FILES["image"]["name"]);
+		$target_file = $target_dir . $rand . basename($_FILES["image"]["name"]);
 		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 		
 		move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
@@ -46,18 +53,11 @@
 		$contact_email = $_POST['contact_email'] ;
 		$contact_telefone = $_POST['contact_telefone'];
         $checkbox_aceite = $_POST['checkbox_aceite'];
-		
-		//SQL
-		//$sql = "INSERT INTO cups (IS_ACTIVE, NAME, cathegory, entry_fee, date_limit, matches_timeofweek, location_details, email, cell, image)	VALUES (0, '".$championshipName."','". $category."','". $cost ."','". $limitDate."','". $days ."','". $address ."','". $contact ."','". $phone ."','". $image."');";
-        $sql = "INSERT INTO leagues (name, foundation_year, address, size, cnpj, image, contact_name, contact_email, contact_telefone, terms_accepted) VALUES ( '".$name."','".$foundation."','".$address."','".$size."','".$cnpj."','".$image."','".$contact_name."','".$contact_email."','".$contact_telefone."', '".$checkbox_aceite."');";
         
-		// prepare and bind
-		//$stmt = $conn->prepare($sql);
-		//$stmt->bind_param("sssssssss", $championshipName, $category, $cost , $limitDate, $days, $address, $contact, $phone, $image);
-
-		//$stmt->execute();
+        $sql = "INSERT INTO clubs (name, foundation_year, address, size, cnpj, image, contact_name, contact_email, contact_telefone, terms_accepted, cup) VALUES ( '".$name."','".$foundation."','".$address."','".$size."','".$cnpj."','".$image."','".$contact_name."','".$contact_email."','".$contact_telefone."', '".$checkbox_aceite."', '".$id."');";
+        
 		mysqli_query($conn, $sql);
-		//$stmt->close();
+        
 		$conn->close();
 	
 		$renderMessage = true;
@@ -78,26 +78,26 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Nova Liga - Esportes.Co</title>
+    <title>Inscrição de Clube - Esportes.Co</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/1-col-portfolio.css" rel="stylesheet">
+    <link href="../css/1-col-portfolio.css" rel="stylesheet">
 	
 	<!-- AdminLTE CSS -->
-	<link rel="stylesheet" href="css/AdminLTE.min.css">
-	<link rel="stylesheet" href="css/_all-skins.min.css">
+	<link rel="stylesheet" href="../css/AdminLTE.min.css">
+	<link rel="stylesheet" href="../css/_all-skins.min.css">
 
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	
 	<!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
 
 	<!-- Bootstrap time Picker -->
-    <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+    <link rel="stylesheet" href="../plugins/timepicker/bootstrap-timepicker.min.css">
 	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -174,14 +174,14 @@
 					
 					<div class="box box-primary">
 						<div class="box-header with-border">
-						  <h1 class="box-title">Nova Liga</h1>
+						  <h1 class="box-title">Inscrição de Clube - <?php echo $dados['name']; ?></h1>
 						</div>
 						
 						<?php 
 							if ($renderMessage) {
 								echo '<div class="alert alert-success alert-dismissible">
 										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-										<h4><i class="icon fa fa-check"></i>Liga cadastrada com sucesso!</h4>
+										<h4><i class="icon fa fa-check"></i>Clube inscrito com sucesso!</h4>
 										Entraremos em contato.
 									  </div>';
 								
@@ -254,61 +254,10 @@
 									</div>
 								</div>
                                   <div class="form-group">
-                                      <label for="size">Li e concordo com o <a href="./termos.html" target="_blank">Termo de Aceite* </a></label>
+                                      <label for="size">Li e concordo com o <a href="./termos.html" target="_blank">Regulamento</a> * </label>
 									<input type="hidden" name="checkbox_aceite" value="0" />
                                     <input type="checkbox" name="checkbox_aceite" value="1" required="true" />
-								</div>                           
-                               
-								
-								
-								<!--
-								
-								<div class="form-group">
-									<label for="cost">Valor por Jogador</label>
-									<div class="input-group">
-										<span class="input-group-addon">R$</span>
-										<input type="text" class="form-control" name="cost" id="cost">
-										<span class="input-group-addon">,00</span>
-									</div>
-								</div>
-								<div class="form-group">
-									<label>Dias dos Jogos</label>
-									<textarea class="form-control" name="days" id="days" rows="3" placeholder="Preencha os dias e horários dos jogos..."></textarea>
-								</div>
-								<div class="form-group">
-									<label for="weekDays">Dias dos Jogos</label>
-									<div class="checkbox">
-										<label><input type="checkbox" name="weekDays">D</label>
-										<label><input type="checkbox" name="weekDays">S</label>
-										<label><input type="checkbox" name="weekDays">T</label>
-										<label><input type="checkbox" name="weekDays">Q</label>
-										<label><input type="checkbox" name="weekDays">Q</label>
-										<label><input type="checkbox" name="weekDays">S</label>
-										<label><input type="checkbox" name="weekDays">S</label>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="bootstrap-timepicker">
-										<label for="weekDays">Horário dos Jogos</label>
-										<div class="input-group">
-											<div class="input-group-addon">
-											  <i class="fa fa-clock-o"></i>
-											</div>
-											<input type="text" class="form-control timepicker">
-										</div>
-									</div>
-								</div>
-								
-								
-								<div class="form-group">
-									<label for="datepicker2">Data Limite para Inscrição</label>
-									<div class="input-group date">
-										<div class="input-group-addon">
-											<i class="fa fa-calendar"></i>
-										</div>
-										<input type="text" name="limitDate" class="form-control pull-right" id="datepicker2">
-									</div>
-								</div> -->
+								</div> 
 								
 							</div>
                             <p style="margin-left:10px; margin-top:-20px;">* Campos obrigatórios.</p>
