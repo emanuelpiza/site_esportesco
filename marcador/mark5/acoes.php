@@ -142,6 +142,48 @@
                 p.goals = n.novos;";
         mysqli_query($mysqli, $gols);
         
+        //Cartões Amarelos
+        $amarelos = "
+            UPDATE players p
+                RIGHT JOIN (
+                   select n.player, sum(1) as novos from notes n where available = 1 and type = 2 group by player) AS n ON
+                n.`player` = p.`id_players`
+            SET
+                p.yellow_cards = n.novos;";
+        mysqli_query($mysqli, $amarelos);
+        
+        //Cartões Vermelhos
+        $vermelhos = "
+            UPDATE players p
+                RIGHT JOIN (
+                   select n.player, sum(1) as novos from notes n where available = 1 and type = 3 group by player) AS n ON
+                n.`player` = p.`id_players`
+            SET
+                p.red_cards = n.novos;";
+        mysqli_query($mysqli, $vermelhos);
+        
+        //SUSPENSÕES
+        $situation = "
+            UPDATE players p SET situation = 
+            IF (
+                (p.red_cards > 0) and
+                    (
+                    (select date(n.datetime) from notes n where player = p.`id_players` and n.`type` = 3 order by n.datetime DESC limit 1) = 
+                    (select date(m.datetime) from matches m where (m.`team1` = p.`players_team_id` or m.`team2` = p.`players_team_id`) and datetime < NOW() limit 1)
+                ), 
+                'Suspenso Vermelho', 
+                IF(
+                    (p.`yellow_cards` % 3 = 0) and 
+                    (
+                        (select date(n.datetime) from notes n where player = p.`id_players` and n.`type` = 2 order by n.datetime DESC limit 1) = 
+                        (select date(m.datetime) from matches m where (m.`team1` = p.`players_team_id` or m.`team2` = p.`players_team_id`) and datetime < NOW() limit 1)
+                    ),
+                    'Suspenso Amarelo',
+                    'Apto'
+                )
+            );";
+        mysqli_query($mysqli, $situation);
+        
         //COMPROMETIMENTO
         $comprometimento = "
           UPDATE players p

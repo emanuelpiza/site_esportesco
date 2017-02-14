@@ -120,6 +120,50 @@
             }   
             .estrela {
                 width:50%;
+            }  
+            .ion-trophy{
+                color:#c5b358;
+            }
+            .base-trofeu{
+                margin-top:-303px;
+                background-color:#855E42;
+                color: white;
+                font-weight:600;
+            }
+            .rubber_stamp {
+              font-family: 'Vollkorn', serif;
+              font-size: 12px;
+              line-height: 12px;
+              text-transform: uppercase;
+              font-weight: bolder;
+              color: white;
+              border: 2px solid white;
+              padding: 10px 7px;
+              border-radius: 10px;
+
+              opacity: 0.8;
+              -webkit-transform: rotate(-10deg);
+              -o-transform: rotate(-10deg);
+              -moz-transform: rotate(-10deg);
+              -ms-transform: rotate(-10deg);
+              position:absolute;
+              margin-top:130px;
+              margin-left: auto; 
+              margin-right: auto;
+              margin-left:30px;
+              text-align:center;
+              filter:alpha(opacity=80);
+              opacity:0.8;
+              box-shadow: 0 0 2px white;
+                background-color: black;
+            }
+            .rubber_stamp::after {
+              position: absolute;
+              content: " ";
+              width: 100%;
+              height: auto;
+              min-height: 100%;
+              padding: 10px;
             }
 		</style>
     <!-- Hotjar Tracking Code for http://www.esportes.co -->
@@ -215,11 +259,76 @@
     <div class="row">
 
         <div class="col-md-6">
+          <!-- USERS LIST -->
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Jogadores</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding">
+              <ul class="users-list">
+                <?php while ($data2 = mysqli_fetch_assoc($sql_jogadores)) {
+                    if  ($data2['situation'] != "Apto"){
+                                $enfeite = '
+                                    <div class="rubber_stamp">Suspenso</div></i>';
+                                 $path = '../cadastro/clube.php';
+                    }
+                    else {
+                         $enfeite = '';
+                        $path = '';
+                    }
+                    echo '
+                    <li>
+                        <a href="./jogador.php?id=' . $data2['id_players'] . '">
+                        <div class="figurinha">
+                        <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image">
+                        <span class="users-list-name">' . $data2['players_name'] . '</span>
+                      </div>
+                      </a>
+                      '.$enfeite.' 
+                      
+                    </li>';}
+                ?>
+              </ul><!-- /.users-list -->
+            </div><!-- /.box-body -->
+          </div><!--/.box -->
+             
+            <div class="box">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Top 3 Artilharia Interna</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-bordered">
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Nome</th>
+                      <th style="width: 90px; text-align:center;">Gols</th>
+                    </tr>
+                    <tr>
+                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." and p.goals > 0 order by p.goals DESC, p.players_name LIMIT 3");
+                        $posicao = 1;
+                    while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
+                    echo '
+                    <tr>
+                      <td>'.$posicao.'</td>
+                      <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
+                      <td style="text-align:center;"><span>'.$data8['goals'].'</span></td>
+                    </tr>';
+                    $posicao = $posicao+1;}?>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+        </div><!-- /.col -->
+        
+        
+        
+        
+        
+        <div class="col-md-6">
             
             
                <div class="box" id="class_grupoA">
                 <div class="box-header">
-                  <h1 class="box-title" style="float:middle;">Partidas</h1>
+                  <h1 class="box-title" style="float:middle;">Campanha</h1>
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="col-md-10 col-md-offset-1">
@@ -287,52 +396,29 @@
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
           
-        </div><!-- /.col --> 
-        
-                 <div class="col-md-6">
-          <!-- USERS LIST -->
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Jogadores</h3>
-            </div><!-- /.box-header -->
-            <div class="box-body no-padding">
-              <ul class="users-list">
-                <?php while ($data2 = mysqli_fetch_assoc($sql_jogadores)) {
-                    echo '
-                    <li>
-                        <a href="./jogador.php?id=' . $data2['id_players'] . '">
-                        <div class="figurinha">
-                        <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image">
-                        <span class="users-list-name">' . $data2['players_name'] . '</span>
-                      </div>
-                      </a>
-                      
-                    </li>';}
-                ?>
-              </ul><!-- /.users-list -->
-            </div><!-- /.box-body -->
-          </div><!--/.box -->
              
             <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Ranking Interno</h3>
+                  <h3 class="box-title">Cartões</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table class="table table-bordered">
                     <tr>
                       <th style="width: 10px">#</th>
                       <th>Nome</th>
-                      <th style="width: 90px; text-align:center;">Nota Média</th>
+                      <th style="width: 90px; text-align:center;">Amarelos</th>
+                      <th style="width: 90px; text-align:center;">Vermelhos</th>
                     </tr>
                     <tr>
-                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.players_stats_average, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." order by p.players_stats_average DESC LIMIT 5");
+                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.yellow_cards, p.red_cards, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." and (p.yellow_cards > 0 or p.red_cards > 0) order by p.red_cards DESC, p.yellow_cards DESC, p.players_name");
                         $posicao = 1;
                     while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
                     echo '
                     <tr>
                       <td>'.$posicao.'</td>
                       <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
-                      <td style="text-align:center;"><span>'.$data8['players_stats_average'].'</span></td>
+                      <td style="text-align:center;"><span>'.$data8['yellow_cards'].'</span></td>
+                      <td style="text-align:center;"><span>'.$data8['red_cards'].'</span></td>
                     </tr>';
                     $posicao = $posicao+1;}?>
                   </table>

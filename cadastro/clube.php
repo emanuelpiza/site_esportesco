@@ -192,7 +192,7 @@
 							<div class="box-body">
 								<div class="form-group">
 								  <label for="championshipName">Nome *</label>
-								  <input type="text" class="form-control" id="name" name="name" placeholder="Nome Completo da Liga" required="true">
+								  <input type="text" class="form-control" id="name" name="name" placeholder="Nome do Clube" required="true">
 								</div>
                                 
                                  <div class="form-group">
@@ -202,7 +202,7 @@
                                 
                                 <div class="form-group">
 									<label for="size">Número de Jogadores em 2016 *</label>
-									<input type="text" class="form-control" id="size" name="size" placeholder="Número aproximado de jogadores inscritos em 2016">
+									<input type="text" class="form-control" id="size" name="size" placeholder="Número aproximado de jogadores em 2016">
 								</div>
                                 
                                 <div class="form-group">
@@ -212,7 +212,7 @@
                              
                                 <div class="form-group">
 									<label for="cnpj">CNPJ</label>
-									<input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ da Liga pela qual é responsável">
+									<input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ do Clube">
 								</div>
                                 
                                 <div class="form-group">
@@ -236,15 +236,15 @@
 								
                                 
 								<div class="form-group">
-								  <label for="contact">Contatos *</label>
+								  <label for="contact">Dirigente *</label>
  								  <div class="input-group">
 									  <span class="input-group-addon"> <i class="fa fa-user" style="width:15px;"></i></span>
-									  <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Seu Nome" required="true">
+									  <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome" required="true">
 								  </div>                                   
 								  <div class="input-group">
 									  <span class="input-group-addon">
 										<i class="fa fa-envelope"  style="width:15px;"></i></span>
-									  <input type="contact_email" name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="Seu melhor Email" required="true">
+									  <input type="contact_email" name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="Email" required="true">
 								  </div>
 								  <div class="input-group">
 									  <div class="input-group-addon">
@@ -253,12 +253,7 @@
 									  <input type="text" name="contact_telefone" id="contact_telefone" placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask required="true">
 									</div>
 								</div>
-                                  <div class="form-group">
-                                      <label for="size">Li e concordo com o <a href="./termos.html" target="_blank">Regulamento</a> * </label>
-									<input type="hidden" name="checkbox_aceite" value="0" />
-                                    <input type="checkbox" name="checkbox_aceite" value="1" required="true" />
-								</div> 
-								
+                                
 							</div>
                             <p style="margin-left:10px; margin-top:-20px;">* Campos obrigatórios.</p>
 							

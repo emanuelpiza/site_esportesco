@@ -83,7 +83,6 @@
 <html lang="en" content="text/html; charset=utf-8">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -94,33 +93,33 @@
     <script src="marcador.js" type="text/javascript"></script>-->
     
     <!-- Sweet Alert -->
-    <script src="../../js/sweetalert.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../css/sweetalert.css">
+    <script src="http://www.esportes.co/js/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://www.esportes.co/css/sweetalert.css">
     
     <title><?php echo $dados['name']; ?> - EsportesCo</title>
 
-   <link rel="stylesheet" href="../../css/bootstrap.min.css">
+   <link rel="stylesheet" href="http://www.esportes.co/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../css/AdminLTE.min.css">
+    <link rel="stylesheet" href="http://www.esportes.co/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../css/_all-skins.min.css">
+    <link rel="stylesheet" href="http://www.esportes.co/css/_all-skins.min.css">
     <!-- Ícones -->
-    <link rel="icon" type="image/png" href="../img/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="../img/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="http://www.esportes.co/img/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="http://www.esportes.co/img/favicon-16x16.png" sizes="16x16" />
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
      <!-- jQuery -->
-    <script src="./js/jquery.js"></script>
+    <script src="http://www.esportes.co/js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/app.js"></script>
-    <script src="../js/Chart.js"></script>
+    <script src="http://www.esportes.co/js/bootstrap.min.js"></script>
+    <script src="http://www.esportes.co/js/app.js"></script>
+    <script src="http://www.esportes.co/js/Chart.js"></script>
 		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
 		<style>
 			canvas{
@@ -150,23 +149,14 @@
 </head>
 
 <body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=1510121465959695";
-        fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
     <?php 
         include_once("../admin/analyticstracking.php");
-        include('../navbar.php');
+        include("../navbar.php");
     ?>
    <section class="content-header">
     </section>
     
-        <div class="row" style="background-color:#003366; text-align:center; margin:-25px -10px 25px -10px;">
+        <div class="row" style="background-color:black; text-align:center; margin:-25px -10px 25px -10px;">
         <h1 style="color:white; margin-top:5px; font-size: 40px;"><b><?php echo $dados['name']; ?></b></h1>
         </div>
     
@@ -329,7 +319,8 @@
                 </div>
             </div>';}
                 ?>
-    
+    </div>
+    <div class="row">
          <div class="col-md-6">
                        <div class="box">
                 <div class="box-header with-border">
@@ -343,7 +334,7 @@
                       <th>Equipe</th>
                       <th style="width: 50px; height:57px;">Gols</th>
                     </tr>
-                    <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where players_team_id in (select id_teams from teams where cup_id = '$copa') order by p.goals DESC LIMIT 3");
+                    <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where players_team_id in (select id_teams from teams where cup_id = '$copa') order by p.goals DESC LIMIT 5");
                         $posicao = 1;
                     while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
                     echo '
@@ -359,7 +350,7 @@
               </div><!-- /.box -->
         </div><!-- /.col --> 
         
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6">
             <div class="box">
                 <div class="box-header with-border">
                   <h3 class="box-title">Equipe Menos Vazada</h3>

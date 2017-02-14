@@ -182,11 +182,24 @@
                         <h5 class="description-header"><?php echo $dados['goals']; ?></h5>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
-                    <div class="col-xs-4 border-right" style="margin-top:-20px;">
+                      <div class="col-xs-2 border-right" style="margin-top:-20px;">
+                          <div class="description-block">
+                            <span class="description-text">C.A.</span>
+                              <h5 class="description-header"><?php echo $dados['yellow_cards']; ?></h5>
+                          </div><!-- /.description-block -->
+                      </div><!-- /.col -->
+                      <div class="col-xs-2" style="margin-top:-20px;">
+                          <div class="description-block">
+                            <span class="description-text">C.V.</span>
+                              <h5 class="description-header"><?php echo $dados['red_cards']; ?></h5>
+                          </div><!-- /.description-block -->
+                      </div><!-- /.col -->
+                      
+                   <!-- <div class="col-xs-4 border-right" style="margin-top:-20px;">
                       <div class="description-block">
                         <span class="description-text">NOTA MÉDIA</span>
-                        <h5 class="description-header"><?php echo intval($dados['players_stats_average']); ?></h5>
-                      </div><!-- /.description-block -->
+                        <h5 class="description-header">?php echo intval($dados['players_stats_average']); ?></h5>
+                      </div><
                     </div><!-- /.col -->
                   </div><!-- /.row -->
                 </div>

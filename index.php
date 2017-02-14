@@ -19,7 +19,9 @@
             };
             var dx = 0.3;
             var positions = [
-                { type: '<a href="http://www.esportes.co/times/liga.php?id=2" style="text-decoration: none; color:black;"><img src="http://www.esportes.co/cadastro/uploads/0.png" style="width:80px;"></a>', LatLng: offsetCenter(-0.078, -0.0165) }
+                //{ type: '<a href="http://www.esportes.co/times/liga.php?id=2" style="text-decoration: none; color:black;"><img src="http://www.esportes.co/cadastro/uploads/0.png" style="width:80px;"></a>', LatLng: offsetCenter(-0.078, -0.0165) },
+                { type: '<a href="http://www.esportes.co/times/liga.php?id=15" style="text-decoration: none; color:black;"><img src="http://www.esportes.co/cadastro/uploads/LBF 150X150.png" style="width:80px;"></a>', LatLng: { lat:-22.959844, lng:-46.544389} },
+                { type: '<a href="http://www.esportes.co/times/copa.php?id=1" style="text-decoration: none; color:black;"><img src="http://www.esportes.co/cadastro/uploads/benteler.jpeg" style="width:80px;"></a>', LatLng: { lat: -23.004614, lng: -47.116369} }//Benteler
             ];
 
             $.each(positions, function(i, e) {

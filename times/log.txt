@@ -2222,3 +2222,5 @@
 \n2Dj2-zho0K8__0h37m7s_10, ,Inicio: 2016-11-08 23:28:01 Final : 20161108 23:30:48
 2016-11-08 23:43:14 arquivo= 2Dj2-zho0K8 inicio= 3499  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 252
 \n2Dj2-zho0K8__0h58m28s_10, ,Inicio: 2016-11-08 23:43:14 Final : 20161108 23:47:37
+2017-01-23 11:07:57 arquivo= 05j_oVFSkXM inicio= 7  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 1
+\n05j_oVFSkXM__0h0m16s_10, ,Inicio: 2017-01-23 11:07:57 Final : 20170123 11:08:03

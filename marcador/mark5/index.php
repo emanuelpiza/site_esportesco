@@ -141,6 +141,43 @@
     <link rel="icon" type="image/png" href="../../img/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="../../img/favicon-16x16.png" sizes="16x16" />
      <!-- jQuery -->
+    <style>
+            .rubber_stamp {
+              font-family: 'Vollkorn', serif;
+              font-size: 12px;
+              line-height: 12px;
+              text-transform: uppercase;
+              font-weight: bolder;
+              color: white;
+              border: 2px solid white;
+              padding: 10px 7px;
+              border-radius: 10px;
+
+              opacity: 0.8;
+              -webkit-transform: rotate(-10deg);
+              -o-transform: rotate(-10deg);
+              -moz-transform: rotate(-10deg);
+              -ms-transform: rotate(-10deg);
+              position:absolute;
+              margin-top:-30px;
+              margin-left: auto; 
+              margin-right: auto;
+              margin-left:100px;
+              text-align:center;
+              filter:alpha(opacity=80);
+              opacity:0.8;
+              box-shadow: 0 0 2px white;
+                background-color: black;
+            }
+            .rubber_stamp::after {
+              position: absolute;
+              content: " ";
+              width: 100%;
+              height: auto;
+              min-height: 100%;
+              padding: 10px;
+            }
+		</style>
 </head>
 <body id="<?php echo $id;?>">
        <div class="row" style="margin-bottom:10px;">
@@ -202,14 +239,29 @@
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <ul class="options" id="ul_esq" style=" text-align:center;">
-                            <?php while ($team1 = mysqli_fetch_assoc($sqlteam1)) {
-                            echo "<button type='button' class='btn btn-primary btn-sm' style='width:150px;' onclick=\x22selecionar_jogador(&quot;" . $team1['id_players'] . "&quot;, &quot;" . $team1['shirt'] . "&quot;)\x22 id='" . $team1['id_players'] . "' value='" . $team1['id_players'] . "'>" . $team1['shirt'] . " - " . $team1['players_name'];} ?>
+                            <?php 
+                            while ($team1 = mysqli_fetch_assoc($sqlteam1)) {
+                            if  ($team1['situation'] != "Apto"){
+                                $enfeite = '<div class="rubber_stamp">Suspenso</div></i>';
+                                    }
+                            else {
+                                $enfeite = '';
+                            }
+                            echo "<button type='button' class='btn btn-primary btn-sm' style='width:150px;' onclick=\x22selecionar_jogador(&quot;" . $team1['id_players'] . "&quot;, &quot;" . $team1['shirt'] . "&quot;)\x22 id='" . $team1['id_players'] . "' value='" . $team1['id_players'] . "'>" . $team1['shirt'] . " - " . $team1['players_name'].$enfeite;
+                            } ?>
                         </ul>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                          <ul class="options" id="ul_esq" style="text-align:center;">
                             <?php while ($team2 = mysqli_fetch_assoc($sqlteam2)) {
-                            echo "<button type='button' class='btn btn-primary btn-sm'  style='width:150px;'  onclick=\x22selecionar_jogador(&quot;" . $team2['id_players'] . "&quot;, &quot;" . $team2['shirt'] . "&quot;)\x22 id='" . $team2['id_players'] . "' value='" . $team2['id_players'] . "'>" . $team2['shirt'] . " - " . $team2['players_name'];} ?>
+                                if  ($team2['situation'] != "Apto"){
+                                    $enfeite = '<div class="rubber_stamp">Suspenso</div></i>';
+                                        }
+                                else {
+                                    $enfeite = '';
+                                }
+                            echo "<button type='button' class='btn btn-primary btn-sm'  style='width:150px;'  onclick=\x22selecionar_jogador(&quot;" . $team2['id_players'] . "&quot;, &quot;" . $team2['shirt'] . "&quot;)\x22 id='" . $team2['id_players'] . "' value='" . $team2['id_players'] . "'>" . $team2['shirt'] . " - " . $team2['players_name'].$enfeite;
+                            } ?>
                         </ul>
                     </div>
                 </div>

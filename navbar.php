@@ -35,14 +35,14 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="http://www.esportes.co/index.php" class="navbar-brand">
-                <img src="http://www.esportes.co/img/logo_transp.png" style="width:50px;">Esportes.Co
+                <img src="http://www.esportes.co/img/logo_transp.png" style="margin-top:-10px;width:50px;">
             </a>
         </div>
         <nav class="collapse navbar-collapse main-navbar" role="navigation">
             <div class="sidebar-widget widget_search pull-right">
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="organizadores.php">Adicione sua Liga</a> 
+                <li><a href="http://www.esportes.co/organizadores.php">Adicione sua Liga</a> 
                 </li>
                 <li><a href="http://www.esportes.co/blog.php">Blog</a> 
                 </li>
