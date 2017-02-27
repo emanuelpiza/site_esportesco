@@ -9,21 +9,23 @@
         $_SESSION["error1"] = "Please Sign in";
         header("Location: index.php");
     }
-    $copa = $_GET['id'];
+    $id = $_GET['id'];
 
-    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM cups where id='$copa'");
+    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM cups where id='$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
+
+    $sql_times = mysqli_query($mysqli,"SELECT * FROM teams where cup_id='$id'");
     
-    $sql_max = mysqli_query($mysqli,"select MAX(DATE_FORMAT(m.datetime,'%Y-%m-%d')) as data from matches m where cup_id = '$copa';");
+    $sql_max = mysqli_query($mysqli,"select MAX(DATE_FORMAT(m.datetime,'%Y-%m-%d')) as data from matches m where cup_id = '$id';");
     $max = mysqli_fetch_assoc($sql_max)['data'];
 
-    $sql_min = mysqli_query($mysqli,"select MIN(DATE_FORMAT(m.datetime,'%Y-%m-%d')) as data from matches m where cup_id = '$copa';");
+    $sql_min = mysqli_query($mysqli,"select MIN(DATE_FORMAT(m.datetime,'%Y-%m-%d')) as data from matches m where cup_id = '$id';");
     $min = mysqli_fetch_assoc($sql_min)['data'];
 
     $data = $_GET['data'];
     //Data da última partida
     if ($data == null){
-        $sql_data = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$copa' and datetime <= now() order by datetime DESC LIMIT 1;");
+        $sql_data = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$id' and datetime <= now() order by datetime DESC LIMIT 1;");
         $data = mysqli_fetch_assoc($sql_data)['data'];
         if($data == null){
             $data = $min;
@@ -34,24 +36,24 @@
     $month_name = $mons[$month];
     $day = date_parse_from_format('Y-m-d', $data)['day'];
 
-    $sql_fase = mysqli_query($mysqli,"select name from cup_phases where cup_id = '$copa' and start_date <= '$data' order by start_date DESC limit 1");
+    $sql_fase = mysqli_query($mysqli,"select name from cup_phases where cup_id = '$id' and start_date <= '$data' order by start_date DESC limit 1");
     $fase = mysqli_fetch_assoc($sql_fase)['name'];
 
-    $sql_last = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$copa' and datetime <= '$data' and cup_id = '$copa' order by datetime DESC LIMIT 1;");
+    $sql_last = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$id' and datetime <= '$data' and cup_id = '$id' order by datetime DESC LIMIT 1;");
     $last = mysqli_fetch_assoc($sql_last)['data'];
 
-    $sql_next = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$copa' and DATE_FORMAT(m.datetime,'%Y-%m-%d') > '$data' and cup_id = '$copa' order by datetime LIMIT 1;");
+    $sql_next = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$id' and DATE_FORMAT(m.datetime,'%Y-%m-%d') > '$data' and cup_id = '$id' order by datetime LIMIT 1;");
     $next = mysqli_fetch_assoc($sql_next)['data'];
 
     // Total de jogadores
-    $sqlcount_players = mysqli_query($mysqli,"SELECT count(*) as total FROM players  where players_team_id in (select id_teams from teams where cup_id = '$copa')");
+    $sqlcount_players = mysqli_query($mysqli,"SELECT count(*) as total FROM players  where players_team_id in (select id_teams from teams where cup_id = '$id')");
     $count_players = mysqli_fetch_assoc($sqlcount_players);
 
     // Total de partidas gravadas
-    $sqlcount_videos = mysqli_query($mysqli,"SELECT count(*) as total FROM matches where match_video_id is not null and cup_id = '$copa'");
+    $sqlcount_videos = mysqli_query($mysqli,"SELECT count(*) as total FROM matches where match_video_id is not null and cup_id = '$id'");
     $count_videos = mysqli_fetch_assoc($sqlcount_videos);
     // Total de marcações
-    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays p join teams t on t.`teams_name` = p.`teams_name` where available in (1,2) and id_teams in (select id_teams from teams where cup_id = '$copa');");
+    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays p join teams t on t.`teams_name` = p.`teams_name` where available in (1,2) and id_teams in (select id_teams from teams where cup_id = '$id');");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     
         // PAGINATION
@@ -59,7 +61,7 @@
         $limit = 3;
         $pages = ceil($total / $limit);
 
-        $sqlcount_inicio = mysqli_query($mysqli,"select round(count(1) / 6) as inicio from matches where cup_id = '$copa' and datetime < now()");
+        $sqlcount_inicio = mysqli_query($mysqli,"select round(count(1) / 6) as inicio from matches where cup_id = '$id' and datetime < now()");
         $count_inicio = mysqli_fetch_assoc($sqlcount_inicio);
         $inicio = $count_inicio['inicio'];
         $page = min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
@@ -172,10 +174,35 @@
     
     
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-6">
+          <!-- USERS LIST -->
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Times</h3>
+                <a href="../cadastro/time.php?id=<?php echo $id; ?>"><button class="btn btn-xs btn-success" style="float:right;">Adicionar</button></a>
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding">
+              <ul class="users-list">
+                <?php while ($data2 = mysqli_fetch_assoc($sql_times)) {
+                    echo '
+                    <li>
+                        <a href="../cadastro/jogador.php?id=' . $data2['id_teams'] . '">
+                        <div class="figurinha">
+                        <img style="height:150px;" src="../cadastro/uploads/' . $data2['teams_picture'] . '">
+                        <span class="users-list-name">' . $data2['teams_name'] . '</span>
+                      </div>
+                      </a> 
+                    </li>';}
+                ?>
+              </ul><!-- /.users-list -->
+            </div><!-- /.box-body -->
+          </div><!--/.box -->
+        </div><!-- /.col -->
+            
+            <div class="col-md-6">
             <div class="box" id="class_partidas">
                 <div class="box-header" style="text-align:center;">
-                  <h1 class="box-title">Arbitragem - Jogos</h1>
+                  <h1 class="box-title">Jogos / Arbitragem</h1>
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="col-md-10 col-md-offset-1">
@@ -208,7 +235,7 @@
                                 left join fields as f
                                     on f.id_fields = m.field_id
                                 where
-                                DATE_FORMAT(m.datetime,'%Y-%m-%d') = '$data' and m.cup_id = '$copa'  order by m.datetime");
+                                DATE_FORMAT(m.datetime,'%Y-%m-%d') = '$data' and m.cup_id = '$id'  order by m.datetime");
 
                             // Bind the query params
                             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -235,7 +262,7 @@
                                     <div class="col-xs-4" style="text-align:right; padding:0;">
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; margin-right:10px; color:black;">'.$data5['team1_name'].'</span>
                                         
-                                        <img src="./img/equipes/'.$data5['t1_picture'].'.png" style="width:30px; margin-top: -10px; margin-right:5px;">
+                                        <img src="../cadastro/uploads/'.$data5['t1_picture'].'" style="width:30px; margin-top: -10px; margin-right:5px;">
                                     </div>
                                 
                                     <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
@@ -250,11 +277,16 @@
                                     </div>
                                     
                                     <div  class="col-xs-4" style="padding:0;">
-                                        <img src="./img/equipes/'.$data5['t2_picture'].'.png" style="width:30px; margin-top: -10px; margin-left:5px">
+                                        <img src="../cadastro/uploads/'.$data5['t2_picture'].'" style="width:30px; margin-top: -10px; margin-left:5px">
                                         
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
                                   </div>
                               </a>
+                              
+                                <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;">
+                                    <br><span style="text-align:center;">
+                                    <a href="../marcador/mark5/impressao.php?id='.$data5['id'].'">Formato para Impressão</a></span>
+                                </div>
                             </div>';   
                                 }
 
@@ -263,10 +295,10 @@
                             }  
                                 
                             // The "back" link
-                            $prevlink = ($data > $min) ? '<a href="?id='.$copa.'&data=' . $last . '#class_partidas" title="Previous page"><span style="color:black; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span></a>' : '<span style="color:white; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span>';
+                            $prevlink = ($data > $min) ? '<a href="?id='.$id.'&data=' . $last . '#class_partidas" title="Previous page"><span style="color:black; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span></a>' : '<span style="color:white; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span>';
 
                             // The "forward" link
-                            $nextlink = ($data < $max) ? '<a href="?id='.$copa.'&data=' . $next . '#class_partidas" title="Next page"><span style="color:black; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>' : '<span style="color:white; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span>';
+                            $nextlink = ($data < $max) ? '<a href="?id='.$id.'&data=' . $next . '#class_partidas" title="Next page"><span style="color:black; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>' : '<span style="color:white; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span>';
 
                             // Display the paging information
                             echo '

@@ -164,7 +164,7 @@
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-light-blue-gradient banner" style="color:white; text-align:center; margin-bottom:3px;">
                     <a href="./index.php?id=<?php echo $dados['players_team_id']; ?>">
-                    <img src="img/equipes/<?php echo $dados['teams_picture']; ?>.png" style="
+                    <img src="../cadastro/uploads/<?php echo $dados['teams_picture']; ?>" style="
                         position: absolute; top: -10px; right:-70px; width:150px;   opacity: 0.5; filter: alpha(opacity=50); -webkit-filter: grayscale(100%); filter:grayscale(100%);  -ms-transform: rotate(10deg); -webkit-transform: rotate(10deg); transform: rotate(10deg);">
                     <div class="col-xs-offset-5 col-xs-7">
                         <h3 class="widget-user-username"><?php echo $dados['players_name']; ?></h3>

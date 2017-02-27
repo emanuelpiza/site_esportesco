@@ -54,7 +54,7 @@
 		$contact_telefone = $_POST['contact_telefone'];
         $checkbox_aceite = $_POST['checkbox_aceite'];
         
-        $sql = "INSERT INTO clubs (name, foundation_year, address, size, cnpj, image, contact_name, contact_email, contact_telefone, terms_accepted, cup) VALUES ( '".$name."','".$foundation."','".$address."','".$size."','".$cnpj."','".$image."','".$contact_name."','".$contact_email."','".$contact_telefone."', '".$checkbox_aceite."', '".$id."');";
+        $sql = "INSERT INTO clubs (name, image, contact_name, contact_email, contact_telefone, terms_accepted, cup) VALUES ( '".$name."','".$image."','".$contact_name."','".$contact_email."','".$contact_telefone."', '".$checkbox_aceite."', '".$id."');";
         
 		mysqli_query($conn, $sql);
         
@@ -182,9 +182,7 @@
 								echo '<div class="alert alert-success alert-dismissible">
 										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 										<h4><i class="icon fa fa-check"></i>Clube inscrito com sucesso!</h4>
-										Entraremos em contato.
 									  </div>';
-								
 							}
 						?>
 
@@ -193,26 +191,6 @@
 								<div class="form-group">
 								  <label for="championshipName">Nome *</label>
 								  <input type="text" class="form-control" id="name" name="name" placeholder="Nome do Clube" required="true">
-								</div>
-                                
-                                 <div class="form-group">
-									<label for="foundation">Ano de Fundação *</label>
-                                    <input type="text" name="foundation" id="foundation" class="form-control" placeholder="Ano, com quatro dígitos." required="true">
-								</div>
-                                
-                                <div class="form-group">
-									<label for="size">Número de Jogadores em 2016 *</label>
-									<input type="text" class="form-control" id="size" name="size" placeholder="Número aproximado de jogadores em 2016">
-								</div>
-                                
-                                <div class="form-group">
-									<label for="address">Endereço</label>
-                                    <input type="text" name="address" id="address" class="form-control" placeholder="Rua, número, cidade, estado.">
-								</div>
-                             
-                                <div class="form-group">
-									<label for="cnpj">CNPJ</label>
-									<input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ do Clube">
 								</div>
                                 
                                 <div class="form-group">
@@ -254,8 +232,83 @@
 									</div>
 								</div>
                                 
+                                <!--
+                                  //  for ($x = 1; $x <= 0; $x++) {
+                                        echo '
+                        <div class="row">
+                            <div class="col-sm-4">
+								<div class="form-group">
+								  <label for="jogador'.$x.'">Jogador '.$x.'</label>
+ 								  <div class="input-group">
+									  <span class="input-group-addon"> <i class="fa fa-user" style="width:15px;"></i></span>
+									  <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome" required="true">
+								  </div>                                   
+								  <div class="input-group">
+									  <span class="input-group-addon">
+										<i class="fa fa-envelope"  style="width:15px;"></i></span>
+									  <input type="contact_email" name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="Email" required="true">
+								  </div>
+								  <div class="input-group">
+									  <div class="input-group-addon">
+										 <i class="fa fa-phone"  style="width:15px;"></i>
+									  </div>
+									  <input type="text" name="contact_telefone" id="contact_telefone" placeholder="Telefone" class="form-control">
+									</div>
+								</div>
+                            </div>
+                            
+                             <div class="col-sm-2">
+								<div class="form-group" style="margin-top:25px;">
+ 								  <div class="input-group">
+									  <input type="text"  name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="# Registro" required="true">
+								  </div>                                   
+								  <div class="input-group">
+									
+									  <input type="text"  name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="R.G." required="true">
+								  </div>
+								  <div class="input-group">
+									  <input type="text" name="contact_telefone" id="contact_telefone" placeholder="CPF" class="form-control">
+									</div>
+								</div>
+                            </div>
+                             <div class="col-sm-2">
+								<div class="form-group" style="margin-top:25px;">
+ 								  <div class="input-group">
+									  <input type="text"  name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome" required="true">
+								  </div>                                   
+								  <div class="input-group">
+									
+									  <input type="text"  name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="Email" required="true">
+								  </div>
+								  <div class="input-group">
+									  <input type="text" name="contact_telefone" id="contact_telefone" placeholder="Telefone" class="form-control">
+									</div>
+								</div>
+                            </div>
+                            <div class="col-sm-4">
+                                
+                                <div class="form-group">
+									<label>Foto (150px x 200px JPG)</label>
+									<div class="input-group image-preview">
+										<input type="text" class="form-control image-preview-filename" disabled="disabled"> 
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+												<span class="glyphicon glyphicon-remove"></span> Remover
+											</button>
+											<div class="btn btn-default image-preview-input">
+												<span class="glyphicon glyphicon-folder-open"></span>
+												<span class="image-preview-input-title">Buscar</span>
+												<input type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> 
+											</div>
+										</span>
+									</div>
+								</div>
+                            </div>        
+                        </div>';
+                                    } 
+                                ?>
+                                
 							</div>
-                            <p style="margin-left:10px; margin-top:-20px;">* Campos obrigatórios.</p>
 							
 							<!-- submit button -->
 							<div class="box-footer">

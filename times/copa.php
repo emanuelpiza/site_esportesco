@@ -225,7 +225,7 @@
                                     <div class="col-xs-4" style="text-align:right; padding:0;">
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; margin-right:10px; color:black;">'.$data5['team1_name'].'</span>
                                         
-                                        <img src="./img/equipes/'.$data5['t1_picture'].'.png" style="width:30px; margin-top: -10px; margin-right:5px;">
+                                        <img src="../cadastro/uploads/'.$data5['t1_picture'].'" style="width:30px; margin-top: -10px; margin-right:5px;">
                                     </div>
                                 
                                     <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
@@ -240,7 +240,7 @@
                                     </div>
                                     
                                     <div  class="col-xs-4" style="padding:0;">
-                                        <img src="./img/equipes/'.$data5['t2_picture'].'.png" style="width:30px; margin-top: -10px; margin-left:5px">
+                                        <img src="../cadastro/uploads/'.$data5['t2_picture'].'" style="width:30px; margin-top: -10px; margin-left:5px">
                                         
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
                                   </div>
@@ -249,7 +249,7 @@
                                 }
 
                             } else {
-                                echo '<p>Não foi possível exibir resultados.</p>';
+                                echo '<p>Nenhuma partida cadastrada. Favor enviar email para contato@esportes.co</p>';
                             }  
                                 
                             // The "back" link
@@ -277,14 +277,14 @@
     
         <div class="row">
             <?php 
-            $sql_groups = mysqli_query($mysqli,"SELECT distinct(groups) as nome FROM teams where cup_id = $copa");
+            $sql_groups = mysqli_query($mysqli,"SELECT distinct(groups) as nome FROM teams where cup_id = $copa order by nome");
              while ($data_grupos = mysqli_fetch_assoc($sql_groups)) {
                  $nome_grupo = $data_grupos['nome'];
             echo '
-            <div class="col-md-6">
+            <div class="col-md-6 col-md-offset-3">
                 <div class="box">
                     <div class="box-header">
-                      <h3 class="box-title">Tabela Grupo ' .$nome_grupo. '</h3>
+                      <h3 class="box-title">Grupo ' .$nome_grupo. '</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body no-padding">
                       <table class="table table-striped">

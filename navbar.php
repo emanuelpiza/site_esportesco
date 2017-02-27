@@ -1,7 +1,7 @@
 <?php
     session_start(); 
 ?>
-<style>
+<!--<style>
 .image-cropper {
     width: 32px;
     height: 32px;
@@ -47,17 +47,17 @@
                 <li><a href="http://www.esportes.co/blog.php">Blog</a> 
                 </li>
                 <li>
-                    <?php if ($_SESSION['FBID']): ?>      <!--  After user login  -->
+                    php if ($_SESSION['FBID']): ?>      <!--  After user login  --
                     <a href="http://www.esportes.co/1353/logout.php">
                         <div class="image-cropper">
-                            <img src="https://graph.facebook.com/<?php echo $_SESSION['FBID']; ?>/picture" class="img_perfil"/>
+                            <img src="https://graph.facebook.com/<php echo $_SESSION['FBID']; ?>/picture" class="img_perfil"/>
                         </div>
                     </a>
-                    <?php else: ?>     <!-- Before login --> 
+                    ?php else: ?>     <!-- Before login --
                        <a href="http://www.esportes.co/1353/fbconfig.php">Entrar</a>
-                    <?php endif ?>
+                    ?php endif ?>
                 </li>
             </ul>
         </nav>
     </div>
-</header>
+</header>-->

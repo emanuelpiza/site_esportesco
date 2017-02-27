@@ -26,19 +26,27 @@
     while ($data4 = mysqli_fetch_assoc($sql_jogadores2)) {
         $selecoes .= "<option value=".$data4['id_players'].">".$data4['players_name']."</option>" ;
     }
+
+    // Navegação entre os times do campeonato
     $sqlnav = mysqli_query($mysqli,"select max(id_teams) as maximo, min(id_teams) as minimo from teams where cup_id =".$dados['cup_id']);
     $fetch_nav = mysqli_fetch_assoc($sqlnav);
     $max_teamid = $fetch_nav['maximo'];  
     $min_teamid = $fetch_nav['minimo'];
+
+    $sql_team_prev = mysqli_query($mysqli,"select max(id_teams) as prev_team from teams where id_teams < '$id' and cup_id =".$dados['cup_id']);
+    $team_prev = mysqli_fetch_assoc($sql_team_prev)['prev_team'];
+    $sql_team_foll = mysqli_query($mysqli,"select min(id_teams) as foll_team from teams where id_teams > '$id' and cup_id =".$dados['cup_id']);
+    $team_foll = mysqli_fetch_assoc($sql_team_foll)['foll_team'];
+
     if ($id == $max_teamid){
         $nextteam = $min_teamid;
     } else {    
-        $nextteam = ($id+1);
+        $nextteam = $team_foll;
     }
     if ($id == $min_teamid){
         $prevteam = $max_teamid;
     } else {
-        $prevteam = ($id-1);
+        $prevteam = $team_prev;
     }
 ?>
 
@@ -199,7 +207,7 @@
                 echo '
                 <div id="estrela_content">
                     <a href="index.php?id='.$prevteam.'" style="color:black"><i class="fa fa-angle-double-left" aria-hidden="true" class="estrela"></i></a>
-                    <img src="./img/equipes/'.$dados['teams_picture'].'.png" class="estrela" style="width:100px;margin-left:30px; margin-right:30px;">
+                    <img src="../cadastro/uploads/'.$dados['teams_picture'].'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px;">
                     <a href="index.php?id='.$nextteam.'" style="color:black"><i class="fa fa-angle-double-right" aria-hidden="true" class="estrela"></i></a>
                 </div>';
         ?>
@@ -270,11 +278,9 @@
                     if  ($data2['situation'] != "Apto"){
                                 $enfeite = '
                                     <div class="rubber_stamp">Suspenso</div></i>';
-                                 $path = '../cadastro/clube.php';
                     }
                     else {
                          $enfeite = '';
-                        $path = '';
                     }
                     echo '
                     <li>
@@ -351,7 +357,7 @@
                                     <div class="col-xs-4" style="text-align:right; padding:0;">
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; margin-right:10px; color:black;">'.$data5['team1_name'].'</span>
                                         
-                                        <img src="./img/equipes/'.$data5['t1_picture'].'.png" style="width:30px; margin-top: -10px; margin-right:5px;">
+                                        <img src="../cadastro/uploads/'.$data5['t1_picture'].'" style="width:30px; margin-top: -10px; margin-right:5px;">
                                     </div>
                                 
                                     <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
@@ -366,7 +372,7 @@
                                     </div>
                                     
                                     <div  class="col-xs-4" style="padding:0;">
-                                        <img src="./img/equipes/'.$data5['t2_picture'].'.png" style="width:30px; margin-top: -10px; margin-left:5px">
+                                        <img src="../cadastro/uploads/'.$data5['t2_picture'].'" style="width:30px; margin-top: -10px; margin-left:5px">
                                         
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
                                   </div>';}

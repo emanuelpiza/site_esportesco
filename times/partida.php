@@ -207,7 +207,7 @@
           <a href="./index.php?id='.$dados['team1'].'">
 
                 <div class="col-xs-4" style="text-align:right; padding:0;">
-                    <img src="./img/equipes/'.$dados['t1_picture'].'.png" style="width:80px; margin-right:5px;">
+                    <img src="../cadastro/uploads/'.$dados['t1_picture'].'" style="width:80px; margin-right:5px;">
                 </div>
 
                 <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
@@ -223,7 +223,7 @@
                 </div>
 
                 <div  class="col-xs-4" style="padding:0;">
-                    <img src="./img/equipes/'.$dados['t2_picture'].'.png" style="width:80px; margin-left:5px">
+                    <img src="../cadastro/uploads/'.$dados['t2_picture'].'" style="width:80px; margin-left:5px">
               </div>
           </a>
         </div>

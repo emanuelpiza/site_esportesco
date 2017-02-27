@@ -9,7 +9,7 @@
     <body class="pace-on pace-dot">
         <?php 
         include_once("./admin/analyticstracking.php");
-        include_once("./navbar.php");
+        include_once("./navbar2.php");
         ?>
         <div class="pace-overlay"></div>
         <div id="content" role="main">

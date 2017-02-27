@@ -62,7 +62,7 @@ if ( isset( $session ) ) {
 	    $_SESSION['verified'] =  $fbverified;
     /* ---- header location after session ----*/
     checkuser($fbid, $fbfullname, $femail, $fbfirst_name, $fblast_name, $fbage_range, $fblink, $fbgender, $fblocale, $fbpicture, $fbtimezone, $fbupdated_time, $fbverified); // To update local DB
-  header("Location: ../blog.php");
+  header("Location: ../mapa.php");
 } else {
   $loginUrl = $helper->getLoginUrl();
  header("Location: ".$loginUrl);
