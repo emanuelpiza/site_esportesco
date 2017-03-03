@@ -1,5 +1,18 @@
 <!DOCTYPE html>
 <html>
+    <?php
+ 
+    header('Content-Type: text/html; charset=utf-8');
+    session_start();
+
+    ob_start();
+    include('./admin/dbcon/dbcon.php');
+
+    $copa = $_GET['copa'];
+    $sqlcopa = mysqli_query($mysqli,"select * from cups where id = ".$copa);
+    $nome_copa = mysqli_fetch_assoc($sqlcopa)['name'];
+    ?>
+    
     <head>
         
     <meta charset="utf-8">
@@ -8,7 +21,7 @@
     <meta name="description" content="">
     <meta name="author" content="Emanuel Piza" >
 
-    <title>Painel - EsportesCo</title>
+    <title>Criar Competição - EsportesCo</title>
 
    <link rel="stylesheet" href="./css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -60,7 +73,7 @@
     <div class="container">
             <div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 cfeature infos col-lg-offset-3 col-lg-6">
                 
-            <div class="panel-heading" style="text-align:center;"><strong>Atualizar Status</strong> <small>Copa Benteler</small></div>
+            <div class="panel-heading" style="text-align:center;"><strong>Criar Competição</strong> <small><?php echo $nome_copa;?></small></div>
                
             </div>
         <div class="row">
@@ -108,12 +121,13 @@
                     <input type="submit" class="btn btn-sm btn-primary" value="Atualizar" name="submit" style="margin-left:10px; margin-top:8px;">
                     </div>
                     </div>
-                    
+                   
+                <input type="hidden" name="copa" value="<?php echo copa;?>"> 
                 </div>
             </form>
                 </div>
             </div>
         </div>
-    </div> <!-- /container -->
+    </div>
 </body>
 </html>

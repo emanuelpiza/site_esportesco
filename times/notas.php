@@ -179,19 +179,20 @@
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Times</h3>
-                <a href="../cadastro/time.php?id=<?php echo $id; ?>"><button class="btn btn-xs btn-success" style="float:right;">Adicionar</button></a>
+                <a href="../cadastro/time.php?id=<?php echo $id; ?>"><button class="btn btn-xs btn-success" style="float:right;">Adicionar Time</button></a>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
               <ul class="users-list">
                 <?php while ($data2 = mysqli_fetch_assoc($sql_times)) {
                     echo '
                     <li>
-                        <a href="../cadastro/jogador.php?id=' . $data2['id_teams'] . '">
-                        <div class="figurinha">
-                        <img style="height:150px;" src="../cadastro/uploads/' . $data2['teams_picture'] . '">
-                        <span class="users-list-name">' . $data2['teams_name'] . '</span>
-                      </div>
-                      </a> 
+                        <a href="admintime.php?id=' . $data2['id_teams'] . '">
+                            <div class="figurinha">
+                                <img style="height:150px;" src="../cadastro/uploads/' . $data2['teams_picture'] . '">
+                                <span class="users-list-name">' . $data2['teams_name'] . '</span>
+                            </div>
+                        </a> 
+                       <a href="../cadastro/jogador.php?id='.$data2['id_teams'].'"><button class="btn btn-xs btn-success">+1 Jogador</button></a>
                     </li>';}
                 ?>
               </ul><!-- /.users-list -->

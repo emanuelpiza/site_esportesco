@@ -65,25 +65,12 @@
     $sql_fase = mysqli_query($mysqli,"select IF(MAX(type) is null, 0, MAX(type)) as maximo from notes n where match_id = '$id';");
     $fase = mysqli_fetch_assoc($sql_fase)['maximo'];
 
-    if ($fase < 10){
-        $estilo_btn_fase = "btn-success";
-        $texto_btn_fase = "Iniciar partida";
-        $momento = "inicio_1";
-        $botao_wo_t1 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team1)'>Equipe Ausente.<br>Indicar W.O.</button>";
-        $botao_wo_t2 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team2)'>Equipe Ausente.<br>Indicar W.O.</button>";
-    }else if ($fase == 10){
-        $estilo_btn_fase = "btn-danger";
-        $texto_btn_fase = "Encerrar primeiro tempo";
-        $momento = "fim_1";
-    } else if ($fase == 11){
-        $estilo_btn_fase = "btn-success";
-        $texto_btn_fase = "Iniciar segundo tempo";
-        $momento = "inicio_2";
-    } else {
-        $estilo_btn_fase = "btn-danger";
-        $texto_btn_fase = "Encerrar partida e Atualizar Classificações";
-        $momento = "encerrar";
-    }
+    //Gestão da partida.
+    $botao_wo_t1 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team1)'>Equipe Ausente.<br>Indicar W.O.</button>";
+    $botao_wo_t2 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team2)'>Equipe Ausente.<br>Indicar W.O.</button>";
+    $estilo_btn_fase = "btn-danger";
+    $texto_btn_fase = "Encerrar partida e Atualizar Classificações";
+    $momento = "encerrar";
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -403,7 +390,7 @@
   
     
     <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
+    <div id="myModal" class="modal fade">
       <div class="modal-dialog">
 
         <!-- Modal content-->

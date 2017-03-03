@@ -253,7 +253,7 @@
                             <div style=\" -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;background-image: url(./img/gramado.jpg);\">
                                 <div style=\"height: 460px; margin:10px auto; 10px; auto;\" >
                                     <div class\"embed-responsive embed-responsive-16by9\" style=\"text-align:center; margin:-25px -10px 25px -10px; color:white;padding-top:10px;\">
-                                        <h1 style=\"font-family: 'Chivo', sans-serif;\">ACOMPANHE<br> EM TEMPO REAL</h1>
+                                        <h1 style=\"font-family: 'Chivo', sans-serif;\">SUBA O VÍDEO<br> COMPLETO DE SUA PARTIDA</h1>
                                         <div id=\"timer\"></div>
                                     </div>
                                 </div>
