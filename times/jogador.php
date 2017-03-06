@@ -172,7 +172,7 @@
                     </div></a>
                   </div>
                 <div class="widget-user-image">
-                  <img class="figurinha_img" style="margin-left:-10px; margin-top:-10px;" src="img/jogadores/<?php echo $dados['player_picture']; ?>">
+                  <img class="figurinha_img" style="margin-left:-10px; margin-top:-10px; height:184px; width:138px;" src="img/jogadores/<?php echo $dados['player_picture']; ?>">
                 </div>
                 <div class="box-footer">
                   <div class="row">

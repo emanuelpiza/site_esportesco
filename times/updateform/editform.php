@@ -75,12 +75,20 @@
 			$userpic = $player_picture; // old image from database
 		}	
 						
+
+        $sql = "
+               UPDATE `players` SET 
+                    players_name= IF('".$nickname."' <> '', '".$nickname."', UC_Words(CONCAT_WS(' ', substring_index(whole_name, ' ', 1), substring_index(whole_name, ' ', -1))))
+                where id_players = '".$player."';";
+        mysqli_query($mysqli, $sql);
 		
+        
 		// if no error occured, continue ....
 		if(!isset($errMSG))
 		{
             $sql = "
                 UPDATE `players` SET 
+                    players_name = IF('".$nickname."' <> '', '".$nickname."', UC_Words(CONCAT_WS(' ', substring_index(whole_name, ' ', 1), substring_index(whole_name, ' ', -1)))),
                     nickname= '".$nickname."',
                     shirt= '".$shirt."',
                     email= '".$email."',

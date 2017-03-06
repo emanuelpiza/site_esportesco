@@ -13,7 +13,7 @@
     $sqlgeral = mysqli_query($mysqli,"
         SELECT 
             m.*, LEFT(t1.`teams_name` , 3) as team1_name, f.fields_coordinates,
-            f.fields_name, t1.`teams_name` as team1_full_name, LEFT(t2.`teams_name` , 3) as team2_name, t1.teams_picture as t1_picture, t2.teams_picture as t2_picture, date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date 
+            f.fields_name, t1.`teams_name` as team1_full_name, LEFT(t2.`teams_name` , 3) as team2_name, t1.teams_picture as t1_picture, t2.teams_picture as t2_picture, date_format(m.datetime, '%Hh%i') as hour, date_format(m.datetime,'%d/%m') as date 
         FROM matches m left join teams t1 on m.team1 = t1.`id_teams` left join teams t2 on      m.`team2` = t2.id_teams left join fields as f on f.id_fields = m.field_id 
         WHERE id = '$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);

@@ -188,7 +188,7 @@
                                     m.`score2`, 
                                     left(t2.`teams_name`,3) as 'team2_name', 
                                     t1.`teamd_fields_id` as 'teams_field', 
-                                    date_format(m.datetime, '%hh%i') as hour, 
+                                    date_format(m.datetime, '%Hh%i') as hour, 
                                     date_format(m.datetime,'%d/%m') as date 
                                 FROM matches as m 
                                 left join teams t1 

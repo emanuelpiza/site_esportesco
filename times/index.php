@@ -286,7 +286,7 @@
                     <li>
                         <a href="./jogador.php?id=' . $data2['id_players'] . '">
                         <div class="figurinha">
-                        <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image">
+                        <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image" style="width:120px; height:160px;">
                         <span class="users-list-name">' . $data2['players_name'] . '</span>
                       </div>
                       </a>
@@ -310,7 +310,7 @@
                       <th style="width: 90px; text-align:center;">Gols</th>
                     </tr>
                     <tr>
-                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." and p.goals > 0 order by p.goals DESC, p.players_name LIMIT 3");
+                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." order by p.goals DESC, p.players_name LIMIT 3");
                         $posicao = 1;
                     while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
                     echo '
@@ -340,7 +340,7 @@
                     <div class="col-md-10 col-md-offset-1">
                           <?php
                             // Prepare the paged query
-                            $sqlpartidas = mysqli_query($mysqli,"SELECT m.id,t1.teams_picture as t1_picture, t2.teams_picture as t2_picture, m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where (m.team1 = '$id' or m.team2 = '$id') order by m.datetime");
+                            $sqlpartidas = mysqli_query($mysqli,"SELECT m.id,t1.teams_picture as t1_picture, t2.teams_picture as t2_picture, m.`team1`, left(t1.`teams_name`,3) as 'team1_name', m.`team2`, m.`score1`, m.`score2`, left(t2.`teams_name`,3) as 'team2_name', t1.`teamd_fields_id` as 'teams_field', date_format(m.datetime, '%Hh%i') as hour, date_format(m.datetime,'%d/%m') as date FROM matches as m left join teams t1 on m.team1 = t1.`id_teams` left join teams as t2 on m.team2 = t2.id_teams where (m.team1 = '$id' or m.team2 = '$id') order by m.datetime");
 
                             while ($data5 = mysqli_fetch_assoc($sqlpartidas)) {
                                 echo '
@@ -416,9 +416,9 @@
                       <th style="width: 90px; text-align:center;">Vermelhos</th>
                     </tr>
                     <tr>
-                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.yellow_cards, p.red_cards, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." and (p.yellow_cards > 0 or p.red_cards > 0) order by p.red_cards DESC, p.yellow_cards DESC, p.players_name");
+                     <?php $sqlcartoes = mysqli_query($mysqli,"SELECT p.yellow_cards, p.red_cards, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." and (p.yellow_cards > 0 or p.red_cards > 0) order by p.red_cards DESC, p.yellow_cards DESC, p.players_name");
                         $posicao = 1;
-                    while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
+                    while ($data8 = mysqli_fetch_assoc($sqlcartoes)) {
                     echo '
                     <tr>
                       <td>'.$posicao.'</td>

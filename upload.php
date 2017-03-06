@@ -55,7 +55,7 @@
                     $sql = "INSERT INTO teams (teams_name, cup_id) VALUES (UCASE('".$team_name."'), ".$copa.")";
                     mysqli_query($mysqli, $sql);
                 }
-                if ($id > $max_jogadores){
+                if ($nickname <> ""){
                     $sql = "INSERT INTO players(whole_name, players_team_id, shirt, birthdate, name_responsible, phone, email, nickname, players_name, rg, cpf, registry) VALUES (UC_Words('".$nome_completo."'), (select id_teams from teams where teams_name  = '".$team_name."' and cup_id =".$copa."), '".$shirt."', '".$birthdate."', '".$name_responsable."', '".$phone."', '".$email."', UC_Words('".$nickname."'), UC_Words(CONCAT_WS(' ', substring_index('".$nome_completo."', ' ', 1), substring_index('".$nome_completo."', ' ', -1))), '".$rg."','".$cpf."', '".$registry."');";  
                     mysqli_query($mysqli, $sql);  
                 //}else{ 
@@ -67,16 +67,16 @@
     }
    
     if ($objPHPExcel->sheetNameExists("Partidas")){
-        $partidas = $objPHPExcel->getSheetByName("Partidas"); 
+        $partidas = $objPHPExcel->getSheetByName("Partidas");  
         $highestRow = $partidas->getHighestRow();  
         for ($row=2; $row<=$highestRow; $row++)  
         {    
-            $datetime = mysqli_real_escape_string($mysqli, $partidas->getCellByColumnAndRow(2, $row)->getValue());
-            if ($datetime <> null ){
+            $team1 = mysqli_real_escape_string($mysqli, $partidas->getCellByColumnAndRow(3, $row)->getValue());  
+            if ($team1 <> null ){
                 $id = mysqli_real_escape_string($mysqli, $partidas->getCellByColumnAndRow(0, $row)->getValue()); 
                 $field = mysqli_real_escape_string($mysqli, $partidas->getCellByColumnAndRow(1, $row)->getValue());  
-                $team1 = mysqli_real_escape_string($mysqli, $partidas->getCellByColumnAndRow(3, $row)->getValue());  
                 $team2 = mysqli_real_escape_string($mysqli, $partidas->getCellByColumnAndRow(4, $row)->getValue());  
+                $datetime = mysqli_real_escape_string($mysqli, date($format = "Y-m-d H:i:s", PHPExcel_Shared_Date::ExcelToPHP($partidas->getCellByColumnAndRow(2, $row)->getValue())));  
 
                 $sql = "INSERT IGNORE INTO fields (fields_name) VALUES ('".$field."')";
                 mysqli_query($mysqli, $sql);

@@ -8,7 +8,7 @@
         <script src="js/snazzy/snazzy-info-window.min.js"></script>
         <script>
         $(function() {
-            var center = { lat: -22.83965, lng: -47.05147 };
+            var center = { lat: -22.83965, lng: -46.80147 };
             var map = new google.maps.Map($('.map-canvas')[0], {
                 zoom: 9,
                 center: center
@@ -20,8 +20,9 @@
             var dx = 0.3;
             var positions = [
                 //{ type: '<a href="http://www.esportes.co/times/liga.php?id=2" style="text-decoration: none; color:black;"><img src="http://www.esportes.co/cadastro/uploads/0.png" style="width:80px;"></a>', LatLng: offsetCenter(-0.078, -0.0165) },
-                { type: '<a href="http://www.esportes.co/times/liga.php?id=15" style="text-decoration: none; color:black;"><img src="http://www.esportes.co/cadastro/uploads/LBF 150X150.png" style="width:80px;"></a>', LatLng: { lat:-22.959844, lng:-46.544389} },
-                { type: '<a href="http://www.esportes.co/times/copa.php?id=1" style="text-decoration: none; color:black;"><img src="http://www.esportes.co/cadastro/uploads/benteler.jpeg" style="width:80px;"></a>', LatLng: { lat: -23.004614, lng: -47.116369} }//Benteler
+                { type: '<a href="http://www.esportes.co/times/copa.php?id=17" style="text-decoration: none; color:black;"><img src="http://www.esportes.co/cadastro/uploads/LBF 150X150.png" style="width:80px;"></a>', LatLng: { lat:-22.959844, lng:-46.544389} },
+                { type: '<a href="http://www.esportes.co/times/copa.php?id=1" style="text-decoration: none; color:black;"><img src="http://www.esportes.co/cadastro/uploads/benteler.jpeg" style="width:80px;"></a>', LatLng: { lat: -23.004614, lng: -47.116369} },//Benteler
+                { type: '<a href="http://www.esportes.co/times/copa.php?id=16" style="text-decoration: none; color:black;"><img src="http://www.esportes.co/cadastro/uploads/liredep.png" style="width:80px;"></a>', LatLng: {lat:-22.9174848, lng:-47.0667094} }
             ];
 
             $.each(positions, function(i, e) {
