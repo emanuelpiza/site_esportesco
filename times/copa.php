@@ -281,7 +281,7 @@
              while ($data_grupos = mysqli_fetch_assoc($sql_groups)) {
                  $nome_grupo = $data_grupos['nome'];
             echo '
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-6">
                 <div class="box">
                     <div class="box-header">
                       <h3 class="box-title">Grupo ' .$nome_grupo. '</h3>
@@ -302,7 +302,7 @@
             
                         while ($data4 = mysqli_fetch_assoc($sqltimes)) {
                         echo '
-                        <tr>
+                        <tr style="height:60px;">
                           <td>'.$data4['rank'].'</td>
                           <td><a href="./index.php?id=' . $data4['id_teams'] . '"><span style="font-family: \'Source Sans Pro\', Arial, serif; font-size:16px; color:black;">'.$data4['teams_name'].'</span></a></td>
                           <td><b>'.$data4['points'].'</b></td>
@@ -382,19 +382,17 @@
     
     <div class="row" style="margin-top:15px;">
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
-                    <h3>2016</h3>
+                    <h3>2017</h3>
                     <p>Edição</p>
                 </div>
                 <div class="icon">  
                     <i class="ion ion-ios-calendar"></i>
                 </div>
             </div>
-        </div><!-- ./col -->
+        </div>
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
                     <h3><?php echo $count_players['total']; ?></h3>
@@ -404,9 +402,8 @@
                     <i class="ion ion-person-add"></i>
                 </div>
             </div>
-        </div><!-- ./col -->
+        </div>
         <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
         <div class="small-box bg-light-blue-active">
             <div class="inner">
                 <h3><?php echo $count_videos['total']; ?></h3>
@@ -416,9 +413,8 @@
                 <i class="ion ion-videocamera"></i>
             </div>
         </div>
-        </div><!-- ./col -->
+        </div>
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
                     <h3><?php echo $count_plays['total']; ?></h3>
@@ -428,8 +424,8 @@
                     <i class="ion ion-checkmark-round"></i>
                 </div>
             </div>
-        </div><!-- ./col -->
-    </div><!-- /.row -->
+        </div>
+    </div>
     <div class="row">
     <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center">
         <h4 style="color:#555;">Arbitragem:</h4>

@@ -16,7 +16,9 @@
                                     left join teams t1 
                                         on m.team1 = t1.`id_teams` 
                                     left join teams as t2 
-                                    on m.team2 = t2.id_teams where m.id='$id'");
+                                    on m.team2 = t2.id_teams left join
+                                    cups c on m.cup_id = c.id where m.id='$id'");
+
     $dados = mysqli_fetch_assoc($sqlgeral);
     $id_team1 = $dados['team1'];
     $id_team2 = $dados['team2'];
@@ -39,28 +41,28 @@
     $sql_inicio_fim = mysqli_query($mysqli,"select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type = 0 and p.`players_team_id` = ".$id_team1.";");
     $inicio_fim = mysqli_fetch_assoc($sql_inicio_fim);  
 
-    $sqlteam1 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id=".$id_team1);
-    $sqlteam2 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id=".$id_team2);
-    $sql_notes = mysqli_query($mysqli,"select p1.*, p2.`players_name` from (
-	SELECT t1.`id`, t1.`match_id`,
-        DATE_FORMAT(t1.`datetime`,'%H:%i:%s') as datetime,
-        t1.`type`,
-        t1.`player`,
-        t1.`available`, 
-        '' as detail
-    FROM notes t1
-    LEFT JOIN plays t2 ON t2.`datetime` = t1.`datetime`
-    UNION
-    SELECT 
-        t2.`id_plays` as id,
-        t2.`match_id`,
-        DATE_FORMAT(t2.`datetime`,'%H:%i:%s') as datetime,
-        (6) as type , 
-        t2.`plays_players_id` as player,
-        t2.`video_id` as detail,
-        t2.`available`
-    FROM notes t1
-    RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where t2.`available` in (1,2) ) p1 left join players p2 on p1.player = p2.`id_players` where match_id ='$id' and available = 1  order by p1.`datetime` DESC;");
+    $sqlteam1 = mysqli_query($mysqli,"SELECT *, LEFT(whole_name , 20) as whole_name FROM players where players_team_id=".$id_team1." order by whole_name, shirt");
+    $sqlteam2 = mysqli_query($mysqli,"SELECT *, LEFT(whole_name , 20) as whole_name FROM players where players_team_id=".$id_team2." order by whole_name, shirt");
+    $sql_notes = mysqli_query($mysqli,"select p1.*, p2.`whole_name` from (
+        SELECT t1.`id`, t1.`match_id`,
+            DATE_FORMAT(t1.`datetime`,'%H:%i:%s') as datetime,
+            t1.`type`,
+            t1.`player`,
+            t1.`available`, 
+            '' as detail
+        FROM notes t1
+        LEFT JOIN plays t2 ON t2.`datetime` = t1.`datetime`
+        UNION
+        SELECT 
+            t2.`id_plays` as id,
+            t2.`match_id`,
+            DATE_FORMAT(t2.`datetime`,'%H:%i:%s') as datetime,
+            (6) as type , 
+            t2.`plays_players_id` as player,
+            t2.`video_id` as detail,
+            t2.`available`
+        FROM notes t1
+        RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where t2.`available` in (1,2) ) p1 left join players p2 on p1.player = p2.`id_players` where match_id ='$id' and available = 1  order by p1.`datetime` DESC;");
 
     $sql_fase = mysqli_query($mysqli,"select IF(MAX(type) is null, 0, MAX(type)) as maximo from notes n where match_id = '$id';");
     $fase = mysqli_fetch_assoc($sql_fase)['maximo'];
@@ -68,9 +70,33 @@
     //Gestão da partida.
     $botao_wo_t1 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team1)'>Equipe Ausente.<br>Indicar W.O.</button>";
     $botao_wo_t2 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team2)'>Equipe Ausente.<br>Indicar W.O.</button>";
-    $estilo_btn_fase = "btn-danger";
-    $texto_btn_fase = "Encerrar partida e Atualizar Classificações";
-    $momento = "encerrar";
+
+    //Contagem de faltas por tempo?
+    if ($id_team2 = $dados['real_time'] = 0){
+        $estilo_btn_fase = "btn-danger";
+        $texto_btn_fase = "Encerrar partida e Atualizar Classificações";
+        $momento = "encerrar";
+    }else{
+        if ($fase < 10){
+            $estilo_btn_fase = "btn-success";
+            $texto_btn_fase = "Iniciar partida";
+            $momento = "inicio_1";
+            $botao_wo_t1 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team1)'>Equipe Ausente.<br>Indicar W.O.</button>";
+            $botao_wo_t2 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team2)'>Equipe Ausente.<br>Indicar W.O.</button>";
+        }else if ($fase == 10){
+            $estilo_btn_fase = "btn-danger";
+            $texto_btn_fase = "Encerrar primeiro tempo";
+            $momento = "fim_1";
+        } else if ($fase == 11){
+            $estilo_btn_fase = "btn-success";
+            $texto_btn_fase = "Iniciar segundo tempo";
+            $momento = "inicio_2";
+        } else {
+            $estilo_btn_fase = "btn-danger";
+            $texto_btn_fase = "Encerrar partida e Atualizar Classificações";
+            $momento = "encerrar";
+        }
+    }
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -164,6 +190,25 @@
               min-height: 100%;
               padding: 10px;
             }
+        
+            .modal { 
+                  width: 100%;
+                  left: 0;
+                  right: 0;
+                  top: 800px;
+                  bottom: 0;
+                  margin: auto;
+                  position: absolute;
+                  background-color: transparent;
+            }
+
+            .modal-body { 
+                  display: inline-block; 
+                  background-color: #FFF;
+            }
+
+            .modal img { min-width: none!important;
+            }
 		</style>
 </head>
 <body id="<?php echo $id;?>">
@@ -234,7 +279,7 @@
                             else {
                                 $enfeite = '';
                             }
-                            echo "<button type='button' class='btn btn-primary btn-sm' style='width:150px;' onclick=\x22selecionar_jogador(&quot;" . $team1['id_players'] . "&quot;, &quot;" . $team1['shirt'] . "&quot;)\x22 id='" . $team1['id_players'] . "' value='" . $team1['id_players'] . "'>" . $team1['shirt'] . " - " . $team1['players_name'].$enfeite;
+                            echo "<button type='button' class='btn btn-primary btn-sm' style='width:150px;' onclick=\x22selecionar_jogador(&quot;" . $team1['id_players'] . "&quot;, &quot;" . $team1['shirt'] . "&quot;)\x22 id='" . $team1['id_players'] . "' value='" . $team1['id_players'] . "'>" . $team1['shirt'] . " - " . $team1['whole_name'].$enfeite;
                             } ?>
                         </ul>
                     </div>
@@ -247,7 +292,7 @@
                                 else {
                                     $enfeite = '';
                                 }
-                            echo "<button type='button' class='btn btn-primary btn-sm'  style='width:150px;'  onclick=\x22selecionar_jogador(&quot;" . $team2['id_players'] . "&quot;, &quot;" . $team2['shirt'] . "&quot;)\x22 id='" . $team2['id_players'] . "' value='" . $team2['id_players'] . "'>" . $team2['shirt'] . " - " . $team2['players_name'].$enfeite;
+                            echo "<button type='button' class='btn btn-primary btn-sm'  style='width:150px;'  onclick=\x22selecionar_jogador(&quot;" . $team2['id_players'] . "&quot;, &quot;" . $team2['shirt'] . "&quot;)\x22 id='" . $team2['id_players'] . "' value='" . $team2['id_players'] . "'>" . $team2['shirt'] . " - " . $team2['whole_name'].$enfeite;
                             } ?>
                         </ul>
                     </div>
@@ -295,7 +340,7 @@
                             <div class="timeline-item">
                              <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
-                            <h3 class="timeline-header">Falta de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                            <h3 class="timeline-header">Falta de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['whole_name'].'</a></h3>
                             </div>
                             </li>';
                     } else if ($notes['type'] == 1){
@@ -303,7 +348,7 @@
                             <div class="timeline-item">
                              <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
-                            <h3 class="timeline-header">Gol de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                            <h3 class="timeline-header">Gol de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['whole_name'].'</a></h3>
                             </div>
                             </li>';
                     } else if ($notes['type'] == 2){
@@ -312,7 +357,7 @@
                             <div class="timeline-item">
                              <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
-                            <h3 class="timeline-header">Cartão amarelo para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                            <h3 class="timeline-header">Cartão amarelo para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['whole_name'].'</a></h3>
                             </div>
                             </li>';
                     } else if ($notes['type'] == 3){
@@ -320,7 +365,7 @@
                         <i class="fa fa-square  bg-gray" style="color:red;"></i>
                         <div class="timeline-item">
                          <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
-                        <h3 class="timeline-header">Cartão vermelho para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                        <h3 class="timeline-header">Cartão vermelho para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['whole_name'].'</a></h3>
                         </div>
                         </li>';
                     } else if ($notes['type'] == 4){
@@ -328,7 +373,7 @@
                             <div class="timeline-item">
                              <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
-                            <h3 class="timeline-header">Gol contra de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                            <h3 class="timeline-header">Gol contra de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['whole_name'].'</a></h3>
                             </div>
                             </li>';
                     } else if ($notes['type'] == 5){
@@ -362,7 +407,7 @@
                             <div class="timeline-item">
                              <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
-                            <h3 class="timeline-header"><a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a> presente, iniciou no banco.</h3>
+                            <h3 class="timeline-header"><a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['whole_name'].'</a> presente, iniciou no banco.</h3>
                             </div>
                             </li>';
                     } else if ($notes['type'] == 9){
@@ -370,7 +415,7 @@
                             <div class="timeline-item">
                              <button type="button" class="btn btn-box-tool" style="width:10px;float:right; margin-top:-5px; margin-right:10px;" onclick=\'deletar("' . $notes['id'] . '")\' title="Remover"><i class="fa fa-times"></i></button>
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['datetime'].'</span>
-                            <h3 class="timeline-header"><a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a> presente, iniciou jogando.</h3>
+                            <h3 class="timeline-header"><a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['whole_name'].'</a> presente, iniciou jogando.</h3>
                             </div>
                             </li>';
                     }

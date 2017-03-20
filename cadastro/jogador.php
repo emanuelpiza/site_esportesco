@@ -1,26 +1,16 @@
 <?php
+    header('Content-Type: text/html; charset=utf-8');
+    session_start();
 
-    # Evita o armazenamento em Cache
-    @header("Cache-Control: no-cache, must-revalidate");  
-    @header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");  
-	
-	$renderMessage = false;
+    ob_start();
+    include('../admin/dbcon/dbcon.php');
 
-    $id = $_GET['id'];
-    $servername = "localhost";
-    $username = "root";
-    $password = "k1llersql";
-    $dbname = "Esportes";
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    $conn->query("SET NAMES 'utf8'");
-    mb_language('uni'); 
-    mb_internal_encoding('UTF-8');
-
-    //Comecei a fazer mas não usei o nome do time. Não é primordial.
-    $sqlteam_name = mysqli_query($mysqli,"SELECT teams_name FROM teams where id_teams = '$id'");
-    $team_name = mysqli_fetch_assoc($sqlteam_name)['teams_name'];
+    $renderMessage = false;
+    $key =  mysqli_real_escape_string($mysqli,$_GET['key']);
+    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM teams where admin_key='$key'");
+    $dados = mysqli_fetch_assoc($sqlgeral);
+    $id = $dados['id_teams'];
 
     // Check connection
     if ($conn->connect_error) {
@@ -30,11 +20,13 @@
 	if ( !empty($_POST)) {
 
         $rand = rand();
-        
-        
 		$target_dir = "../times/img/jogadores/";
-        
-        $target_file_bd = $rand . basename($_FILES["image"]["name"]);
+        $campo_img = basename($_FILES["image"]["name"]);
+        if ($campo_img <> ""){
+            $target_file_bd = $rand . $campo_img;
+        }else {
+            $target_file_bd = "0.jpg";
+        }
 		$target_file = $target_dir . $target_file_bd;
 		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 		
@@ -42,24 +34,27 @@
 
 		
 		//Getting data from request
-		$name = $_POST['name'];
-		$rg = $_POST['rg'];
-		$cpf = $_POST['cpf'];
-		$image = $target_file_bd;
-		$contact_name = $_POST['contact_name'];
-		$contact_email = $_POST['contact_email'] ;
-		$contact_telefone = $_POST['contact_telefone'];  
-        $date = str_replace('/', '-', $_POST['datepicker']);
-        $birthdate = date('Y-m-d', strtotime($date));
+		$name = mysqli_real_escape_string($mysqli,$_POST['name']);
+		$rg = mysqli_real_escape_string($mysqli,$_POST['rg']);
+		$cpf =  mysqli_real_escape_string($mysqli,$_POST['cpf']);
+		$image =  mysqli_real_escape_string($mysqli,$target_file_bd);
+		$contact_name =  mysqli_real_escape_string($mysqli,$_POST['contact_name']);
+		$contact_email =  mysqli_real_escape_string($mysqli,$_POST['contact_email']);
+		$contact_telefone =  mysqli_real_escape_string($mysqli,$_POST['contact_telefone']);  
+        $date =  mysqli_real_escape_string($mysqli,str_replace('/', '-', $_POST['datepicker']));
+        $birthdate =  mysqli_real_escape_string($mysqli,date('Y-m-d', strtotime($date)));
          
 		//SQL
-        $sql = "INSERT INTO `players` (players_team_id, players_name, player_picture, rg, cpf, birthdate, email, phone, name_responsible) VALUES ('".$id."', '".$name."', '".$image."', '".$rg."', '".$cpf."', '".$birthdate."', '".$contact_email."', '".$contact_telefone."', '".$contact_name."');";
+        $sql = "INSERT INTO `players` (players_team_id, whole_name, player_picture, rg, cpf, birthdate, email, phone, name_responsible, players_name) VALUES ('".$id."', '".$name."', '".$image."', '".$rg."', '".$cpf."', '".$birthdate."', '".$contact_email."', '".$contact_telefone."', '".$contact_name."', UC_Words(CONCAT_WS(' ', substring_index('".$name."', ' ', 1), substring_index('".$name."', ' ', -1))));";
         
-		mysqli_query($conn, $sql);
+		mysqli_query($mysqli, $sql);
 		//$stmt->close();
-		$conn->close();
+		$mysqli->close();
 	
 		$renderMessage = true;
+        
+        $redirect = "http://www.esportes.co/times/admintime.php?key=$key";
+        header("location:$redirect");
 	}
 
 ?>

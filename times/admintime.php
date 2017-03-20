@@ -9,45 +9,11 @@
         $_SESSION["error1"] = "Please Sign in";
         header("Location: index.php");
     }
-    $id = $_GET['id'];
-    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM teams where id_teams='$id'");
+    $key = $_GET['key'];
+    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM teams where admin_key='$key'");
     $dados = mysqli_fetch_assoc($sqlgeral);
-    $sqlcount_players = mysqli_query($mysqli,"SELECT points FROM teams where id_teams='$id'");
-    $count_players = mysqli_fetch_assoc($sqlcount_players);
-    $sqlcount_videos = mysqli_query($mysqli,"SELECT goals_balance FROM teams where id_teams='$id'");
-    $count_videos = mysqli_fetch_assoc($sqlcount_videos);
-    $nome = $dados['teams_name'];
-    $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available in (1,2) and teams_name LIKE '%".$nome."%' ");
-    $count_plays = mysqli_fetch_assoc($sqlcount_plays);
-    $sql_anos = mysqli_query($mysqli,"SELECT YEAR(teams_schedule_date) as year FROM teams WHERE id_teams='$id'");
-    $anos = mysqli_fetch_assoc($sql_anos);
+    $id = $dados['id_teams'];
     $sql_jogadores = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id' order by players_name");
-    $sql_jogadores2 = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id' order by players_name");
-    while ($data4 = mysqli_fetch_assoc($sql_jogadores2)) {
-        $selecoes .= "<option value=".$data4['id_players'].">".$data4['players_name']."</option>" ;
-    }
-
-    // Navegação entre os times do campeonato
-    $sqlnav = mysqli_query($mysqli,"select max(id_teams) as maximo, min(id_teams) as minimo from teams where cup_id =".$dados['cup_id']);
-    $fetch_nav = mysqli_fetch_assoc($sqlnav);
-    $max_teamid = $fetch_nav['maximo'];  
-    $min_teamid = $fetch_nav['minimo'];
-
-    $sql_team_prev = mysqli_query($mysqli,"select max(id_teams) as prev_team from teams where id_teams < '$id' and cup_id =".$dados['cup_id']);
-    $team_prev = mysqli_fetch_assoc($sql_team_prev)['prev_team'];
-    $sql_team_foll = mysqli_query($mysqli,"select min(id_teams) as foll_team from teams where id_teams > '$id' and cup_id =".$dados['cup_id']);
-    $team_foll = mysqli_fetch_assoc($sql_team_foll)['foll_team'];
-
-    if ($id == $max_teamid){
-        $nextteam = $min_teamid;
-    } else {    
-        $nextteam = $team_foll;
-    }
-    if ($id == $min_teamid){
-        $prevteam = $max_teamid;
-    } else {
-        $prevteam = $team_prev;
-    }
 ?>
 
 
@@ -209,7 +175,6 @@
                     <img src="../cadastro/uploads/'.$dados['teams_picture'].'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:20px;">
                 </div>';
         ?>
-   
     </div>
     
     <div class="row">
@@ -219,6 +184,7 @@
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Atualização de Informações dos Jogadores</h3>
+              <a href="../cadastro/jogador.php?key=<?php echo $key; ?>"><button class="btn btn-xs btn-success" style="float:right;">Adicionar Jogador</button></a>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
               <ul class="users-list">
@@ -232,9 +198,9 @@
                     }
                     echo '
                     <li>
-                        <a href="./updateform/editform.php?id=' . $data2['id_players'] . '">
+                        <a href="./updateform/editform.php?key=' . $data2['admin_key'] . '">
                         <div class="figurinha">
-                        <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image">
+                        <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image" style="width:120px; height:160px;>
                         <span class="users-list-name">' . $data2['players_name'] . '</span>
                       </div>
                       </a>
@@ -243,6 +209,23 @@
                 ?>
               </ul><!-- /.users-list -->
             </div><!-- /.box-body -->
+              <hr>
+             <div style="max-width: 650px; margin: 5px;">
+                <span>Trocar imagem do Time</span>
+                <p>Escolha uma imagem PNG ou JPEG image, de preferência com 150px X 150px.</p>
+                <form action="novo_logo.php" method="post" enctype="multipart/form-data">
+                    <div id="image-preview-div" style="display: none">
+                        <label for="exampleInputFile">Selected image:</label>
+                        <br>
+                        <img id="preview-img" src="noimage">
+                    </div>
+                    <div class="form-group">
+                        <input id="files" type="file" name="fileToUpload" id="fileToUpload" required>
+                    </div>
+                    <input type="hidden" name="key" value="<?php echo $key;?>"> 
+                    <button class="btn btn-sm btn-primary" style="float:right; margin-top:-50px;" type="submit" >Subir Arquivo</button>
+                </form>
+                </div>
           </div><!--/.box -->
         </div><!-- /.col -->
     </div>

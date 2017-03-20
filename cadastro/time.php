@@ -2,31 +2,17 @@
 
 #Novo template a ser aplicado: https://codepen.io/nikhil8krishnan/pen/gaybLK
 
-	
-    # Evita o armazenamento em Cache
-    @header("Cache-Control: no-cache, must-revalidate");  
-    @header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");  
-	
-	$renderMessage = false;
-	
-	if ( !empty($_POST)) {
-	
-        $id = $_GET['id'];
-		$servername = "localhost";
-		$username = "root";
-		$password = "k1llersql";
-		$dbname = "Esportes";
+    header('Content-Type: text/html; charset=utf-8');
+    session_start();
 
-		// Create connection
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		$conn->query("SET NAMES 'utf8'");
-		mb_language('uni'); 
-		mb_internal_encoding('UTF-8');
-		
-		// Check connection
-		if ($conn->connect_error) {
-			die("Connection failed: " . $conn->connect_error);
-		} 
+    ob_start();
+    include('../admin/dbcon/dbcon.php');
+
+    $renderMessage = false;
+
+    $id = $_GET['id'];
+
+	if ( !empty($_POST)) {
     
 
          $rand = rand();
@@ -42,6 +28,7 @@
 		
 		//Getting data from request
 		$name = $_POST['name'];
+		$short_name = $_POST['short_name'];
 		$group = $_POST['group'];
 		$image = $target_file_bd;
 		$contact_name = $_POST['contact_name'];
@@ -49,13 +36,22 @@
 		$contact_telefone = $_POST['contact_telefone'];
 		
 		//SQL
-        $sql = "INSERT INTO teams (cup_id, teams_name, groups, teams_picture, contact_name, contact_email, contact_telefone) VALUES ('".$id."', '".$name."', '".$group."', '".$image."', '".$contact_name."', '".$contact_email."', '".$contact_telefone."');";
+        $sql = "INSERT INTO teams (cup_id, teams_name, short_name, groups, teams_picture, contact_name, contact_email, contact_telefone) VALUES ('".$id."', '".$name."', '".$short_name."', '".$group."', '".$image."', '".$contact_name."', '".$contact_email."', '".$contact_telefone."');";
         
-		mysqli_query($conn, $sql);
-		//$stmt->close();
-		$conn->close();
+		mysqli_query($mysqli, $sql);
+        
+        $sqlredirect = mysqli_query($mysqli,"SELECT admin_key FROM teams where cup_id='".$id."' and teams_name='".$name."'");
+        $redir = mysqli_fetch_assoc($sqlredirect);
+        $key_team = $redir['admin_key'];
+        
+		$mysqli->close();
 	
 		$renderMessage = true;
+        
+        $redirect = "http://www.esportes.co/times/admintime.php?key=$key_team";
+        #abaixo, chamamos a função header() com o atributo location: apontando para a variavel $redirect, que por 
+        #sua vez aponta para o endereço de onde ocorrerá o redirecionamento
+        header("location:$redirect");
 
 	}
 
@@ -169,7 +165,7 @@
 					
 					<div class="box box-primary">
 						<div class="box-header with-border">
-						  <h1 class="box-title">Novo Time</h1>
+						  <h1 class="box-title">Novo Time - <?php echo $name; ?></h1>
 						</div>
 						
 						<?php 
@@ -191,9 +187,15 @@
 								  <input type="text" class="form-control" id="name" name="name" placeholder="Nome do Time" required="true">
 								</div>
                                 
+                                
+								<div class="form-group">
+								  <label for="name">Abreviação (3 Letras)</label>
+								  <input type="text" maxlength="3" class="form-control" id="short_name" name="short_name" placeholder="Abreviação do nome do time">
+								</div>
+                                
                                 <div class="form-group">
-								  <label for="group">Grupo *</label>
-								  <input type="text" class="form-control" id="group" name="group" placeholder="Grupo na Competição" required="true">
+								  <label for="group">Grupo</label>
+								  <input type="text" class="form-control" id="group" name="group" placeholder="Grupo na Competição">
 								</div>
                                 
                                 <div class="form-group">

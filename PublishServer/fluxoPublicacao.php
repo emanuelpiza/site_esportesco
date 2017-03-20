@@ -20,47 +20,43 @@
         printf("Connect failed: %s\n", mysqli_connect_error());
         exit();
     }
-
-
     // Início do fluxo - Verifica se os arquivos já foram salvos
-    $sql_ftp_teste = mysqli_query($mysqli,"
-        select 
-            m.id, 
-            m.status, 
-            m.field_id, 
-            m.is_two_cameras, 
-            m.datetime, 
-            c.match_duration as duration, 
-            t1.`teams_name` as team1_name, 
-            LEFT(t1.`teams_name`, 3) as team1_abrev, 
-            t2.`teams_name` as team2_name, 
-            LEFT(t2.`teams_name`, 3) as team2_abrev 
-        from matches m 
-            left join teams t1 on m.team1 = t1.id_teams 
-            left join teams t2 on m.team2 = t2.id_teams 
-            left join cups c on m.cup_id = c.id
-        where datetime < NOW() and status is null
-        order by datetime;");
-    while ($row = mysqli_fetch_assoc($sql_ftp_teste)) {
+  //  $sql_ftp_teste = mysqli_query($mysqli,"
+    //    select 
+     //       m.id, 
+   //         m.status, 
+   //         m.field_id, 
+   //         m.is_two_cameras, 
+   //         m.datetime, 
+   //         c.match_duration as duration, 
+     //       t1.`teams_name` as team1_name, 
+     //       LEFT(t1.`teams_name`, 3) as team1_abrev, 
+     //       t2.`teams_name` as team2_name, 
+     //       LEFT(t2.`teams_name`, 3) as team2_abrev 
+    //    from matches m 
+   //         left join teams t1 on m.team1 = t1.id_teams 
+    //        left join teams t2 on m.team2 = t2.id_teams 
+   //         left join cups c on m.cup_id = c.id
+   //     where datetime < NOW() and m.status is null
+   //     order by datetime;");
+ //   while ($row = mysqli_fetch_assoc($sql_ftp_teste)) {
         
         // Preparação 
-        if ($row['team2_name'] == null){
-            $title = $row['team1_name'];
-        } else {
-            $title = $row['team1_abrev'] . ' vs ' . $row['team2_abrev'];
-        }
-        $datahora = new DateTime($row['datetime']);
-        $dia = $datahora->format('Y-m-d'); 
-        $hora_ini = $datahora->format('Hi');
-        $datahora->add(new DateInterval('PT' . $row['duration'] . 'M'));
-        $hora_fim = $datahora->format('Hi');
+   //     if ($row['team2_name'] == null){
+   //         $title = $row['team1_name'];
+   //     } else {
+   //         $title = $row['team1_abrev'] . ' vs ' . $row['team2_abrev'];
+   //     }
+  ////      $datahora = new DateTime($row['datetime']);
+  //      $dia = $datahora->format('Y-m-d'); 
+  //      $hora_ini = $datahora->format('Hi');
+  //      $datahora->add(new DateInterval('PT' . $row['duration'] . 'M'));
+  //      $hora_fim = $datahora->format('Hi');
         
-        $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' '.$row['field_id'].' '.$row['id'].' '.$row['is_two_cameras'];
-        $cmd = '/var/www/videos/PublishServer/ftp_teste.sh '.$parametros;
-        shell_exec($cmd);
-    }
-
-
+  //      $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' '.$row['field_id'].' '.$row['id'].' '.$row['is_two_cameras'];
+   //     $cmd = '/var/www/videos/PublishServer/ftp_teste.sh '.$parametros;
+      //  shell_exec($cmd);
+    //}
   // Após arquivos ok, inicia o processamento, um por vez
   $sql_processamento = mysqli_query($mysqli,"
        select 
@@ -78,8 +74,8 @@
             left join teams t1 on m.team1 = t1.id_teams 
             left join teams t2 on m.team2 = t2.id_teams 
             left join cups c on m.cup_id = c.id
-        where datetime < NOW() and status in (1, 2)
-        order by status DESC, datetime LIMIT 1;");
+        where datetime < NOW() and m.status in (1, 2)
+        order by m.status DESC, datetime LIMIT 1;");
     while ($row = mysqli_fetch_assoc($sql_processamento)) {
         if ($row['status'] == 1){
             
@@ -94,7 +90,7 @@
             $hora_ini = $datahora->format('Hi');
             $datahora->add(new DateInterval('PT' . $row['duration'] . 'M'));
             $hora_fim = $datahora->format('Hi');
-            $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' '.$row['field_id'].' '.$row['id'].' '.$row['is_two_cameras'];
+            $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' 0 '.$row['id'].' '.$row['is_two_cameras'];
             
             $novo_status = 2;//Match - Enviado para recorte
             $sql = "UPDATE matches set status = '$novo_status', last_status = NOW() where id = ".$row['id'].";";
@@ -111,7 +107,6 @@
             shell_exec($cmd);
         }
     }
-        
         
     // Publicação das partidas completas no Youtube, uma por vez
     $sql_publicarYT = mysqli_query($mysqli,"
@@ -130,11 +125,10 @@
             left join teams t1 on m.team1 = t1.id_teams 
             left join teams t2 on m.team2 = t2.id_teams 
             left join cups c on m.cup_id = c.id
-        where datetime < NOW() and status in (6, 7)
-        order by status DESC, datetime LIMIT 1;");
+        where datetime < NOW() and m.status in (6, 7)
+        order by m.status DESC, datetime LIMIT 1;");
     while ($row = mysqli_fetch_assoc($sql_publicarYT)) {
         if ($row['status'] == 6){
-            
             // Preparação 
             if ($row['team2_name'] == null){
                 $title = $row['team1_name'];
@@ -147,7 +141,7 @@
             $datahora->add(new DateInterval('PT' . $row['duration'] . 'M'));
             $hora_fim = $datahora->format('Hi');
             $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' '.$row['field_id'].' '.$row['id'].' '.$row['is_two_cameras'];
-            
+           
             $novo_status = 7;//Match - Enviado para recorte
             $sql = "UPDATE matches set status = '$novo_status', last_status = NOW() where id = ".$row['id'].";";
             if ($mysqli->query($sql) === TRUE) {
@@ -178,8 +172,8 @@
             left join teams t1 on m.team1 = t1.id_teams 
             left join teams t2 on m.team2 = t2.id_teams 
             left join cups c on m.cup_id = c.id
-        where m.`datetime` < ADDDATE(NOW(), -4) and status in (8, 9)
-        order by status DESC, datetime DESC LIMIT 1");
+        where m.`datetime` < ADDDATE(NOW(), -4) and m.status in (8, 9)
+        order by m.status DESC, datetime DESC LIMIT 1");
     while ($row = mysqli_fetch_assoc($sql_Melhores)) {
         if ($row['status'] == 8){
             $sql_count = mysqli_query($mysqli,"

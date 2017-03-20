@@ -6,16 +6,13 @@
 	
     include('../../admin/dbcon/dbcon.php');
 	
-    $id = $_GET['id'];
-	if(isset($id) && !empty($id))
+
+    $key = mysqli_real_escape_string($mysqli,$_GET['key']);
+
+	if(isset($key) && !empty($key))
 	{
-		//$id = $_GET['edit_id'];
-		//$stmt_edit = $DB_con->prepare('SELECT userName, userProfession, userPic FROM tbl_users WHERE userID =:uid');
-		//$stmt_edit->execute(array(':uid'=>$id));
-		//$edit_row = $stmt_edit->fetch(PDO::FETCH_ASSOC);
-		//extract($edit_row);
         
-        $sqlgeral = mysqli_query($mysqli,"SELECT * FROM players where id_players='$id'");
+        $sqlgeral = mysqli_query($mysqli,"SELECT p.*, t.admin_key as admin_key_team FROM players p left join teams t on p.players_team_id = t.id_teams where p.admin_key='$key';");
         $dados = mysqli_fetch_assoc($sqlgeral);
         $player = $dados['id_players'];
         $whole_name = $dados['whole_name'];
@@ -24,6 +21,7 @@
         $shirt = $dados['shirt'];
         $player_picture = $dados['player_picture'];
         $team = $dados['players_team_id'];
+        $team_key = $dados['admin_key_team'];
 	}
 	else
 	{
@@ -35,12 +33,12 @@
 	if(isset($_POST['btn_save_updates']))
 	{
         
-        $whole_name = $_POST['whole_name'];
-        $nickname = $_POST['nickname'];
-        $email = $_POST['email'];
-        $shirt = $_POST['shirt'];
-        $foto_padrao = $_POST['foto_padrao'];
-		$imgFile = $_FILES['player_picture']['name'];
+        $whole_name = mysqli_real_escape_string($mysqli,$_POST['whole_name']);
+        $nickname = mysqli_real_escape_string($mysqli,$_POST['nickname']);
+        $email = mysqli_real_escape_string($mysqli,$_POST['email']);
+        $shirt = mysqli_real_escape_string($mysqli,$_POST['shirt']);
+        $foto_padrao = mysqli_real_escape_string($mysqli,$_POST['foto_padrao']);
+		$imgFile = mysqli_real_escape_string($mysqli,$_FILES['player_picture']['name']);
 		$tmp_dir = $_FILES['player_picture']['tmp_name'];
 		$imgSize = $_FILES['player_picture']['size'];
 					
@@ -99,7 +97,7 @@
 			?>
                 <script>
 				alert('Cadastro atualizado com Sucesso...!');
-				window.location.href='../admintime.php?id=<?php echo $team; ?>';
+				window.location.href='../admintime.php?key=<?php echo $team_key; ?>';
 				</script>
                 <?php
 			}
@@ -188,7 +186,7 @@
         <span class="glyphicon glyphicon-save"></span> Atualizar
         </button>
         
-        <a class="btn btn-default" href="../admintime.php?id=<?php echo $team; ?>"> <span class="glyphicon glyphicon-backward"></span> Cancelar </a>
+        <a class="btn btn-default" href="../admintime.php?key=<?php echo $team_key; ?>"> <span class="glyphicon glyphicon-backward"></span> Cancelar </a>
         
         </td>
     </tr>

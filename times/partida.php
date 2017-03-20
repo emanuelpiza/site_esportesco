@@ -18,6 +18,15 @@
         WHERE id = '$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
     $sqlcount_players = mysqli_query($mysqli,"SELECT points FROM teams where id_teams='$id'");
+
+    $sqlcup = mysqli_query($mysqli,"SELECT sport from cups c left join matches m on c.id = m.cup_id where m.id = '$id'");
+    $sport = mysqli_fetch_assoc($sqlcup)['sport'];
+    if ($sport == "Futebol de Salão"){
+        $arena = "futsal.jpeg";
+    } else {
+        $arena = "gramado.jpg";
+    }
+
     $count_players = mysqli_fetch_assoc($sqlcount_players);
     $sqlcount_videos = mysqli_query($mysqli,"SELECT goals_balance FROM teams where id_teams='$id'");
     $count_videos = mysqli_fetch_assoc($sqlcount_videos);
@@ -42,17 +51,17 @@
             t1.available,
             '' as detail
         FROM notes t1
-        LEFT JOIN plays t2 ON t2.`datetime` = t1.`datetime`
+        LEFT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where t1.match_id ='$id'
         UNION
         SELECT   t2.`id_plays` as id,
          	t2.`match_id`,
             t2.`initial_time`,
             (6) as type , 
             t2.`plays_players_id` as player,
-            t2.`video_id` as detail,
-            t2.available
+            t2.available,
+            t2.`video_id` as detail
         FROM notes t1
-        RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where plays_play_types_id > -1 ) p1 
+        RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where plays_play_types_id > -1 and t2.match_id ='$id' ) p1 
     left join players p2 on p1.player = p2.`id_players` where p1.`available` in (1,2) and match_id ='$id' order by p1.`initial_time` DESC;");
     $titulo = $dados['team1_name'] . ' vs ' . $dados['team2_name'] . ' - EsportesCo';
 ?>
@@ -174,32 +183,33 @@
         include_once("../admin/analyticstracking.php");
         include('../navbar.php');
     ?>
-
     
+    <!--
+    Botão do Local, quando tinha coordenadas<a href="#" data-toggle="modal" data-target="#myModal">'.$dados['fields_name'].'.</a>
     <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Local</h4>
-        </div>
-        <div class="modal-body">
-            <div style="width: 95%; height:95%; margin:10px auto; 10px; auto;" >
-                <div id="overlay" class="map">
-                    <iframe id="map" src="<?php echo $dados['fields_coordinates'] ?>" width="100%" height="350" frameborder="0" ></iframe>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Local</h4>
+            </div>
+            <div class="modal-body">
+                <div style="width: 95%; height:95%; margin:10px auto; 10px; auto;" >
+                    <div id="overlay" class="map">
+                        <iframe id="map" src="php echo $dados['fields_coordinates'] ?>" width="100%" height="350" frameborder="0" ></iframe>
+                    </div>
                 </div>
             </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </div>--> 
   <?php 
         if ($dados['cup_id'] <> 0) {
         echo '
             <div class="row">
                 <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;">
                     <span style="font-family: Roboto, Arial, serif; font-size:12px;">'. $dados['date'].' às '.$dados['hour'].'
-                    <br> <b>Local: <a href="#" data-toggle="modal" data-target="#myModal">'.$dados['fields_name'].'.</a></b></span>
+                    <br>'.$dados['fields_name'].'.</span>
                 </div>
             </div>
          <div class="row" style="margin-bottom:10px;">
@@ -243,14 +253,14 @@
              
                      <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Partida Completa</h3>
+                        <h3 class="box-title">Vídeos</h3>
                     </div><!-- /.box-header -->
                    
                 <?php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM matches where id = '$id'");
                     while ($data3 = mysqli_fetch_assoc($sqlpartida)) {
                         if ($data3['match_video_id'] == null) {
                             $cover = " 
-                            <div style=\" -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;background-image: url(./img/gramado.jpg);\">
+                            <div style=\" -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;background-image: url(./img/".$arena.");\">
                                 <div style=\"height: 460px; margin:10px auto; 10px; auto;\" >
                                     <div class\"embed-responsive embed-responsive-16by9\" style=\"text-align:center; margin:-25px -10px 25px -10px; color:white;padding-top:10px;\">
                                         <h1 style=\"font-family: 'Chivo', sans-serif;\">SUBA O VÍDEO<br> COMPLETO DE SUA PARTIDA</h1>
@@ -263,14 +273,12 @@
                             $cover = '
                         <iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $data3['match_video_id'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
                         </div>
-                     <div class="row">
-                            <div class="col-xs-6 col-md-6" style="margin-top:20px;">
-                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; float:right; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "0"," '.$data3['field_id'].'")\'>Recortar Últimos 10s<br>Lado Esquerdo</button>
+                         <div class="row">
+                            <div style="margin-top:20px; text-align:center;">
+                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; float:center; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "0"," '.$data3['field_id'].'")\'>Recortar Últimos 10s</button>
                             </div>
-                            <div class="col-xs-6 col-md-6" style="margin-top:20px;float:right;">
-                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "1"," '.$data3['field_id'].'")\'>Recortar Últimos 10s<br>Lado Direito</button>
-                            </div>
-                        </div>';};
+                     </div>  
+                        ';};
                     echo '
                     <form name="f" id="f" onSubmit="return false">
                     <input type="hidden" name="video" value="' . $dados['match_video_id']  . '">
@@ -283,8 +291,7 @@
                           <div class="box-body no-padding">
                         <div class="fb-comments" data-href="http://www.esportes.co/times/partida.php?id=<?php echo $id ?>" data-width="100%" data-numposts="5"></div>
                     </div><!-- /.box-body -->
-                </div><!--/.box -->  
-            
+                </div>
             <?php $sqlfoto = mysqli_query($mysqli,"SELECT * FROM videos where team_id = '$id' and type = 'p' order by date DESC LIMIT 1");
                 while ($datafoto = mysqli_fetch_assoc($sqlfoto)) {
                     echo'
@@ -317,7 +324,7 @@
         <div class="col-md-8 col-md-offset-2">
              <section class="content-header">
           <h1>
-            Lances
+            Linha do Tempo
           </h1>
         </section>
 
@@ -329,12 +336,25 @@
             <div class="col-md-12">
               <!-- The time line -->
               <ul class="timeline">
-                <!-- timeline time label -->
-                <li class="time-label">
-                  <span class="bg-gray">
-                    Fim de Jogo
-                  </span>
-                </li>
+                  <!-- timeline time label -->
+                  <?php if ($dados['interview'] <> ""){
+                    echo '
+                  <li>
+                      <i class="fa fa-video-camera bg-gray"></i>
+                      <div class="timeline-item">
+                        <h3 class="timeline-header">Entrevistas</h3>
+                        <div class="timeline-body">
+                          <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/'.$dados['interview'].'" frameborder="0" allowfullscreen=""></iframe>
+                          </div>
+                        </div>
+                      </div>
+                  </li> ';} ?>
+                  <li class="time-label">
+                      <span class="bg-gray">
+                        Fim de Jogo
+                      </span>
+                  </li>
                   <?php while ($notes = mysqli_fetch_assoc($sql_notes)) {
                     if ($notes['type'] == 1){
                         echo '<li><i class="fa fa-soccer-ball-o bg-white" style="color:black;"></i>

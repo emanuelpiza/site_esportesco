@@ -55,12 +55,9 @@
                     $sql = "INSERT INTO teams (teams_name, cup_id) VALUES (UCASE('".$team_name."'), ".$copa.")";
                     mysqli_query($mysqli, $sql);
                 }
-                if ($nickname <> ""){
-                    $sql = "INSERT INTO players(whole_name, players_team_id, shirt, birthdate, name_responsible, phone, email, nickname, players_name, rg, cpf, registry) VALUES (UC_Words('".$nome_completo."'), (select id_teams from teams where teams_name  = '".$team_name."' and cup_id =".$copa."), '".$shirt."', '".$birthdate."', '".$name_responsable."', '".$phone."', '".$email."', UC_Words('".$nickname."'), UC_Words(CONCAT_WS(' ', substring_index('".$nome_completo."', ' ', 1), substring_index('".$nome_completo."', ' ', -1))), '".$rg."','".$cpf."', '".$registry."');";  
-                    mysqli_query($mysqli, $sql);  
-                //}else{ 
-                  //  sql =  "UPDATE players SET whole_name = UC_Words('".$nome_completo."'), players_team_id = (select id_teams from teams where teams_name  = '".$team_name."'), shirt = '".$shirt."', birthdate = '".$date."', name_responsible = '".$name_responsable."', phone = '".$phone."', email = '".$email."', nickname = UC_Words('".$nickname."'), players_name = UC_Words(CONCAT_WS(' ', substring_index('".$nome_completo."', ' ', 1), substring_index('".$nome_completo."', ' ', -1))) where cup_player_id = ".$id." and cup_id =".$copa;  
-                    //mysqli_query($mysqli, $sql);     
+                if ($nome_completo <> ""){
+                    $sql = "INSERT IGNORE INTO players(whole_name, players_team_id, shirt, birthdate, name_responsible, phone, email, nickname, players_name, rg, cpf, registry) VALUES (UC_Words('".$nome_completo."'), (select id_teams from teams where teams_name  = '".$team_name."' and cup_id =".$copa."), '".$shirt."', '".$birthdate."', '".$name_responsable."', '".$phone."', '".$email."', UC_Words('".$nickname."'), UC_Words(CONCAT_WS(' ', substring_index('".$nome_completo."', ' ', 1), substring_index('".$nome_completo."', ' ', -1))), '".$rg."','".$cpf."', '".$registry."');";  
+                    mysqli_query($mysqli, $sql); 
                 } 
             }
         }  
