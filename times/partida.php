@@ -12,8 +12,8 @@
     $id = $_GET['id'];
     $sqlgeral = mysqli_query($mysqli,"
         SELECT 
-            m.*, LEFT(t1.`teams_name` , 3) as team1_name, f.fields_coordinates,
-            f.fields_name, t1.`teams_name` as team1_full_name, LEFT(t2.`teams_name` , 3) as team2_name, t1.teams_picture as t1_picture, t2.teams_picture as t2_picture, date_format(m.datetime, '%Hh%i') as hour, date_format(m.datetime,'%d/%m') as date 
+            m.*, t1.`teams_name` as team1_name, f.fields_coordinates,
+            f.fields_name, t1.`teams_name` as team1_full_name, t2.`teams_name` as team2_name, t1.teams_picture as t1_picture, t2.teams_picture as t2_picture, date_format(m.datetime, '%Hh%i') as hour, date_format(m.datetime,'%d/%m') as date 
         FROM matches m left join teams t1 on m.team1 = t1.`id_teams` left join teams t2 on      m.`team2` = t2.id_teams left join fields as f on f.id_fields = m.field_id 
         WHERE id = '$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
@@ -33,6 +33,11 @@
     $nome = $dados['teams_name'];
     $team1 = $dados['team1'];
     $team2 = $dados['team2'];
+    $title = $dados['title'];
+    $subtitle = $dados['subtitle'];
+    $author_name = $dados['author_name'];
+    $author_link = $dados['author_link'];
+
     $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available in (1,2) and teams_name LIKE '%".$nome."%' ");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     $sql_anos = mysqli_query($mysqli,"SELECT YEAR(teams_schedule_date) as year FROM teams WHERE id_teams='$id'");
@@ -246,24 +251,38 @@
         } ?>
    
     <div class="row"> 
-
-       
-        
-         <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12" style="margin-bottom:20px;">
+          <h1 style="text-align:center;">
+              <?php if ($title <> "") { echo $title."<br>";}?>
+            <small><?php echo $subtitle; ?></small><br>
+          </h1>
+            <?php if ($author_name <> "") {
+                echo '<h5 style="text-align:center;">Informações e imagens por: <a href="'.$author_link.'">'.$author_name.'</a>.</h5>';}?>
+        </div>
+    </div>
+    <div class="row"> 
+        <div class="col-md-8 col-md-offset-2">
              
-                     <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Vídeos</h3>
-                    </div><!-- /.box-header -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Vídeos</h3>
+                </div><!-- /.box-header -->
                    
                 <?php $sqlpartida = mysqli_query($mysqli,"SELECT * FROM matches where id = '$id'");
                     while ($data3 = mysqli_fetch_assoc($sqlpartida)) {
+                        
+                        if ($data3['status'] <> null) {
+                            $msg_video = "VÍDEO EM <BR>PROCESSAMENTO.<BR>DISPONÍVEL<BR> EM BREVE.";
+                            
+                        } else {
+                            $msg_video = "<a href='../painel_video.php?match=".$id."'>SUBIR GRAVAÇÃO<br>E INFORMAÇÕES<BR> DA PARTIDA</a>";
+                        }
                         if ($data3['match_video_id'] == null) {
                             $cover = " 
                             <div style=\" -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;background-image: url(./img/".$arena.");\">
                                 <div style=\"height: 460px; margin:10px auto; 10px; auto;\" >
                                     <div class\"embed-responsive embed-responsive-16by9\" style=\"text-align:center; margin:-25px -10px 25px -10px; color:white;padding-top:10px;\">
-                                        <h1 style=\"font-family: 'Chivo', sans-serif;\">SUBA O VÍDEO<br> COMPLETO DE SUA PARTIDA</h1>
+                                        <h1 style=\"font-family: 'Chivo', sans-serif;\">".$msg_video."</h1>
                                         <div id=\"timer\"></div>
                                     </div>
                                 </div>

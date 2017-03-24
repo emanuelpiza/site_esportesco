@@ -198,8 +198,8 @@
         
         <div class="col-lg-5">
             <span>
-                Competição: Copa Metropolitana
-                <br>Local: Campo Cadastrado
+                Competição:
+                <br>Local: 
                 <br>Auxiliar 1:
                 <br>Auxiliar 2: 
             </span>

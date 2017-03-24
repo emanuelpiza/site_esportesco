@@ -66,68 +66,76 @@
    
     </head>
 <body>
-    
-
-    <div class="container">
-            <div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 cfeature infos col-lg-offset-3 col-lg-6">
-                
-            <div class="panel-heading" style="text-align:center;"><strong>Subir vídeo</strong> <small><?php echo $nome_copa;?></small></div>
-               
+    <div class="container" style="
+  height: 500px;
+  overflow: auto;">
+        <div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 cfeature infos col-lg-offset-3 col-lg-6">
+            <div class="panel-heading" style="text-align:center;">
+                <h3>Atualizar informações da partida. </h3> <small><?php echo $nome_copa;?></small>
             </div>
+        </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 cfeature infos col-lg-offset-3 col-lg-6">
-                <div class="row">
-                    <form action="upload_video.php" method="post" enctype="multipart/form-data">
-                        <div class="form-inline">
-                           <div class="row">
+            <form action="upload_video.php" method="post" enctype="multipart/form-data">
+                <div class="form-inline" style="text-align:center;">
+                    <div class="col-sm-6">
+                        	<table class="table table-bordered table-responsive">
+	
+                                <tr>
+                                    <td><label for="title">Título (Max 80 Caracteres)</label></td>
+                                    <td><input type="text" maxlength="80" class="form-control" id="title" name="title" placeholder="Título dos acontecimentos da partida"></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><label for="subtitle">Subtítulo (Max 130 Caracteres)</label></td>
+                                    <td><input type="text" maxlength="130" class="form-control" id="subtitle" name="subtitle" placeholder="Descrição mais aprofundada da partida."></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><label for="author_name">Nome do responsável</label></td>
+                                    <td><input type="text" maxlength="80" class="form-control" id="author_name" name="author_name" placeholder="Ex: Bastidores do Esporte"></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td> <label for="subtitle">Link do responsável</label></td>
+                                    <td><input type="author_link" maxlength="130" class="form-control" id="author_link" name="author_link" placeholder="Ex: www.bastidores.com.br"></td>
+                                </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <?php 
+                        for ($x = 1; $x <= 5; $x++) {
+                            echo ' <div class="row">
                              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"  style="text-align:right;">
                                  <span class="fa-stack fa-3x">
                                   <i class="fa fa-circle-thin fa-stack-2x"></i>
-                                  <strong class="fa-stack-1x calendar-text" style="margin-top:0px;">1</strong>
+                                  <strong class="fa-stack-1x calendar-text" style="margin-top:0px;">'.$x.'</strong>
                                  </span>
                                </div>
                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"  style="margin-top:15px;">
-                                   <span>Suba o arquivo 1.<br></span>
+                                   <span>Arquivo '.$x.'.<br></span>
                                    <div class="form-group fileUpload">
-                                       <input id="files1" type="file" name="fileToUpload1" id="fileToUpload1"><br>
+                                       <input id="files'.$x.'" type="file" accept="video/*" name="fileToUpload'.$x.'" id="fileToUpload'.$x.'"><br>
                                    </div>
                                </div>
-                             </div>
-                             
-                             <div class="row"  style="margin-top:10px;">
-                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="text-align:right;"   style="margin-top:20px;">
-                                     <span class="fa-stack fa-3x" >
-                                         <i class="fa fa-circle-thin fa-stack- 2x"></i>
-                                         <strong class="fa-stack-1x calendar-text" style="margin-   top:0px;">2</strong>
-                                     </span>
-                                 </div>
-                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"   style="margin-top:15px;">
-                                     <span>Suba o arquivo 2.<br></span>
-                                     <div class="form-group fileUpload">
-                                         <input id="files2" type="file" name="fileToUpload2" id="fileToUpload2"><br>
-                                     </div>
-                                 </div>
-                             </div>
-                    
-                             <div class="row">
-                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"  style="text-align:right;">
-                                     <span class="fa-stack fa-3x" style="margin-top:10px;">
-                                         <i class="fa fa-circle-thin fa-stack-2x"></i>
-                                         <strong class="fa-stack-1x calendar-text" style="margin-top:0px;">3</strong>
-                                     </span>
-                                 </div>
-                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-top:25px;">
-                            
-                                     <span>Atualize a base de dados.<br></span>
-                                     <input type="submit" class="btn btn-sm btn-primary" value="Atualizar" name="submit" style="margin-left:10px; margin-top:8px;">
-                                 </div>
-                             </div>
-                   
-                             <input type="hidden" name="match" value="<?php echo $match;?>"> 
+                             </div>';
+                        } 
+                        ?>
+                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"  style="text-align:right;">
+                             <span class="fa-stack fa-3x" style="margin-top:10px;">
+                                 <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                 <strong class="fa-stack-1x calendar-text" style="margin-top:0px;"><i class="fa fa-upload" aria-hidden="true"></i></strong>
+                             </span>
                          </div>
-                    </form>
+                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-top:25px;">
+
+                             <span>Enviar os vídeos para processamento. (Não feche esta página).<br></span>
+                             <input type="submit" class="btn btn-sm btn-primary" value="Atualizar" name="submit" style="margin-left:10px; margin-top:8px;">
+                         </div>
+                         <input type="hidden" name="match" value="<?php echo $match;?>"> 
+                     </div>
+                    <div style="height:300px;"></div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>

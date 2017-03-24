@@ -108,6 +108,18 @@
             mysqli_query($mysqli, $goals_taken); 
             $goals_taken2 = " update teams set goals_taken = 0 where goals_taken is null;";
             mysqli_query($mysqli, $goals_taken2); 
+            
+            $goals = "UPDATE teams SET goals =
+               (SELECT SUM(gols) FROM
+                ( 
+                    select sum(score1) gols from matches where team1 = ".$times['id_teams']."
+                    UNION ALL
+                    select sum(score2) gols from matches where team2 = ".$times['id_teams']."
+                ) s) where id_teams = ".$times['id_teams'].";";
+            mysqli_query($mysqli, $goals); 
+            $goals2 = " update teams set goals = 0 where goals is null;";
+            mysqli_query($mysqli, $goals2); 
+            
             $victories = "UPDATE teams SET victories = (SELECT SUM(count) FROM  (  select count(1) count from matches where team1 = ".$times['id_teams']." and score1 > score2 UNION ALL select count(1) count from matches where team2 = ".$times['id_teams']." and score2 > score1 ) s) where id_teams = ".$times['id_teams'].";";
             mysqli_query($mysqli, $victories); 
             $draws = "UPDATE teams SET draws = (select count(1) count from matches where (team1 = ".$times['id_teams']." or team2 = ".$times['id_teams'].") and score1 = score2 and datetime < NOW() ) where id_teams = ".$times['id_teams'].";";
@@ -122,7 +134,7 @@
         $sqlgrupos = mysqli_query($mysqli,"select distinct groups from teams where cup_id = ".$copa);
         while ($times = mysqli_fetch_assoc($sqlgrupos)) {
             $position = "update teams t1 join (select @rownum:=@rownum+1 rank, p.id_teams
-            from teams p, (SELECT @rownum:=0) r where p.groups = '".$times['groups']."' and cup_id = ".$copa." order by points desc, goals_balance DESC) t2 on t1.id_teams = t2.id_teams set t1.rank = t2.rank;";
+            from teams p, (SELECT @rownum:=0) r where p.groups = '".$times['groups']."' and cup_id = ".$copa." order by points desc, victories DESC, goals_balance DESC, goals_taken DESC) t2 on t1.id_teams = t2.id_teams set t1.rank = t2.rank;";
         mysqli_query($mysqli, $position);    
         }
         

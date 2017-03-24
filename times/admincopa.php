@@ -221,11 +221,11 @@
                                     m.`team1`,
                                     t1.teams_picture as t1_picture, 
                                     t2.teams_picture as t2_picture, 
-                                    left(t1.`teams_name`,3) as 'team1_name', 
+                                    t1.`short_name` as 'team1_name', 
                                     m.`team2`, 
                                     m.`score1`, 
                                     m.`score2`, 
-                                    left(t2.`teams_name`,3) as 'team2_name', 
+                                    t2.`short_name` as 'team2_name', 
                                     t1.`teamd_fields_id` as 'teams_field', 
                                     date_format(m.datetime, '%hh%i') as hour, 
                                     date_format(m.datetime,'%d/%m') as date 
@@ -287,7 +287,8 @@
                               
                                 <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;">
                                     <br><span style="text-align:center;">
-                                    <a href="../marcador/mark5/impressao.php?id='.$data5['id'].'">Formato para Impressão</a></span>
+                                    <a href="../marcador/mark5/impressao.php?id='.$data5['id'].'"> <i class="fa fa-print fa-lg" aria-hidden="true" style="margin:10px;"> </i> </a>
+                                    <a href="../painel_video.php?match='.$data5['id'].'"> <i class="fa fa-file-video-o fa-lg" aria-hidden="true" style="margin:10px;"></i></a></span>
                                 </div>
                             </div>';   
                                 }
@@ -316,6 +317,16 @@
                     </div><!-- /.box-body -->
                 </div>
               </div><!-- /.box -->
+                
+          <!-- USERS LIST -->
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Portal público</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding" style="text-align:center;">
+                <a href="./copa.php?id=<?php echo $id; ?>" target="_blank"><i class="fa fa-trophy fa-5x" aria-hidden="true"></i><br>Abrir</a>
+            </div><!-- /.box-body -->
+          </div><!--/.box -->
             </div>
         </div>
     

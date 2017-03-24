@@ -36,7 +36,7 @@
     //    from matches m 
    //         left join teams t1 on m.team1 = t1.id_teams 
     //        left join teams t2 on m.team2 = t2.id_teams 
-   //         left join cups c on m.cup_id = c.id
+   //         left join cups c on t1.cup_id = c.id
    //     where datetime < NOW() and m.status is null
    //     order by datetime;");
  //   while ($row = mysqli_fetch_assoc($sql_ftp_teste)) {
@@ -67,13 +67,13 @@
             m.datetime, 
             c.match_duration as duration, 
             t1.`teams_name` as team1_name, 
-            LEFT(t1.`teams_name`, 3) as team1_abrev, 
+            t1.`short_name` as team1_abrev, 
             t2.`teams_name` as team2_name, 
-            LEFT(t2.`teams_name`, 3) as team2_abrev 
+            t2.`short_name` as team2_abrev 
         from matches m 
             left join teams t1 on m.team1 = t1.id_teams 
             left join teams t2 on m.team2 = t2.id_teams 
-            left join cups c on m.cup_id = c.id
+            left join cups c on t1.cup_id = c.id
         where datetime < NOW() and m.status in (1, 2)
         order by m.status DESC, datetime LIMIT 1;");
     while ($row = mysqli_fetch_assoc($sql_processamento)) {
@@ -118,13 +118,13 @@
             m.datetime, 
             c.match_duration as duration, 
             t1.`teams_name` as team1_name, 
-            LEFT(t1.`teams_name`, 3) as team1_abrev, 
+            t1.`short_name` as team1_abrev, 
             t2.`teams_name` as team2_name, 
-            LEFT(t2.`teams_name`, 3) as team2_abrev 
+            t2.`short_name` as team2_abrev 
         from matches m 
             left join teams t1 on m.team1 = t1.id_teams 
             left join teams t2 on m.team2 = t2.id_teams 
-            left join cups c on m.cup_id = c.id
+            left join cups c on t1.cup_id = c.id
         where datetime < NOW() and m.status in (6, 7)
         order by m.status DESC, datetime LIMIT 1;");
     while ($row = mysqli_fetch_assoc($sql_publicarYT)) {
@@ -140,7 +140,7 @@
             $hora_ini = $datahora->format('Hi');
             $datahora->add(new DateInterval('PT' . $row['duration'] . 'M'));
             $hora_fim = $datahora->format('Hi');
-            $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' '.$row['field_id'].' '.$row['id'].' '.$row['is_two_cameras'];
+            $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' 0 '.$row['id'].' '.$row['is_two_cameras'];
            
             $novo_status = 7;//Match - Enviado para recorte
             $sql = "UPDATE matches set status = '$novo_status', last_status = NOW() where id = ".$row['id'].";";
@@ -165,13 +165,13 @@
             m.datetime,
             c.match_duration as duration, 
             t1.`teams_name` as team1_name, 
-            LEFT(t1.`teams_name`, 3) as team1_abrev, 
+            t1.`short_name` as team1_abrev, 
             t2.`teams_name` as team2_name, 
-            LEFT(t2.`teams_name`, 3) as team2_abrev 
+            t2.`short_name` as team2_abrev 
         from matches m 
             left join teams t1 on m.team1 = t1.id_teams 
             left join teams t2 on m.team2 = t2.id_teams 
-            left join cups c on m.cup_id = c.id
+            left join cups c on t1.cup_id = c.id
         where m.`datetime` < ADDDATE(NOW(), -4) and m.status in (8, 9)
         order by m.status DESC, datetime DESC LIMIT 1");
     while ($row = mysqli_fetch_assoc($sql_Melhores)) {

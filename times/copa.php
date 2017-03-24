@@ -298,7 +298,7 @@
                           <th style="width: 70px">D</th>
                           <th style="width: 70px">SG</th>
                         </tr>';
-                        $sqltimes = mysqli_query($mysqli,"SELECT * FROM teams where cup_id = '$copa' and groups = '$nome_grupo' order by points DESC, goals_balance DESC");
+                        $sqltimes = mysqli_query($mysqli,"SELECT * FROM teams where cup_id = '$copa' and groups = '$nome_grupo' order by rank");
             
                         while ($data4 = mysqli_fetch_assoc($sqltimes)) {
                         echo '
