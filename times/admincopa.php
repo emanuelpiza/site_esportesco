@@ -180,7 +180,7 @@
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Times</h3>
-                <a href="../cadastro/time.php?id=<?php echo $id; ?>"><button class="btn btn-xs btn-success" style="float:right;">Adicionar Time</button></a>
+                <a href="../cadastro/time.php?id=<?php echo $id; ?>"><button class="btn btn-xs btn-success" style="float:right;">Adicionar</button></a>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
               <ul class="users-list">
@@ -193,7 +193,6 @@
                                 <span class="users-list-name">' . $data2['teams_name'] . '</span>
                             </div>
                         </a> 
-                       <a href="../cadastro/jogador.php?key='.$data2['admin_key'].'"><button class="btn btn-xs btn-success">+1 Jogador</button></a>
                     </li>';}
                 ?>
               </ul><!-- /.users-list -->
@@ -203,8 +202,9 @@
             
             <div class="col-md-6">
             <div class="box" id="class_partidas">
-                <div class="box-header" style="text-align:center;">
-                  <h1 class="box-title">Jogos / Arbitragem</h1>
+                <div class="box-header">
+                  <h3 class="box-title">Partidas</h3>
+                     <a href="../cadastro/partida.php?key=<?php echo $key; ?>"><button class="btn btn-xs btn-success" style="float:right;">Adicionar</button></a>
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="col-md-10 col-md-offset-1">

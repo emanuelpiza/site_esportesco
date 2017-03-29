@@ -2254,3 +2254,81 @@
 \nWXTOBVo3QWQ__0h0m14s_10, ,Inicio: 2017-03-23 17:23:28 Final : 20170323 17:23:29
 2017-03-23 20:00:39 arquivo= Sqeypdp5n00 inicio= 40  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 525
 \nSqeypdp5n00__0h0m49s_10, ,Inicio: 2017-03-23 20:00:39 Final : 20170323 20:00:41
+2017-03-24 15:53:51 arquivo= v_gntxnTeYw inicio= 70  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h1m19s_10, ,Inicio: 2017-03-24 15:53:51 Final : 20170324 15:54:09
+2017-03-24 15:54:57 arquivo= v_gntxnTeYw inicio= 124  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h2m13s_10, ,Inicio: 2017-03-24 15:54:57 Final : 20170324 15:55:20
+2017-03-24 15:57:31 arquivo= v_gntxnTeYw inicio= 258  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h4m27s_10, ,Inicio: 2017-03-24 15:57:31 Final : 20170324 15:58:05
+2017-03-24 15:59:35 arquivo= v_gntxnTeYw inicio= 323  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h5m32s_10, ,Inicio: 2017-03-24 15:59:35 Final : 20170324 16:00:14
+2017-03-24 16:01:10 arquivo= v_gntxnTeYw inicio= 349  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:01:25 arquivo= v_gntxnTeYw inicio= 364  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:01:59 arquivo= v_gntxnTeYw inicio= 373  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h5m58s_10, ,Inicio: 2017-03-24 16:01:10 Final : 20170324 16:02:41
+\nv_gntxnTeYw__0h6m13s_10, ,Inicio: 2017-03-24 16:01:25 Final : 20170324 16:03:01
+\nv_gntxnTeYw__0h6m22s_10, ,Inicio: 2017-03-24 16:01:59 Final : 20170324 16:03:17
+2017-03-24 16:04:02 arquivo= v_gntxnTeYw inicio= 489  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:04:14 arquivo= v_gntxnTeYw inicio= 501  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:05:18 arquivo= v_gntxnTeYw inicio= 547  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h8m18s_10, ,Inicio: 2017-03-24 16:04:02 Final : 20170324 16:05:56
+\nv_gntxnTeYw__0h8m30s_10, ,Inicio: 2017-03-24 16:04:14 Final : 20170324 16:06:15
+\nv_gntxnTeYw__0h9m16s_10, ,Inicio: 2017-03-24 16:05:18 Final : 20170324 16:06:47
+2017-03-24 16:07:05 arquivo= v_gntxnTeYw inicio= 619  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:07:25 arquivo= v_gntxnTeYw inicio= 639  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:07:41 arquivo= v_gntxnTeYw inicio= 656  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:08:31 arquivo= v_gntxnTeYw inicio= 680  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:09:08 arquivo= v_gntxnTeYw inicio= 717  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h10m28s_10, ,Inicio: 2017-03-24 16:07:05 Final : 20170324 16:11:46
+\nv_gntxnTeYw__0h10m48s_10, ,Inicio: 2017-03-24 16:07:25 Final : 20170324 16:12:11
+\nv_gntxnTeYw__0h11m5s_10, ,Inicio: 2017-03-24 16:07:41 Final : 20170324 16:12:19
+\nv_gntxnTeYw__0h11m29s_10, ,Inicio: 2017-03-24 16:08:31 Final : 20170324 16:12:30
+\nv_gntxnTeYw__0h12m6s_10, ,Inicio: 2017-03-24 16:09:08 Final : 20170324 16:12:38
+2017-03-24 16:17:34 arquivo= v_gntxnTeYw inicio= 759  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h12m48s_10, ,Inicio: 2017-03-24 16:17:34 Final : 20170324 16:18:51
+2017-03-24 16:19:28 arquivo= v_gntxnTeYw inicio= 825  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:20:15 arquivo= v_gntxnTeYw inicio= 872  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:20:58 arquivo= v_gntxnTeYw inicio= 915  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:21:15 arquivo= v_gntxnTeYw inicio= 932  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:22:18 arquivo= v_gntxnTeYw inicio= 995  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h13m54s_10, ,Inicio: 2017-03-24 16:19:28 Final : 20170324 16:22:41
+2017-03-24 16:22:43 arquivo= v_gntxnTeYw inicio= 998  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:23:58 arquivo= v_gntxnTeYw inicio= 1074  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h14m41s_10, ,Inicio: 2017-03-24 16:20:15 Final : 20170324 16:28:54
+\nv_gntxnTeYw__0h15m24s_10, ,Inicio: 2017-03-24 16:20:58 Final : 20170324 16:29:17
+\nv_gntxnTeYw__0h15m41s_10, ,Inicio: 2017-03-24 16:21:15 Final : 20170324 16:29:24
+\nv_gntxnTeYw__0h16m44s_10, ,Inicio: 2017-03-24 16:22:18 Final : 20170324 16:29:46
+\nv_gntxnTeYw__0h16m47s_10, ,Inicio: 2017-03-24 16:22:43 Final : 20170324 16:29:48
+\nv_gntxnTeYw__0h18m3s_10, ,Inicio: 2017-03-24 16:23:58 Final : 20170324 16:29:58
+2017-03-24 16:31:38 arquivo= v_gntxnTeYw inicio= 1146  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 16:32:05 arquivo= v_gntxnTeYw inicio= 1173  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h19m15s_10, ,Inicio: 2017-03-24 16:31:38 Final : 20170324 16:34:46
+\nv_gntxnTeYw__0h19m42s_10, ,Inicio: 2017-03-24 16:32:05 Final : 20170324 16:35:14
+2017-03-24 17:33:17 arquivo= v_gntxnTeYw inicio= 1173  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h19m42s_10, ,Inicio: 2017-03-24 17:33:17 Final : 20170324 17:33:17
+2017-03-24 17:44:43 arquivo= v_gntxnTeYw inicio= 1034  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+2017-03-24 17:44:58 arquivo= v_gntxnTeYw inicio= 1073  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 557
+\nv_gntxnTeYw__0h17m23s_10, ,Inicio: 2017-03-24 17:44:43 Final : 20170324 17:47:45
+\nv_gntxnTeYw__0h18m2s_10, ,Inicio: 2017-03-24 17:44:58 Final : 20170324 17:48:01
+2017-03-25 14:59:07 arquivo= upyykR9lhdY inicio= 1014  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+2017-03-25 14:59:26 arquivo= upyykR9lhdY inicio= 1033  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+2017-03-25 15:01:36 arquivo= upyykR9lhdY inicio= 1164  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+2017-03-25 15:01:50 arquivo= upyykR9lhdY inicio= 1177  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+2017-03-25 15:06:34 arquivo= upyykR9lhdY inicio= 1348  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+2017-03-25 15:07:13 arquivo= upyykR9lhdY inicio= 1378  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+2017-03-25 15:09:46 arquivo= upyykR9lhdY inicio= 1550  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+\nupyykR9lhdY__0h17m3s_10, ,Inicio: 2017-03-25 14:59:07 Final : 20170325 15:22:56
+\nupyykR9lhdY__0h17m22s_10, ,Inicio: 2017-03-25 14:59:26 Final : 20170325 15:24:27
+\nupyykR9lhdY__0h19m33s_10, ,Inicio: 2017-03-25 15:01:36 Final : 20170325 15:26:22
+\nupyykR9lhdY__0h19m46s_10, ,Inicio: 2017-03-25 15:01:50 Final : 20170325 15:26:36
+\nupyykR9lhdY__0h22m37s_10, ,Inicio: 2017-03-25 15:06:34 Final : 20170325 15:27:56
+\nupyykR9lhdY__0h23m7s_10, ,Inicio: 2017-03-25 15:07:13 Final : 20170325 15:28:03
+\nupyykR9lhdY__0h25m59s_10, ,Inicio: 2017-03-25 15:09:46 Final : 20170325 15:28:25
+2017-03-25 20:18:30 arquivo= upyykR9lhdY inicio= 1449  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+2017-03-25 20:18:39 arquivo= upyykR9lhdY inicio= 1458  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+2017-03-25 20:26:21 arquivo= upyykR9lhdY inicio= 1454  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+\nupyykR9lhdY__0h24m18s_10, ,Inicio: 2017-03-25 20:18:30 Final : 20170325 20:29:15
+\nupyykR9lhdY__0h24m27s_10, ,Inicio: 2017-03-25 20:18:39 Final : 20170325 20:29:24
+\nupyykR9lhdY__0h24m23s_10, ,Inicio: 2017-03-25 20:26:21 Final : 20170325 20:32:51
+2017-03-27 06:42:26 arquivo= upyykR9lhdY inicio= 1452  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+\nupyykR9lhdY__0h24m21s_10, ,Inicio: 2017-03-27 06:42:26 Final : 20170327 06:47:20
