@@ -2332,3 +2332,5 @@
 \nupyykR9lhdY__0h24m23s_10, ,Inicio: 2017-03-25 20:26:21 Final : 20170325 20:32:51
 2017-03-27 06:42:26 arquivo= upyykR9lhdY inicio= 1452  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
 \nupyykR9lhdY__0h24m21s_10, ,Inicio: 2017-03-27 06:42:26 Final : 20170327 06:47:20
+2017-03-31 11:13:53 arquivo= F8pQhwYloHc inicio= 1382  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 559
+\nF8pQhwYloHc__0h23m11s_10, ,Inicio: 2017-03-31 11:13:53 Final : 20170331 11:17:35

@@ -116,6 +116,27 @@
         } else {
             echo "Erro na base de dados: " . $conn->error;
         } 
-    }
+    //Modelo de remoção genérico    
+    } else if ($acao == "remover"){
+        $table = $_POST['table'];
+        $id_key = $_POST['id'];
+        if ($table == "players"){
+            $id_var = "id_players";
+            $master = "players_team_id";
+        } else if ($table == "teams"){
+            $id_var = "id_teams";
+            $master = "cup_id";
+        } else if ($table == "matches"){
+            $id_var = "id";
+            $master = "cup_id";
+        }
+        $sql = "update ".$table." set ".$master." = ".$master."*-1 where ".$id_var." = '".$id_key."'";
+        //$sql = "delete from ".$table." WHERE ".$id_var." = '".$id_key."'";
+        if ($conn->query($sql) === TRUE) {
+            echo "";
+        } else {
+            echo "Erro na base de dados: " . $conn->error;
+        }
+    } 
     $conn->close();
 ?>

@@ -11,52 +11,14 @@
     $sqlgeral = mysqli_query($mysqli,"SELECT * FROM teams where admin_key='$key'");
     $dados = mysqli_fetch_assoc($sqlgeral);
     $id = $dados['id_teams'];
+    $teams_name = $dados['teams_name'];
+    $team_picture = $dados['teams_picture'];
+    $short_name = $dados['short_name'];
 
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     } 
-	
-	if ( !empty($_POST)) {
-
-        $rand = rand();
-		$target_dir = "../times/img/jogadores/";
-        $campo_img = basename($_FILES["image"]["name"]);
-        if ($campo_img <> ""){
-            $target_file_bd = $rand . $campo_img;
-        }else {
-            $target_file_bd = "0.jpg";
-        }
-		$target_file = $target_dir . $target_file_bd;
-		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-		
-		move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-
-		
-		//Getting data from request
-		$name = mysqli_real_escape_string($mysqli,$_POST['name']);
-		$rg = mysqli_real_escape_string($mysqli,$_POST['rg']);
-		$cpf =  mysqli_real_escape_string($mysqli,$_POST['cpf']);
-		$image =  mysqli_real_escape_string($mysqli,$target_file_bd);
-		$contact_name =  mysqli_real_escape_string($mysqli,$_POST['contact_name']);
-		$contact_email =  mysqli_real_escape_string($mysqli,$_POST['contact_email']);
-		$contact_telefone =  mysqli_real_escape_string($mysqli,$_POST['contact_telefone']);  
-        $date =  mysqli_real_escape_string($mysqli,str_replace('/', '-', $_POST['datepicker']));
-        $birthdate =  mysqli_real_escape_string($mysqli,date('Y-m-d', strtotime($date)));
-         
-		//SQL
-        $sql = "INSERT INTO `players` (players_team_id, whole_name, player_picture, rg, cpf, birthdate, email, phone, name_responsible, players_name) VALUES ('".$id."', '".$name."', '".$image."', '".$rg."', '".$cpf."', '".$birthdate."', '".$contact_email."', '".$contact_telefone."', '".$contact_name."', UC_Words(CONCAT_WS(' ', substring_index('".$name."', ' ', 1), substring_index('".$name."', ' ', -1))));";
-        
-		mysqli_query($mysqli, $sql);
-		//$stmt->close();
-		$mysqli->close();
-	
-		$renderMessage = true;
-        
-        $redirect = "http://www.esportes.co/times/admintime.php?key=$key";
-        header("location:$redirect");
-	}
-
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +33,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Novo Jogador <?php echo $team_name; ?> - Esportes.Co</title>
+    <title>Novo Jogador - <?php echo $teams_name; ?> - Esportes.Co</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -86,20 +48,18 @@
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	
-	<!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
-
-	<!-- Bootstrap time Picker -->
-    <link rel="stylesheet" href="../plugins/timepicker/bootstrap-timepicker.min.css">
-	
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-	<style>
+    <!-- Sweet Alert -->
+    <script src="../js/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/sweetalert.css">
+    
+    <link rel="stylesheet" href="../js/cropperjs/dist/cropper.css">
+    <script src="../js/cropperjs/dist/cropper.js"></script>
+    
+    <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <style>
+        .img-container img {
+          max-width: 100%;
+        }
 		.image-preview-input {
 			position: relative;
 			overflow: hidden;
@@ -126,131 +86,151 @@
 			margin: auto;
 			max-width: 500px;
 		}
+        .exibicao{
+            width: 130px;
+            height: 190px;
+            padding: 5px;
+            background-color: #FEFEFE;
+            box-shadow: 0px 1px 1px 0px grey;
+            margin: 0 auto;
+        }
+        #estrela_content{
+            display:-moz-box;
+            -moz-box-pack:center;
+            -moz-box-align:center;
+            display:-webkit-box;
+            -webkit-box-pack:center;
+            -webkit-box-align:center;
+            display:box;
+            box-pack:center;
+            box-align:center;
+            text-align: center;
+            margin-bottom:10px;
+        }   
+        .estrela {
+            width:50%;
+        }  
 	</style>
-	
-
-	
 </head>
 
 <body style="background-color: #ecf0f5;">
-    
-    <?php 
-    if ( !empty($_POST)) {
-        echo 
-            '<!-- Google Code for Convers&atilde;o site Esportes.Co Conversion Page -->
-            <script type="text/javascript">
-            /* <![CDATA[ */
-            var google_conversion_id = 1011268021;
-            var google_conversion_language = "en";
-            var google_conversion_format = "3";
-            var google_conversion_color = "ffffff";
-            var google_conversion_label = "GzU7CN_1jWsQtfOa4gM";
-            var google_remarketing_only = false;
-            /* ]]> */
-            </script>
-            <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-            </script>
-            <noscript>
-            <div style="display:inline;">
-            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1011268021/?label=GzU7CN_1jWsQtfOa4gM&amp;guid=ON&amp;script=0"/>
-            </div>
-            </noscript>';
-    }?>
-  
     <div class="container" >
+        <div class="modal fade" id="modal" role="dialog" aria-labelledby="modalLabel" tabindex="-1">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Ajustar e Recortar Foto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body">
+                <div class="img-container">
+                  <img id="image" alt="Picture">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button id="crop_button" class="btn btn-success">Salvar</button> 
+              </div>
+            </div>
+          </div>
+        </div>
 
-		<!-- Form -->
-		<!-- <div class="im-centered"> -->
-		
+    <div class="row">
+        <?php 
+                echo '
+                <div id="estrela_content">
+                    <a href="../times/admintime.php?key='.$key.'">
+                        <img src="../cadastro/uploads/'.$team_picture.'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:0px;">
+                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; color:black;"><br>'.$short_name.'</span>
+                    </a>
+                </div>';
+        ?>
+    </div>
+        
+        
 			<div class="row">
 				<div class="col-lg-offset-1 col-lg-10" > 
 					
 					<div class="box box-primary">
 						<div class="box-header with-border">
-						  <h1 class="box-title">Novo Jogador <?php echo $team_name; ?></h1>
+						  <h1 class="box-title">Novo Jogador - <?php echo $teams_name; ?></h1>
 						</div>
-						
-						<?php 
-							if ($renderMessage) {
-								echo '<div class="alert alert-success alert-dismissible">
-										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-										<h4><i class="icon fa fa-check"></i>Jogador cadastrado com sucesso!</h4>
-									  </div>';
-								
-							}
-						?>
 
-						<form method="post" role="form"  action="" enctype="multipart/form-data">
+						<form method="post" id="form" name="form" role="form"  action="" enctype="multipart/form-data">
+                            <input type="hidden" name="team" value="<?php echo $id;?>">
 							<div class="box-body">
-								                         
-                               
-								<div class="form-group">
-								  <label for="name">Nome *</label>
-								  <input type="text" class="form-control" id="name" name="name" required="true">
-								</div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                          <label for="name">Nome Completo *</label>
+                                          <input type="text" class="form-control" id="name" name="name">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="group">RG</label>
+                                          <input type="text" class="form-control" id="rg" name="rg">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                          <label for="group">CPF</label>
+                                          <input type="text" class="form-control" id="cpf" name="cpf" >
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="group">Data de Nascimento</label><br>
+                                            <input id="datepicker" class="form-control" name="datepicker" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" style="text-align:center; width:100%">
+                                        <label>Foto</label>
+                                        <div id="cropped_result" class="exibicao">
+                                            <img id="img_padrao" src="../times/img/jogadores/0.jpg" width="120">
+                                        </div>
+                                        <div class="input-group image-preview">
+                                            <span class="input-group-btn">
+                                                <!-- image-preview-clear button -->
+                                                <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                                    <span class="glyphicon glyphicon-remove"></span> Remover
+                                                </button>
+                                                <!-- image-preview-input -->
+                                                <div class="btn btn-default image-preview-input" style="margin-top:10px;">
+                                                    <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                    <span class="image-preview-input-title">Trocar</span>
+                                                    <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                                 
-                                <div class="form-group">
-								  <label for="group">RG</label>
-								  <input type="text" class="form-control" id="rg" name="rg">
-								</div>
-                                
-                                <div class="form-group">
-								  <label for="group">CPF</label>
-								  <input type="text" class="form-control" id="cpf" name="cpf" >
-								</div>
-                                
-                                <div class="form-group">
-								  <label for="group">Data de Nascimento</label><br>
-								    <input id="datepicker" size="40" name="datepicker" type="text" />
-								</div>
-                                
-                                <div class="form-group">
-									<label>Foto .JPG 150px x 200px </label>
-									<div class="input-group image-preview">
-										<input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-										<span class="input-group-btn">
-											<!-- image-preview-clear button -->
-											<button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-												<span class="glyphicon glyphicon-remove"></span> Remover
-											</button>
-											<!-- image-preview-input -->
-											<div class="btn btn-default image-preview-input">
-												<span class="glyphicon glyphicon-folder-open"></span>
-												<span class="image-preview-input-title">Buscar</span>
-												<input type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
-											</div>
-										</span>
-									</div>
-								</div>
-								
-                                
-								<div class="form-group">
-								  <label for="contact">Contatos</label>                 
-								  <div class="input-group">
-									  <span class="input-group-addon">
-										<i class="fa fa-envelope"  style="width:15px;"></i></span>
-									  <input type="contact_email" name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-								  </div>
-								  <div class="input-group">
-									  <div class="input-group-addon">
-										 <i class="fa fa-phone"  style="width:15px;"></i>
-									  </div>
-									  <input type="text" name="contact_telefone" id="contact_telefone" placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
-									</div>
-                                     <div class="input-group">
-									  <span class="input-group-addon"> <i class="fa fa-user" style="width:15px;"></i></span>
-									  <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome do Familiar ou Responsável">
-								  </div>   
-								</div>
-								
-							</div>
-                            <p style="margin-left:10px; margin-top:-20px;">* Campos obrigatórios.</p>
-							
-							<!-- submit button -->
-							<div class="box-footer">
-								<button class="btn btn-sm btn-success" type="submit" >Cadastrar</button>
-							</div>
-						</form> 
+                                <div class="col-sm-6 col-sm-offset-3">
+                                    <div class="form-group">
+                                        <label for="contact">Contatos</label>                 
+                                      <div class="input-group">
+                                          <span class="input-group-addon">
+                                            <i class="fa fa-envelope"  style="width:15px;"></i></span>
+                                          <input type="contact_email" name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                                      </div>
+                                      <div class="input-group">
+                                          <div class="input-group-addon">
+                                             <i class="fa fa-phone"  style="width:15px;"></i>
+                                          </div>
+                                          <input type="text" name="contact_telefone" id="contact_telefone" placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                                        </div>
+                                         <div class="input-group">
+                                          <span class="input-group-addon"> <i class="fa fa-user" style="width:15px;"></i></span>
+                                          <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome do Familiar ou Responsável">
+                                      </div>   
+                                    </div>
+                                </div>
+                            </div>
+                        </form> 
+                        <div class="box-footer">
+                            <button class="btn btn btn-secondary" onclick="window.location.replace('../times/admintime.php?key=<?php echo $key; ?>')" style="float:left;">Voltar</button>
+                            <button class="btn btn btn-success" onclick="cadastrar();" style="float:right;">Cadastrar</button>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -264,9 +244,6 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
 
-	<!-- bootstrap datepicker -->
-	<script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
-
 	<!-- bootstrap time picker -->
 	<script src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
 	
@@ -276,89 +253,97 @@
 	<script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
 	
 	<script>
-		$(function () {
+        var formData = new FormData();
+        $(function () {
 
-			//Date picker
-			$('#datepicker').datepicker({
-			  autoclose: true,
-			  todayHighlight: true,
-			  format: 'dd/mm/yyyy'
-			});
-			
-			//Date picker
-			$('#datepicker2').datepicker({
-			  autoclose: true,
-			  todayHighlight: true,
-			  format: 'dd/mm/yyyy'
-			});
-
-			//Timepicker
-			$(".timepicker").timepicker({
-			  showInputs: false
-			});
-		  });
-		  
-		  $(document).on('click', '#close-preview', function(){ 
-			$('.image-preview').popover('hide');
-			// Hover befor close the preview
-			$('.image-preview').hover(
-				function () {
-				   $('.image-preview').popover('show');
-				}, 
-				 function () {
-				   $('.image-preview').popover('hide');
-				}
-			);    
-		});
-
-		$(function() {
-			// Create the close button
-			var closebtn = $('<button/>', {
-				type:"button",
-				text: 'x',
-				id: 'close-preview',
-				style: 'font-size: initial;',
-			});
-			closebtn.attr("class","close pull-right");
-			// Set the popover default content
-			$('.image-preview').popover({
-				trigger:'manual',
-				html:true,
-				title: "<strong>Imagem Escolhida</strong>"+$(closebtn)[0].outerHTML,
-				content: "There's no image",
-				placement:'bottom'
-			});
-			// Clear event
-			$('.image-preview-clear').click(function(){
-				$('.image-preview').attr("data-content","").popover('hide');
-				$('.image-preview-filename').val("");
-				$('.image-preview-clear').hide();
-				$('.image-preview-input input:file').val("");
-				$(".image-preview-input-title").text("Buscar"); 
-			}); 
+            $("#datepicker").inputmask("99/99/9999",{ "placeholder": "dd/mm/aaaa" });
+            
 			// Create the preview image
-			$(".image-preview-input input:file").change(function (){     
-				var img = $('<img/>', {
+			$(".image-preview-input input:file").change(function (){
+                var img = $('<img/>', {
 					id: 'dynamic',
-					width:250,
+					width:150,
 					height:200
-				});      
+				});  
 				var file = this.files[0];
 				var reader = new FileReader();
-				// Set preview image into the popover data-content
 				reader.onload = function (e) {
-					$(".image-preview-input-title").text("Trocar");
-					$(".image-preview-clear").show();
-					$(".image-preview-filename").val(file.name);            
-					img.attr('src', e.target.result);
-					$(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+                    $("#image").attr("src",e.target.result);
+					$('#modal').modal('show');
 				}        
 				reader.readAsDataURL(file);
 			});  
-		});
+            
+            window.addEventListener('DOMContentLoaded', function () {
+                var image = document.getElementById('image');
+                var cropBoxData;
+                var canvasData;
+                var cropper;
 
+                $('#modal').on('shown.bs.modal', function () {
+                    cropper = new Cropper(image, {
+                    dragMode: 'move',
+                    aspectRatio: 3 / 4,
+                    autoCropArea: 0.65,
+                    restore: false,
+                    guides: true,
+                    center: false,
+                    highlight: false,
+                    cropBoxMovable: false,
+                    cropBoxResizable: false,
+                    toggleDragModeOnDblclick: false,
+                    });
+                }).on('hidden.bs.modal', function () {
+                    cropBoxData = cropper.getCropBoxData();
+                    canvasData = cropper.getCanvasData();
+                    cropper.destroy();
+                });
 
-	</script>
+                 document.getElementById('crop_button').addEventListener('click', function(){
+
+                var imgurl =  cropper.getCroppedCanvas().toDataURL();
+                    var img = document.createElement("img");
+                    img.src = imgurl;
+                    img.width = "120";
+                    document.getElementById("cropped_result").appendChild(img);
+                    $('#modal').modal('hide');
+                    $("#img_padrao").hide();
+
+                    cropper.getCroppedCanvas().toBlob(function (blob) {
+                          formData.append('croppedImage', blob);
+                    });
+                 });  
+            });
+        });
+        function cadastrar() {
+            var other_data = $('form').serializeArray();
+            $.each(other_data,function(key,input){
+                formData.append(input.name,input.value);
+            });
+            $.ajax('./form_jogador.php', {
+                        method: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function () { 
+                            swal({
+                                  title: "Jogador Cadastrado!",
+                                  text: "Você será redirecionado para a página do time.",
+                                  type: "success",
+                                  closeOnConfirm: true
+                                },
+                                function(isConfirm) {
+                                  if (isConfirm) {
+                                      window.location.replace("../times/admintime.php?key=<?php echo $key; ?>");
+                                  };
+                            });  
+                        },
+                        error: function () {
+                            swal('Houve um problema no cadastro. Caso o problema persista, procure o responsável pelo campeonato.', "warning");
+                        }
+            });
+        } 
+  </script>
 
 	
 </body>

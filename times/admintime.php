@@ -13,6 +13,10 @@
     $sqlgeral = mysqli_query($mysqli,"SELECT * FROM teams where admin_key='$key'");
     $dados = mysqli_fetch_assoc($sqlgeral);
     $id = $dados['id_teams'];
+    $cup_id = $dados['cup_id'];
+    $nome = $dados['teams_name'];
+    $team_picture = $dados['teams_picture'];
+    $short_name = $dados['short_name'];
     $sql_jogadores = mysqli_query($mysqli,"SELECT * FROM players where players_team_id = '$id' order by players_name");
 ?>
 
@@ -35,7 +39,7 @@
     <script src="../../js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../css/sweetalert.css">
     
-    <title><?php echo $dados['teams_name']; ?> - EsportesCo</title>
+    <title><?php echo $nome ?> - EsportesCo</title>
 
    <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -91,6 +95,8 @@
                 display:box;
                 box-pack:center;
                 box-align:center;
+                text-align: center;
+                margin-bottom:10px;
             }   
             .estrela {
                 width:50%;
@@ -172,18 +178,19 @@
         <?php 
                 echo '
                 <div id="estrela_content">
-                    <img src="../cadastro/uploads/'.$dados['teams_picture'].'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:20px;">
+                        <img src="../cadastro/uploads/'.$team_picture.'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:0px;">
+                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; color:black;"><br>'.$short_name.'</span>
                 </div>';
         ?>
     </div>
     
     <div class="row">
 
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6">
           <!-- USERS LIST -->
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Atualização de Informações dos Jogadores</h3>
+              <h3 class="box-title">Jogadores - <?php echo $nome; ?></h3>
               <a href="../cadastro/jogador.php?key=<?php echo $key; ?>"><button class="btn btn-xs btn-success" style="float:right;">Adicionar Jogador</button></a>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
@@ -198,7 +205,7 @@
                     }
                     echo '
                     <li>
-                        <a href="./updateform/editform.php?key=' . $data2['admin_key'] . '">
+                        <a href="./editplayer.php?key=' . $data2['admin_key'] . '">
                         <div class="figurinha">
                         <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image" style="width:120px; height:160px;>
                         <span class="users-list-name">' . $data2['players_name'] . '</span>
@@ -226,8 +233,21 @@
                     <button class="btn btn-sm btn-primary" style="float:right; margin-top:-50px;" type="submit" >Subir Arquivo</button>
                 </form>
                 </div>
-          </div><!--/.box -->
+          </div><!--/.box -->  
+            <hr>
+            <button type="button" class="btn btn-danger" onclick='remover("teams", "<?php  echo $id ?>")'>Excluir Time</button>
         </div><!-- /.col -->
+        
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Portal público</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding" style="text-align:center;">
+                    <a href="./index.php?id=<?php echo $id; ?>"><i class="fa fa-trophy fa-5x" aria-hidden="true"></i><br>Abrir</a>
+                </div><!-- /.box-body -->
+            </div><!--/.box -->
+        </div>
     </div>
     
     <script>
@@ -347,7 +367,36 @@
             parseTime: false
         });
     });
-        
+       function remover(table, id) {   
+       swal({
+
+            title: "Excluir definitivamente?",
+            text: "Atenção! Esta ação não pode ser desfeita.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sim, excluir!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+            },
+            function(isConfirm){
+                if (isConfirm) {
+                    $.post("acoes.php",{acao: "remover", table: table, id: id},function(data){}); 
+                    swal({
+                        title: "Concluído!",
+                        text: "Exclusão feita com sucesso. Você será redirecionado para a página de criação de times da competição.",
+                        type: "success",
+                        showCancelButton: false,
+                        closeOnConfirm: false,
+                    },
+                    function(){
+                        window.location.replace("../cadastro/time.php?id=<?php echo $cup_id; ?>");
+                    });
+              } else {
+                swal("Cancelado", ":)", "error");
+              }
+            });
+        };
     </script>
 </body>
 

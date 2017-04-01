@@ -59,13 +59,13 @@
                                 Entregamos mais reconhecimento pra quem merece, e isso é só o começo. 
                                 <br>
                             </p>
-                            <!--<div class="text-center">
-                                <a href="http://www.esportes.co/1353/fbconfig.php" class="btn btn-primary btn-lg  btn-icon-right" target="_self">Entrar
+                            <div class="text-center">
+                                <a href="./cadastro/campeonato.php" class="btn btn-primary btn-lg  btn-icon-right" target="_self">Criar Campeonato
                                     <span class="hex-alt">
-                                        <i class="fa fa-user" data-animation="swing"></i>
+                                        <i class="fa fa-trophy" data-animation="swing"></i>
                                     </span>
                                 </a>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,28 +158,6 @@
                         <div class="col-md-12 os-animation" data-os-animation="fadeInUp" data-os-animation-delay=".1s">
                             <div id="slider-flex1" class="flexslider" data-flex-speed="7000" data-flex-animation="slide" data-flex-directions="hide" data-flex-controls="show" data-flex-controlsalign="center">
                                 <ul class="slides">
-                                    <!--<li>
-                                        <blockquote class="fancy-blockquote">
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <div class="box-round box-huge">
-                                                        <div class="box-dummy"></div>
-                                                        <div class="box-inner">
-                                                            <img width="300" height="300" src="assets/images/design/people/man-1-300x300.png" class="attachment-square-image-small wp-post-image" alt="some alt" draggable="false">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <p>Nullam vitae sollicitudin eros. Cras varius vehicula velit ac congue quam dictum sed. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat.Donec sed odio dui. Nulla
-                                                        vitae elit libero a pharetra augue. Nullam id dolor id ultricies ut vehicula ut id. Integer posuere erat a venenatis dapibus posuere velit aliquet duis mollis. Pellentesque ornare sem lacinia quam
-                                                        venenatis vestibulum.</p>
-                                                    <small> Alex Andrade - Coordenador de RH
-                                    
-                                </small>
-                                                </div>
-                                            </div>
-                                        </blockquote>
-                                    </li>-->
                                     <li>
                                         <blockquote class="fancy-blockquote">
                                             <div class="row">
@@ -187,13 +165,31 @@
                                                     <div class="box-round box-huge">
                                                         <div class="box-dummy"></div>
                                                         <div class="box-inner">
-                                                            <img width="300" height="300" src="../img/raquel.jpeg" class="attachment-square-image-small wp-post-image" alt="some alt" draggable="false">
+                                                            <img width="300" height="300" src="img/bruno12345.jpeg" class="attachment-square-image-small wp-post-image" alt="some alt" draggable="false">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <p><i>"Tivemos a oportunidade de trabalhar em parceria com a EsportesCo fazendo a súmula online no Campeonato de Society da empresa Benteler.
-                                                    Foi uma experiência singular. Praticidade e rapidez. A informação chegando à todos de maneira rápida, objetiva e completa. No aguardo de novas parcerias."</i></p>
+                                                    <p><i>A EsportesCo ajudou a otimizar a gestão das competições, tanto para os participantes quanto para os professores, pela praticidade dos jogos online.</i></p>
+                                                    <small>Bruno Fernandes - Escola de Futebol Projeto Bugrinho Campinas</small>
+                                                </div>
+                                            </div>
+                                        </blockquote>
+                                    </li>
+                                    <li>
+                                        <blockquote class="fancy-blockquote">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="box-round box-huge">
+                                                        <div class="box-dummy"></div>
+                                                        <div class="box-inner">
+                                                            <img width="300" height="300" src="img/raquel.jpeg" class="attachment-square-image-small wp-post-image" alt="some alt" draggable="false">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <p><i>Tivemos a oportunidade de trabalhar em parceria com a EsportesCo fazendo a súmula online no Campeonato de Society da empresa Benteler.
+                                                    Foi uma experiência singular. Praticidade e rapidez. A informação chegando à todos de maneira rápida, objetiva e completa.</i></p>
                                                     <small> Raquel - GESTEC Arbitragem
                                     
                                 </small>
@@ -214,19 +210,83 @@
                     </svg>
                 </div>
                 <div class="container">
-                    <header class="section-header ">
-                        <h1 class="headline super hairline">Saiba Mais</h1>
-                        <p class="">A evolução dos campeonatos e suas melhores jogadas, reunidas em um só lugar.</p>
+                    <header class="section-header underline">
+                        <h1 class="headline super hairline">Perguntas Frequentes</h1>
                     </header>
-                    <div class="row">
-                     <div class="col-md-12  text-default">
-                            <!--<div class="text-center">
-                                <a href="http://www.esportes.co/1353/fbconfig.php" class="btn btn-danger btn-lg text-center btn-icon-right" target="_self">Entrar
-                                    <span class="hex-alt">
-                                        <i class="fa fa-user" data-animation="swing"></i>
-                                    </span>
-                                </a>
-                            </div>-->
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a class="accordion-toggle collapsed" data-parent="#accordion"  data-toggle="collapse" href="#collapseOne">
+                                        1. A plataforma é pra mim?
+                                    </a>
+                                </div>
+                                <div class="panel-collapse collapse" id="collapseOne">
+                                    <div class="panel-body">
+                                        <p>
+                                            Se você é um organizador de campeonatos de futebol amadores (de campo, society ou salão), a resposta é sim.<br><br>
+                                            
+                                            Nossa plataforma substitui sistemas antigos e o famoso excel com uma interface mais automática e navegável.<br><br>
+                                            
+                                            Outros esportes por enquanto não são atendidos.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a class="accordion-toggle collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">
+                                        2. O que preciso para começar a usar?
+                                    </a>
+                                </div>
+                                <div class="panel-collapse collapse" id="collapseTwo">
+                                    <div class="panel-body">
+                                        <p>
+                                           São necessários 3 passos:<br><br>
+                                            1 - Preencher dados iniciais, como nome do camponato, modalidade, dados de contato e termo de aceite.<br><br>
+                                            2 - Você receberá um link para divulgar, para que os times possam fazer a inscrição dos jogadores.<br><br>
+                                            3 - Após a inscrição das equipes, será preciso definir os grupos e criar as partidas.<br><br>
+                                            E pronto! Bola em jogo.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a class="accordion-toggle collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">
+                                        3. Como administro o sistema?
+                                    </a>
+                                </div>
+                                <div class="panel-collapse collapse" id="collapseThree">
+                                    <div class="panel-body">
+                                        <p>
+                                            Você receberá um endereço único, com uma chave que só você tem acesso. A partir desse endereço é possível acessar o portal do administrador, que possibilida a inclusão, edição e exclusão de times, jogadores e partidas.<br><br>
+                                            
+                                            Esse mesmo portal dá acesso à súmula eletrônica para as partidas criadas.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a class="accordion-toggle collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseFour">
+                                       5. Como funciona a súmula eletrônica?
+                                    </a>
+                                </div>
+                                <div class="panel-collapse collapse" id="collapseFour">
+                                    <div class="panel-body">
+                                        <p>
+                                            Nossa súmula é um site preparado para celulares que funciona em qualquer dispositivo Android/iOS sem a necessidade de instalação prévia. Ela pode ser usada de duas maneiras:<br><br>
+                                            
+                                            1 - Pela arbitragem, durante as partidas.<br>
+                                            Este caso minimiza o trabalho do organizador e os jogadores conseguem acessar as informações marcadas em <b>tempo real</b> pelos seus próprios celulares.<br><br>
+                                            
+                                            2- Pelo organizador, após as partidas.<br>
+                                            Caso a equipe de arbitragem não esteja preparada para utilizar a súmula no celular, eles podem utilizar o papel normalmente, que nosso sistema gera para impressão, e entregar as anotações para o organizador. A partir dessas anotações, o organizador passa tudo para o sistema e encerra a partida, o que atualizará todas as informações (como a tabela, artilharia e cartões).
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

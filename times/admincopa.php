@@ -288,7 +288,8 @@
                                 <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;">
                                     <br><span style="text-align:center;">
                                     <a href="../marcador/mark5/impressao.php?id='.$data5['id'].'"> <i class="fa fa-print fa-lg" aria-hidden="true" style="margin:10px;"> </i> </a>
-                                    <a href="../painel_video.php?match='.$data5['id'].'"> <i class="fa fa-file-video-o fa-lg" aria-hidden="true" style="margin:10px;"></i></a></span>
+                                    <a href="../painel_video.php?match='.$data5['id'].'"> <i class="fa fa-file-video-o fa-lg" aria-hidden="true" style="margin:10px;"></i></a>
+                                    <a onclick=\'remover("matches", "'.$data5['id'].'")\'> <i class="fa fa-trash fa-lg" aria-hidden="true" style="margin:10px;"> </i> </a></span>
                                 </div>
                             </div>';   
                                 }
@@ -342,6 +343,37 @@
         $('.nav-tabs a').on('shown.bs.tab', function (e) {
             window.location.hash = e.target.hash;
         })
+        
+        function remover(table, id) {   
+           swal({
+             
+                title: "Excluir definitivamente?",
+                text: "Atenção! Esta ação não pode ser desfeita.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Sim, excluir!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function(isConfirm){
+                if (isConfirm) {
+                    $.post("acoes.php",{acao: "remover", table: table, id: id},function(data){}); 
+                    swal({
+                        title: "Concluído!",
+                        text: "Exclusão feita com sucesso.",
+                        type: "success",
+                        showCancelButton: false,
+                        closeOnConfirm: false,
+                    },
+                    function(){
+                        window.location.replace("../times/admincopa.php?key=<?php echo $key; ?>");
+                    });
+              } else {
+                swal("Cancelado", ":)", "error");
+              }
+            });
+        };
     </script>
 </body>
 

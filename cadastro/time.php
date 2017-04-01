@@ -11,6 +11,8 @@
     $renderMessage = false;
 
     $id = $_GET['id'];
+    $sql_campeonato = mysqli_query($mysqli,"SELECT name FROM cups where id='$id'");
+    $campeonato = mysqli_fetch_assoc($sql_campeonato)['name'];
 
 	if ( !empty($_POST)) {
     
@@ -19,7 +21,12 @@
         
 		//Saving file
 		$target_dir = "uploads/";
-        $target_file_bd = $rand . basename($_FILES["image"]["name"]);
+        $target_file_bd = basename($_FILES["image"]["name"]);
+         if ($target_file_bd <> ""){
+            $target_file_bd = $rand . $target_file_bd;
+        }else {
+            $target_file_bd = "0.png";
+        }
 		$target_file = $target_dir . $target_file_bd;
 		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 		
@@ -36,7 +43,7 @@
 		$contact_telefone = $_POST['contact_telefone'];
 		
 		//SQL
-        $sql = "INSERT INTO teams (cup_id, teams_name, short_name, groups, teams_picture, contact_name, contact_email, contact_telefone) VALUES ('".$id."', '".$name."', '".$short_name."', '".$group."', '".$image."', '".$contact_name."', '".$contact_email."', '".$contact_telefone."');";
+        $sql = "INSERT INTO teams (cup_id, teams_name, short_name, teams_picture, contact_name, contact_email, contact_telefone) VALUES ('".$id."', '".$name."', '".$short_name."', '".$image."', '".$contact_name."', '".$contact_email."', '".$contact_telefone."');";
         
 		mysqli_query($mysqli, $sql);
         
@@ -45,14 +52,6 @@
         $key_team = $redir['admin_key'];
         
 		$mysqli->close();
-	
-		$renderMessage = true;
-        
-        $redirect = "http://www.esportes.co/times/admintime.php?key=$key_team";
-        #abaixo, chamamos a função header() com o atributo location: apontando para a variavel $redirect, que por 
-        #sua vez aponta para o endereço de onde ocorrerá o redirecionamento
-        header("location:$redirect");
-
 	}
 
 ?>
@@ -69,7 +68,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Novo Time - Esportes.Co</title>
+    <title>Cadastro de Time - <?php echo $campeonato; ?> - Esportes.Co</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -81,6 +80,11 @@
 	<link rel="stylesheet" href="../css/AdminLTE.min.css">
 	<link rel="stylesheet" href="../css/_all-skins.min.css">
 
+    
+    <!-- Sweet Alert -->
+    <script src="../js/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/sweetalert.css">
+    
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	
@@ -165,7 +169,7 @@
 					
 					<div class="box box-primary">
 						<div class="box-header with-border">
-						  <h1 class="box-title">Novo Time - <?php echo $name; ?></h1>
+						  <h1 class="box-title">Cadastro de Time - <?php echo $campeonato; ?></h1>
 						</div>
 						
 						<?php 
@@ -193,10 +197,10 @@
 								  <input type="text" maxlength="3" class="form-control" id="short_name" name="short_name" placeholder="Abreviação do nome do time">
 								</div>
                                 
-                                <div class="form-group">
+                                <!--<div class="form-group">
 								  <label for="group">Grupo</label>
 								  <input type="text" class="form-control" id="group" name="group" placeholder="Grupo na Competição">
-								</div>
+								</div>-->
                                 
                                 <div class="form-group">
 									<label>Imagem do Logo (.PNG) </label>
@@ -250,6 +254,21 @@
 			</div>
         <!-- </div> -->
 	</div>
+    <?php if ( !empty($_POST)) {
+        echo '
+            <script type="text/javascript">
+                swal({
+                    title: "Sucesso!",
+                    text: "Seu time foi criado! Você será redirecionado para ele agora.",
+                    type: "success",
+                    showCancelButton: false,
+                    closeOnConfirm: false
+                    },
+                    function(){
+                        window.location.replace("../times/admintime.php?key='.$key_team.'");
+                    });
+            </script>';
+    }?>
                     
 
     <!-- jQuery -->
