@@ -13,7 +13,7 @@
 	if(isset($key) && !empty($key))
 	{
         
-        $sqlgeral = mysqli_query($mysqli,"SELECT p.*, t.admin_key as admin_key_team FROM players p left join teams t on p.players_team_id = t.id_teams where p.admin_key='$key';");
+        $sqlgeral = mysqli_query($mysqli,"SELECT p.*,DATE_FORMAT(birthdate,'%d/%m/%Y') as birthdate_fmt, t.admin_key as admin_key_team FROM players p left join teams t on p.players_team_id = t.id_teams where p.admin_key='$key';");
         $dados = mysqli_fetch_assoc($sqlgeral);
         $player = $dados['id_players'];
         $whole_name = $dados['whole_name'];
@@ -23,6 +23,9 @@
         $player_picture = $dados['player_picture'];
         $team = $dados['players_team_id'];
         $team_key = $dados['admin_key_team'];
+        $rg = $dados['rg'];
+        $cpf = $dados['cpf'];
+        $birthdate = $dados['birthdate_fmt'];
 	}
 	else
 	{
@@ -39,6 +42,9 @@
         $email = mysqli_real_escape_string($mysqli,$_POST['email']);
         $shirt = mysqli_real_escape_string($mysqli,$_POST['shirt']);
         $foto_padrao = mysqli_real_escape_string($mysqli,$_POST['foto_padrao']);
+        $rg = mysqli_real_escape_string($mysqli,$_POST['rg']);
+        $cpf = mysqli_real_escape_string($mysqli,$_POST['cpf']);
+        $birthdate = mysqli_real_escape_string($mysqli,$_POST['birthdate']);
 		$imgFile = mysqli_real_escape_string($mysqli,$_FILES['player_picture']['name']);
 		$tmp_dir = $_FILES['player_picture']['tmp_name'];
 		$imgSize = $_FILES['player_picture']['size'];
@@ -48,14 +54,13 @@
         }else if($imgFile)
 		{
 			$upload_dir = './img/jogadores/'; // upload directory	
-			$imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
-			$valid_extensions = array('jpeg', 'jpg', 'png', 'gif'); // valid extensions
+			$imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION));
+			$valid_extensions = array('jpeg', 'jpg', 'png', 'gif');
 			$userpic = rand(1000,1000000).".".$imgExt;
 			if(in_array($imgExt, $valid_extensions))
 			{			
 				if($imgSize < 5000000)
 				{
-					unlink($upload_dir.$player_picture);
 					move_uploaded_file($tmp_dir,$upload_dir.$userpic);
 				}
 				else
@@ -91,6 +96,9 @@
                     nickname= '".$nickname."',
                     shirt= '".$shirt."',
                     email= '".$email."',
+                    rg= '".$rg."',
+                    cpf= '".$cpf."',
+                    birthdate= DATE_FORMAT(STR_TO_DATE('".$birthdate."', '%d/%m/%Y'), '%Y-%m-%d'),
                     player_picture= '".$userpic."' 
                 where id_players = '".$player."';";
             
@@ -107,7 +115,6 @@
 			}
 		
 		}
-		
 						
 	}
 	
@@ -167,6 +174,21 @@
         <td><input class="form-control" type="text" name="email" value="<?php echo $email; ?>"/></td>
     </tr>
     
+    <tr>
+    	<td><label class="control-label">RG.</label></td>
+        <td><input class="form-control" type="text" name="rg" value="<?php echo $rg; ?>"/></td>
+    </tr>
+        
+    <tr>
+    	<td><label class="control-label">CPF.</label></td>
+        <td><input class="form-control" type="text" name="cpf" value="<?php echo $cpf; ?>"/></td>
+    </tr>
+        
+    <tr>
+    	<td><label class="control-label">Data de Nasc.</label></td>
+        <td><input class="form-control" placeholder="dd/mm/aaaa" type="text" name="birthdate" value="<?php echo $birthdate; ?>"/></td>
+    </tr>
+        
     <tr>
     	<td><label class="control-label">Profile Img.</label></td>
         <td>

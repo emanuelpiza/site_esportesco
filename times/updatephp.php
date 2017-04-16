@@ -21,7 +21,7 @@
 	                   if (!empty($_POST)) {
                             
                             //Tratamento da foto    
-                            $rand = rand();
+                            $rand = uniqid();
                             $target_dir = "../times/img/jogadores/";
         
                             $target_file_bd = $rand . basename($_FILES["image"]["name"]);

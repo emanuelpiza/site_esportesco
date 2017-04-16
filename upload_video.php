@@ -19,7 +19,7 @@
     $dir = "../../videos/uploads/".$match."/";
     mkdir($dir, 0775);
     $target_dir = $dir;
-    $rand = rand();    
+    $rand = uniqid();    
     $uploadOk = 0;
     $msg = "Título não atualizado. <br>";
 

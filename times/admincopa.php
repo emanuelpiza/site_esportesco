@@ -125,34 +125,35 @@
     <script src="../js/app.js"></script>
     <script src="../js/Chart.js"></script>
 		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
-		<style>
-			canvas{
-			}
-		</style>
-    
-    <!-- Include Mask plugin -->
+
     <script src="http://oss.maxcdn.com/jquery.mask/1.11.4/jquery.mask.min.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     
-    <!-- Hotjar Tracking Code for http://www.esportes.co -->
-<script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:280196,hjsv:5};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:280196,hjsv:5};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Teko:400,700" rel="stylesheet">
+    <style>
+        /*Contact sectiom*/
+        .titulo{
+            font-family: 'Oleo Script', cursive;
+            color:#73bfc1;
+            font-size: 45px;
+            text-align:center;
+            margin: 10px;
+        }
+	</style>
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
+<body class="skin-blue sidebar-mini" style="padding-left:10px; padding-right:10px; background-color:#F0F8FF; ">
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -164,17 +165,29 @@
     </script>
     <?php 
         include_once("../admin/analyticstracking.php");
-        include('../navbar.php');
     ?>
-   <section class="content-header">
-    </section>
-    
-        <div class="row" style="background-color:#003366; text-align:center; margin:-25px -10px 25px -10px;">
-        <h1 style="color:white; margin-top:5px; font-size: 40px;"><b>Administração - <?php echo $dados['name']; ?></b></h1>
-        </div>
-    
-    
+      <header class="main-header" style="margin-left:-10px; margin-right:-10px;">
+        <!-- Logo -->
+        <a href="" class="logo" style="background-color:#e74c3c;">
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg" ><b>Painel</b>Administrativo</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation" style="background-color:#e74c3c;">
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+               <li>
+                 <a href="../inscricoes.php?id=<?php echo $id; ?>" target="_blank"><i class="fa fa-pencil-square-o"></i> Inscrições</a>
+              </li>
+                <li>
+                <a href="./copa.php?id=<?php echo $id; ?>" target="_blank"><i class="fa fa-globe"></i> Área Pública</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
         <div class="row">
+             <h1 class="titulo"><?php echo $dados['name']; ?></h1>
             <div class="col-md-6">
           <!-- USERS LIST -->
           <div class="box">
@@ -318,19 +331,11 @@
                     </div><!-- /.box-body -->
                 </div>
               </div><!-- /.box -->
-                
-          <!-- USERS LIST -->
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Portal público</h3>
-            </div><!-- /.box-header -->
-            <div class="box-body no-padding" style="text-align:center;">
-                <a href="./copa.php?id=<?php echo $id; ?>" target="_blank"><i class="fa fa-trophy fa-5x" aria-hidden="true"></i><br>Abrir</a>
-            </div><!-- /.box-body -->
-          </div><!--/.box -->
             </div>
         </div>
-    
+        
+        
+        
     
     <script>
         // Javascript to enable link to tab

@@ -17,18 +17,19 @@
 	if ( !empty($_POST)) {
     
 
-         $rand = rand();
+         $rand = uniqid();
         
 		//Saving file
 		$target_dir = "uploads/";
         $target_file_bd = basename($_FILES["image"]["name"]);
+		$imageFileType = pathinfo($_FILES["image"]["name"],PATHINFO_EXTENSION);
+        
          if ($target_file_bd <> ""){
-            $target_file_bd = $rand . $target_file_bd;
+            $target_file_bd = $rand . "." . $imageFileType;
         }else {
             $target_file_bd = "0.png";
         }
 		$target_file = $target_dir . $target_file_bd;
-		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 		
 		move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 
@@ -58,17 +59,15 @@
 
 <!DOCTYPE html>
 <html lang="en" content="text/html; charset=utf-8">
-
-
 <head>
-
+    <link rel="shortcut icon" href="../img/favicon-trophy.ico" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cadastro de Time - <?php echo $campeonato; ?> - Esportes.Co</title>
+    <title>Criar Campeonato - Esportes.Co</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -79,12 +78,12 @@
 	<!-- AdminLTE CSS -->
 	<link rel="stylesheet" href="../css/AdminLTE.min.css">
 	<link rel="stylesheet" href="../css/_all-skins.min.css">
-
+    
     
     <!-- Sweet Alert -->
     <script src="../js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/sweetalert.css">
-    
+
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	
@@ -93,14 +92,9 @@
 
 	<!-- Bootstrap time Picker -->
     <link rel="stylesheet" href="../plugins/timepicker/bootstrap-timepicker.min.css">
-	
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+        
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Teko:400,700" rel="stylesheet">
 	<style>
 		.image-preview-input {
 			position: relative;
@@ -128,132 +122,144 @@
 			margin: auto;
 			max-width: 500px;
 		}
+        
+        /*Contact sectiom*/
+        .content-header{
+          font-family: 'Oleo Script', cursive;
+          color:#73bfc1;
+          font-size: 45px;
+        }
+
+        .section-content{
+          text-align: center;
+          padding:5px;
+
+        }
+        #contact{
+            font-family: 'Teko', sans-serif;
+            width: 100%;
+            width: 100vw;
+            height: 100%;
+            color : #fff;    
+            margin-bottom: 60px;
+        }
+        .contact-section{
+          padding-top: 40px;
+        }
+        .contact-section .col-md-6{
+          width: 50%;
+        }
+
+        .form-line{
+          border-right: 1px solid #B29999;
+        }
+
+        .form-group{
+          margin-top: 10px;
+        }
+        label{
+          font-size: 1.3em;
+          line-height: 1em;
+          font-weight: normal;
+        }
+        .form-control{
+          font-size: 1.3em;
+          color: #080808;
+        }
+        textarea.form-control {
+            height: 135px;
+           /* margin-top: px;*/
+        }
+
+        .submit{
+          font-size: 1.5em;
+          float: right;
+          width: 150px;
+          background-color: transparent;
+          color: #fff;
+
+        }
+        body{
+            background: #3a6186; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to left, #3a6186 , #89253e); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to left, #e74c3c , #e74c3c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
 	</style>
 	
 
 	
 </head>
 
-<body style="background-color: #ecf0f5;">
+<body>
     
-    <?php 
-    if ( !empty($_POST)) {
-        echo 
-            '<!-- Google Code for Convers&atilde;o site Esportes.Co Conversion Page -->
-            <script type="text/javascript">
-            /* <![CDATA[ */
-            var google_conversion_id = 1011268021;
-            var google_conversion_language = "en";
-            var google_conversion_format = "3";
-            var google_conversion_color = "ffffff";
-            var google_conversion_label = "GzU7CN_1jWsQtfOa4gM";
-            var google_remarketing_only = false;
-            /* ]]> */
-            </script>
-            <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-            </script>
-            <noscript>
-            <div style="display:inline;">
-            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1011268021/?label=GzU7CN_1jWsQtfOa4gM&amp;guid=ON&amp;script=0"/>
+    <section id="contact">
+        <div class="section-content">
+            <h1 class="section-header">Inscrição de Times</h1>
+            <h1><span class="content-header wow fadeIn " data-wow-delay="0.2s" data-wow-duration="2s" style="margin-left:-10px;"><?php echo $campeonato; ?></span></h1>
+            <h3>Preencha os campos abaixo para realizar a inscrição e começar a cadastrar jogadores.</h3>
+        </div>
+        <div class="contact-section">
+            <div class="container">
+                <form method="post" role="form"  action="" enctype="multipart/form-data">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Nome *</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Nome do Time" required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Abreviação (3 Letras)</label>
+                            <input type="text" maxlength="3" class="form-control" id="short_name" name="short_name" placeholder="Abreviação do nome do time">
+                        </div>
+                        <div class="form-group">
+                            <label>Imagem do Logo (.PNG) </label>
+                            <div class="input-group image-preview">
+                                <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                                <span class="input-group-btn">
+                                    <!-- image-preview-clear button -->
+                                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                        <span class="glyphicon glyphicon-remove"></span> Remover
+                                    </button>
+                                    <!-- image-preview-input -->
+                                    <div class="btn btn-default image-preview-input">
+                                        <span class="image-preview-input-title">Buscar  <i class="fa fa-file-image-o" aria-hidden="true"> </i></span>
+                                        <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="contact">Dirigente</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"> <i class="fa fa-user" style="width:15px;"></i></span>
+                                <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome">
+                            </div>                                   
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <i class="fa fa-envelope"  style="width:15px;"></i></span>
+                                <input type="contact_email" name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-phone"  style="width:15px;"></i>
+                                </div>
+                                <input type="text" name="contact_telefone" id="contact_telefone"  placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="size" style="font-size:18px;">Li e concordo com os <a href="../termos.php" target="_blank" style="color:#73bfc1;">Termos de Uso</a>. </label>
+                            <input type="hidden" name="checkbox_aceite" value="0" />
+                            <input type="checkbox" name="checkbox_aceite" value="1" required="true"/>
+                        </div> 
+                        <button type="submit" class="btn btn-default submit">Inscrever<i class="fa fa-users" aria-hidden="true" style="margin-left:20px;"></i></button>
+                    </div>
+                </form>
             </div>
-            </noscript>';
-    }?>
-  
-    <div class="container" >
-
-		<!-- Form -->
-		<!-- <div class="im-centered"> -->
-		
-			<div class="row">
-				<div class="col-lg-offset-1 col-lg-10" > 
-					
-					<div class="box box-primary">
-						<div class="box-header with-border">
-						  <h1 class="box-title">Cadastro de Time - <?php echo $campeonato; ?></h1>
-						</div>
-						
-						<?php 
-							if ($renderMessage) {
-								echo '<div class="alert alert-success alert-dismissible">
-										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-										<h4><i class="icon fa fa-check"></i>Time cadastrado com sucesso!</h4>
-									  </div>';
-								
-							}
-						?>
-
-						<form method="post" role="form"  action="" enctype="multipart/form-data">
-							<div class="box-body">
-								                         
-                               
-								<div class="form-group">
-								  <label for="name">Nome *</label>
-								  <input type="text" class="form-control" id="name" name="name" placeholder="Nome do Time" required="true">
-								</div>
-                                
-                                
-								<div class="form-group">
-								  <label for="name">Abreviação (3 Letras)</label>
-								  <input type="text" maxlength="3" class="form-control" id="short_name" name="short_name" placeholder="Abreviação do nome do time">
-								</div>
-                                
-                                <!--<div class="form-group">
-								  <label for="group">Grupo</label>
-								  <input type="text" class="form-control" id="group" name="group" placeholder="Grupo na Competição">
-								</div>-->
-                                
-                                <div class="form-group">
-									<label>Imagem do Logo (.PNG) </label>
-									<div class="input-group image-preview">
-										<input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-										<span class="input-group-btn">
-											<!-- image-preview-clear button -->
-											<button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-												<span class="glyphicon glyphicon-remove"></span> Remover
-											</button>
-											<!-- image-preview-input -->
-											<div class="btn btn-default image-preview-input">
-												<span class="glyphicon glyphicon-folder-open"></span>
-												<span class="image-preview-input-title">Buscar</span>
-												<input type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
-											</div>
-										</span>
-									</div>
-								</div>
-								
-                                
-								<div class="form-group">
-								  <label for="contact">Dirigente</label>
- 								  <div class="input-group">
-									  <span class="input-group-addon"> <i class="fa fa-user" style="width:15px;"></i></span>
-									  <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome">
-								  </div>                                   
-								  <div class="input-group">
-									  <span class="input-group-addon">
-										<i class="fa fa-envelope"  style="width:15px;"></i></span>
-									  <input type="contact_email" name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-								  </div>
-								  <div class="input-group">
-									  <div class="input-group-addon">
-										 <i class="fa fa-phone"  style="width:15px;"></i>
-									  </div>
-									  <input type="text" name="contact_telefone" id="contact_telefone" placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
-									</div>
-								</div>
-								
-							</div>
-                            <p style="margin-left:10px; margin-top:-20px;">* Campos obrigatórios.</p>
-							
-							<!-- submit button -->
-							<div class="box-footer">
-								<button class="btn btn-sm btn-success" type="submit" >Cadastrar</button>
-							</div>
-						</form> 
-					</div>
-				</div>
-			</div>
-        <!-- </div> -->
-	</div>
+        </div>
+    </section>
     <?php if ( !empty($_POST)) {
         echo '
             <script type="text/javascript">

@@ -228,7 +228,7 @@
                             </div>
                         </form> 
                         <div class="box-footer">
-                            <button class="btn btn btn-secondary" onclick="window.location.replace('../times/admintime.php?key=<?php echo $key; ?>')" style="float:left;">Voltar</button>
+                            <button class="btn btn btn-default" onclick="window.location.replace('../times/admintime.php?key=<?php echo $key; ?>')" style="float:left;">Voltar</button>
                             <button class="btn btn btn-success" onclick="cadastrar();" style="float:right;">Cadastrar</button>
                         </div>
 					</div>

@@ -9,7 +9,7 @@
     include ("../classes/PHPExcel/IOFactory.php");  
 
     $key = $_POST['key'];
-    $rand = rand();
+    $rand = uniqid();
     $target_dir = "../cadastro/uploads/";
     $campo_img = basename($_FILES["fileToUpload"]["name"]);
     if ($campo_img <> ""){

@@ -13,7 +13,9 @@
 
     $sqlgeral = mysqli_query($mysqli,"SELECT * FROM cups where id='$copa'");
     $dados = mysqli_fetch_assoc($sqlgeral);
-    
+    $sponsor = $dados['sponsor'];    
+    $sponsor_url = $dados['sponsor_url'];
+
     $sql_max = mysqli_query($mysqli,"select MAX(DATE_FORMAT(m.datetime,'%Y-%m-%d')) as data from matches m where cup_id = '$copa';");
     $max = mysqli_fetch_assoc($sql_max)['data'];
 
@@ -114,52 +116,219 @@
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Teko:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.esportes.co/novo/assets/css/swatch-red-white.min.css">
      <!-- jQuery -->
     <script src="http://www.esportes.co/js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="http://www.esportes.co/js/bootstrap.min.js"></script>
     <script src="http://www.esportes.co/js/app.js"></script>
     <script src="http://www.esportes.co/js/Chart.js"></script>
-		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
-		<style>
-			canvas{
-			}
-		</style>
-    
-    <!-- Include Mask plugin -->
+    <meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
     <script src="http://oss.maxcdn.com/jquery.mask/1.11.4/jquery.mask.min.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-    <!-- Hotjar Tracking Code for http://www.esportes.co -->
-<script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:280196,hjsv:5};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
+    <style>
+        /*Contact sectiom*/
+        .titulo{
+            font-family: 'Oleo Script', cursive;
+            color:#73bfc1;
+            font-size: 45px;
+            text-align:center;
+            margin: 10px;
+        }
+        
+/* --------- */
+/* MEGA MENU */
+/* --------- */
+.menu-item-object-oxy_mega_menu {
+  position: static !important;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu {
+  left: 0px !important;
+  right: 0px !important;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li {
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li:before {
+  content: "";
+  position: absolute;
+  height: 1000px;
+  width: 1px;
+  left: 0;
+  top: 3px;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li:first-child:before {
+  display: none;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li > ul {
+  list-style-type: none;
+  padding: 0px;
+  overflow: hidden;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li {
+  padding-bottom: 0px;
+  margin-left: 30px;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li > a {
+  padding: 8px 20px;
+  display: block;
+  font-size: 14px;
+  -moz-transition: color 0.1s;
+  -o-transition: color 0.1s;
+  -webkit-transition: color 0.1s;
+  transition: color 0.1s;
+  position: relative;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li > strong {
+  text-indent: 20px;
+  line-height: 37px;
+  display: block;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li > strong a {
+  padding: 0;
+  line-height: 37px;
+  display: block;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li .fa {
+  text-indent: 0;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li .menu-widget {
+  padding: 8px 20px;
+}
+.menu-item-object-oxy_mega_menu .dropdown-menu > li > p {
+  font-size: 14px;
+  font-style: italic;
+  padding-bottom: 12px;
+  margin-bottom: 0px;
+  border-bottom: 1px solid;
+}
+
+.container-fullwidth .menu-item-object-oxy_mega_menu .dropdown-menu {
+  margin-left: 15px !important;
+  margin-right: 15px !important;
+}
+
+.oxy_mega_menu-no-dividers > ul > li:before {
+  display: none;
+}
+
+.oxy_mega_menu-no-dividers > ul > li > p {
+  border: 0 !important;
+}
+
+@media (max-width: 992px) {
+  .menu-item-object-oxy_mega_menu {
+    position: relative !important;
+  }
+
+  .menu-item-object-oxy_mega_menu .dropdown-menu {
+    background-image: none !important;
+  }
+
+  .menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li > a {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+	</style>
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:280196,hjsv:5};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
+<body class="skin-blue" style="padding-left:10px; padding-right:10px; background-color:#F0F8FF;">
     <?php 
         include_once("../admin/analyticstracking.php");
-        include("../navbar.php");
     ?>
-   <section class="content-header">
-    </section>
     
-        <div class="row" style="background-color:black; text-align:center; margin:-25px -10px 25px -10px;">
-        <h1 style="color:white; margin-top:5px; font-size: 40px;"><b><?php echo $dados['name']; ?></b></h1>
+    <header id="masthead" class="navbar navbar-sticky navbar-stuck swatch-red-white" role="banner" style="margin-left:-13px;margin-right:-13px;">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="">       
+                <span style="font-size:35px; margin-left:10px; position:absolute;"><i class="fa fa-trophy" aria-hidden="true"></i></span> 
+            </a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".main-navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+            </button>
         </div>
+        <nav class="navbar-collapse main-navbar collapse" role="navigation" aria-expanded="false" style="height: 1px;">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="http://www.esportes.co/index.php" class="dropdown-toggle"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Notícias
+                    </a>
+                </li>
+                <li class="dropdown menu-item-object-oxy_mega_menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                         <i class="fa fa-trophy" aria-hidden="true"></i> Campeonatos
+                    </a>
+                    <ul class="dropdown-menu row">
+                        <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
+                            <strong>Futebol de Campo</strong>
+                            <ul role="menu">
+                                <li>
+                                    <a href="./times/copa.php?id=17">Série - A</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns"><strong>Futebol Society</strong>
+                            <ul role="menu">
+                                <li>
+                                    <a href="./times/copa.php?id=1">15º Copa Benteler</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
+                            <strong>Futsal</strong>
+                            <ul role="menu">
+                                <li>
+                                    <a href="./times/copa.php?id=23">Liga Futsal Rioclarense Masculino</a>
+                                </li>
+                                <li>
+                                    <a href="./times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="http://www.esportes.co/novo.php" class="dropdown-toggle">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Criar Campeonato
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
     
+    <div class="row">
+        <h1 class="titulo"><?php echo $dados['name']; ?></h1>
+    </div>
+    
+     <?php 
+        if ($sponsor <> ""){
+            echo '
+        <div class="row" style="margin-bottom:20px;">
+        <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center">
+            <h4 style="color:#555;">Oferecimento:</h4>
+            <a href="'.$sponsor_url.'" target="_blank">
+            <img src="../img/'.$sponsor.'" style="display: block; margin-left: auto; margin-right: auto; width:150px;">
+            </a>
+        </div>
+        </div>';
+        }
+    ?>
     
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
@@ -182,11 +351,11 @@
                                     m.`team1`,
                                     t1.teams_picture as t1_picture, 
                                     t2.teams_picture as t2_picture, 
-                                    left(t1.`teams_name`,3) as 'team1_name', 
+                                    t1.`short_name` as 'team1_name', 
                                     m.`team2`, 
                                     m.`score1`, 
                                     m.`score2`, 
-                                    left(t2.`teams_name`,3) as 'team2_name', 
+                                    t2.`short_name` as 'team2_name', 
                                     t1.`teamd_fields_id` as 'teams_field', 
                                     date_format(m.datetime, '%Hh%i') as hour, 
                                     date_format(m.datetime,'%d/%m') as date 
@@ -425,14 +594,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-    <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center">
-        <h4 style="color:#555;">Arbitragem:</h4>
-        <a href="http://www.gestecarbitragem.com.br/site" target="_blank">
-        <img src="../img/gestec.png" style="display: block; margin-left: auto; margin-right: auto;">
-        </a>
-    </div>
     </div>
     
     <script>

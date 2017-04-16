@@ -1,3 +1,4 @@
+
 <?php
 
 #Novo template a ser aplicado: https://codepen.io/nikhil8krishnan/pen/gaybLK
@@ -19,8 +20,10 @@
     $conn->query("SET NAMES 'utf8'");
     mb_language('uni'); 
     mb_internal_encoding('UTF-8');
+    $success = false;
 
 	if ( !empty($_POST)) {
+        include ('../admin/PHPMailer_config.php');
 		
 		// Check connection
 		if ($conn->connect_error) {
@@ -33,14 +36,45 @@
 		$contact_name = mysqli_real_escape_string($conn,$_POST['contact_name']);
 		$contact_email = mysqli_real_escape_string($conn,$_POST['contact_email']);
 		$contact_telefone = mysqli_real_escape_string($conn,$_POST['contact_telefone']);
+		$date_mysql = mysqli_real_escape_string($conn,$_POST['datepicker']);
         
-        $sql = "INSERT INTO cups (name, sport, contact_name, contact_email, contact_telefone) VALUES ('".$name."', '".$sport."', '".$contact_name."', '".$contact_email."', '".$contact_telefone."');";
+        $sql = "INSERT INTO cups (name, sport, date_limit, contact_name, contact_email, contact_telefone) VALUES ('".$name."', '".$sport."', DATE_ADD(DATE_FORMAT(STR_TO_DATE('".$date_mysql."', '%d/%m/%Y'), '%Y-%m-%d'), INTERVAL 1 DAY), '".$contact_name."', '".$contact_email."', '".$contact_telefone."');";
         mysqli_query($conn, $sql);
         
-        $sql_novo = mysqli_query($conn,"SELECT id from cups order by id DESC limit 1;");
-        $id = mysqli_fetch_assoc($sql_novo)['id'];
+        $sql_novo = mysqli_query($conn,"SELECT id, admin_key from cups order by id DESC limit 1;");
+        $novo = mysqli_fetch_assoc($sql_novo);
+        $key = $novo['admin_key'];
+        $id = $novo['id'];
+        
+        //Preparando email para envio
+        $sUrl = 'http://www.esportes.co/cadastro/template_campeonato.php';
+        $params = array('http' => array(
+            'method' => 'POST',
+        'content' => 'title='.$name.'&key='.$key.'&id='.$id
+        ));
+
+        $ctx = stream_context_create($params);
+        $fp = @fopen($sUrl, 'rb', false, $ctx);
+        if (!$fp)
+        {
+            throw new Exception("Problem with $sUrl, $php_errormsg");
+        }
+
+        $response = @stream_get_contents($fp);
+        if ($response === false) 
+        {
+        throw new Exception("Problem reading data from $sUrl, $php_errormsg");
+        }
+        $mail->Subject = $name.' já está disponível para acesso! Esportes.Co';
+        $mail->Body = $response;
+        $mail->addAddress($contact_email, '');     // Add a recipient
+        if(!$mail->send()) {
+            echo 'Message could not be sent.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+           $success = true;
+        }
 		$conn->close();
-		$renderMessage = true;
 	}
 
 ?>
@@ -48,7 +82,7 @@
 <!DOCTYPE html>
 <html lang="en" content="text/html; charset=utf-8">
 <head>
-
+    <link rel="shortcut icon" href="../img/favicon-trophy.ico" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,12 +108,9 @@
 
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	
-	<!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
-
-	<!-- Bootstrap time Picker -->
-    <link rel="stylesheet" href="../plugins/timepicker/bootstrap-timepicker.min.css">
+        
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Teko:400,700" rel="stylesheet">
 	<style>
 		.image-preview-input {
 			position: relative;
@@ -107,13 +138,76 @@
 			margin: auto;
 			max-width: 500px;
 		}
+        
+        /*Contact sectiom*/
+        .content-header{
+          font-family: 'Oleo Script', cursive;
+          color:#73bfc1;
+          font-size: 45px;
+        }
+
+        .section-content{
+          text-align: center;
+          padding:5px;
+
+        }
+        #contact{
+            font-family: 'Teko', sans-serif;
+            width: 100%;
+            width: 100vw;
+            height: 100%;
+            color : #fff;    
+            margin-bottom: 60px;
+        }
+        .contact-section{
+          padding-top: 40px;
+        }
+        .contact-section .col-md-6{
+          width: 50%;
+        }
+
+        .form-line{
+          border-right: 1px solid #B29999;
+        }
+
+        .form-group{
+          margin-top: 10px;
+        }
+        label{
+          font-size: 1.3em;
+          line-height: 1em;
+          font-weight: normal;
+        }
+        .form-control{
+          font-size: 1.3em;
+          color: #080808;
+        }
+        textarea.form-control {
+            height: 135px;
+           /* margin-top: px;*/
+        }
+
+        .submit{
+          font-size: 1.5em;
+          float: right;
+          width: 150px;
+          background-color: transparent;
+          color: #fff;
+
+        }
+        body{
+            background: #3a6186; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to left, #3a6186 , #89253e); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to left, #e74c3c , #e74c3c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
 	</style>
 	
 
 	
 </head>
 
-<body style="background-color: #ecf0f5;">
+<body>
     
     <?php 
     if ( !empty($_POST)) {
@@ -138,35 +232,36 @@
             </noscript>';
     }?>
   
-    <div class="container" >
-
-		<!-- Form -->
-		<!-- <div class="im-centered"> -->
-		
-        <div class="row">
-            <div class="col-lg-offset-1 col-lg-10" > 
-
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                      <h1 class="box-title">Novo Campeonato</h1>
-                    </div>
+        <section id="contact">
+            <div class="section-content">
+                <h1 class="section-header">Crie seu <span class="content-header wow fadeIn " data-wow-delay="0.2s" data-wow-duration="2s" style="margin-left:-10px;">Campeonato</span></h1>
+                <h3>Preencha os campos abaixo para criar um campeonato e começar a receber as inscrições dos times.</h3>
+            </div>
+            <div class="contact-section">
+                <div class="container">
                     <form method="post" role="form"  action="" enctype="multipart/form-data">
-                        <div class="box-body">
-                            <div class="form-group">
-                              <label for="championshipName">Nome *</label>
+                        <div class="col-sm-6">
+                             <div class="form-group">
+                              <label for="championshipName">Nome</label>
                               <input type="text" class="form-control" id="name" name="name" placeholder="Exemplo: Liga Futsal Rioclarense Masculino" required="true">
                             </div>
-
-                            <label for="championshipName">Esporte</label>
-                            <select id="sport" name="sport" class="form-control bg-white">
-                                <option value="Indefinida">Definir</option>
-                                <option value='Futebol de Campo'>Futebol de Campo</option>
-                                <option value='Futebol Society'>Futebol Society</option>
-                                <option value='Futebol de Salão'>Futebol de Salão</option>
-                            </select><br>
-
                             <div class="form-group">
-                              <label for="contact">Dirigente *</label>
+                                <label for="championshipName">Esporte</label>
+                                <select id="sport" name="sport" class="form-control bg-white">
+                                    <option value="Indefinida"></option>
+                                    <option value='Futebol de Campo'>Futebol de Campo</option>
+                                    <option value='Futebol Society'>Futebol Society</option>
+                                    <option value='Futebol de Salão'>Futsal</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Último dia para inscrições:</label><br>
+                                <input id="datepicker" style="color:#555;" class="form-control" name="datepicker" type="text" placeholder="DD/MM/AAAA" required="true"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="contact">Organizador</label>
                               <div class="input-group">
                                   <span class="input-group-addon"> <i class="fa fa-user" style="width:15px;"></i></span>
                                   <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome" required="true">
@@ -180,92 +275,53 @@
                                   <div class="input-group-addon">
                                      <i class="fa fa-phone"  style="width:15px;"></i>
                                   </div>
-                                  <input type="text" name="contact_telefone" id="contact_telefone" placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask required="true">
+                                  <input type="text" name="contact_phone" id="contact_phone" placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask required="true">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="size">Li e concordo com o <a href="./termos.html"   target="_blank">Termo de Aceite</a> * </label>
+                             <div class="form-group">
+                                <label for="size" style="font-size:18px;">Li e concordo com os <a href="../termos.php" target="_blank" style="color:#73bfc1;">Termos de Uso</a>. </label>
                                 <input type="hidden" name="checkbox_aceite" value="0" />
                                 <input type="checkbox" name="checkbox_aceite" value="1" required="true"/>
                             </div> 
-                            <p style="margin-top:-10px;">* Campos obrigatórios.</p>
-                            <button style="float:right;" class="btn btn-success" type="submit" >Criar</button>
+                            <button type="submit" class="btn btn-default submit">Criar<i class="fa fa-trophy" aria-hidden="true" style="margin-left:20px;"></i></button>
                         </div>
-                    </form> 
+                    </form>
                 </div>
             </div>
-        </div>
-    </div>
-                    
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-	<!-- bootstrap datepicker -->
-	<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
-
-	<!-- bootstrap time picker -->
-	<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
-	
-	<!-- InputMask -->
-	<script src="plugins/input-mask/jquery.inputmask.js"></script>
-	<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-	<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
-    <?php if ( !empty($_POST)) {
+        </section> 
+    <?php if ($success == true) {
         echo '
             <script type="text/javascript">
                 swal({
-                    title: "Sucesso!",
-                    text: "Seu campeonato está criado! Você será redirecionado para ele agora.",
+                    title: "Campeonato Criado!",
+                    text: "Um email foi enviado com o link de acesso. Clique abaixo para acessar o Painel Administrativo.",
                     type: "success",
                     showCancelButton: false,
                     closeOnConfirm: false
                     },
                     function(){
-                        window.location.replace("../times/inscricoes.php?id='.$id.'");
+                        window.location.replace("../times/admincopa.php?key='.$key.'");
                     });
             </script>';
     }?>
+    <!-- jQuery -->
+    <script src="../js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+    
+	<!-- bootstrap time picker -->
+	<script src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
+	
+	<!-- InputMask -->
+	<script src="../plugins/input-mask/jquery.inputmask.js"></script>
+	<script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+	<script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
 	<script>
-		$(function () {
-
-			//Date picker
-			$('#datepicker').datepicker({
-			  autoclose: true,
-			  todayHighlight: true,
-			  format: 'yyyy/mm/dd'
-			});
-			
-			//Date picker
-			$('#datepicker2').datepicker({
-			  autoclose: true,
-			  todayHighlight: true,
-			  format: 'yyyy/mm/dd'
-			});
-
-			//Timepicker
-			$(".timepicker").timepicker({
-			  showInputs: false
-			});
-		  });
-		  
-		  $(document).on('click', '#close-preview', function(){ 
-			$('.image-preview').popover('hide');
-			// Hover befor close the preview
-			$('.image-preview').hover(
-				function () {
-				   $('.image-preview').popover('show');
-				}, 
-				 function () {
-				   $('.image-preview').popover('hide');
-				}
-			);    
-		});
 
 		$(function() {
+            $("#datepicker").inputmask("99/99/9999",{ "placeholder": "DD/MM/AAAA" });
+         
 			// Create the close button
 			var closebtn = $('<button/>', {
 				type:"button",

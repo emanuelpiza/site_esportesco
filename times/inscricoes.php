@@ -186,8 +186,8 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Compartilhe Este Campeonato</h3>
                 </div><!-- /.box-header -->
-                <div class="box-body" style="text-align:center; height:160px;">
-                    <div class="addthis_inline_share_toolbox" style="margin-top:40px;"></div>
+                <div class="box-body" style="text-align:center; height:350px;">
+                    <div class="addthis_inline_share_toolbox" style="margin-top:140px;"></div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
         </div><!-- /.col --> 
@@ -197,9 +197,8 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Conheça a Plataforma</h3>
                 </div>
-                <div class="box-body" style="text-align:center;">
-                    <a href="http://www.esportes.co/times/copa.php?id=1" target="_blank"><img src="http://www.esportes.co/cadastro/uploads/benteler.jpeg" style="margin:20px; width:140px;"></a>
-                    <a href="http://www.esportes.co/times/copa.php?id=17" target="_blank"><img src="http://www.esportes.co/cadastro/uploads/LBF 150X150.png" style="margin:20px; width:100px;"></a>
+                <div class="box-body" style="text-align:center; height:350px;">
+                    <iframe width=100% height="100%" src="https://www.youtube.com/embed/KedOsEHQe-Q" frameborder="0" allowfullscreen></iframe>
                 </div>
               </div>
         </div>

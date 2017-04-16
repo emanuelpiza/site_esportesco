@@ -19,8 +19,13 @@
     $dados = mysqli_fetch_assoc($sqlgeral);
     $sqlcount_players = mysqli_query($mysqli,"SELECT points FROM teams where id_teams='$id'");
 
-    $sqlcup = mysqli_query($mysqli,"SELECT sport from cups c left join matches m on c.id = m.cup_id where m.id = '$id'");
-    $sport = mysqli_fetch_assoc($sqlcup)['sport'];
+    $sqlcup = mysqli_query($mysqli,"SELECT c.id, sport, sponsor, sponsor_url from cups c left join matches m on c.id = m.cup_id where m.id = '$id'");
+    $cup = mysqli_fetch_assoc($sqlcup);
+    $sport = $cup['sport'];
+    $cup_id = $cup['id'];
+    $sponsor = $cup['sponsor'];
+    $sponsor_url = $cup['sponsor_url'];
+
     if ($sport == "Futebol de Salão"){
         $arena = "futsal.jpeg";
     } else {
@@ -120,22 +125,111 @@
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     
 		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
-		<style>
-			canvas{
-			}
-		</style>
     
     <!-- Include Mask plugin -->
     <script src="http://oss.maxcdn.com/jquery.mask/1.11.4/jquery.mask.min.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <style>
         .scrolloff {
             pointer-events: none;
+        }
+        /* --------- */
+        /* MEGA MENU */
+        /* --------- */
+        .menu-item-object-oxy_mega_menu {
+          position: static !important;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu {
+          left: 0px !important;
+          right: 0px !important;
+          overflow: hidden;
+          background-position: center;
+          background-size: cover;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li {
+          position: relative;
+          padding-left: 0;
+          padding-right: 0;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li:before {
+          content: "";
+          position: absolute;
+          height: 1000px;
+          width: 1px;
+          left: 0;
+          top: 3px;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li:first-child:before {
+          display: none;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > ul {
+          list-style-type: none;
+          padding: 0px;
+          overflow: hidden;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li {
+          padding-bottom: 0px;
+          margin-left: 30px;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li > a {
+          padding: 8px 20px;
+          display: block;
+          font-size: 14px;
+          -moz-transition: color 0.1s;
+          -o-transition: color 0.1s;
+          -webkit-transition: color 0.1s;
+          transition: color 0.1s;
+          position: relative;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > strong {
+          text-indent: 20px;
+          line-height: 37px;
+          display: block;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > strong a {
+          padding: 0;
+          line-height: 37px;
+          display: block;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li .fa {
+          text-indent: 0;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li .menu-widget {
+          padding: 8px 20px;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > p {
+          font-size: 14px;
+          font-style: italic;
+          padding-bottom: 12px;
+          margin-bottom: 0px;
+          border-bottom: 1px solid;
+        }
+
+        .container-fullwidth .menu-item-object-oxy_mega_menu .dropdown-menu {
+          margin-left: 15px !important;
+          margin-right: 15px !important;
+        }
+
+        .oxy_mega_menu-no-dividers > ul > li:before {
+          display: none;
+        }
+
+        .oxy_mega_menu-no-dividers > ul > li > p {
+          border: 0 !important;
+        }
+
+        @media (max-width: 992px) {
+          .menu-item-object-oxy_mega_menu {
+            position: relative !important;
+          }
+
+          .menu-item-object-oxy_mega_menu .dropdown-menu {
+            background-image: none !important;
+          }
+
+          .menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li > a {
+            padding-left: 0px;
+            padding-right: 0px;
+          }
         }
     </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -172,9 +266,10 @@
         a.appendChild(r);
     })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
+    <link rel="stylesheet" href="http://www.esportes.co/novo/assets/css/swatch-red-white.min.css">
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
+<body class="skin-blue" style="padding-left:10px; padding-right:10px; background-color:#F0F8FF;">
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -186,8 +281,66 @@
     </script>
     <?php 
         include_once("../admin/analyticstracking.php");
-        include('../navbar.php');
     ?>
+    
+    <header id="masthead" class="navbar navbar-sticky navbar-stuck swatch-red-white" role="banner" style="margin-left:-13px;margin-right:-13px;">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="./copa.php?id=<?php echo $cup_id;?>">       
+                    <span style="font-size:35px; margin-left:10px; position:absolute;"><i class="fa fa-trophy" aria-hidden="true"></i></span> 
+                </a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".main-navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+            </div>
+            <nav class="navbar-collapse main-navbar collapse" role="navigation" aria-expanded="false" style="height: 1px;">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="http://www.esportes.co/index.php" class="dropdown-toggle"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Notícias
+                        </a>
+                    </li>
+                    <li class="dropdown menu-item-object-oxy_mega_menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                             <i class="fa fa-trophy" aria-hidden="true"></i> Campeonatos
+                        </a>
+                        <ul class="dropdown-menu row">
+                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
+                                <strong>Futebol de Campo</strong>
+                                <ul role="menu">
+                                    <li>
+                                        <a href="./times/copa.php?id=17">Série - A</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns"><strong>Futebol Society</strong>
+                                <ul role="menu">
+                                    <li>
+                                        <a href="./times/copa.php?id=1">15º Copa Benteler</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
+                                <strong>Futsal</strong>
+                                <ul role="menu">
+                                    <li>
+                                        <a href="./times/copa.php?id=23">Liga Futsal Rioclarense Masculino</a>
+                                    </li>
+                                    <li>
+                                        <a href="./times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="http://www.esportes.co/novo.php" class="dropdown-toggle">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Criar Campeonato
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
     
     <!--
     Botão do Local, quando tinha coordenadas<a href="#" data-toggle="modal" data-target="#myModal">'.$dados['fields_name'].'.</a>
@@ -460,6 +613,20 @@
               </ul>
             </div><!-- /.col -->
           </div><!-- /.row -->
+               <?php 
+        if ($sponsor <> ""){
+            echo '
+        <div class="row" style="margin-bottom:20px;">
+        <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center">
+            <h4 style="color:#555;">Oferecimento:</h4>
+            <a href="'.$sponsor_url.'" target="_blank">
+            <img src="../img/'.$sponsor.'" style="display: block; margin-left: auto; margin-right: auto; width:150px;">
+            </a>
+        </div>
+        </div>';
+        }
+    ?>
+        
         </section>
             </div>
     </div>
