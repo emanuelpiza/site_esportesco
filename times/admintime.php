@@ -97,6 +97,7 @@
                 box-align:center;
                 text-align: center;
                 margin-bottom:10px;
+                margin-top:10px;
             }   
             .estrela {
                 width:50%;
@@ -135,7 +136,7 @@
               filter:alpha(opacity=80);
               opacity:0.8;
               box-shadow: 0 0 2px white;
-                background-color: black;
+              background-color: black;
             }
             .rubber_stamp::after {
               position: absolute;
@@ -144,7 +145,13 @@
               height: auto;
               min-height: 100%;
               padding: 10px;
-            }
+            }      
+        body{
+            background: #e74c3c;
+            padding-left:40px;
+            padding-right:40px;
+            padding-bottom:40px;
+        }
 		</style>
     <!-- Hotjar Tracking Code for http://www.esportes.co -->
 <script>
@@ -159,7 +166,7 @@
 </script>
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
+<body class="skin-blue" style="padding:10px; background-color:#F0F8FF;">
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -171,14 +178,30 @@
     </script>
     <?php 
         include_once("../admin/analyticstracking.php");
-        include('../navbar.php');
     ?>
-
+    <header class="main-header" style="margin-left:-10px; margin-right:-10px; margin-top:-10px;">
+        <!-- Logo -->
+        <a href="./copa.php?id=<?php echo $cup_id; ?>" class="logo" style="background-color:#e74c3c;">
+          <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg" style="font-size:35px; margin-left:10px; position:absolute;"><i class="fa fa-trophy"></i> </span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation" style="background-color:#e74c3c;">
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li>
+                <a href="./index.php?id=<?php echo $id; ?>" target="_blank"><i class="fa fa-globe"></i> Perfil Público</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    
     <div class="row">
         <?php 
                 echo '
                 <div id="estrela_content">
-                        <img src="../cadastro/uploads/'.$team_picture.'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:0px;">
+                        <img src="../cadastro/uploads/'.$team_picture.'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px;">
                          <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; color:black;"><br>'.$short_name.'</span>
                 </div>';
         ?>
@@ -186,7 +209,7 @@
     
     <div class="row">
 
-        <div class="col-md-6">
+        <div class="col-md-6 col-md-offset-3">
           <!-- USERS LIST -->
           <div class="box">
             <div class="box-header with-border">
@@ -216,8 +239,8 @@
                 ?>
               </ul><!-- /.users-list -->
             </div><!-- /.box-body -->
-              <hr>
-             <div style="max-width: 650px; margin: 5px;">
+              
+             <div style="max-width: 650px; margin: 5px; color:black;">
                 <span>Trocar imagem do Time</span>
                 <p>Escolha uma imagem PNG ou JPEG image, de preferência com 150px X 150px.</p>
                 <form action="novo_logo.php" method="post" enctype="multipart/form-data">
@@ -234,20 +257,9 @@
                 </form>
                 </div>
           </div><!--/.box -->  
-            <hr>
             <button type="button" class="btn btn-danger" onclick='remover("teams", "<?php  echo $id ?>")'>Excluir Time</button>
         </div><!-- /.col -->
         
-        <div class="col-md-6">
-            <div class="box">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Portal público</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body no-padding" style="text-align:center;">
-                    <a href="./index.php?id=<?php echo $id; ?>"><i class="fa fa-trophy fa-5x" aria-hidden="true"></i><br>Abrir</a>
-                </div><!-- /.box-body -->
-            </div><!--/.box -->
-        </div>
     </div>
     
     <script>
@@ -376,6 +388,7 @@
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Sim, excluir!",
+            cancelButtonText: "Cancelar",
             closeOnConfirm: false,
             closeOnCancel: false
             },

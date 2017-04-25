@@ -111,8 +111,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="http://www.esportes.co/css/_all-skins.min.css">
     <!-- Ícones -->
-    <link rel="icon" type="image/png" href="http://www.esportes.co/img/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="http://www.esportes.co/img/favicon-16x16.png" sizes="16x16" />
+    <link rel="shortcut icon" href="../img/favicon-trophy.ico" />
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
@@ -137,105 +136,105 @@
             margin: 10px;
         }
         
-/* --------- */
-/* MEGA MENU */
-/* --------- */
-.menu-item-object-oxy_mega_menu {
-  position: static !important;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu {
-  left: 0px !important;
-  right: 0px !important;
-  overflow: hidden;
-  background-position: center;
-  background-size: cover;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li {
-  position: relative;
-  padding-left: 0;
-  padding-right: 0;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li:before {
-  content: "";
-  position: absolute;
-  height: 1000px;
-  width: 1px;
-  left: 0;
-  top: 3px;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li:first-child:before {
-  display: none;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li > ul {
-  list-style-type: none;
-  padding: 0px;
-  overflow: hidden;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li {
-  padding-bottom: 0px;
-  margin-left: 30px;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li > a {
-  padding: 8px 20px;
-  display: block;
-  font-size: 14px;
-  -moz-transition: color 0.1s;
-  -o-transition: color 0.1s;
-  -webkit-transition: color 0.1s;
-  transition: color 0.1s;
-  position: relative;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li > strong {
-  text-indent: 20px;
-  line-height: 37px;
-  display: block;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li > strong a {
-  padding: 0;
-  line-height: 37px;
-  display: block;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li .fa {
-  text-indent: 0;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li .menu-widget {
-  padding: 8px 20px;
-}
-.menu-item-object-oxy_mega_menu .dropdown-menu > li > p {
-  font-size: 14px;
-  font-style: italic;
-  padding-bottom: 12px;
-  margin-bottom: 0px;
-  border-bottom: 1px solid;
-}
+        /* --------- */
+        /* MEGA MENU */
+        /* --------- */
+        .menu-item-object-oxy_mega_menu {
+          position: static !important;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu {
+          left: 0px !important;
+          right: 0px !important;
+          overflow: hidden;
+          background-position: center;
+          background-size: cover;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li {
+          position: relative;
+          padding-left: 0;
+          padding-right: 0;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li:before {
+          content: "";
+          position: absolute;
+          height: 1000px;
+          width: 1px;
+          left: 0;
+          top: 3px;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li:first-child:before {
+          display: none;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > ul {
+          list-style-type: none;
+          padding: 0px;
+          overflow: hidden;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li {
+          padding-bottom: 0px;
+          margin-left: 30px;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li > a {
+          padding: 8px 20px;
+          display: block;
+          font-size: 14px;
+          -moz-transition: color 0.1s;
+          -o-transition: color 0.1s;
+          -webkit-transition: color 0.1s;
+          transition: color 0.1s;
+          position: relative;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > strong {
+          text-indent: 20px;
+          line-height: 37px;
+          display: block;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > strong a {
+          padding: 0;
+          line-height: 37px;
+          display: block;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li .fa {
+          text-indent: 0;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li .menu-widget {
+          padding: 8px 20px;
+        }
+        .menu-item-object-oxy_mega_menu .dropdown-menu > li > p {
+          font-size: 14px;
+          font-style: italic;
+          padding-bottom: 12px;
+          margin-bottom: 0px;
+          border-bottom: 1px solid;
+        }
 
-.container-fullwidth .menu-item-object-oxy_mega_menu .dropdown-menu {
-  margin-left: 15px !important;
-  margin-right: 15px !important;
-}
+        .container-fullwidth .menu-item-object-oxy_mega_menu .dropdown-menu {
+          margin-left: 15px !important;
+          margin-right: 15px !important;
+        }
 
-.oxy_mega_menu-no-dividers > ul > li:before {
-  display: none;
-}
+        .oxy_mega_menu-no-dividers > ul > li:before {
+          display: none;
+        }
 
-.oxy_mega_menu-no-dividers > ul > li > p {
-  border: 0 !important;
-}
+        .oxy_mega_menu-no-dividers > ul > li > p {
+          border: 0 !important;
+        }
 
-@media (max-width: 992px) {
-  .menu-item-object-oxy_mega_menu {
-    position: relative !important;
-  }
+        @media (max-width: 992px) {
+          .menu-item-object-oxy_mega_menu {
+            position: relative !important;
+          }
 
-  .menu-item-object-oxy_mega_menu .dropdown-menu {
-    background-image: none !important;
-  }
+          .menu-item-object-oxy_mega_menu .dropdown-menu {
+            background-image: none !important;
+          }
 
-  .menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li > a {
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-}
+          .menu-item-object-oxy_mega_menu .dropdown-menu > li > ul > li > a {
+            padding-left: 0px;
+            padding-right: 0px;
+          }
+        }
 	</style>
     <script>
         (function(h,o,t,j,a,r){
@@ -271,21 +270,21 @@
                 </li>
                 <li class="dropdown menu-item-object-oxy_mega_menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                         <i class="fa fa-trophy" aria-hidden="true"></i> Campeonatos
+                         <i class="fa fa-trophy" aria-hidden="true"></i> Campeonatos Atuais
                     </a>
                     <ul class="dropdown-menu row">
                         <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
                             <strong>Futebol de Campo</strong>
                             <ul role="menu">
                                 <li>
-                                    <a href="./times/copa.php?id=17">Série - A</a>
+                                    <a href="../times/copa.php?id=17">Série - A</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns"><strong>Futebol Society</strong>
                             <ul role="menu">
                                 <li>
-                                    <a href="./times/copa.php?id=1">15º Copa Benteler</a>
+                                    <a href="../times/copa.php?id=1">15º Copa Benteler</a>
                                 </li>
                             </ul>
                         </li>
@@ -293,10 +292,10 @@
                             <strong>Futsal</strong>
                             <ul role="menu">
                                 <li>
-                                    <a href="./times/copa.php?id=23">Liga Futsal Rioclarense Masculino</a>
+                                    <a href="../times/copa.php?id=23">Liga Futsal Rioclarense Masculino</a>
                                 </li>
                                 <li>
-                                    <a href="./times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
+                                    <a href="../times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
                                 </li>
                             </ul>
                         </li>
@@ -304,7 +303,12 @@
                 </li>
                 <li class="dropdown">
                     <a href="http://www.esportes.co/novo.php" class="dropdown-toggle">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Criar Campeonato
+                        <i class="fa fa-plus" aria-hidden="true"></i> Criar Novo
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="http://www.esportes.co/anuncie.php" class="dropdown-toggle">
+                        <i class="fa fa-heartbeat" aria-hidden="true"></i> Anuncie
                     </a>
                 </li>
             </ul>
@@ -450,7 +454,7 @@
              while ($data_grupos = mysqli_fetch_assoc($sql_groups)) {
                  $nome_grupo = $data_grupos['nome'];
             echo '
-            <div class="col-md-6">
+            <div class="col-md-6 col-md-offset-3">
                 <div class="box">
                     <div class="box-header">
                       <h3 class="box-title">Grupo ' .$nome_grupo. '</h3>

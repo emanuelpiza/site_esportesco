@@ -2344,3 +2344,7 @@
 \nFp1D43SHzYE__1h4m32s_10, ,Inicio: 2017-04-07 12:47:46 Final : 20170407 12:47:46
 2017-04-07 22:04:07 arquivo= F8pQhwYloHc inicio= 1095  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 559
 \nF8pQhwYloHc__0h18m24s_10, ,Inicio: 2017-04-07 22:04:07 Final : 20170407 22:07:07
+2017-04-19 16:44:19 arquivo= j2logVEyuDc inicio= 3  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 570
+\nj2logVEyuDc__0h0m12s_10, ,Inicio: 2017-04-19 16:44:19 Final : 20170419 16:44:22
+2017-04-22 22:26:27 arquivo= upyykR9lhdY inicio= 1839  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
+\nupyykR9lhdY__0h30m48s_10, ,Inicio: 2017-04-22 22:26:27 Final : 20170422 22:32:25

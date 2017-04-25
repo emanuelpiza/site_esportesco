@@ -1,19 +1,9 @@
 <?php
-    # Evita o armazenamento em Cache
-    @header('Content-Type: text/html; charset=iso-8859-1');
-    @header("Cache-Control: no-cache, must-revalidate");  
-    @header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");  
+    header('Content-Type: text/html; charset=utf-8');
+    session_start();
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "k1llersql";
-    $dbname = "Esportes";
-
-    // Create and test connection
-    $mysqli = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    } 
+    ob_start();
+    include('../admin/dbcon/dbcon.php');
 
     // TRATAMENTO DA FOTO
     $target_dir = "../times/img/jogadores/";

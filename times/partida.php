@@ -108,8 +108,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../css/_all-skins.min.css">
     <!-- Ícones -->
-    <link rel="icon" type="image/png" href="../img/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="../img/favicon-16x16.png" sizes="16x16" />
+    <link rel="shortcut icon" href="../img/favicon-trophy.ico" />
      <!-- jQuery -->
     <script src="./js/jquery.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Chivo" rel="stylesheet">
@@ -299,43 +298,48 @@
                         </a>
                     </li>
                     <li class="dropdown menu-item-object-oxy_mega_menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                             <i class="fa fa-trophy" aria-hidden="true"></i> Campeonatos
-                        </a>
-                        <ul class="dropdown-menu row">
-                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
-                                <strong>Futebol de Campo</strong>
-                                <ul role="menu">
-                                    <li>
-                                        <a href="./times/copa.php?id=17">Série - A</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns"><strong>Futebol Society</strong>
-                                <ul role="menu">
-                                    <li>
-                                        <a href="./times/copa.php?id=1">15º Copa Benteler</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
-                                <strong>Futsal</strong>
-                                <ul role="menu">
-                                    <li>
-                                        <a href="./times/copa.php?id=23">Liga Futsal Rioclarense Masculino</a>
-                                    </li>
-                                    <li>
-                                        <a href="./times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="http://www.esportes.co/novo.php" class="dropdown-toggle">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Criar Campeonato
-                        </a>
-                    </li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                         <i class="fa fa-trophy" aria-hidden="true"></i> Campeonatos Atuais
+                    </a>
+                    <ul class="dropdown-menu row">
+                        <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
+                            <strong>Futebol de Campo</strong>
+                            <ul role="menu">
+                                <li>
+                                    <a href="../times/copa.php?id=17">Série - A</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns"><strong>Futebol Society</strong>
+                            <ul role="menu">
+                                <li>
+                                    <a href="../times/copa.php?id=1">15º Copa Benteler</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
+                            <strong>Futsal</strong>
+                            <ul role="menu">
+                                <li>
+                                    <a href="../times/copa.php?id=23">Liga Futsal Rioclarense Masculino</a>
+                                </li>
+                                <li>
+                                    <a href="../times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="http://www.esportes.co/novo.php" class="dropdown-toggle">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Criar Novo
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="http://www.esportes.co/anuncie.php" class="dropdown-toggle">
+                        <i class="fa fa-heartbeat" aria-hidden="true"></i> Anuncie
+                    </a>
+                </li>
                 </ul>
             </nav>
         </div>
@@ -428,7 +432,7 @@
                             $msg_video = "VÍDEO EM <BR>PROCESSAMENTO.<BR>DISPONÍVEL<BR> EM BREVE.";
                             
                         } else {
-                            $msg_video = "<a href='../painel_video.php?match=".$id."'>SUBIR GRAVAÇÃO<br>E INFORMAÇÕES<BR> DA PARTIDA</a>";
+                            $msg_video = "<a href='../painel_video.php?match=".$id."'><button type='button' class='btn btn-success btn-lg'>Subir Vídeos</button></a>";
                         }
                         if ($data3['match_video_id'] == null) {
                             $cover = " 

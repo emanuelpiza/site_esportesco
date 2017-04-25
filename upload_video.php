@@ -51,38 +51,6 @@
     }
 
 
-    // ARQUIVO 3
-    if (pathinfo(basename($_FILES["fileToUpload3"]['name']), PATHINFO_EXTENSION) <> "") {
-        $target_file3 = $target_dir . $rand ."_3". "." . pathinfo(basename($_FILES["fileToUpload3"]['name']), PATHINFO_EXTENSION);
-        if (move_uploaded_file($_FILES["fileToUpload3"]["tmp_name"], $target_file3) && ($uploadOk == 1)) {      
-            $uploadOk = 1;
-        }else{
-            $uploadOk = 0;         
-        }
-    }
-
-
-    // ARQUIVO 4
-    if (pathinfo(basename($_FILES["fileToUpload4"]['name']), PATHINFO_EXTENSION) <> "") {
-        $target_file4 = $target_dir . $rand ."_4". "." . pathinfo(basename($_FILES["fileToUpload4"]['name']), PATHINFO_EXTENSION);
-        if (move_uploaded_file($_FILES["fileToUpload4"]["tmp_name"], $target_file4) && ($uploadOk == 1)) {      
-            $uploadOk = 1;
-        }else{
-            $uploadOk = 0;         
-        }
-    }
-
-
-    // ARQUIVO 5
-    if (pathinfo(basename($_FILES["fileToUpload5"]['name']), PATHINFO_EXTENSION) <> "") {
-        $target_file5 = $target_dir . $rand ."_5". "." . pathinfo(basename($_FILES["fileToUpload5"]['name']), PATHINFO_EXTENSION);
-        if (move_uploaded_file($_FILES["fileToUpload5"]["tmp_name"], $target_file5) && ($uploadOk == 1)) {      
-            $uploadOk = 1;
-        }else{
-            $uploadOk = 0;         
-        }
-    }
-
     if ($uploadOk == 1) {
         $sql = "update matches set status = 1, last_status = NOW() where id='$match';";  
         mysqli_query($mysqli, $sql);  

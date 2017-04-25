@@ -103,7 +103,7 @@
                     </div>
                     <div class="col-sm-6">
                         <?php 
-                        for ($x = 1; $x <= 5; $x++) {
+                        for ($x = 1; $x <= 2; $x++) {
                             echo ' <div class="row">
                              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"  style="text-align:right;">
                                  <span class="fa-stack fa-3x">
@@ -112,7 +112,7 @@
                                  </span>
                                </div>
                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"  style="margin-top:15px;">
-                                   <span>Arquivo '.$x.'.<br></span>
+                                   <span>'.$x.'º Tempo Completo.<br></span>
                                    <div class="form-group fileUpload">
                                        <input id="files'.$x.'" type="file" accept="video/*" name="fileToUpload'.$x.'" id="fileToUpload'.$x.'"><br>
                                    </div>

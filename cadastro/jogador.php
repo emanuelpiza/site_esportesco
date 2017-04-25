@@ -1,10 +1,9 @@
 <?php
-    header('Content-Type: text/html; charset=utf-8');
+    header("Content-Type: text/html;charset=UTF-8");
     session_start();
 
     ob_start();
     include('../admin/dbcon/dbcon.php');
-
 
     $renderMessage = false;
     $key =  mysqli_real_escape_string($mysqli,$_GET['key']);
@@ -23,10 +22,7 @@
 
 <!DOCTYPE html>
 <html lang="en" content="text/html; charset=utf-8">
-
-
 <head>
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -109,11 +105,31 @@
         }   
         .estrela {
             width:50%;
-        }  
+        }         
+        body{
+            background: #3a6186; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to left, #3a6186 , #89253e); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to left, #e74c3c , #e74c3c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+         #contact{
+            font-family: 'Teko', sans-serif;
+            width: 100%;
+            width: 100vw;
+            height: 100%;
+            color : #fff;    
+            margin-bottom: 60px;
+        }
+        .contact-section{
+          padding-top: 40px;
+        }
+        .contact-section .col-md-6{
+          width: 50%;
+        }
 	</style>
 </head>
 
 <body style="background-color: #ecf0f5;">
+    
     <div class="container" >
         <div class="modal fade" id="modal" role="dialog" aria-labelledby="modalLabel" tabindex="-1">
           <div class="modal-dialog" role="document">
@@ -140,13 +156,18 @@
                 echo '
                 <div id="estrela_content">
                     <a href="../times/admintime.php?key='.$key.'">
-                        <img src="../cadastro/uploads/'.$team_picture.'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:0px;">
-                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; color:black;"><br>'.$short_name.'</span>
+                        <img src="../cadastro/uploads/'.$team_picture.'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:0px;margin-top:-30px;">
+                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; color:white;"><br>'.$short_name.'</span>
                     </a>
                 </div>';
         ?>
     </div>
-        
+    </div>    
+    <section id="contact">
+        <div class="section-content" style="text-align:center; margin-bottom:-30px;">
+            <h1 class="section-header">Inscrição de Jogador</h1>
+        </div>
+    </section>
         
 			<div class="row">
 				<div class="col-lg-offset-1 col-lg-10" > 
