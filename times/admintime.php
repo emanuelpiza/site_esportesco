@@ -228,7 +228,7 @@
                     }
                     echo '
                     <li>
-                        <a href="./editplayer.php?key=' . $data2['admin_key'] . '">
+                        <a href="../cadastro/edit_jogador.php?key=' . $data2['admin_key'] . '">
                         <div class="figurinha">
                         <img class="figurinha_img" src="img/jogadores/' . $data2['player_picture'] . '" alt="User Image" style="width:120px; height:160px;>
                         <span class="users-list-name">' . $data2['players_name'] . '</span>

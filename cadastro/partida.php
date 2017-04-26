@@ -524,7 +524,7 @@
                 var field = select_field.options[select_field.selectedIndex].value;    
             }
             
-            var datetime = moment($("#datetimepicker12").data("DateTimePicker").date()).format("YYYY-MM-DD hh:mm:00");
+            var datetime = moment($("#datetimepicker12").data("DateTimePicker").date()).format("YYYY-MM-DD HH:mm:00");
             
             if ((team1 == "")||(team2 == "")||(team1 == team2)){
                 swal("Times indefinidos.", "Ambos os times tem de estar definidos e serem diferentes entre si.", "warning");

@@ -7,12 +7,33 @@
 
     $renderMessage = false;
     $key =  mysqli_real_escape_string($mysqli,$_GET['key']);
-    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM teams where admin_key='$key'");
+    $sqljogador = mysqli_query($mysqli,"SELECT *, DATE_FORMAT(birthdate,'%d/%m/%Y') as birthdate_fmt FROM players where admin_key='$key'");
+    $jogador = mysqli_fetch_assoc($sqljogador);
+    $team = $jogador['players_team_id'];
+    $name = $jogador['players_name'];
+    $team = $jogador['players_team_id'];
+    $whole_name = $jogador['whole_name'];
+    $cpf = $jogador['cpf'];
+    $rg = $jogador['rg'];
+    $birthdate = $jogador['birthdate_fmt'];
+    $name_responsible = $jogador['name_responsible'];
+    $phone = $jogador['phone'];
+    $email = $jogador['email'];
+    $player_picture = $jogador['player_picture'];
+
+    $player_position = $jogador['player_position'];
+    $player_strongfoot = $jogador['player_strongfoot'];
+
+    $player_height = $jogador['player_height'];
+    $shirt = $jogador['shirt'];
+
+    $sqlgeral = mysqli_query($mysqli,"SELECT * FROM teams where id_teams='$team'");
     $dados = mysqli_fetch_assoc($sqlgeral);
     $id = $dados['id_teams'];
     $teams_name = $dados['teams_name'];
     $team_picture = $dados['teams_picture'];
     $short_name = $dados['short_name'];
+    $key_team = $dados['admin_key'];
 
     // Check connection
     if ($conn->connect_error) {
@@ -30,7 +51,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Novo Jogador - <?php echo $teams_name; ?> - Esportes.Co</title>
+    <title>Editar Jogador - <?php echo $name; ?> - Esportes.Co</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -108,9 +129,9 @@
             width:50%;
         }         
         body{
-            background: #3a6186; /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #3a6186 , #89253e); /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #e74c3c , #e74c3c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: #e74c3c;
+            padding-right:10px;
+            padding-left:10px;
         }
          #contact{
             font-family: 'Teko', sans-serif;
@@ -129,7 +150,7 @@
 	</style>
 </head>
 
-<body style="background-color: #ecf0f5;">
+<body>
     
     <div class="container" >
         <div class="modal fade" id="modal" role="dialog" aria-labelledby="modalLabel" tabindex="-1">
@@ -156,8 +177,8 @@
         <?php 
                 echo '
                 <div id="estrela_content">
-                    <a href="../times/admintime.php?key='.$key.'">
-                        <img src="../cadastro/uploads/'.$team_picture.'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:0px;margin-top:-30px;">
+                    <a href="../times/admintime.php?key='.$key_team.'">
+                        <img src="../cadastro/uploads/'.$team_picture.'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:10px;margin-top:-30px;">
                          <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; color:white;"><br>'.$short_name.'</span>
                     </a>
                 </div>';
@@ -165,8 +186,8 @@
     </div>
     </div>    
     <section id="contact">
-        <div class="section-content" style="text-align:center; margin-bottom:-30px;">
-            <h1 class="section-header">Inscrição de Jogador</h1>
+        <div class="section-content" style="text-align:center; margin-bottom:-50px;margin-top:-20px;">
+            <h1 class="section-header">Edição de Jogador</h1>
         </div>
     </section>
         
@@ -175,40 +196,78 @@
 					
 					<div class="box box-primary">
 						<div class="box-header with-border">
-						  <h1 class="box-title">Novo Jogador - <?php echo $teams_name; ?></h1>
+						  <h1 class="box-title"><?php echo $whole_name; ?></h1>
 						</div>
 
 						<form method="post" id="form" name="form" role="form"  action="" enctype="multipart/form-data">
+                            <input type="hidden" name="admin_key" value="<?php echo $key;?>">
                             <input type="hidden" name="team" value="<?php echo $id;?>">
+                            <input type="hidden" name="image_name" value="<?php echo $player_picture;?>">
 							<div class="box-body">
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" style="padding-left:30px;padding-right:30px;">
                                         <div class="form-group">
-                                          <label for="name">Nome Completo *</label>
-                                          <input type="text" class="form-control" id="name" name="name">
+                                          <label for="name">Nome Reduzido ou Apelido</label>
+                                          <input type="text" class="form-control" id="name" name="name" value="<?php echo $name;?>">
                                         </div>
                                         <div class="form-group">
                                           <label for="group">RG</label>
-                                          <input type="text" class="form-control" id="rg" name="rg">
+                                          <input type="text" maxlength="14" class="form-control" id="rg" name="rg"  value="<?php echo $rg;?>" readonly>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" style="padding-left:30px;padding-right:30px;">
                                         <div class="form-group">
                                           <label for="group">CPF</label>
-                                          <input type="text" class="form-control" id="cpf" name="cpf" >
+                                          <input type="text" class="form-control" maxlength="15" id="cpf" name="cpf" readonly  value="<?php echo $cpf;?>">
                                         </div>
                                         <div class="form-group">
                                           <label for="group">Data de Nascimento</label><br>
-                                            <input id="datepicker" class="form-control" name="datepicker" type="text" />
+                                            <input id="datepicker" class="form-control" name="datepicker" type="text" readonly  value="<?php echo $birthdate;?>"/>
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <div class="row">
+                                    <div class="col-sm-6" style="padding-left:30px;padding-right:30px;">
+                                         <div class="form-group">
+                                          <label for="group">Posição / Função</label>
+                                          <input type="text" class="form-control" id="player_position" name="player_position" placeholder="Indefinido" value="<?php echo $player_position;?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-md-4">
+                                             <div class="form-group">
+                                              <label for="group">Número da Camisa</label>
+                                              <input type="text" class="form-control" id="shirt" name="shirt" maxlength="3" placeholder="Indefinido" value="<?php echo $shirt;?>">
+                                            </div>
+                                        </div>   
+                                        <div class="col-md-4">
+                                             <div class="form-group">
+                                              <label for="group">Altura</label>
+                                              <input type="text" class="form-control" id="player_height" name="player_height" maxlength="4" placeholder="Indefinido" value="<?php echo $player_height;?>">
+                                            </div>
+                                        </div>    
+                                        <div class="col-md-4" style="padding-right:-20px;">
+                                             <div class="form-group">
+                                                <label for="group">Pé Dominante</label><br>
+                                                <select name="player_strongfoot" style="width:100%; height:35px;">
+                                                  <option value="0" <?php if ($player_strongfoot == 0): ?> selected="selected"<?php endif; ?>>Indefinido</option>
+                                                    <option value="1" <?php if ($player_strongfoot == 1): ?> selected="selected"<?php endif; ?>>Ambidestro</option>
+                                                    <option value="2" <?php if ($player_strongfoot == 2): ?> selected="selected"<?php endif; ?>>Canhoto</option>
+                                                    <option value="3" <?php if ($player_strongfoot == 3): ?> selected="selected"<?php endif; ?>>Destro</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
                                 <div class="row">
                                     <div class="form-group" style="text-align:center; width:100%">
                                         <label>Foto</label>
                                         <div id="cropped_result" class="exibicao">
-                                            <img id="img_padrao" src="../times/img/jogadores/0.jpg" width="120">
+                                            <img id="img_padrao" src="../times/img/jogadores/<?php echo $player_picture;?>" width="120">
                                         </div>
                                         <div class="input-group image-preview">
                                             <span class="input-group-btn">
@@ -220,7 +279,7 @@
                                                 <div class="btn btn-default image-preview-input" style="margin-top:10px;">
                                                     <i class="fa fa-file-image-o" aria-hidden="true"></i>
                                                     <span class="image-preview-input-title">Trocar</span>
-                                                    <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
+                                                    <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
                                                 </div>
                                             </span>
                                         </div>
@@ -233,29 +292,30 @@
                                       <div class="input-group">
                                           <span class="input-group-addon">
                                             <i class="fa fa-envelope"  style="width:15px;"></i></span>
-                                          <input type="contact_email" name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                                          <input type="contact_email" name="contact_email" id="email" class="form-control" id="exampleInputEmail1" placeholder="Email" value="<?php echo $email;?>">
                                       </div>
                                       <div class="input-group">
                                           <div class="input-group-addon">
                                              <i class="fa fa-phone"  style="width:15px;"></i>
                                           </div>
-                                          <input type="text" name="contact_telefone" id="contact_telefone" placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                                          <input type="text" name="contact_telefone" id="contact_telefone" placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask value="<?php echo $phone;?>">
                                         </div>
                                          <div class="input-group">
                                           <span class="input-group-addon"> <i class="fa fa-user" style="width:15px;"></i></span>
-                                          <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome do Familiar ou Responsável">
+                                          <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome do Familiar ou Responsável" value="<?php echo $name_responsible;?>">
                                       </div>   
                                     </div>
                                 </div>
                             </div>
                         </form> 
                         <div class="box-footer">
-                            <button class="btn btn btn-default" onclick="window.location.replace('../times/admintime.php?key=<?php echo $key; ?>')" style="float:left;">Voltar</button>
-                            <button class="btn btn btn-success" onclick="cadastrar();" style="float:right;">Cadastrar</button>
+                            <button class="btn btn btn-default" onclick="window.location.replace('../times/admintime.php?key=<?php echo $key_team; ?>')" style="float:left;">Voltar</button>
+                            <button class="btn btn btn-success" onclick="cadastrar();" style="float:right;">Salvar</button>
                         </div>
 					</div>
 				</div>
 			</div>
+        <!-- </div> -->
                     
 
     <!-- jQuery -->
@@ -340,32 +400,30 @@
             $.each(other_data,function(key,input){
                 formData.append(input.name,input.value);
             });
-            $.ajax('./form_jogador.php', {
+            $.ajax('./form_edit_jogador.php', {
                         method: "POST",
                         data: formData,
                         processData: false,
                         contentType: false,
                         success: function () { 
                             swal({
-                                  title: "Jogador Cadastrado!",
+                                  title: "Jogador Atualizado!",
                                   text: "Você será redirecionado para a página do time.",
                                   type: "success",
                                   closeOnConfirm: true
                                 },
                                 function(isConfirm) {
                                   if (isConfirm) {
-                                      window.location.replace("../times/admintime.php?key=<?php echo $key; ?>");
+                                      window.location.replace("../times/admintime.php?key=<?php echo $key_team; ?>");
                                   };
                             });  
                         },
                         error: function () {
-                            swal('Houve um problema no cadastro. Caso o problema persista, procure o responsável pelo campeonato.', "warning");
+                            swal('Ops!', "Houve um problema no cadastro. Caso o problema persista, procure o responsável pelo campeonato.");
                         }
             });
         } 
   </script>
-
-	
 </body>
 
 </html>

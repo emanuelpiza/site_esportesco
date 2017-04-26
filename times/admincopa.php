@@ -372,6 +372,7 @@
                         closeOnConfirm: false,
                     },
                     function(){
+                        $.post("../marcador/mark5/acoes.php",{acao: "encerrar", match: id, copa: <?php echo $id; ?>},function(data){});
                         window.location.replace("../times/admincopa.php?key=<?php echo $key; ?>");
                     });
               } else {

@@ -122,21 +122,29 @@
         $id_key = $_POST['id'];
         if ($table == "players"){
             $id_var = "id_players";
-            $master = "players_team_id";
+            $master = "players_team_id = players_team_id * -1";
         } else if ($table == "teams"){
             $id_var = "id_teams";
-            $master = "cup_id";
+            $master = "cup_id = cup_id * -1";
         } else if ($table == "matches"){
+            //No caso de partidas, temos que remover as marcações também
+            $sql = "update notes set match_id = match_id * -1, player = player * -1 where match_id = '".$id_key."'";
+            if ($conn->query($sql) === TRUE) {
+                echo "";
+            } else {
+                echo "Erro na base de dados: " . $conn->error;
+            }
             $id_var = "id";
-            $master = "cup_id";
+            $master = "cup_id = cup_id * -1, team1 = team1 * -1, team2 = team2 * -1";
         }
-        $sql = "update ".$table." set ".$master." = ".$master."*-1 where ".$id_var." = '".$id_key."'";
+        $sql = "update ".$table." set ".$master." where ".$id_var." = '".$id_key."'";
         //$sql = "delete from ".$table." WHERE ".$id_var." = '".$id_key."'";
         if ($conn->query($sql) === TRUE) {
             echo "";
         } else {
             echo "Erro na base de dados: " . $conn->error;
         }
+        
     } 
     $conn->close();
 ?>

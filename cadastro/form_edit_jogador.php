@@ -1,0 +1,42 @@
+<?php
+    header('Content-Type: text/html; charset=utf-8');
+    session_start();
+
+    ob_start();
+    include('../admin/dbcon/dbcon.php');
+
+    // TRATAMENTO DA FOTO
+    $target_dir = "../times/img/jogadores/";
+    $tmp_name = $_FILES["croppedImage"]["tmp_name"];
+    $image_name = mysqli_real_escape_string($mysqli,$_POST['image_name']);
+
+    if ($tmp_name <> ""){
+        $target_file = uniqid() . ".jpg";
+        move_uploaded_file($tmp_name, $target_dir . $target_file);
+    }else{
+        $target_file = $image_name;        
+    }
+
+    // ATRIBUINDO OUTROS PARÂMETROS
+    $name = mysqli_real_escape_string($mysqli,$_POST['name']);
+    $team = mysqli_real_escape_string($mysqli,$_POST['team']);
+    $rg = mysqli_real_escape_string($mysqli,$_POST['rg']);
+    $cpf =  mysqli_real_escape_string($mysqli,$_POST['cpf']);
+    $contact_name =  mysqli_real_escape_string($mysqli,$_POST['contact_name']);
+    $contact_email =  mysqli_real_escape_string($mysqli,$_POST['contact_email']);
+    $contact_telefone =  mysqli_real_escape_string($mysqli,$_POST['contact_telefone']);  
+    $date =  mysqli_real_escape_string($mysqli,str_replace('/', '-', $_POST['datepicker']));
+    $birthdate =  mysqli_real_escape_string($mysqli,date('Y-m-d', strtotime($date)));
+    $player_strongfoot = mysqli_real_escape_string($mysqli,$_POST['player_strongfoot']);
+    $player_height = mysqli_real_escape_string($mysqli,$_POST['player_height']);
+    $shirt = mysqli_real_escape_string($mysqli,$_POST['shirt']);
+    $player_position =  mysqli_real_escape_string($mysqli,$_POST['player_position']);
+    $admin_key =  mysqli_real_escape_string($mysqli,$_POST['admin_key']);
+
+    //SQL
+    $sql = "UPDATE `players` set players_team_id = '".$team."', whole_name = '".$name."', player_picture = '".$target_file."', rg = '".$rg."', cpf = '".$cpf."', birthdate = '".$birthdate."', email = '".$contact_email."', phone = '".$contact_telefone."', name_responsible = '".$contact_name."', players_name = UC_Words(CONCAT_WS(' ', substring_index('".$name."', ' ', 1), substring_index('".$name."', ' ', -1))), player_strongfoot = '".$player_strongfoot."', player_height = '".$player_height."', shirt = '".$shirt."', player_position = '".$player_position."' where admin_key = '".$admin_key."'";
+
+    mysqli_query($mysqli, $sql);
+    $mysqli->close();
+
+?>

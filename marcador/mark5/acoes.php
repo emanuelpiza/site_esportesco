@@ -6,7 +6,12 @@
 
     $acao = $_POST['acao'];
     $copa = $_POST['copa'];
-    $id = $_POST['match'];
+    if (isset($_POST['match']))
+    {
+        $id = $_POST['match'];
+    } else{
+        $id = '';
+    }
 
     if ($acao == "marcar"){
         
@@ -56,26 +61,30 @@
         mysqli_query($mysqli, $sql); 
         
     } else if ($acao == "encerrar"){
-        // GOLS CONSIDERANDO W.O.
-        $sqlgols = "update matches m set score1 = IF((select distinct count(*) as total from notes n where type = 13 and available = 1 and match_id = '$id' and n.detail = m.team2) > 0, 3,(select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = m.team1) or (type = 4 and p.`players_team_id` = m.team2)))) where id = '$id';";
-        mysqli_query($mysqli, $sqlgols); 
         
-        $sqlgols = "update matches m set score2 = IF((select distinct count(*) as total from notes n where type = 13 and available = 1 and match_id = '$id' and n.detail = m.team1) > 0, 3,(select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = m.team2) or (type = 4 and p.`players_team_id` = m.team1)))) where id = '$id';";
-        mysqli_query($mysqli, $sqlgols); 
-        
-        // FALTAS
-        $sqlfaltas = "update matches m set faults1 = (select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type = 0 and p.`players_team_id` = m.team1) where id = '$id';";
-        mysqli_query($mysqli, $sqlfaltas); 
-        
-        $sqlfaltas = "update matches m set faults2 = (select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type = 0 and p.`players_team_id` = m.team2) where id = '$id';";
-        mysqli_query($mysqli, $sqlfaltas); 
-        
-        // CARTÕES
-        $sqlcartoes = "update matches m set cards1 = (select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type in (2,3) and p.`players_team_id` = m.team1) where id = '$id';";
-        mysqli_query($mysqli, $sqlcartoes); 
-        
-        $sqlcartoes = "update matches m set cards2 = (select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type in (2,3) and p.`players_team_id` = m.team2) where id = '$id';";
-        mysqli_query($mysqli, $sqlcartoes); 
+        //Só faz caso a partida ainda exista.
+        if ($id <> ''){
+            // GOLS CONSIDERANDO W.O.
+            $sqlgols = "update matches m set score1 = IF((select distinct count(*) as total from notes n where type = 13 and available = 1 and match_id = '$id' and n.detail = m.team2) > 0, 3,(select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = m.team1) or (type = 4 and p.`players_team_id` = m.team2)))) where id = '$id';";
+            mysqli_query($mysqli, $sqlgols); 
+
+            $sqlgols = "update matches m set score2 = IF((select distinct count(*) as total from notes n where type = 13 and available = 1 and match_id = '$id' and n.detail = m.team1) > 0, 3,(select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = m.team2) or (type = 4 and p.`players_team_id` = m.team1)))) where id = '$id';";
+            mysqli_query($mysqli, $sqlgols); 
+
+            // FALTAS
+            $sqlfaltas = "update matches m set faults1 = (select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type = 0 and p.`players_team_id` = m.team1) where id = '$id';";
+            mysqli_query($mysqli, $sqlfaltas); 
+
+            $sqlfaltas = "update matches m set faults2 = (select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type = 0 and p.`players_team_id` = m.team2) where id = '$id';";
+            mysqli_query($mysqli, $sqlfaltas); 
+
+            // CARTÕES
+            $sqlcartoes = "update matches m set cards1 = (select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type in (2,3) and p.`players_team_id` = m.team1) where id = '$id';";
+            mysqli_query($mysqli, $sqlcartoes); 
+
+            $sqlcartoes = "update matches m set cards2 = (select count(*) as total from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and type in (2,3) and p.`players_team_id` = m.team2) where id = '$id';";
+            mysqli_query($mysqli, $sqlcartoes); 
+        }
         
         //Atualização das tabelas do campeonato
         $sqltimes = mysqli_query($mysqli,"select id_teams from teams where cup_id = ".$copa);
@@ -150,32 +159,32 @@
         
         //GOLS
         $gols = "
-            UPDATE players p
-                RIGHT JOIN (
+             UPDATE players p
+                left JOIN (
                    select n.player, sum(1) as novos from notes n where available = 1 and type = 1 group by player) AS n ON
                 n.`player` = p.`id_players`
             SET
-                p.goals = n.novos;";
+                p.goals = if(n.novos is null, 0 , n.novos);";
         mysqli_query($mysqli, $gols);
         
         //Cartões Amarelos
         $amarelos = "
             UPDATE players p
-                RIGHT JOIN (
+                left JOIN (
                    select n.player, sum(1) as novos from notes n where available = 1 and type = 2 group by player) AS n ON
                 n.`player` = p.`id_players`
             SET
-                p.yellow_cards = n.novos;";
+                p.yellow_cards = if(n.novos is null, 0 , n.novos);";
         mysqli_query($mysqli, $amarelos);
         
         //Cartões Vermelhos
         $vermelhos = "
             UPDATE players p
-                RIGHT JOIN (
+                left JOIN (
                    select n.player, sum(1) as novos from notes n where available = 1 and type = 3 group by player) AS n ON
                 n.`player` = p.`id_players`
             SET
-                p.red_cards = n.novos;";
+                p.red_cards = if(n.novos is null, 0 , n.novos);";
         mysqli_query($mysqli, $vermelhos);
         
         //SUSPENSÕES
