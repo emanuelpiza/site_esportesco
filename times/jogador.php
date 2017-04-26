@@ -9,7 +9,7 @@
         header("Location: index.php");
     }
     $id = $_GET['id'];
-    $sqlgeral = mysqli_query($mysqli,"SELECT p.*, players_stats_average, t.`teams_picture` FROM players p left join teams t on p.`players_team_id` = t.`id_teams` where id_players='$id'");
+    $sqlgeral = mysqli_query($mysqli,"SELECT p.*, players_stats_average, t.`teams_picture`, IF( p.`birthdate` is null, '-', (YEAR(CURRENT_TIMESTAMP) - YEAR(p.`birthdate`) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(p.`birthdate`, 5)))) as age FROM players p left join teams t on p.`players_team_id` = t.`id_teams` where id_players='$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
     $jogador = $dados['id_players'];
     $time = $dados['players_team_id'];
@@ -23,6 +23,7 @@
     $sql_count = mysqli_query($mysqli,"SELECT count(1) as total FROM plays p left join matches m on p.`match_id` = m.`id` left join teams t1 on m.`team1` = t1.`id_teams` left join teams t2 on m.team2 = t2.`id_teams` where ( assistance = '$id' or plays_players_id='$id') and available in (1,2)");
     $dados3 = mysqli_fetch_assoc($sql_count);
     $count = $dados3['total'];
+    $array_peh = array("-", "Amb.", "Dir.", "Esq.");
 ?>
 
 
@@ -342,29 +343,22 @@
                   <div class="row">
                     <div class="col-xs-2 col-xs-offset-6 border-right" style="margin-top:-20px;">
                       <div class="description-block">
-                        <span class="description-text">Gols</span>
-                        <h5 class="description-header"><?php echo $dados['goals']; ?></h5>
+                        <span class="description-text">Idade</span>
+                        <h5 class="description-header"><?php echo $dados['age']; ?></h5>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                       <div class="col-xs-2 border-right" style="margin-top:-20px;">
                           <div class="description-block">
-                            <span class="description-text">C.A.</span>
-                              <h5 class="description-header"><?php echo $dados['yellow_cards']; ?></h5>
+                            <span class="description-text">Altura</span>
+                              <h5 class="description-header"><?php echo $dados['player_height']; ?></h5>
                           </div><!-- /.description-block -->
                       </div><!-- /.col -->
                       <div class="col-xs-2" style="margin-top:-20px;">
                           <div class="description-block">
-                            <span class="description-text">C.V.</span>
-                              <h5 class="description-header"><?php echo $dados['red_cards']; ?></h5>
+                            <span class="description-text">P.D.</span>
+                              <h5 class="description-header"><?php echo $array_peh[$dados['player_strongfoot']]; ?></h5>
                           </div><!-- /.description-block -->
                       </div><!-- /.col -->
-                      
-                   <!-- <div class="col-xs-4 border-right" style="margin-top:-20px;">
-                      <div class="description-block">
-                        <span class="description-text">NOTA MÉDIA</span>
-                        <h5 class="description-header">?php echo intval($dados['players_stats_average']); ?></h5>
-                      </div><
-                    </div><!-- /.col -->
                   </div><!-- /.row -->
                 </div>
               </div><!-- /.widget-user -->
@@ -373,9 +367,32 @@
               <div class="box">
                 <div class="box-header with-border">
                     <a data-toggle="modal" data-target="#myModal" style="color:#666; cursor:pointer;"><span style="float:right; width:20px; text-align:center; margin-right:-4px;"><i class="fa fa-info" aria-hidden="true"></i></span></a>
-                  <h3 class="box-title">Notas</h3>
+                  <h3 class="box-title">No Campeonato</h3>
                 </div>
                 <div class="box-body">
+                     <div class="row">
+                         <h3 class="widget-user-username" style="color:black; text-align:center; margin-top:0px; margin-bottom:30px;font-weight:lighter;"><?php echo $dados['player_position']; ?></h3>
+                    </div>
+                    <div class="row" style="margin-bottom:20px;">
+                         <div class="col-xs-4 border-right" style="margin-top:-20px;">
+                             <div class="description-block">
+                              <span class="description-text">Gols</span>
+                                 <h5 class="description-header"><?php echo $dados['goals']; ?></h5>
+                             </div><!-- /.description-block -->
+                         </div><!-- /.col -->
+                         <div class="col-xs-4 border-right" style="margin-top:-20px;">
+                             <div class="description-block">
+                                 <span class="description-text">C.A.</span>
+                                 <h5 class="description-header"><?php echo $dados['yellow_cards']; ?></h5>
+                             </div><!-- /.description-block -->
+                         </div><!-- /.col -->
+                         <div class="col-xs-4" style="margin-top:-20px;">
+                             <div class="description-block">
+                                 <span class="description-text">C.V.</span>
+                                 <h5 class="description-header"><?php echo $dados['red_cards']; ?></h5>
+                             </div><!-- /.description-block -->
+                         </div>
+                  </div><!-- /.row -->
                     <canvas id="canvas" style="height:250px"></canvas>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

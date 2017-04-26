@@ -212,18 +212,18 @@
                                         </div>
                                         <div class="form-group">
                                           <label for="group">RG</label>
-                                          <input type="text" maxlength="14" class="form-control" id="rg" name="rg"  value="<?php echo $rg;?>" readonly>
+                                          <input type="text" maxlength="14" class="form-control" id="rg" name="rg"  value="<?php echo $rg;?>" >
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6" style="padding-left:30px;padding-right:30px;">
                                         <div class="form-group">
                                           <label for="group">CPF</label>
-                                          <input type="text" class="form-control" maxlength="15" id="cpf" name="cpf" readonly  value="<?php echo $cpf;?>">
+                                          <input type="text" class="form-control" maxlength="15" id="cpf" name="cpf"   value="<?php echo $cpf;?>">
                                         </div>
                                         <div class="form-group">
                                           <label for="group">Data de Nascimento</label><br>
-                                            <input id="datepicker" class="form-control" name="datepicker" type="text" readonly  value="<?php echo $birthdate;?>"/>
+                                            <input id="datepicker" class="form-control" name="datepicker" type="text"   value="<?php echo $birthdate;?>"/>
                                         </div>
                                     </div>
                                 </div>
@@ -253,9 +253,9 @@
                                                 <label for="group">Pé Dominante</label><br>
                                                 <select name="player_strongfoot" style="width:100%; height:35px;">
                                                   <option value="0" <?php if ($player_strongfoot == 0): ?> selected="selected"<?php endif; ?>>Indefinido</option>
-                                                    <option value="1" <?php if ($player_strongfoot == 1): ?> selected="selected"<?php endif; ?>>Ambidestro</option>
-                                                    <option value="2" <?php if ($player_strongfoot == 2): ?> selected="selected"<?php endif; ?>>Canhoto</option>
-                                                    <option value="3" <?php if ($player_strongfoot == 3): ?> selected="selected"<?php endif; ?>>Destro</option>
+                                                    <option value="1" <?php if ($player_strongfoot == 1): ?> selected="selected"<?php endif; ?>>Ambos</option>
+                                                    <option value="2" <?php if ($player_strongfoot == 2): ?> selected="selected"<?php endif; ?>>Direito</option>
+                                                    <option value="3" <?php if ($player_strongfoot == 3): ?> selected="selected"<?php endif; ?>>Esquerdo</option>
                                                 </select>
                                             </div>
                                         </div>
