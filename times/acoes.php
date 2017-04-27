@@ -19,8 +19,32 @@
     $acao = $_POST['acao'];
     $video = $_POST['video'];
 
-    if ($acao == "marcar") {
+     if ($acao == "salvar") {
         
+         $key = mysqli_real_escape_string($conn,$_POST['key']);
+         $nome = mysqli_real_escape_string($conn,$_POST['nome']);
+         $abrev = mysqli_real_escape_string($conn,$_POST['abrev']);
+         $grupo = mysqli_real_escape_string($conn,$_POST['grupo']);
+         $copa = mysqli_real_escape_string($conn,$_POST['copa']);
+         
+         $sql = "update teams set teams_name = UPPER('$nome'), short_name = UPPER('$abrev'), groups = UPPER('$grupo')  where admin_key = '$key';";
+        
+         if ($conn->query($sql) === TRUE) {
+             echo "";
+         } else {
+             echo "Erro na base de dados: " . $conn->error;
+         }
+         
+         //Ajuste de posicionamento dos times com a possível nova distribuição de grupos.
+         $sqlgrupos = mysqli_query($conn,"select distinct groups from teams where cup_id = ".$copa);
+         while ($times = mysqli_fetch_assoc($sqlgrupos)) {
+             $position = "update teams t1 join (select @rownum:=@rownum+1 rank, p.id_teams
+             from teams p, (SELECT @rownum:=0) r where p.groups = '".$times['groups']."' and cup_id = ".$copa." order by points desc, victories DESC, goals_balance DESC, goals_taken DESC) t2 on t1.id_teams = t2.id_teams set t1.rank = t2.rank;";
+             mysqli_query($conn, $position);    
+         }
+         
+    }else if ($acao == "marcar") {
+
         $inicio = $_POST['momento']; 
         $lado = $_POST['radio_lado']; 
         $partida = $_POST['partida']; 
@@ -31,29 +55,29 @@
         //$cmd = "./mode.sh o2wVpTDW15g 00:00:09 10 0 0 45 1 2>&1";// Duracao padrao agora é 10
         $cmd = './mode.sh '.$video.' '.$inicio.' 10 '.$lado.' 0 45 '.$partida.' '.$campo.' '.$is_two_cameras.' 2>&1';
         shell_exec($cmd);  
-        
+
     } else if ($acao == "estatisticas"){
-        
+
         $match = $_POST['match'];
         $player = $_POST['player'];
-        
+
         //JOGADA EM SI
         $sql = "INSERT INTO plays SET video_id='".$video."', datetime=NOW(), match_id=".$match.", plays_players_id=".$player.", plays_play_types_id=-1, available=1";
         //Setamos plays_play_types_id como -1 pra filtrar na hora de mostrar na página da partida, pra evitar mostrar repetido.
-        
+
         if ($conn->query($sql) === TRUE) {
             echo "";
         } else {
             echo "Erro na base de dados: " . $conn->error;
         }
-       
+
         //if ($tipo == 2 || $tipo == 3){
         //    $tipo = "3";
         //    $tipo_sql = "in (2,3)";
         //} else {
         //    $tipo_sql = " = ".$tipo;
         //}
-        
+
         //if ($tipo <> 5 && $tipo <> 0){// Bola mucha não tá contando nas stats
             //STATS BASE
             $stats = "
@@ -81,7 +105,7 @@
            //     echo "Erro na base de dados: " . $conn->error;
            // } 
         //}
-        
+
         //STATS 2 - PARTICIPAÇÕES - Para todo tipo de lance
         $stats2 = "
            UPDATE players AS t
@@ -138,13 +162,13 @@
             $master = "cup_id = cup_id * -1, team1 = team1 * -1, team2 = team2 * -1";
         }
         $sql = "update ".$table." set ".$master." where ".$id_var." = '".$id_key."'";
-        
+
         if ($conn->query($sql) === TRUE) {
             echo "";
         } else {
             echo "Erro na base de dados: " . $conn->error;
         }
-        
+
         //Atualizar caso seja delete de jogador
         $sql2 = " UPDATE teams t left JOIN (  select p.players_team_id, sum(1) as novos from players p group by players_team_id) AS p ON p.`players_team_id` = t.`id_teams`   SET  t.players_count = if(p.novos is null, 0 , p.novos);";
         if ($conn->query($sql2) === TRUE) {

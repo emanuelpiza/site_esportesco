@@ -87,6 +87,7 @@
 
 <head>
 
+    <?php include_once("../head.html"); ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -124,7 +125,7 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/app.js"></script>
     <script src="../js/Chart.js"></script>
-		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
+    <meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
 
     <script src="http://oss.maxcdn.com/jquery.mask/1.11.4/jquery.mask.min.js"></script>
     
@@ -150,10 +151,19 @@
             text-align:center;
             margin: 10px;
         }
+        .btn-circle {
+          width: 20px;
+          height: 20px;
+          text-align: center;
+          padding: 0;
+          font-size: 18px;
+          line-height: 0.8;
+          border-radius: 10px;
+        }
 	</style>
 </head>
 
-<body class="skin-blue sidebar-mini" style="padding-left:10px; padding-right:10px; background-color:#F0F8FF; ">
+<body  class="skin-blue sidebar-mini">
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -186,42 +196,23 @@
           </div>
         </nav>
       </header>
-        <div class="row">
-             <h1 class="titulo"><?php echo $dados['name']; ?></h1>
+    <div class="row">
+        <h1 class="titulo"><?php echo $dados['name']; ?></h1>
+    </div>
+        
+    <section class="section swatch-white-red">
+        <div class="container" style="margin-top:-60px;">
             <div class="col-md-6">
-          <!-- USERS LIST -->
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Times</h3>
-                <a href="../cadastro/time.php?id=<?php echo $id; ?>"><button class="btn btn-xs btn-success" style="float:right;">Adicionar</button></a>
-            </div><!-- /.box-header -->
-            <div class="box-body no-padding">
-              <ul class="users-list">
-                <?php while ($data2 = mysqli_fetch_assoc($sql_times)) {
-                    echo '
-                    <li>
-                        <a href="admintime.php?key=' . $data2['admin_key'] . '">
-                            <div class="figurinha">
-                                <img style="height:150px;" src="../cadastro/uploads/' . $data2['teams_picture'] . '">
-                                <span class="users-list-name">' . $data2['teams_name'] . '</span>
-                            </div>
-                        </a> 
-                    </li>';}
-                ?>
-              </ul><!-- /.users-list -->
-            </div><!-- /.box-body -->
-          </div><!--/.box -->
-        </div><!-- /.col -->
-            
-            <div class="col-md-6">
-            <div class="box" id="class_partidas">
-                <div class="box-header">
-                  <h3 class="box-title">Partidas</h3>
-                     <a href="../cadastro/partida.php?key=<?php echo $key; ?>"><button class="btn btn-xs btn-success" style="float:right;">Adicionar</button></a>
-                </div><!-- /.box-header -->
-                <div class="box-body no-padding">
-                    <div class="col-md-10 col-md-offset-1">
-                          <?php
+                <h4 class="headline" style="text-align:center;font-weight:lighter; margin-bottom:10px;">Partidas
+                    <a href="../cadastro/partida.php?key=<?php echo $key; ?>"><button class="btn btn-xs btn-success btn-circle" style="margin-top:0px;"><b>+</b></button></a>
+                 </h4>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width:100%; text-align:center; padding-top:20px; height:37px;">
+                                    <?php
                             try {
 
  
@@ -256,7 +247,27 @@
                             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
                             $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
                             $stmt->execute();
+                                // The "back" link
+                            $prevlink = ($data > $min) ? '<a href="?key='.$key.'&data=' . $last . '#class_partidas" title="Previous page"><span style="color:white; margin-right:14px; margin-top:0px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true" style="color:white;"></i></span></a>' : '<span style="color:white; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" style="color:#e74c3c;" aria-hidden="true"></i></span>';
 
+                            // The "forward" link
+                            $nextlink = ($data < $max) ? '<a href="?key='.$key.'&data=' . $next . '#class_partidas" title="Next page"><span style="color:white; margin-left:15px; margin-top:0px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true" style="color:white;"></i></span></a>' : '<span style="color:white; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" style="color:#e74c3c;" aria-hidden="true"></i></span>';
+
+                            // Display the paging information
+                            echo '
+                                 <div id="paging" class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:-10px;margin-top:-22px;">';
+                            if ($stmt->rowCount() > 0) {
+                                echo $prevlink, '<span style="font-family: \'Lalezar\', cursive; font-size:17px; font-weight:lighter; margin-top:-15px;">', $day," de ", $month_name,"</span>", $nextlink;
+                            }else{
+                                echo '<span style="font-family: \'Lalezar\', cursive; font-size:17px; font-weight:lighter; margin-top:0px;">Nenhuma Partida Encontrada</span></div>';
+                            }?>
+                                        
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="col-md-10 col-md-offset-1" style="margin-top:-20px;">
+                          <?php
                             // Do we have any results?
                             if ($stmt->rowCount() > 0) {
                                 // Define how we want to fetch the results
@@ -265,7 +276,7 @@
 
                                 // Display the results
                                 foreach ($iterator as $data5) {
-                                     echo '<hr style="margin-top:-2px;"></hr>
+                                     echo '<hr style="margin-top:-2px;">
                         <div class="row">
                             <div class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-15px;">
                                 <span style="font-family: Roboto, Arial, serif; font-size:12px;">'.$data5['fields_name'].' às '.$data5['hour'].'</span>
@@ -277,7 +288,7 @@
                                     <div class="col-xs-4" style="text-align:right; padding:0;">
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; margin-right:10px; color:black;">'.$data5['team1_name'].'</span>
                                         
-                                        <img src="../cadastro/uploads/'.$data5['t1_picture'].'" style="width:30px; margin-top: -10px; margin-right:5px;">
+                                        <img src="../cadastro/uploads/'.$data5['t1_picture'].'" style="max-width:30px; max-height:30px; margin-top: -10px; margin-right:5px;">
                                     </div>
                                 
                                     <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
@@ -292,7 +303,7 @@
                                     </div>
                                     
                                     <div  class="col-xs-4" style="padding:0;">
-                                        <img src="../cadastro/uploads/'.$data5['t2_picture'].'" style="width:30px; margin-top: -10px; margin-left:5px">
+                                        <img src="../cadastro/uploads/'.$data5['t2_picture'].'" style="max-width:30px; max-height:30px; margin-top: -10px; margin-left:5px">
                                         
                                         <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px ;text-align:left; margin-left:10px; color:black;">'.$data5['team2_name'].'</span>
                                   </div>
@@ -307,35 +318,66 @@
                             </div>';   
                                 }
 
-                            } else {
-                                echo '<p>Não foi possível exibir resultados.</p>';
-                            }  
-                                
-                            // The "back" link
-                            $prevlink = ($data > $min) ? '<a href="?key='.$key.'&data=' . $last . '#class_partidas" title="Previous page"><span style="color:black; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span></a>' : '<span style="color:white; margin-right:14px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-left" aria-hidden="true"></i></span>';
-
-                            // The "forward" link
-                            $nextlink = ($data < $max) ? '<a href="?key='.$key.'&data=' . $next . '#class_partidas" title="Next page"><span style="color:black; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>' : '<span style="color:white; margin-left:15px; margin-top:10px; font-size:17px; "><i class="fa fa-caret-right" aria-hidden="true"></i></span>';
-
-                            // Display the paging information
-                            echo '
-                                 <hr style="margin-top:-5px;"></hr>
-                                 <div id="paging" class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:0px;margin-top:-17px;">
-                                ', $prevlink, '<span style="font-family: \'Lalezar\', cursive; font-size:20px; font-wigth:bold; margin-top:-15px;">', $day," de ", $month_name,"</span>", $nextlink, '
-                            </div>     ';
-                                
-                                
+                            }       
                         } catch (Exception $e) {
                             echo '<p>', $e->getMessage(), '</p>';
-                        }?> 
-                    </div><!-- /.box-body -->
+                        }
+                        echo ' <hr style="margin-top:-2px;">';?> 
+                    </div>
+                    </div>
                 </div>
-              </div><!-- /.box -->
+            </div>
+            
+            <div class="col-md-6" style="margin-bottom:80px;">
+                <h4 class="headline" style="text-align:center; font-weight:lighter; margin-bottom:10px;">Times
+                   <a href="../cadastro/time.php?id=<?php echo $id; ?>"><button class="btn btn-xs btn-success btn-circle" style="margin-top:0px;"><b>+</b></button></a>
+                </h4>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width:40px;"><i class="fa fa-level-down" aria-hidden="true" style="color:white; float:left; margin-left:8px;"></i></th>
+                                    <th>Nome</th>
+                                    <th style="width:60px;">Abrev.</th>
+                                    <th style="width:80px;">Grupo</th>
+                                    <th style="width:30px;"><i class="fa fa-group" aria-hidden="true" style="color:white; float:right;"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <?php while ($data2 = mysqli_fetch_assoc($sql_times)) {
+                                    echo '
+                                    <tr>
+                                        <td>
+                                            <a href="admintime.php?key=' . $data2['admin_key'] . '">
+                                                <img style="max-width:30px; max-height:30px;" src="../cadastro/uploads/' . $data2['teams_picture'] . '">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="'. $data2['admin_key'] .'_nome" value="' . $data2['teams_name'] . '" style="padding-left:5px;padding-right:0px;"
+                                            onchange="alterar(\'' . $data2['admin_key'] . '\')">
+                                        </td>
+                                        <td>
+                                            <input type="text" maxlength="3" class="form-control" id="'. $data2['admin_key'] .'_abrev" value="' . $data2['short_name'] . '" style="padding-left:5px;padding-right:0px;"
+                                            onchange="alterar(\'' . $data2['admin_key'] . '\')">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control"  id="'. $data2['admin_key'] .'_grupo" value="' . $data2['groups'] . '"  style="padding-left:5px;padding-right:0px;" onchange="alterar(\'' . $data2['admin_key'] . '\')">
+                                        </td>
+                                        <td style="padding-top:15px;">
+                                            <button type="button" id="'. $data2['admin_key'] .'_btn" class="btn btn-success btn-xs" style="display: none; margin-right:-10px;" onclick="salvar(\'' . $data2['admin_key'] . '\')"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                                            <span id="'. $data2['admin_key'] .'_span">' . $data2['players_count'] . '</span>
+                                        </td>
+                                    ';}
+                                 ?>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        
-        
+    </section>
     
     <script>
         // Javascript to enable link to tab
@@ -351,7 +393,6 @@
         
         function remover(table, id) {   
            swal({
-             
                 title: "Excluir definitivamente?",
                 text: "Atenção! Esta ação não pode ser desfeita.",
                 type: "warning",
@@ -378,6 +419,45 @@
               } else {
                 swal("Cancelado", ":)", "error");
               }
+            });
+        };
+        
+        function alterar(key) {
+            document.getElementById(key + "_span").style.display = "none";
+            document.getElementById(key + "_btn").style.display = "block";
+        };
+        
+        function salvar(key) {
+        
+            var nome = document.getElementById(key + "_nome").value;
+            var abrev = document.getElementById(key + "_abrev").value;
+            var grupo = document.getElementById(key + "_grupo").value;
+           
+            swal({
+                title: "Salvar Alterações Feitas?",
+                text: "As mudanças para " + nome + " serão aplicadas também na área pública do campeonato.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sim, alterar!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function(isConfirm){
+                if (isConfirm) {
+                    $.post("acoes.php",{acao: "salvar", key: key, nome : nome, abrev: abrev, grupo: grupo, copa : <?php echo $id; ?>},function(data){}); 
+                    alterar(key);
+                    swal({
+                        title: "Concluído!",
+                        text: "Alteração realizada.",
+                        type: "success",
+                        showCancelButton: false,
+                        closeOnConfirm: false,
+                    });
+              } else {
+                swal("Cancelado", ":)", "error");
+              }  
+                document.getElementById(key + "_span").style.display = "block";
+                document.getElementById(key + "_btn").style.display = "none";
             });
         };
     </script>
