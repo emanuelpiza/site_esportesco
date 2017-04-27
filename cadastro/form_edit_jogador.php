@@ -19,7 +19,6 @@
 
     // ATRIBUINDO OUTROS PARÂMETROS
     $name = mysqli_real_escape_string($mysqli,$_POST['name']);
-    $team = mysqli_real_escape_string($mysqli,$_POST['team']);
     $rg = mysqli_real_escape_string($mysqli,$_POST['rg']);
     $cpf =  mysqli_real_escape_string($mysqli,$_POST['cpf']);
     $contact_name =  mysqli_real_escape_string($mysqli,$_POST['contact_name']);
@@ -34,7 +33,7 @@
     $admin_key =  mysqli_real_escape_string($mysqli,$_POST['admin_key']);
 
     //SQL
-    $sql = "UPDATE `players` set players_team_id = '".$team."', player_picture = '".$target_file."', rg = '".$rg."', cpf = '".$cpf."', birthdate = '".$birthdate."', email = '".$contact_email."', phone = '".$contact_telefone."', name_responsible = '".$contact_name."', players_name = UC_Words('".$name."'), substring_index('".$name."', ' ', -1))), player_strongfoot = '".$player_strongfoot."', player_height = '".$player_height."', shirt = '".$shirt."', player_position = '".$player_position."' where admin_key = '".$admin_key."'";
+    $sql = "UPDATE `players` set player_picture = '".$target_file."', rg = '".$rg."', cpf = '".$cpf."', birthdate = '".$birthdate."', email = '".$contact_email."', phone = '".$contact_telefone."', name_responsible = '".$contact_name."', players_name = UC_Words('".$name."'), player_strongfoot = '".$player_strongfoot."', player_height = '".$player_height."', shirt = '".$shirt."', player_position = '".$player_position."' where admin_key = '".$admin_key."'";
 
     mysqli_query($mysqli, $sql);
     $mysqli->close();

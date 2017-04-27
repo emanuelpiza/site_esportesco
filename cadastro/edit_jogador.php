@@ -20,6 +20,7 @@
     $phone = $jogador['phone'];
     $email = $jogador['email'];
     $player_picture = $jogador['player_picture'];
+    $id_players = $jogador['id_players'];
 
     $player_position = $jogador['player_position'];
     $player_strongfoot = $jogador['player_strongfoot'];
@@ -201,7 +202,6 @@
 
 						<form method="post" id="form" name="form" role="form"  action="" enctype="multipart/form-data">
                             <input type="hidden" name="admin_key" value="<?php echo $key;?>">
-                            <input type="hidden" name="team" value="<?php echo $id;?>">
                             <input type="hidden" name="image_name" value="<?php echo $player_picture;?>">
 							<div class="box-body">
                                 <div class="row">
@@ -310,6 +310,7 @@
                         </form> 
                         <div class="box-footer">
                             <button class="btn btn btn-default" onclick="window.location.replace('../times/admintime.php?key=<?php echo $key_team; ?>')" style="float:left;">Voltar</button>
+                            <button type="button"class="btn btn-danger btn-xs" style="margin-left:20px; margin-top:5px;"  onclick='remover("players", "<?php  echo $id_players ?>")'>Excluir Jogador</button>
                             <button class="btn btn btn-success" onclick="cadastrar();" style="float:right;">Salvar</button>
                         </div>
 					</div>
@@ -422,7 +423,36 @@
                             swal('Ops!', "Houve um problema no cadastro. Caso o problema persista, procure o responsável pelo campeonato.");
                         }
             });
-        } 
+        }
+         function remover(table, id) {   
+             swal({
+                title: "Excluir definitivamente?",
+                text: "Atenção! Esta ação não pode ser desfeita.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Sim, excluir!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        $.post("http://www.esportes.co/times/acoes.php",{acao: "remover", table: table, id: id},function(data){});
+                        swal({
+                            title: "Concluído!",
+                            text: "Exclusão feita com sucesso. Você será redirecionado para a página de criação de times da competição.",
+                            type: "success",
+                            showCancelButton: false,
+                            closeOnConfirm: false,
+                        },
+                        function(){
+                            window.location.replace("../times/admintime.php?key=<?php echo $key_team; ?>");
+                        });
+                  } else {
+                    swal("Cancelado", ":)", "error");
+                  }
+                });
+            };
   </script>
 </body>
 

@@ -203,52 +203,7 @@
     <section class="section swatch-white-red">
         <div class="container" style="margin-top:-80px;">
             <div class="col-md-6">
-                <h4 class="headline" style="text-align:center;">Times
-                   <a href="../cadastro/time.php?id=<?php echo $id; ?>"><button class="btn btn-xs btn-success btn-circle" style="margin-top:0px;"><b>+</b></button></a>
-                </h4>
-                <div class="row-fluid">
-                    <div class="span12">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th style="width:40px;"><i class="fa fa-level-down" aria-hidden="true" style="color:white; float:left; margin-left:8px;"></i></th>
-                                    <th>Nome</th>
-                                    <th style="width:60px;">Abrev.</th>
-                                    <th style="width:80px;">Grupo</th>
-                                    <th style="width:30px;"><i class="fa fa-group" aria-hidden="true" style="color:white; float:right;"></i></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                 <?php while ($data2 = mysqli_fetch_assoc($sql_times)) {
-                                    echo '
-                                    <tr>
-                                        <td>
-                                            <a href="admintime.php?key=' . $data2['admin_key'] . '">
-                                                <img style="max-width:30px; max-height:30px;" src="../cadastro/uploads/' . $data2['teams_picture'] . '">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" id="cpf" name="cpf" value="' . $data2['teams_name'] . '" style="padding-left:5px;padding-right:0px;">
-                                        </td>
-                                        <td>
-                                            <input type="text" maxlength="3" class="form-control" id="cpf" name="cpf" value="' . $data2['short_name'] . '" style="padding-left:5px;padding-right:0px;">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" id="cpf" name="cpf" value="' . $data2['groups'] . '"  style="padding-left:5px;padding-right:0px;">
-                                        </td>
-                                        <td style="padding-top:15px;">
-                                            25
-                                        </td>
-                                    ';}
-                                 ?>
-                               
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-6">
-                <h4 class="headline" style="text-align:center;">Partidas
+                <h4 class="headline" style="text-align:center;font-weight:lighter;">Partidas
                     <a href="../cadastro/partida.php?key=<?php echo $key; ?>"><button class="btn btn-xs btn-success btn-circle" style="margin-top:0px;"><b>+</b></button></a>
                  </h4>
                 <div class="row-fluid">
@@ -300,10 +255,13 @@
 
                             // Display the paging information
                             echo '
-                                 <div id="paging" class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:-10px;margin-top:-22px;">
-                                ', $prevlink, '<span style="font-family: \'Lalezar\', cursive; font-size:20px; font-wigth:bold; margin-top:-15px;">', $day," de ", $month_name,"</span>", $nextlink, '
-                            </div>     ';
-                                ?>
+                                 <div id="paging" class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:-10px;margin-top:-22px;">';
+                            if ($stmt->rowCount() > 0) {
+                                echo $prevlink, '<span style="font-family: \'Lalezar\', cursive; font-size:17px; font-weight:lighter; margin-top:-15px;">', $day," de ", $month_name,"</span>", $nextlink;
+                            }else{
+                                echo '<span style="font-family: \'Lalezar\', cursive; font-size:17px; font-weight:lighter; margin-top:0px;">Nenhuma Partida Encontrada</span></div>';
+                            }?>
+                                        
                                     </th>
                                 </tr>
                             </thead>
@@ -360,13 +318,57 @@
                             </div>';   
                                 }
 
-                            } else {
-                                echo '<p>Não foi possível exibir resultados.</p>';
-                            }        
+                            }       
                         } catch (Exception $e) {
                             echo '<p>', $e->getMessage(), '</p>';
                         }?> 
                     </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <h4 class="headline" style="text-align:center; font-weight:lighter;">Times
+                   <a href="../cadastro/time.php?id=<?php echo $id; ?>"><button class="btn btn-xs btn-success btn-circle" style="margin-top:0px;"><b>+</b></button></a>
+                </h4>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width:40px;"><i class="fa fa-level-down" aria-hidden="true" style="color:white; float:left; margin-left:8px;"></i></th>
+                                    <th>Nome</th>
+                                    <th style="width:60px;">Abrev.</th>
+                                    <th style="width:80px;">Grupo</th>
+                                    <th style="width:30px;"><i class="fa fa-group" aria-hidden="true" style="color:white; float:right;"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <?php while ($data2 = mysqli_fetch_assoc($sql_times)) {
+                                    echo '
+                                    <tr>
+                                        <td>
+                                            <a href="admintime.php?key=' . $data2['admin_key'] . '">
+                                                <img style="max-width:30px; max-height:30px;" src="../cadastro/uploads/' . $data2['teams_picture'] . '">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="cpf" name="cpf" value="' . $data2['teams_name'] . '" style="padding-left:5px;padding-right:0px;">
+                                        </td>
+                                        <td>
+                                            <input type="text" maxlength="3" class="form-control" id="cpf" name="cpf" value="' . $data2['short_name'] . '" style="padding-left:5px;padding-right:0px;">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="cpf" name="cpf" value="' . $data2['groups'] . '"  style="padding-left:5px;padding-right:0px;">
+                                        </td>
+                                        <td style="padding-top:15px;">
+                                            ' . $data2['players_count'] . '
+                                        </td>
+                                    ';}
+                                 ?>
+                               
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

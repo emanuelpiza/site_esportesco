@@ -138,13 +138,20 @@
             $master = "cup_id = cup_id * -1, team1 = team1 * -1, team2 = team2 * -1";
         }
         $sql = "update ".$table." set ".$master." where ".$id_var." = '".$id_key."'";
-        //$sql = "delete from ".$table." WHERE ".$id_var." = '".$id_key."'";
+        
         if ($conn->query($sql) === TRUE) {
             echo "";
         } else {
             echo "Erro na base de dados: " . $conn->error;
         }
         
+        //Atualizar caso seja delete de jogador
+        $sql2 = " UPDATE teams t left JOIN (  select p.players_team_id, sum(1) as novos from players p group by players_team_id) AS p ON p.`players_team_id` = t.`id_teams`   SET  t.players_count = if(p.novos is null, 0 , p.novos);";
+        if ($conn->query($sql2) === TRUE) {
+            echo "";
+        } else {
+            echo "Erro na base de dados: " . $conn->error;
+        }
     } 
     $conn->close();
 ?>
