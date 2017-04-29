@@ -1,4 +1,5 @@
-<header id="masthead" class="navbar navbar-sticky navbar-stuck swatch-red-white" role="banner" style="margin-left:-13px; margin-right:-13px;">
+<header id="masthead" class="navbar navbar-sticky navbar-stuck swatch-red-white" role="banner"
+        <?php if (isset($copa)){ echo 'style="margin-left:-13px; margin-right:-13px;"';}?>>
     <div class="container">
         <div class="navbar-header">
             <?php if (isset($nome_copa)) {
@@ -46,10 +47,7 @@
                                     <a href="http://www.esportes.co/times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
                                 </li>
                                 <li>
-                                    <a href="http://www.esportes.co/novo.php" class="btn btn-primary btn-sm  btn-icon-right" target="_self" style="width:180px; margin-right:15px; float:right;" >Lançar Novo
-                                        <span class="hex-alt">
-                                            <i class="fa fa-trophy" data-animation="swing"></i>
-                                        </span>
+                                    <a href="http://www.esportes.co/novo.php" class="btn btn-primary btn-sm" target="_self" style="width:180px; margin-right:15px; float:right; text-align:center;" >Lançar Novo
                                     </a>
                                 </li>
                             </ul>

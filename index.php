@@ -6,10 +6,10 @@
         include_once("./head.html");
         ?>
     </head>
-    <body class="pace-on pace-dot">
+    <body>
         <?php 
         include_once("./admin/analyticstracking.php");
-        include_once("./navbar2.html");
+        include_once("./navbar.php");
         ?>
         <div class="pace-overlay"></div>
         <div id="content" role="main">

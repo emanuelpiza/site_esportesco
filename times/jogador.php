@@ -9,7 +9,7 @@
         header("Location: index.php");
     }
     $id = $_GET['id'];
-    $sqlgeral = mysqli_query($mysqli,"SELECT p.*, players_stats_average, t.`teams_picture`, IF( p.`birthdate` is null, '-', (YEAR(CURRENT_TIMESTAMP) - YEAR(p.`birthdate`) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(p.`birthdate`, 5)))) as age FROM players p left join teams t on p.`players_team_id` = t.`id_teams` where id_players='$id'");
+    $sqlgeral = mysqli_query($mysqli,"SELECT p.*, players_stats_average, t.`teams_picture`, IF( p.`birthdate` is null, '-', (YEAR(CURRENT_TIMESTAMP) - YEAR(p.`birthdate`) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(p.`birthdate`, 5)))) as age, IF(shirt = '', '-', shirt) as shirt, IF(player_height = '', '-', player_height) as player_height, IF(player_position = '', '-', player_position) as player_position FROM players p left join teams t on p.`players_team_id` = t.`id_teams` where id_players='$id'");
     $dados = mysqli_fetch_assoc($sqlgeral);
     $jogador = $dados['id_players'];
     $time = $dados['players_team_id'];

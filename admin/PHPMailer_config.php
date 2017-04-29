@@ -16,8 +16,7 @@ $mail->Password = 'k1llerec';                           // SMTP password
 $mail->SMTPSecure = '';                            // Enable TLS encryption, `ssl` also accepted
 $mail->Port = 26;                                    // TCP port to connect to
 
-$mail->setFrom('contato@esportes.co', 'Contato');
-$mail->addReplyTo('contato@esportes.co', 'Contato');
+$mail->setFrom('contato@esportes.co', 'Esportes.Co');
 
 $mail->isHTML(true);                                  // Set email format to HTML
 
@@ -25,4 +24,4 @@ $mail->isHTML(true);                                  // Set email format to HTM
 //$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
 //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-$mail->addBCC('contato@esportes.co', 'Emanuel Piza');     // Add a recipient
+$mail->addBCC('contato@esportes.co', 'Esportes.Co');     // Add a recipient
