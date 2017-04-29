@@ -1,46 +1,36 @@
 <?php
-    # Evita o armazenamento em Cache
-    @header('Content-Type: text/html; charset=iso-8859-1');
-    @header("Cache-Control: no-cache, must-revalidate");  
-    @header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");  
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "k1llersql";
-    $dbname = "Esportes";
+    header('Content-Type: text/html; charset=utf-8');
+    session_start();
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    } 
+    ob_start();
+    include('../admin/dbcon/dbcon.php');
 
     $acao = $_POST['acao'];
     $video = $_POST['video'];
 
      if ($acao == "salvar") {
         
-         $key = mysqli_real_escape_string($conn,$_POST['key']);
-         $nome = mysqli_real_escape_string($conn,$_POST['nome']);
-         $abrev = mysqli_real_escape_string($conn,$_POST['abrev']);
-         $grupo = mysqli_real_escape_string($conn,$_POST['grupo']);
-         $copa = mysqli_real_escape_string($conn,$_POST['copa']);
+         $key = mysqli_real_escape_string($mysqli,$_POST['key']);
+         $nome = mysqli_real_escape_string($mysqli,$_POST['nome']);
+         $abrev = mysqli_real_escape_string($mysqli,$_POST['abrev']);
+         $grupo = mysqli_real_escape_string($mysqli,$_POST['grupo']);
+         $copa = mysqli_real_escape_string($mysqli,$_POST['copa']);
          
          $sql = "update teams set teams_name = UPPER('$nome'), short_name = UPPER('$abrev'), groups = UPPER('$grupo')  where admin_key = '$key';";
         
-         if ($conn->query($sql) === TRUE) {
+         if ($mysqli->query($sql) === TRUE) {
              echo "";
          } else {
-             echo "Erro na base de dados: " . $conn->error;
+             echo "Erro na base de dados: " . $mysqli->error;
          }
          
          //Ajuste de posicionamento dos times com a possível nova distribuição de grupos.
-         $sqlgrupos = mysqli_query($conn,"select distinct groups from teams where cup_id = ".$copa);
+         $sqlgrupos = mysqli_query($mysqli,"select distinct groups from teams where cup_id = ".$copa);
          while ($times = mysqli_fetch_assoc($sqlgrupos)) {
              $position = "update teams t1 join (select @rownum:=@rownum+1 rank, p.id_teams
              from teams p, (SELECT @rownum:=0) r where p.groups = '".$times['groups']."' and cup_id = ".$copa." order by points desc, victories DESC, goals_balance DESC, goals_taken DESC) t2 on t1.id_teams = t2.id_teams set t1.rank = t2.rank;";
-             mysqli_query($conn, $position);    
+             mysqli_query($mysqli, $position);    
          }
          
     }else if ($acao == "marcar") {
@@ -65,10 +55,10 @@
         $sql = "INSERT INTO plays SET video_id='".$video."', datetime=NOW(), match_id=".$match.", plays_players_id=".$player.", plays_play_types_id=-1, available=1";
         //Setamos plays_play_types_id como -1 pra filtrar na hora de mostrar na página da partida, pra evitar mostrar repetido.
 
-        if ($conn->query($sql) === TRUE) {
+        if ($mysqli->query($sql) === TRUE) {
             echo "";
         } else {
-            echo "Erro na base de dados: " . $conn->error;
+            echo "Erro na base de dados: " . $mysqli->error;
         }
 
         //if ($tipo == 2 || $tipo == 3){
@@ -99,10 +89,10 @@
                     #Passa para a base 100
                     *100) where t.`players_team_id`= ".$time.";";
 
-           // if ($conn->query($stats) === TRUE) {
+           // if ($mysqli->query($stats) === TRUE) {
           //      echo "";
           //  } else {
-           //     echo "Erro na base de dados: " . $conn->error;
+           //     echo "Erro na base de dados: " . $mysqli->error;
            // } 
         //}
 
@@ -127,18 +117,18 @@
                 #Passa para a base 100
                 *100) where t.`players_team_id`= ".$time.";";
 
-      //  if ($conn->query($stats2) === TRUE) {
+      //  if ($mysqli->query($stats2) === TRUE) {
        //     echo "";
       //  } else {
-      //      echo "Erro na base de dados: " . $conn->error;
+      //      echo "Erro na base de dados: " . $mysqli->error;
       //  }   
     } else if ($acao == "deletar"){
         $sql = "UPDATE plays SET available=0 WHERE video_id='".$video."'";
 
-        if ($conn->query($sql) === TRUE) {
+        if ($mysqli->query($sql) === TRUE) {
             echo "";
         } else {
-            echo "Erro na base de dados: " . $conn->error;
+            echo "Erro na base de dados: " . $mysqli->error;
         } 
     //Modelo de remoção genérico    
     } else if ($acao == "remover"){
@@ -153,29 +143,29 @@
         } else if ($table == "matches"){
             //No caso de partidas, temos que remover as marcações também
             $sql = "update notes set match_id = match_id * -1, player = player * -1 where match_id = '".$id_key."'";
-            if ($conn->query($sql) === TRUE) {
+            if ($mysqli->query($sql) === TRUE) {
                 echo "";
             } else {
-                echo "Erro na base de dados: " . $conn->error;
+                echo "Erro na base de dados: " . $mysqli->error;
             }
             $id_var = "id";
             $master = "cup_id = cup_id * -1, team1 = team1 * -1, team2 = team2 * -1";
         }
         $sql = "update ".$table." set ".$master." where ".$id_var." = '".$id_key."'";
 
-        if ($conn->query($sql) === TRUE) {
+        if ($mysqli->query($sql) === TRUE) {
             echo "";
         } else {
-            echo "Erro na base de dados: " . $conn->error;
+            echo "Erro na base de dados: " . $mysqli->error;
         }
 
         //Atualizar caso seja delete de jogador
         $sql2 = " UPDATE teams t left JOIN (  select p.players_team_id, sum(1) as novos from players p group by players_team_id) AS p ON p.`players_team_id` = t.`id_teams`   SET  t.players_count = if(p.novos is null, 0 , p.novos);";
-        if ($conn->query($sql2) === TRUE) {
+        if ($mysqli->query($sql2) === TRUE) {
             echo "";
         } else {
-            echo "Erro na base de dados: " . $conn->error;
+            echo "Erro na base de dados: " . $mysqli->error;
         }
     } 
-    $conn->close();
+    $mysqli->close();
 ?>

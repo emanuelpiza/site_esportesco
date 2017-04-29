@@ -1,63 +1,67 @@
-<?php
-    session_start(); 
-?>
-<!--<style>
-.image-cropper {
-    width: 32px;
-    height: 32px;
-    position: relative;
-    overflow: hidden;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
-    border-radius: 50%;
-    margin-top:-5px;
-}
-.img_perfil {
-    display: inline;
-    margin: 0 auto;
-    height: 100%;
-    width: auto;
-    border-radius: 32px;
-    border: 2px solid #FFFFFF;
-    width: 32px;
-    height: 32px; 
-}
-</style>
-<div class="pace-overlay"></div>
-<header id="masthead" class="navbar navbar-sticky swatch-red-white" role="banner">
+<header id="masthead" class="navbar navbar-sticky navbar-stuck swatch-red-white" role="banner" style="margin-left:-13px; margin-right:-13px;">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".main-navbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+            <?php if (isset($nome_copa)) {
+                echo '
+                <a href="./copa.php?id='.$copa.'">       
+                    <span style="font-size:18px; margin-top:13px; margin-left:10px; position:absolute; font-family:\'Oleo Script\', cursive;">'.$nome_copa.'</span> 
+                </a>';
+            }?>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".main-navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
             </button>
-            <a href="http://www.esportes.co/index.php" class="navbar-brand">
-                <img src="http://www.esportes.co/img/logo_transp.png" style="margin-top:-10px;width:50px;">
-            </a>
         </div>
-        <nav class="collapse navbar-collapse main-navbar" role="navigation">
-            <div class="sidebar-widget widget_search pull-right">
-            </div>
+        <nav class="navbar-collapse main-navbar collapse" role="navigation" aria-expanded="false" style="height: 1px;">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://www.esportes.co/organizadores.php">Adicione sua Liga</a> 
-                </li>
-                <li><a href="http://www.esportes.co/blog.php">Blog</a> 
-                </li>
-                <li>
-                    php if ($_SESSION['FBID']): ?>      <!--  After user login  --
-                    <a href="http://www.esportes.co/1353/logout.php">
-                        <div class="image-cropper">
-                            <img src="https://graph.facebook.com/<php echo $_SESSION['FBID']; ?>/picture" class="img_perfil"/>
-                        </div>
+                <li class="dropdown">
+                    <a href="http://www.esportes.co/index.php" class="dropdown-toggle"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Notícias
                     </a>
-                    ?php else: ?>     <!-- Before login --
-                       <a href="http://www.esportes.co/1353/fbconfig.php">Entrar</a>
-                    ?php endif ?>
+                </li>
+                <li class="dropdown menu-item-object-oxy_mega_menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                         <i class="fa fa-trophy" aria-hidden="true"></i> Campeonatos
+                    </a>
+                    <ul class="dropdown-menu row">
+                        <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
+                            <strong>Futebol de Campo</strong>
+                            <ul role="menu">
+                                <li>
+                                    <a href="http://www.esportes.co/times/copa.php?id=17">Série - A</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns"><strong>Futebol Society</strong>
+                            <ul role="menu">
+                                <li>
+                                    <a href="http://www.esportes.co/times/copa.php?id=1">15º Copa Benteler</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
+                            <strong>Futsal</strong>
+                            <ul role="menu">
+                                <li>
+                                    <a href="http://www.esportes.co/times/copa.php?id=23">Liga Futsal Rioclarense Masculino</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.esportes.co/times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.esportes.co/novo.php" class="btn btn-primary btn-sm  btn-icon-right" target="_self" style="width:180px; margin-right:15px; float:right;" >Lançar Novo
+                                        <span class="hex-alt">
+                                            <i class="fa fa-trophy" data-animation="swing"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                 <li class="dropdown">
+                    <a href="http://www.esportes.co/anuncie.php" class="dropdown-toggle">
+                        <i class="fa fa-bullseye" aria-hidden="true"></i> Anuncie
+                    </a>
                 </li>
             </ul>
         </nav>
     </div>
-</header>-->
+</header>

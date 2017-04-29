@@ -355,14 +355,14 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" id="'. $data2['admin_key'] .'_nome" value="' . $data2['teams_name'] . '" style="padding-left:5px;padding-right:0px;"
-                                            onchange="alterar(\'' . $data2['admin_key'] . '\')">
+                                            onkeydown="alterar(\'' . $data2['admin_key'] . '\')">
                                         </td>
                                         <td>
                                             <input type="text" maxlength="3" class="form-control" id="'. $data2['admin_key'] .'_abrev" value="' . $data2['short_name'] . '" style="padding-left:5px;padding-right:0px;"
-                                            onchange="alterar(\'' . $data2['admin_key'] . '\')">
+                                            onkeydown="alterar(\'' . $data2['admin_key'] . '\')">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control"  id="'. $data2['admin_key'] .'_grupo" value="' . $data2['groups'] . '"  style="padding-left:5px;padding-right:0px;" onchange="alterar(\'' . $data2['admin_key'] . '\')">
+                                            <input type="text" class="form-control"  id="'. $data2['admin_key'] .'_grupo" value="' . $data2['groups'] . '"  style="padding-left:5px;padding-right:0px;" onkeydown="alterar(\'' . $data2['admin_key'] . '\')">
                                         </td>
                                         <td style="padding-top:15px;">
                                             <button type="button" id="'. $data2['admin_key'] .'_btn" class="btn btn-success btn-xs" style="display: none; margin-right:-10px;" onclick="salvar(\'' . $data2['admin_key'] . '\')"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>

@@ -14,8 +14,10 @@
     $jogador = $dados['id_players'];
     $time = $dados['players_team_id'];
 
-    $sqlcup = mysqli_query($mysqli,"SELECT c.id from cups c left join teams t on c.id = t.cup_id where t.id_teams = '$time'");
-    $cup_id = mysqli_fetch_assoc($sqlcup)['id'];
+    $sqlcup = mysqli_query($mysqli,"SELECT c.id, c.name from cups c left join teams t on c.id = t.cup_id where t.id_teams = '$time'");
+    $dados_copa = mysqli_fetch_assoc($sqlcup);
+    $copa = $dados_copa['id'];
+    $nome_copa = $dados_copa['name'];
 
 // Lances
     $sqllances = mysqli_query($mysqli,"SELECT p.*, CONCAT(t1.`teams_name`, ' vs ', t2.`teams_name`, ' - ', date_format(m.datetime,'%d/%m')) as partida FROM plays p left join matches m on p.`match_id` = m.`id` left join teams t1 on m.`team1` = t1.`id_teams` left join teams t2 on m.team2 = t2.`id_teams` where ( assistance = '$id' or plays_players_id='$id') and available in (1,2) order by datetime DESC");
@@ -53,6 +55,7 @@
     <!-- Ícones -->
     <link rel="shortcut icon" href="../img/favicon-trophy.ico" />
     <link href="https://fonts.googleapis.com/css?family=Denk+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet">
     
     <script src="./js/Chart.js"></script>
 		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
@@ -228,70 +231,8 @@
 <body class="skin-blue" style="padding-left:10px; padding-right:10px; background-color:#F0F8FF;">
     <?php 
         include_once("./admin/analyticstracking.php");
+        include("../navbar.php");
     ?> 
-    
-    <header id="masthead" class="navbar navbar-sticky navbar-stuck swatch-red-white" role="banner" style="margin-left:-13px;margin-right:-13px;">
-        <div class="container">
-            <div class="navbar-header">
-                <a href="./copa.php?id=<?php echo $cup_id; ?>">       
-                    <span style="font-size:35px; margin-left:10px; position:absolute;"><i class="fa fa-trophy" aria-hidden="true"></i></span> 
-                </a>
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".main-navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                </button>
-            </div>
-            <nav class="navbar-collapse main-navbar collapse" role="navigation" aria-expanded="false" style="height: 1px;">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="http://www.esportes.co/index.php" class="dropdown-toggle"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Notícias
-                        </a>
-                    </li>
-                    <li class="dropdown menu-item-object-oxy_mega_menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                             <i class="fa fa-trophy" aria-hidden="true"></i> Campeonatos Atuais
-                        </a>
-                        <ul class="dropdown-menu row">
-                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
-                                <strong>Futebol de Campo</strong>
-                                <ul role="menu">
-                                    <li>
-                                        <a href="../times/copa.php?id=17">Série - A</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns"><strong>Futebol Society</strong>
-                                <ul role="menu">
-                                    <li>
-                                        <a href="../times/copa.php?id=1">15º Copa Benteler</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
-                                <strong>Futsal</strong>
-                                <ul role="menu">
-                                    <li>
-                                        <a href="../times/copa.php?id=23">Liga Futsal Rioclarense Masculino</a>
-                                    </li>
-                                    <li>
-                                        <a href="../times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="http://www.esportes.co/novo.php" class="dropdown-toggle">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Criar Novo
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="http://www.esportes.co/anuncie.php" class="dropdown-toggle">
-                            <i class="fa fa-heartbeat" aria-hidden="true"></i> Anuncie
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">

@@ -18,6 +18,11 @@
     $count_videos = mysqli_fetch_assoc($sqlcount_videos);
     $nome = $dados['teams_name'];
     $short_name = $dados['short_name'];
+    $copa = $dados['cup_id'];
+
+    $sqlcup = mysqli_query($mysqli,"SELECT name from cups where id = '$copa'");
+    $nome_copa = mysqli_fetch_assoc($sqlcup)['name'];
+
     $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available in (1,2) and teams_name LIKE '%".$nome."%' ");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     $sql_anos = mysqli_query($mysqli,"SELECT YEAR(teams_schedule_date) as year FROM teams WHERE id_teams='$id'");
@@ -53,10 +58,10 @@
 
 
 <!DOCTYPE html>
-<html lang="en" content="text/html; charset=utf-8">
+<html lang="en" content="text/html; charset=utf-8" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
 
 <head>
-
+    <meta property="og:image" content="../cadastro/uploads/<?php echo $dados['teams_picture']?>">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -112,6 +117,7 @@
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet">
     		<style>
 			canvas{
 			}
@@ -274,6 +280,19 @@
             padding-right: 0px;
           }
         }
+        .wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            padding-top: 25px;
+            height: 0;
+        }
+        .wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 		</style>
     <!-- Hotjar Tracking Code for http://www.esportes.co -->
     <script>
@@ -301,71 +320,8 @@
     </script>
     <?php 
         include_once("../admin/analyticstracking.php");
+        include("../navbar.php");
     ?>
-    
-    
-    <header id="masthead" class="navbar navbar-sticky navbar-stuck swatch-red-white" role="banner" style="margin-left:-13px;margin-right:-13px;">
-        <div class="container">
-            <div class="navbar-header">
-                <a href="./copa.php?id=<?php echo $dados['cup_id'];?>">       
-                    <span style="font-size:35px; margin-left:10px; position:absolute;"><i class="fa fa-trophy" aria-hidden="true"></i></span> 
-                </a>
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".main-navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                </button>
-            </div>
-            <nav class="navbar-collapse main-navbar collapse" role="navigation" aria-expanded="false" style="height: 1px;">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="http://www.esportes.co/index.php" class="dropdown-toggle"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Notícias
-                        </a>
-                    </li>
-                    <li class="dropdown menu-item-object-oxy_mega_menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                             <i class="fa fa-trophy" aria-hidden="true"></i> Campeonatos Atuais
-                        </a>
-                        <ul class="dropdown-menu row">
-                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
-                                <strong>Futebol de Campo</strong>
-                                <ul role="menu">
-                                    <li>
-                                        <a href="../times/copa.php?id=17">Série - A</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns"><strong>Futebol Society</strong>
-                                <ul role="menu">
-                                    <li>
-                                        <a href="../times/copa.php?id=1">15º Copa Benteler</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown col-md-4 menu-item-object-oxy_mega_columns">
-                                <strong>Futsal</strong>
-                                <ul role="menu">
-                                    <li>
-                                        <a href="../times/copa.php?id=23">Liga Futsal Rioclarense Masculino</a>
-                                    </li>
-                                    <li>
-                                        <a href="../times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="http://www.esportes.co/novo.php" class="dropdown-toggle">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Criar Novo
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="http://www.esportes.co/anuncie.php" class="dropdown-toggle">
-                            <i class="fa fa-heartbeat" aria-hidden="true"></i> Anuncie
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
     
     <div class="row">
         <h1 class="titulo"><?php echo $dados['name']; ?></h1>
@@ -466,33 +422,7 @@
                 ?>
               </ul><!-- /.users-list -->
             </div><!-- /.box-body -->
-          </div><!--/.box -->
-             
-            <div class="box">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Top 3 Artilharia Interna</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <table class="table table-bordered">
-                    <tr>
-                      <th style="width: 10px">#</th>
-                      <th>Nome</th>
-                      <th style="width: 90px; text-align:center;">Gols</th>
-                    </tr>
-                    <tr>
-                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." order by p.goals DESC, p.players_name LIMIT 3");
-                        $posicao = 1;
-                    while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
-                    echo '
-                    <tr>
-                      <td>'.$posicao.'</td>
-                      <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
-                      <td style="text-align:center;"><span>'.$data8['goals'].'</span></td>
-                    </tr>';
-                    $posicao = $posicao+1;}?>
-                  </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
+          </div>
         </div><!-- /.col -->
         
         
@@ -572,7 +502,32 @@
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
           
-             
+             <div class="box">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Top 3 Artilharia Interna</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-bordered">
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Nome</th>
+                      <th style="width: 90px; text-align:center;">Gols</th>
+                    </tr>
+                    <tr>
+                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where t.id_teams = ".$id." order by p.goals DESC, p.players_name LIMIT 3");
+                        $posicao = 1;
+                    while ($data8 = mysqli_fetch_assoc($sqlartilharia)) {
+                    echo '
+                    <tr>
+                      <td>'.$posicao.'</td>
+                      <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
+                      <td style="text-align:center;"><span>'.$data8['goals'].'</span></td>
+                    </tr>';
+                    $posicao = $posicao+1;}?>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            
             <div class="box">
                 <div class="box-header with-border">
                   <h3 class="box-title">Cartões</h3>
@@ -600,7 +555,111 @@
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
+            
+            
+            <div class="box">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Aprimoramentos</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="col-xs-4" style="text-align:center;">
+                        <a href="#" data-toggle="modal" data-target="#myModal_fotos" style="font-family: \'Poiret One\', Arial, serif; color:black;">
+                            <div class="row">
+                                 <div style="width:100px; height:135px; display:block; margin-right:auto; margin-left:auto; padding: 5px; background-color: #FEFEFE; box-shadow: 0px 1px 1px 0px grey;margin-bottom:5px;">
+                                    <img src="../img/peoplebw.png" class="estrela img-responsive" style="width:90px; height:105px; display:block; margin:auto; margin-bottom:5px;">
+                                    <span class="users-list-name" style="margin-top:5px;">Jogador</span>
+                                </div>
+                            </div>
+                            <h5 class="box-title">Fotos / Vídeos</h5>
+                        </a>
+                    </div>
+                     <div class="col-xs-4" style="text-align:center;">
+                        <a href="#" data-toggle="modal" data-target="#myModal_brasao" style="font-family: \'Poiret One\', Arial, serif; color:black;">
+                            <div class="row">
+                                <img src="../cadastro/uploads/0.png" class="estrela img-responsive" style="height:130px; width:100px; display:block; margin:auto; margin-bottom:10px;">
+                            </div>
+                            <h5 class="box-title">Brasão</h5>
+                         </a>
+                    </div>
+                    <div class="col-xs-4" style="text-align:center;">
+                        <a href="#" data-toggle="modal" data-target="#myModal_uniforme" style="font-family: \'Poiret One\', Arial, serif; color:black;">
+                            <div class="row">
+                                <img src="../img/shirt.png" class="estrela img-responsive" style="height:140px; width:100px; display:block; margin:auto;">
+                            </div>
+                            <h5 class="box-title">Uniforme</h5>
+                        </a>
+                    </div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
         </div><!-- /.col -->
+    </div>
+    
+    <!-- Modal FOTOS -->
+    <div class="modal fade" id="myModal_fotos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Todo mundo bem na foto.</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="wrapper">  
+                <iframe type="text/html" id="video_iframe" width="100%" height="100%" src="https://www.youtube.com/embed/rkL2FqYbCwg?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal BRASÃO -->
+    <div class="modal fade" id="myModal_brasao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">E a imagem do seu time?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="wrapper">  
+                <iframe type="text/html" id="video_iframe" width="100%" height="100%" src="https://www.youtube.com/embed/0W7vE2aDfKc?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
+              </div>
+              <h5 class="box-title" style="text-align:center; font-family: \'Poiret One\', Arial, serif; font-size:16px;"><i class="fa fa-envelope" aria-hidden="true"></i>: contato@esportes.co<br /><i class="fa fa-whatsapp" aria-hidden="true"></i>: (19) 99975-0044</h5>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal Uniforme -->
+    <div class="modal fade" id="myModal_uniforme" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Tá chegando a hora de renovar o armário?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="wrapper">  
+                <iframe type="text/html" id="video_iframe" width="100%" height="100%" src="https://www.youtube.com/embed/dUpY94oN49Q?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
+              </div>
+                <h5 class="box-title" style="text-align:center; font-family: \'Poiret One\', Arial, serif; font-size:16px;"><i class="fa fa-envelope" aria-hidden="true"></i>: contato@esportes.co<br /><i class="fa fa-whatsapp" aria-hidden="true"></i>: (19) 99975-0044</h5>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+          </div>
+        </div>
+      </div>
     </div>
     
     <script>

@@ -2348,3 +2348,5 @@
 \nj2logVEyuDc__0h0m12s_10, ,Inicio: 2017-04-19 16:44:19 Final : 20170419 16:44:22
 2017-04-22 22:26:27 arquivo= upyykR9lhdY inicio= 1839  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 576
 \nupyykR9lhdY__0h30m48s_10, ,Inicio: 2017-04-22 22:26:27 Final : 20170422 22:32:25
+2017-04-27 15:01:04 arquivo= 8RI9fXxbSrI inicio= 104  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 84
+\n8RI9fXxbSrI__0h1m53s_10, ,Inicio: 2017-04-27 15:01:04 Final : 20170427 15:01:16

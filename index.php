@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-        <title>Esportes.Co - O Portal do Atleta Amador</title>
+        <title>Esportes.Co - O Portal do Esporte Amador</title>
         <?php 
         include_once("./head.html");
         ?>
