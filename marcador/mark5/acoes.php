@@ -92,27 +92,20 @@
             $balance = "UPDATE teams SET goals_balance =
                (SELECT SUM(gols) FROM
                 ( 
-                    select sum(score1 - score2) gols from matches where team1 = ".$times['id_teams']."
+                    select sum(score1 - score2) gols from matches where team1 = ".$times['id_teams']." and phase = 0
                     UNION ALL
-                    select sum(score2 - score1) gols from matches where team2 = ".$times['id_teams']."
+                    select sum(score2 - score1) gols from matches where team2 = ".$times['id_teams']." and phase = 0
                 ) s) where id_teams = ".$times['id_teams'].";";
             mysqli_query($mysqli, $balance); 
             $balance2 = " update teams set goals_balance = 0 where goals_balance is null;";
             mysqli_query($mysqli, $balance2); 
-            $goals = "UPDATE teams SET goals =
-               (SELECT SUM(gols) FROM
-                ( 
-                    select sum(score1) gols from matches where team1 = ".$times['id_teams']."
-                    UNION ALL
-                    select sum(score2) gols from matches where team2 = ".$times['id_teams']."
-                ) s) where id_teams = ".$times['id_teams'].";";
-            mysqli_query($mysqli, goals); 
+
             $goals_taken = "UPDATE teams SET goals_taken =
                (SELECT SUM(gols) FROM
                 ( 
-                    select sum(score2) gols from matches where team1 = ".$times['id_teams']."
+                    select sum(score2) gols from matches where team1 = ".$times['id_teams']." and phase = 0
                     UNION ALL
-                    select sum(score1) gols from matches where team2 = ".$times['id_teams']."
+                    select sum(score1) gols from matches where team2 = ".$times['id_teams']." and phase = 0
                 ) s) where id_teams = ".$times['id_teams'].";";
             mysqli_query($mysqli, $goals_taken); 
             $goals_taken2 = " update teams set goals_taken = 0 where goals_taken is null;";
@@ -121,19 +114,19 @@
             $goals = "UPDATE teams SET goals =
                (SELECT SUM(gols) FROM
                 ( 
-                    select sum(score1) gols from matches where team1 = ".$times['id_teams']."
+                    select sum(score1) gols from matches where team1 = ".$times['id_teams']." and phase = 0
                     UNION ALL
-                    select sum(score2) gols from matches where team2 = ".$times['id_teams']."
+                    select sum(score2) gols from matches where team2 = ".$times['id_teams']." and phase = 0
                 ) s) where id_teams = ".$times['id_teams'].";";
             mysqli_query($mysqli, $goals); 
             $goals2 = " update teams set goals = 0 where goals is null;";
             mysqli_query($mysqli, $goals2); 
             
-            $victories = "UPDATE teams SET victories = (SELECT SUM(count) FROM  (  select count(1) count from matches where team1 = ".$times['id_teams']." and score1 > score2 UNION ALL select count(1) count from matches where team2 = ".$times['id_teams']." and score2 > score1 ) s) where id_teams = ".$times['id_teams'].";";
+            $victories = "UPDATE teams SET victories = (SELECT SUM(count) FROM  (  select count(1) count from matches where team1 = ".$times['id_teams']." and score1 > score2 and phase = 0 UNION ALL select count(1) count from matches where team2 = ".$times['id_teams']." and score2 > score1  and phase = 0) s) where id_teams = ".$times['id_teams'].";";
             mysqli_query($mysqli, $victories); 
-            $draws = "UPDATE teams SET draws = (select count(1) count from matches where (team1 = ".$times['id_teams']." or team2 = ".$times['id_teams'].") and score1 = score2 and datetime < NOW() ) where id_teams = ".$times['id_teams'].";";
+            $draws = "UPDATE teams SET draws = (select count(1) count from matches where (team1 = ".$times['id_teams']." or team2 = ".$times['id_teams'].") and score1 = score2 and datetime < NOW() and phase = 0 ) where id_teams = ".$times['id_teams'].";";
             mysqli_query($mysqli, $draws);     
-            $losses = "UPDATE teams SET losses = (SELECT SUM(count) FROM ( select count(1) count from matches where team1 = ".$times['id_teams']." and score1 < score2 UNION ALL select count(1) count from matches where team2 = ".$times['id_teams']." and score2 < score1 ) s) where id_teams = ".$times['id_teams'].";";
+            $losses = "UPDATE teams SET losses = (SELECT SUM(count) FROM ( select count(1) count from matches where team1 = ".$times['id_teams']." and score1 < score2 and phase = 0 UNION ALL select count(1) count from matches where team2 = ".$times['id_teams']." and score2 < score1  and phase = 0) s) where id_teams = ".$times['id_teams'].";";
             mysqli_query($mysqli, $losses);      
         }
         $points = "UPDATE teams SET points = (victories * 3 + draws);";

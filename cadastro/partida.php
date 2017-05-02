@@ -5,14 +5,11 @@
     ob_start();
     include('../admin/dbcon/dbcon.php');
 
-    if (isset($_SESSION["logname"])) {
-        $_SESSION["error1"] = "Please Sign in";
-        header("Location: index.php");
-    }
-    $key = $_GET['key'];
+    $key = mysqli_real_escape_string($mysqli,$_GET['key']);
     $sqlgeral = mysqli_query($mysqli,"SELECT * FROM cups where admin_key='$key'");
-    $id = mysqli_fetch_assoc($sqlgeral)['id'];
-    
+    $dados_cup = mysqli_fetch_assoc($sqlgeral);
+    $id = $dados_cup['id'];
+    $name = $dados_cup['name'];
 
     $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available in (1,2) and teams_name LIKE '%".$nome."%' ");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
@@ -22,43 +19,130 @@
     while ($data4 = mysqli_fetch_assoc($sql_times)) {
         $selecoes .= "<option value=".$data4['id_teams'].">".$data4['teams_name']."</option>" ;
     }
-    $sql_campos = mysqli_query($mysqli,"SELECT * FROM fields order by fields_name");
+    $sql_campos = mysqli_query($mysqli,"SELECT * FROM fields where cup_id = '$id' order by fields_name");
     while ($data4 = mysqli_fetch_assoc($sql_campos)) {
         $selecoes_campos .= "<option value='".$data4['fields_name']."'>".$data4['fields_name']."</option>" ;
     }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en" content="text/html; charset=utf-8">
-
 <head>
-    
-    <meta charset="utf-8">
+    <link rel="shortcut icon" href="../img/favicon-trophy.ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="Emanuel Piza" >
+    <meta name="author" content="">
 
-    <!-- Javascript - Nosso 
-    <script src="marcador.js" type="text/javascript"></script>-->
-    
-    <title>Cadastro de Partidas</title>
-    
+    <title>Partidas - <?php echo $name; ?> - Esportes.Co</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../css/1-col-portfolio.css" rel="stylesheet">
+	
+	<!-- AdminLTE CSS -->
+	<link rel="stylesheet" href="../css/AdminLTE.min.css">
+	<link rel="stylesheet" href="../css/_all-skins.min.css">
+
+	<!-- Font awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	
     <!-- Sweet Alert -->
     <script src="../js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/sweetalert.css">
     
-    
-    <script src="../js/jquery.js"></script>
+   <script src="../js/jquery.js"></script>
     <script src="../js/moment/min/moment.min.js"></script>
     <script type="text/javascript" src="../js/moment/locale/pt-br.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    
+    <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet">
     <style>
-        /*!
+        .img-container img {
+          max-width: 100%;
+        }
+		.image-preview-input {
+			position: relative;
+			overflow: hidden;
+			margin: 0px;    
+			color: #333;
+			background-color: #fff;
+			border-color: #ccc;    
+		}
+		.image-preview-input input[type=file] {
+			position: absolute;
+			top: 0;
+			right: 0;
+			margin: 0;
+			padding: 0;
+			font-size: 20px;
+			cursor: pointer;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+		.image-preview-input-title {
+			margin-left:2px;
+		}
+		.im-centered {
+			margin: auto;
+			max-width: 500px;
+		}
+        .exibicao{
+            width: 130px;
+            height: 190px;
+            padding: 5px;
+            background-color: #FEFEFE;
+            box-shadow: 0px 1px 1px 0px grey;
+            margin: 0 auto;
+        }
+        #estrela_content{
+            display:-moz-box;
+            -moz-box-pack:center;
+            -moz-box-align:center;
+            display:-webkit-box;
+            -webkit-box-pack:center;
+            -webkit-box-align:center;
+            display:box;
+            box-pack:center;
+            box-align:center;
+            text-align: center;
+            margin-bottom:10px;
+        }   
+        .estrela {
+            width:50%;
+        }         
+        body{
+            background: #3a6186; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to left, #3a6186 , #89253e); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to left, #e74c3c , #e74c3c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+         #contact{
+            font-family: 'Teko', sans-serif;
+            width: 100%;
+            width: 100vw;
+            height: 100%;
+            color : #fff;    
+            margin-bottom: 60px;
+        }
+        .contact-section{
+          padding-top: 40px;
+        }
+        .contact-section .col-md-6{
+          width: 50%;
+        }
+        /*Contact sectiom*/
+        .content-header{
+          font-family: 'Oleo Script', cursive;
+          color:#73bfc1;
+          font-size: 45px;
+        }
+        
+     /*!
      * Datetimepicker for Bootstrap 3
      * version : 4.17.47
      * https://github.com/Eonasdan/bootstrap-datetimepicker/
@@ -437,73 +521,98 @@
     <script type="text/javascript" src="../js/bootstrap-datetimepicker.min.js"></script>
 </head>
 
-<body class="skin-blue" style="padding:10px; background-color:#F0F8FF; padding-top: 70px;">
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=1510121465959695";
-        fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <?php 
-        include_once("../admin/analyticstracking.php");
-        include('../navbar.php');
-    ?>
-    <div class="row" style="margin-bottom:10px;">
-        <div class="col-md-6 col-md-offset-3" style="text-align:center;">
-            <h3 id="view-mode">Equipes</h3>
-            <div class="col-xs-4" style="text-align:right; padding:0;">
-                <select id="team1" class="form-control bg-white">
-                    <option value="">Equipe 1</option>
-                    <?php echo $selecoes; ?>
-                </select>
-            </div>
-
-            <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
-            </div>
-
-            <div  class="col-xs-2 center-block" style="text-align:center; font-size:20px;">X</div>
-
-            <div  class="col-xs-1" style="text-align:center; font-size:15px; padding:0;">
-            </div>
-
-            <div  class="col-xs-4" style="padding:0;">
-                <select id="team2" class="form-control bg-white">
-                    <option value="">Equipe 2</option>
-                    <?php echo $selecoes; ?>
-                </select>
-            </div>
+<body style="background-color: #ecf0f5;">
+    <section id="contact">
+        <div class="section-content" style="text-align:center; margin-bottom:-30px; margin-top:-30px;">
+            <h1><span class="content-header wow fadeIn " data-wow-delay="0.2s" data-wow-duration="2s" style="margin-left:-10px;"><?php echo $name; ?></span></h1>
+            <h1 class="section-header">Cadastro de Partida</h1>
         </div>
+    </section>
+    <div class="container">
+        
+			<div class="row">
+				<div class="col-lg-offset-1 col-lg-10" > 
+					
+					<div class="box box-primary">
+						<div class="box-header with-border">
+						  <h1 class="box-title"></h1>
+						</div>
+
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="form-group col-md-6 col-md-offset-3" style="text-align:center;">
+                                    <h3 id="view-mode">Fase</h3>
+                                    <select id="fase" name="fase" class="form-control bg-white">
+                                        <option value="0">Classificatórias (Pontos Corridos)</option>
+                                        <option value='1'>Oitavas de Final</option>
+                                        <option value='2'>Quartas de Final</option>
+                                        <option value='3'>Semi-Final</option>
+                                        <option value='4'>Disputa de 3º e 4º</option>
+                                        <option value='5'>Final</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:10px;">
+                                <div class="col-md-6 col-md-offset-3" style="text-align:center;">
+                                    <h3 id="view-mode">Equipes</h3>
+                                    <div class="col-xs-4" style="text-align:right; padding:0;">
+                                        <select id="team1" class="form-control bg-white">
+                                            <option value="">Equipe 1</option>
+                                            <?php echo $selecoes; ?>
+                                        </select>
+                                    </div>
+
+                                    <div  class="col-xs-1" style="text-align:center; font-size:15px;padding:0;">
+                                    </div>
+
+                                    <div  class="col-xs-2 center-block" style="text-align:center; font-size:20px;">X</div>
+
+                                    <div  class="col-xs-1" style="text-align:center; font-size:15px; padding:0;">
+                                    </div>
+
+                                    <div  class="col-xs-4" style="padding:0;">
+                                        <select id="team2" class="form-control bg-white">
+                                            <option value="">Equipe 2</option>
+                                            <?php echo $selecoes; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                               <div  class="col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2" style="padding:0; text-align:center;">
+                                    <h3 id="view-mode">Local</h3>
+                                    <select id="field" class="form-control bg-white">
+                                        <option value="">Escolher</option>
+                                        <?php echo $selecoes_campos; ?>
+                                    </select>
+                                   <div class="col-10">
+                                      <span>ou</span><input maxlength="99"  class="form-control" type="text" placeholder="Cadastrar novo local" id="novo_campo">
+                                   </div>
+                                </div>  
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div style="overflow:hidden; text-align:center;">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-xs-offset-3">
+                                                <h3 id="view-mode">Data e Hora</h3>
+                                                <div id="datetimepicker12"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-default" onclick="window.location.replace('../times/admincopa.php?key=<?php echo $key; ?>')" style="float:left;">Voltar</button>
+                            <button class="btn btn-success" type="submit" style="float:right;" onclick="criar()">Salvar</button>
+                        </div>
+					</div>
+				</div>
+			</div>
     </div>
-    <div class="row">
-       <div  class="col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2" style="padding:0; text-align:center;">
-            <h3 id="view-mode">Local</h3>
-            <select id="field" class="form-control bg-white">
-                <option value="">Escolher</option>
-                <?php echo $selecoes_campos; ?>
-            </select>
-           <div class="col-10">
-              <span>ou</span><input maxlength="99"  class="form-control" type="text" placeholder="Cadastrar novo local" id="novo_campo">
-           </div>
-        </div>  
-    </div>
-    <div class="row" style="margin-top:20px;">
-        <div style="overflow:hidden; text-align:center;">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-xs-6 col-xs-offset-3">
-                        <h3 id="view-mode">Data e Hora</h3>
-                        <div id="datetimepicker12"></div>
-                    </div>
-                </div>
-            </div>
-            <button class="btn btn-sm btn-success" type="submit" onclick="criar()">Criar</button>
-        </div>
-    </div>
-    
-    <script type="text/javascript">
+	
+	 <script type="text/javascript">
         $(function () {
             $('#datetimepicker12').datetimepicker({
                 inline: true,
@@ -512,6 +621,9 @@
             });
         });
         function criar() {
+            var select_fase = document.getElementById("fase");
+            var fase = select_fase.options[select_fase.selectedIndex].value;
+            
             var select_team1 = document.getElementById("team1");
             var team1 = select_team1.options[select_team1.selectedIndex].value;
             
@@ -529,7 +641,7 @@
             if ((team1 == "")||(team2 == "")||(team1 == team2)){
                 swal("Times indefinidos.", "Ambos os times tem de estar definidos e serem diferentes entre si.", "warning");
             } else{
-                $.post("form_partida.php",{team1: team1, team2: team2, field: field, datetime:datetime, cup_id: <?php echo $id;?>},function(data){});    
+                $.post("form_partida.php",{fase: fase, team1: team1, team2: team2, field: field, datetime:datetime, cup_id: <?php echo $id;?>},function(data){});    
                 swal({
                       title: "Partida Criada!",
                       text: "Partida disponível para o público geral.",
@@ -543,5 +655,7 @@
             };
         };
     </script>
+	
 </body>
+
 </html>

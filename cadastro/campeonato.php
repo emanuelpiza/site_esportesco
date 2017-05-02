@@ -1,56 +1,35 @@
 
 <?php
+    header('Content-Type: text/html; charset=utf-8');
+    session_start();
 
-#Novo template a ser aplicado: https://codepen.io/nikhil8krishnan/pen/gaybLK
-
-	
-    # Evita o armazenamento em Cache
-    @header("Cache-Control: no-cache, must-revalidate");  
-    @header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");  
-	
-	$renderMessage = false;
-
-    $servername = "localhost";
-    $username = "root";
-    $password = "k1llersql";
-    $dbname = "Esportes";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    $conn->query("SET NAMES 'utf8'");
-    mb_language('uni'); 
-    mb_internal_encoding('UTF-8');
-    $success = false;
+    ob_start();
+    include('../admin/dbcon/dbcon.php');
 
 	if ( !empty($_POST)) {
-        include ('../admin/PHPMailer_config.php');
-		
-		// Check connection
-		if ($conn->connect_error) {
-			die("Connection failed: " . $conn->connect_error);
-		} 
       
 		//Getting data from request
-		$name = mysqli_real_escape_string($conn,$_POST['name']);
+		$name = mysqli_real_escape_string($mysqli,$_POST['name']);
 		$sport = $_POST['sport'];
-		$contact_name = mysqli_real_escape_string($conn,$_POST['contact_name']);
-		$contact_email = mysqli_real_escape_string($conn,$_POST['contact_email']);
-		$contact_telefone = mysqli_real_escape_string($conn,$_POST['contact_telefone']);
-		$date_mysql = mysqli_real_escape_string($conn,$_POST['datepicker']);
+		$contact_name = mysqli_real_escape_string($mysqli,$_POST['contact_name']);
+		$contact_email = mysqli_real_escape_string($mysqli,$_POST['contact_email']);
+		$contact_telefone = mysqli_real_escape_string($mysqli,$_POST['contact_telefone']);
+		$date_mysql = mysqli_real_escape_string($mysqli,$_POST['datepicker']);
         
-        $sql = "INSERT INTO cups (name, sport, date_limit, contact_name, contact_email, contact_telefone) VALUES ('".$name."', '".$sport."', DATE_ADD(DATE_FORMAT(STR_TO_DATE('".$date_mysql."', '%d/%m/%Y'), '%Y-%m-%d'), INTERVAL 1 DAY), '".$contact_name."', '".$contact_email."', '".$contact_telefone."');";
-        mysqli_query($conn, $sql);
+        $sql = "INSERT INTO cups (name, sport, date_limit, contact_name, contact_email, contact_telefone, datahora) VALUES ('".$name."', '".$sport."', DATE_ADD(DATE_FORMAT(STR_TO_DATE('".$date_mysql."', '%d/%m/%Y'), '%Y-%m-%d'), INTERVAL 1 DAY), '".$contact_name."', '".$contact_email."', '".$contact_telefone."', NOW());";
+        mysqli_query($mysqli, $sql);
         
-        $sql_novo = mysqli_query($conn,"SELECT id, admin_key from cups order by id DESC limit 1;");
+        $sql_novo = mysqli_query($mysqli,"SELECT id, admin_key from cups order by id DESC limit 1;");
         $novo = mysqli_fetch_assoc($sql_novo);
         $key = $novo['admin_key'];
         $id = $novo['id'];
         
-        //Preparando email para envio
-        $sUrl = 'http://www.esportes.co/cadastro/template_campeonato.php';
+        //EMAIL COM CHAVE
+        include ('../admin/PHPMailer_config.php');
+        $sUrl = 'http://www.esportes.co/cadastro/template_1.php';
         $params = array('http' => array(
             'method' => 'POST',
-        'content' => 'title='.$name.'&key='.$key.'&id='.$id
+        'content' => 'title='.$name.'&key='.$key.'&id='.$id.'&tipo=campeonato'
         ));
 
         $ctx = stream_context_create($params);
@@ -74,7 +53,7 @@
         } else {
            $success = true;
         }
-		$conn->close();
+		$mysqli->close();
 	}
 
 ?>
@@ -275,7 +254,7 @@
                                   <div class="input-group-addon">
                                      <i class="fa fa-phone"  style="width:15px;"></i>
                                   </div>
-                                  <input type="text" name="contact_phone" id="contact_phone" placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask required="true">
+                                  <input type="text" name="contact_telefone" id="contact_telefone" placeholder="Telefone" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask required="true">
                                 </div>
                             </div>
                              <div class="form-group">

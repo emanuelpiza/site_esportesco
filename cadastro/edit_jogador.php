@@ -7,7 +7,7 @@
 
     $renderMessage = false;
     $key =  mysqli_real_escape_string($mysqli,$_GET['key']);
-    $sqljogador = mysqli_query($mysqli,"SELECT *, DATE_FORMAT(birthdate,'%d/%m/%Y') as birthdate_fmt FROM players where admin_key='$key'");
+    $sqljogador = mysqli_query($mysqli,"SELECT *, IF(birthdate = '1969-12-31', NULL, DATE_FORMAT(birthdate,'%d/%m/%Y')) as birthdate_fmt FROM players where admin_key = '$key'");
     $jogador = mysqli_fetch_assoc($sqljogador);
     $team = $jogador['players_team_id'];
     $name = $jogador['players_name'];
@@ -279,7 +279,7 @@
                                                 <div class="btn btn-default image-preview-input" style="margin-top:10px;">
                                                     <i class="fa fa-file-image-o" aria-hidden="true"></i>
                                                     <span class="image-preview-input-title">Trocar</span>
-                                                    <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
+                                                    <input type="file" name="image" id="image" accept="image/*" name="input-file-preview"/>
                                                 </div>
                                             </span>
                                         </div>
@@ -401,28 +401,27 @@
             $.each(other_data,function(key,input){
                 formData.append(input.name,input.value);
             });
-            $.ajax('./form_edit_jogador.php', {
-                        method: "POST",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function () { 
-                            swal({
-                                  title: "Jogador Atualizado!",
-                                  text: "Você será redirecionado para a página do time.",
-                                  type: "success",
-                                  closeOnConfirm: true
-                                },
-                                function(isConfirm) {
-                                  if (isConfirm) {
-                                      window.location.replace("../times/admintime.php?key=<?php echo $key_team; ?>");
-                                  };
-                            });  
-                        },
-                        error: function () {
-                            swal('Ops!', "Houve um problema no cadastro. Caso o problema persista, procure o responsável pelo campeonato.");
-                        }
-            });
+            
+            
+            
+            var xhr = new XMLHttpRequest();
+
+            xhr.open("POST", "form_edit_jogador.php");
+
+            xhr.send(formData);
+            
+             swal({
+                  title: "Jogador Atualizado!",
+                  text: "Você será redirecionado para a página do time.",
+                  type: "success",
+                  closeOnConfirm: true
+                },
+                function(isConfirm) {
+                  if (isConfirm) {
+                      window.location.replace("../times/admintime.php?key=<?php echo $key_team; ?>");
+                  };
+            });  
+
         }
          function remover(table, id) {   
              swal({

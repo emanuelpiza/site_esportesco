@@ -24,4 +24,4 @@ $mail->isHTML(true);                                  // Set email format to HTM
 //$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
 //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-$mail->addBCC('contato@esportes.co', 'Esportes.Co');     // Add a recipient
+//$mail->addBCC('contato@esportes.co', 'Esportes.Co');     // Add a recipient

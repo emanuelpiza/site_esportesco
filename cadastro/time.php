@@ -44,13 +44,45 @@
 		$contact_telefone = $_POST['contact_telefone'];
 		
 		//SQL
-        $sql = "INSERT INTO teams (cup_id, teams_name, short_name, teams_picture, contact_name, contact_email, contact_telefone) VALUES ('".$id."', '".$name."', '".$short_name."', '".$image."', '".$contact_name."', '".$contact_email."', '".$contact_telefone."');";
+        $sql = "INSERT INTO teams (cup_id, teams_name, short_name, teams_picture, contact_name, contact_email, contact_telefone, datahora) VALUES ('".$id."', '".$name."', '".$short_name."', '".$image."', '".$contact_name."', '".$contact_email."', '".$contact_telefone."', NOW());";
         
 		mysqli_query($mysqli, $sql);
         
-        $sqlredirect = mysqli_query($mysqli,"SELECT admin_key FROM teams where cup_id='".$id."' and teams_name='".$name."'");
+        $sqlredirect = mysqli_query($mysqli,"SELECT admin_key, id_teams FROM teams where cup_id='".$id."' and teams_name='".$name."'");
         $redir = mysqli_fetch_assoc($sqlredirect);
         $key_team = $redir['admin_key'];
+        $id_team = $redir['id_teams'];
+        
+        //EMAIL COM CHAVE
+        
+        include ('../admin/PHPMailer_config.php');
+        $sUrl = 'http://www.esportes.co/cadastro/template_1.php';
+        $params = array('http' => array(
+            'method' => 'POST',
+            'content' => 'title='.$name.'&key='.$key_team.'&id='.$id_team.'&tipo=time'
+        ));
+
+        $ctx = stream_context_create($params);
+        $fp = @fopen($sUrl, 'rb', false, $ctx);
+        if (!$fp)
+        {
+            throw new Exception("Problem with $sUrl, $php_errormsg");
+        }
+
+        $response = @stream_get_contents($fp);
+        if ($response === false) 
+        {
+        throw new Exception("Problem reading data from $sUrl, $php_errormsg");
+        }
+        $mail->Subject = $name.' já está disponível para acesso! Esportes.Co';
+        $mail->Body = $response;
+        $mail->addAddress($contact_email, '');     // Add a recipient
+        if(!$mail->send()) {
+            echo 'Message could not be sent.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+           $success = true;
+        }
         
 		$mysqli->close();
 	}
