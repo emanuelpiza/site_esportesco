@@ -44,36 +44,38 @@
     $key = $redir['admin_key'];
     $id_players = $redir['id_players'];
 
-    //Email com chave
-        
-    include ('../admin/PHPMailer_config.php');
-    $sUrl = 'http://www.esportes.co/cadastro/template_1.php';
-    $params = array('http' => array(
-        'method' => 'POST',
-        'content' => 'title='.$name.'&key='.$key.'&id='.$id_players.'&tipo=jogador'
-    ));
 
-    $ctx = stream_context_create($params);
-    $fp = @fopen($sUrl, 'rb', false, $ctx);
-    if (!$fp)
-    {
-        throw new Exception("Problem with $sUrl, $php_errormsg");
-    }
+    if ($contact_email <> ""){
+        //Email com chave    
+        include ('../admin/PHPMailer_config.php');
+        $sUrl = 'http://www.esportes.co/cadastro/template_1.php';
+        $params = array('http' => array(
+            'method' => 'POST',
+            'content' => 'title='.$name.'&key='.$key.'&id='.$id_players.'&tipo=jogador'
+        ));
 
-    $response = @stream_get_contents($fp);
-    if ($response === false) 
-    {
-    throw new Exception("Problem reading data from $sUrl, $php_errormsg");
-    }
-    $mail->Subject = 'Perfil de '.$name.' disponível para edição! Esportes.Co';
-    $mail->Body = $response;
-    $mail->addAddress($contact_email, '');     // Add a recipient
-    if(!$mail->send()) {
-        echo 'Message could not be sent.';
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
-    } else {
-       $success = true;
-    }
+        $ctx = stream_context_create($params);
+        $fp = @fopen($sUrl, 'rb', false, $ctx);
+        if (!$fp)
+        {
+            throw new Exception("Problem with $sUrl, $php_errormsg");
+        }
 
+        $response = @stream_get_contents($fp);
+        if ($response === false) 
+        {
+        throw new Exception("Problem reading data from $sUrl, $php_errormsg");
+        }
+        $mail->setFrom('contato@esportes.co', 'Esportes.Co');   
+        $mail->Subject = 'Perfil de '.$name.' disponível para edição! Esportes.Co';
+        $mail->Body = $response;
+        $mail->addAddress($contact_email, '');     // Add a recipient
+        if(!$mail->send()) {
+            echo 'Message could not be sent.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+           $success = true;
+        }
+    }
     $mysqli->close();
 ?>

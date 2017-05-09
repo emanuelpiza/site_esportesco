@@ -53,37 +53,40 @@
         $key_team = $redir['admin_key'];
         $id_team = $redir['id_teams'];
         
-        //EMAIL COM CHAVE
         
-        include ('../admin/PHPMailer_config.php');
-        $sUrl = 'http://www.esportes.co/cadastro/template_1.php';
-        $params = array('http' => array(
-            'method' => 'POST',
-            'content' => 'title='.$name.'&key='.$key_team.'&id='.$id_team.'&tipo=time'
-        ));
+        if ($contact_email <> ""){
+            //EMAIL COM CHAVE
+            include ('../admin/PHPMailer_config.php');
+            $sUrl = 'http://www.esportes.co/cadastro/template_1.php';
+            $params = array('http' => array(
+                'method' => 'POST',
+                'content' => 'title='.$name.'&key='.$key_team.'&id='.$id_team.'&tipo=time'
+            ));
 
-        $ctx = stream_context_create($params);
-        $fp = @fopen($sUrl, 'rb', false, $ctx);
-        if (!$fp)
-        {
-            throw new Exception("Problem with $sUrl, $php_errormsg");
-        }
+            $ctx = stream_context_create($params);
+            $fp = @fopen($sUrl, 'rb', false, $ctx);
+            if (!$fp)
+            {
+                throw new Exception("Problem with $sUrl, $php_errormsg");
+            }
 
-        $response = @stream_get_contents($fp);
-        if ($response === false) 
-        {
-        throw new Exception("Problem reading data from $sUrl, $php_errormsg");
+            $response = @stream_get_contents($fp);
+            if ($response === false) 
+            {
+            throw new Exception("Problem reading data from $sUrl, $php_errormsg");
+            }
+            
+            $mail->setFrom('contato@esportes.co', 'Esportes.Co');   
+            $mail->Subject = $name.' já está disponível para acesso! Esportes.Co';
+            $mail->Body = $response;
+            $mail->addAddress($contact_email, '');     // Add a recipient
+            if(!$mail->send()) {
+                echo 'Message could not be sent.';
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            } else {
+               $success = true;
+            }
         }
-        $mail->Subject = $name.' já está disponível para acesso! Esportes.Co';
-        $mail->Body = $response;
-        $mail->addAddress($contact_email, '');     // Add a recipient
-        if(!$mail->send()) {
-            echo 'Message could not be sent.';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        } else {
-           $success = true;
-        }
-        
 		$mysqli->close();
 	}
 

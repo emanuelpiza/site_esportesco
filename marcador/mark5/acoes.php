@@ -60,6 +60,15 @@
         $sql = "INSERT INTO notes SET type=13, match_id=$id, detail=$perdedor_wo, datetime=now(), available=1;";
         mysqli_query($mysqli, $sql); 
         
+    } else if ($acao == "penalidade_equipe"){
+        
+        $penalidade_equipe = $_POST['penalidade_equipe'];
+        $penalidade_pontos = $_POST['penalidade_pontos'];
+        $sql = "delete from notes where type = 7 and detail = $penalidade_equipe and match_id = $id;";
+        mysqli_query($mysqli, $sql); 
+        $sql = "INSERT INTO notes SET type=7, match_id=$id, detail=$penalidade_equipe, right_side = $penalidade_pontos, datetime=now(), available=1;";
+        mysqli_query($mysqli, $sql); 
+        
     } else if ($acao == "encerrar"){
         
         //Só faz caso a partida ainda exista.
@@ -129,14 +138,14 @@
             $losses = "UPDATE teams SET losses = (SELECT SUM(count) FROM ( select count(1) count from matches where team1 = ".$times['id_teams']." and score1 < score2 and phase = 0 UNION ALL select count(1) count from matches where team2 = ".$times['id_teams']." and score2 < score1  and phase = 0) s) where id_teams = ".$times['id_teams'].";";
             mysqli_query($mysqli, $losses);      
         }
-        $points = "UPDATE teams SET points = (victories * 3 + draws);";
+        $points = "update teams t left join notes n on t.id_teams = n.detail set points = (t.victories*3 + t.`draws` - IF(n.right_side is null, 0, n.right_side)) where t.cup_id = ".$copa;
         mysqli_query($mysqli, $points);
         $matches = "UPDATE teams SET matches = (victories + draws + losses);";
         mysqli_query($mysqli, $matches);
         $sqlgrupos = mysqli_query($mysqli,"select distinct groups from teams where cup_id = ".$copa);
         while ($times = mysqli_fetch_assoc($sqlgrupos)) {
             $position = "update teams t1 join (select @rownum:=@rownum+1 rank, p.id_teams
-            from teams p, (SELECT @rownum:=0) r where p.groups = '".$times['groups']."' and cup_id = ".$copa." order by points desc, victories DESC, goals_balance DESC, goals_taken DESC) t2 on t1.id_teams = t2.id_teams set t1.rank = t2.rank;";
+            from teams p, (SELECT @rownum:=0) r where p.groups = '".$times['groups']."' and cup_id = ".$copa." order by points desc, victories DESC, goals_balance DESC, goals_taken) t2 on t1.id_teams = t2.id_teams set t1.rank = t2.rank;";
         mysqli_query($mysqli, $position);    
         }
         

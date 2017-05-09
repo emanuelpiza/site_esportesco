@@ -26,7 +26,13 @@
                             <strong>Futebol de Campo</strong>
                             <ul role="menu">
                                 <li>
-                                    <a href="http://www.esportes.co/times/copa.php?id=17">Série - A</a>
+                                    <a href="http://www.esportes.co/times/copa.php?id=17">Série A - LBF</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.esportes.co/times/copa.php?id=86">Série Ouro - Vinhedo</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.esportes.co/times/copa.php?id=103">Série Prata - Vinhedo</a>
                                 </li>
                             </ul>
                         </li>
@@ -41,13 +47,20 @@
                             <strong>Futsal</strong>
                             <ul role="menu">
                                 <li>
+                                    <a href="http://www.esportes.co/times/copa.php?id=116">Copa Vinhedo de Futsal Feminino</a>
+                                </li>
+                                <li>
                                     <a href="http://www.esportes.co/times/copa.php?id=23">Liga Futsal Rioclarense Masculino</a>
                                 </li>
                                 <li>
                                     <a href="http://www.esportes.co/times/copa.php?id=24">Liga Futsal Rioclarense Feminino</a>
                                 </li>
-                                <li>
-                                    <a href="http://www.esportes.co/novo.php" class="btn btn-primary btn-sm" target="_self" style="width:180px; margin-right:15px; float:right; text-align:center;" >Lançar Novo
+                               
+                                <li style="">
+                                    <a href="http://www.esportes.co/cadastro/campeonato.php" class="btn btn-primary btn-lg  btn-icon-right" target="_self" style="float:right; text-align:left; margin-bottom:5px; width:150px; height:48px; margin-left:-25px;line-height:30px;">Lançar Novo
+                                        <span class="hex-alt">
+                                            <i class="fa fa-plus" data-animation="swing"></i>
+                                        </span>
                                     </a>
                                 </li>
                             </ul>
@@ -55,8 +68,8 @@
                     </ul>
                 </li>
                  <li class="dropdown">
-                    <a href="http://www.esportes.co/anuncie.php" class="dropdown-toggle">
-                        <i class="fa fa-bullseye" aria-hidden="true"></i> Anuncie
+                    <a href="http://www.esportes.co/sobre.php" class="dropdown-toggle">
+                        <i class="fa fa-heartbeat" aria-hidden="true"></i> Sobre
                     </a>
                 </li>
             </ul>

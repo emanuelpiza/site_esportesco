@@ -21,7 +21,7 @@
                         </div>
                         <div class="col-md-4">
                             <h1 class="bordered-header" style="margin-top:15px;">
-                                Sua Marca Conosco
+                                Investindo no esporte amador
                             </h1>
                             <p>
                                 Nos dedicamos a valorizar pessoas, aspiramos produzir conteúdo que coloque o holofote em milhões de atletas e organizadores. Gente que é envolvida no esporte por paixão. Essa é nossa razão de ser desde a origem do projeto, nos idos de 2014.

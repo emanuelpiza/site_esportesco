@@ -14,10 +14,7 @@ $mail->SMTPAuth = true;                               // Enable SMTP authenticat
 $mail->Username = 'contato@esportes.co';                 // SMTP username
 $mail->Password = 'k1llerec';                           // SMTP password
 $mail->SMTPSecure = '';                            // Enable TLS encryption, `ssl` also accepted
-$mail->Port = 26;                                    // TCP port to connect to
-
-$mail->setFrom('contato@esportes.co', 'Esportes.Co');
-
+$mail->Port = 26;   
 $mail->isHTML(true);                                  // Set email format to HTML
 
 //$mail->Subject = 'Here is the subject';

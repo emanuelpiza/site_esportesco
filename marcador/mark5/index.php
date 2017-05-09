@@ -12,16 +12,23 @@
     $id = $_GET['id'];
     $sqlgeral = mysqli_query($mysqli,"SELECT *, 
                                     t1.teams_picture as t1_picture, 
-                                    t2.teams_picture as t2_picture FROM matches as m 
+                                    t1.short_name as t1_short, 
+                                    t2.teams_picture as t2_picture,
+                                    t2.short_name as t2_short,
+                                    n1.right_side as t1_penalty, 
+                                    n2.right_side as t2_penalty 
+                                    FROM matches as m 
                                     left join teams t1 
                                         on m.team1 = t1.`id_teams` 
-                                    left join teams as t2 
+                                    left join teams t2 
                                     on m.team2 = t2.id_teams left join
-                                    cups c on m.cup_id = c.id where m.id='$id'");
+                                    cups c on m.cup_id = c.id left join notes n1 on m.team1 = n1.detail and m.id = n1.match_id left join notes n2 on m.team2 = n2.detail and m.id = n2.match_id where m.id='$id'");
 
     $dados = mysqli_fetch_assoc($sqlgeral);
     $id_team1 = $dados['team1'];
     $id_team2 = $dados['team2'];
+    $penalty_team1 = $dados['t1_penalty'];
+    $penalty_team2 = $dados['t2_penalty'];
     $sqlgols = mysqli_query($mysqli,"select IF((select score1 from matches where id = '$id') is not null, (select score1 from matches where id = '$id'), (select count(*) from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = ".$id_team1.") or (type = 4 and p.`players_team_id` = ".$id_team2.")))) as total;");
     $gols1 = mysqli_fetch_assoc($sqlgols);    
     $sqlgols = mysqli_query($mysqli,"select IF((select score2 from matches where id = '$id') is not null, (select score2 from matches where id = '$id'), (select count(*) from notes n left join players p on n.`player` = p.`id_players` where available = 1 and match_id = '$id' and ((type = 1 and p.`players_team_id` = ".$id_team2.") or (type = 4 and p.`players_team_id` = ".$id_team1.")))) as total;");
@@ -68,11 +75,11 @@
     $fase = mysqli_fetch_assoc($sql_fase)['maximo'];
 
     //Gestão da partida.
-    $botao_wo_t1 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team1)'>Equipe Ausente.<br>Indicar W.O.</button>";
-    $botao_wo_t2 =   "<button type='button' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team2)'>Equipe Ausente.<br>Indicar W.O.</button>";
+    $botao_wo_t1 =   "<button type='button btn-sm' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team1)'>Indicar W.O.</button>";
+    $botao_wo_t2 =   "<button type='button btn-sm' class='btn btn-danger' style='width:120px; margin-bottom:50px;' title='Encerrar' onclick='encerrar_wo($id_team2)'>Indicar W.O.</button>";
 
     //Contagem de faltas por tempo?
-    if ($id_team2 = $dados['real_time'] = 0){
+    if ($dados['real_time'] == 0){
         $estilo_btn_fase = "btn-danger";
         $texto_btn_fase = "Encerrar partida e Atualizar Classificações";
         $momento = "encerrar";
@@ -103,7 +110,6 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br" dir="ltr">
 <head>
-	<title>Esportes.co - <?php echo $id;?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Javascript - Jquery -->
@@ -135,21 +141,21 @@
     <script src="marcador.js" type="text/javascript"></script>-->
     
     <!-- Sweet Alert -->
-    <script src="../../../js/sweetalert.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../../css/sweetalert.css">
+    <script src="../../js/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/sweetalert.css">
     
-    <title><?php echo $dados['team1_name']; ?> vs <?php echo $dados['team2_name']; ?> - EsportesCo</title>
+    <title><?php echo $dados['t1_short']; ?> vs <?php echo $dados['t2_short']; ?> - EsportesCo</title>
 
-   <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+   <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../../css/AdminLTE.css">
+    <link rel="stylesheet" href="../../css/AdminLTE.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../../css/_all-skins.min.css">
+    <link rel="stylesheet" href="../../css/_all-skins.min.css">
     <!-- Ícones -->
     <link rel="icon" type="image/png" href="../../img/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="../../img/favicon-16x16.png" sizes="16x16" />
@@ -210,6 +216,7 @@
             .modal img { min-width: none!important;
             }
 		</style>
+    
 </head>
 <body id="<?php echo $id;?>">
        <div class="row" style="margin-bottom:10px;">
@@ -234,7 +241,14 @@
           </div>
     </div>
     </div>
-    <div class="row">
+    <div class="row" style="text-align:center;">
+        <a id="button" class="btn btn-sm btn-secondary" href="#" style="margin: 0 auto;">Penalizações</a>
+    </div>
+    
+    
+    
+    <div class="row hiders" style="
+    display: none;">
         <div class="col-md-6 col-md-offset-3">
             <div  class="col-xs-1 col-xs-offset-1" style="text-align:center; font-size:15px;padding:0;">
                 <?php echo $botao_wo_t1; ?>
@@ -244,9 +258,27 @@
             </div>
         </div>
     </div>
+    <div class="row hiders" style="margin-bottom:10px;
+    display: none;">
+         <div class="col-md-6 col-md-offset-3">
+
+            <div  class="col-xs-1 col-xs-offset-2" style="text-align:center; font-size:15px;padding:0;">
+                <span style="font-family: Arial, serif; font-size:12px;text-align:center; margin-right:-25px; margin-left:-15px; color:black;font-weight:bolder;">
+                    Penalizar Equipe<br></span>
+                    <input type="text" id="team1_penalty" value="<?php echo $penalty_team1; ?>"  style="width:80px;" onkeydown="alterar('team1_pen')" placeholder="x pontos">
+                <button type="button" id="team1_pen_btn" class="btn btn-success btn-xs" style="display: none; width:60px; margin-top:0px;" onclick="salvar_penalidade('team1', '<?php echo $id_team1;?>')"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            </div>
+
+            <div  class="col-xs-1 col-xs-offset-5" style="text-align:center; font-size:15px; padding:0;">
+                <span style="font-family: Arial, serif; font-size:12px;text-align:center; margin-right:-25px; margin-left:-15px; color:black;font-weight:bolder;">
+                    Penalizar Equipe<br></span>
+                    <input type="text" style="width:80px;"  id="team2_penalty" value="<?php echo $penalty_team2 ?>"  style="padding-left:5px;padding-right:0px;" onkeydown="alterar('team2_pen')"  placeholder="x pontos">
+                <button type="button" id="team2_pen_btn" class="btn btn-success btn-xs" style="display: none; width:60px; margin-top:0px;" onclick="salvar_penalidade('team2', '<?php echo $id_team2;?>')"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
     
-    
-           <div class="row" style="margin-bottom:10px;">
+    <div class="row" style="margin-bottom:10px;">
          <div class="col-md-6 col-md-offset-3">
 
             <div  class="col-xs-1 col-xs-offset-2" style="text-align:center; font-size:15px;padding:0;">
@@ -264,7 +296,6 @@
             </div>
     </div>
     </div>
-    
     <div class="row">
         <form name="f" id="f" onSubmit="return false">
             <div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 cfeature infos col-lg-offset-3 col-lg-6">
@@ -464,7 +495,13 @@
 
       </div>
     </div>
-    
+    <script>
+        $(function() {
+            $( "#button" ).click(function() {
+                $( ".hiders" ).toggle();
+            });
+        });
+    </script>
     <script>
         var global_copa = <?php echo $dados['cup_id']; ?>;
         var global_id = <?php echo $id; ?>;
@@ -563,6 +600,41 @@
             $.post("acoes.php",{acao: "encerrar_wo", match: global_id, copa: global_copa, perdedor_wo: perdedor_wo},function(data){}); 
             encerrar();
         }
+        
+        function alterar(key) {
+            //document.getElementById(key + "_span").style.display = "none";
+            document.getElementById(key + "_btn").style.display = "block";
+        };
+        
+        function salvar_penalidade(key, id_equipe) {
+            var penalidade_pontos = document.getElementById(key + "_penalty").value;
+            
+            swal({
+                title: "Aplicar penalização?",
+                text: "O time ficará com " +  penalidade_pontos + " ponto(s) a menos em relação ao seu número de vítorias e empates.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sim, aplicar!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function(isConfirm){
+                if (isConfirm) {
+                   $.post("acoes.php",{acao: "penalidade_equipe", match: global_id, copa: global_copa, penalidade_equipe: id_equipe, penalidade_pontos: penalidade_pontos},function(data){}); 
+                    swal({
+                        title: "Concluído!",
+                        text: "A penalização será aplicada quando a partida for encerrada.",
+                        type: "success",
+                        showCancelButton: false,
+                        closeOnConfirm: false,
+                    });
+              } else {
+                swal("Cancelado", ":)", "error");
+              }  
+                document.getElementById(key + "_span").style.display = "block";
+                document.getElementById(key + "_btn").style.display = "none";
+            });
+        };
     </script>
 </body>
 </html>

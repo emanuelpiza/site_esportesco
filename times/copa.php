@@ -15,6 +15,14 @@
     $dados = mysqli_fetch_assoc($sqlgeral);
     $sponsor = $dados['sponsor'];    
     $sponsor_url = $dados['sponsor_url'];
+    $regulamento = $dados['regulament'];
+
+    if($regulamento <> ""){
+        $icone_regulamento = '<a href="../cadastro/uploads/'.$regulamento.'" download="" style="color:white;text-decoration:underline;">Baixar Regulamento</a>';
+    }else{
+        $icone_regulamento = 'Edição';
+    }
+
 
     $sql_max = mysqli_query($mysqli,"select MAX(DATE_FORMAT(m.datetime,'%Y-%m-%d')) as data from matches m where cup_id = '$copa';");
     $max = mysqli_fetch_assoc($sql_max)['data'];
@@ -449,7 +457,7 @@
                       <th style="width: 10px">#</th>
                       <th>Nome</th>
                       <th>Equipe</th>
-                      <th style="width: 50px; height:57px;">Gols</th>
+                      <th style="width: 50px;">Gols</th>
                     </tr>
                     <?php $sqlartilharia = mysqli_query($mysqli,"SELECT p.goals, p.players_name, id_players, t.teams_name, t.id_teams FROM players p left join teams t on p.`players_team_id` = t.id_teams where players_team_id in (select id_teams from teams where cup_id = '$copa') order by p.goals DESC LIMIT 5");
                         $posicao = 1;
@@ -459,7 +467,7 @@
                       <td>'.$posicao.'</td>
                       <td><a href="./jogador.php?id='.$data8['id_players'].'"><span style="color:black;">'.$data8['players_name'].'<span></a></td>
                       <td><a href="./index.php?id='.$data8['id_teams'].'"><span style="color:black;">'.$data8['teams_name'].'<span></a></td>
-                      <td><span>'.$data8['goals'].'</span></td>
+                      <td style="text-align:center;"><span>'.$data8['goals'].'</span></td>
                     </tr>';
                     $posicao = $posicao+1;}?>
                   </table>
@@ -478,17 +486,17 @@
                       <th style="width: 10px">#</th>
                       <th>Nome</th>
                       <th style="width: 50px">Jogos</th>
-                      <th style="width: 50px">Gols Sof.</th>
+                      <th style="width: 50px">Média</th>
                     </tr>
-                    <?php $sqldefesa = mysqli_query($mysqli,"select id_teams, teams_name, goals_taken, matches from teams where cup_id = '$copa' order by matches DESC, goals_taken LIMIT 5");
+                    <?php $sqldefesa = mysqli_query($mysqli,"select id_teams, teams_name, goals_taken, matches, ROUND(goals_taken/matches, 2) as media from teams where cup_id = '$copa' order by media, matches DESC LIMIT 5");
                         $posicao = 1;
                     while ($data8 = mysqli_fetch_assoc($sqldefesa)) {
                     echo '
                     <tr>
                       <td>'.$posicao.'</td>
                       <td><a href="./index.php?id='.$data8['id_teams'].'"><span style="color:black;">'.$data8['teams_name'].'<span></a></td>
-                      <td><span>'.$data8['matches'].'</span></td>
-                      <td><span>'.$data8['goals_taken'].'</span></td>
+                      <td style="text-align:center;"><span>'.$data8['matches'].'</span></td>
+                      <td style="text-align:center;"><span>'.$data8['media'].'</span></td>
                     </tr>';
                     $posicao = $posicao+1;}?>
                   </table>
@@ -502,10 +510,10 @@
             <div class="small-box bg-light-blue-active">
                 <div class="inner">
                     <h3>2017</h3>
-                    <p>Edição</p>
+                    <p><?php echo $icone_regulamento; ?></p>
                 </div>
                 <div class="icon">  
-                    <i class="ion ion-ios-calendar"></i>
+                    <i class="fa fa-file-text-o" style="font-size:75px;"></i>
                 </div>
             </div>
         </div>

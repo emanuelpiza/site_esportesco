@@ -7,7 +7,22 @@
     include('../admin/dbcon/dbcon.php');
 
 	if ( !empty($_POST)) {
-      
+        
+        
+		//Saving file
+		$target_dir = "uploads/";
+        $target_file_bd = basename($_FILES["upload"]["name"]);
+		$imageFileType = pathinfo($_FILES["upload"]["name"],PATHINFO_EXTENSION);
+        
+         if ($target_file_bd <> ""){
+            $rand = uniqid();
+            $target_file_bd = $rand . "." . $imageFileType;
+		    $target_file = $target_dir . $target_file_bd;
+		    move_uploaded_file($_FILES["upload"]["tmp_name"], $target_file);
+        }else {
+            $target_file_bd = "";
+        }
+
 		//Getting data from request
 		$name = mysqli_real_escape_string($mysqli,$_POST['name']);
 		$sport = $_POST['sport'];
@@ -16,7 +31,7 @@
 		$contact_telefone = mysqli_real_escape_string($mysqli,$_POST['contact_telefone']);
 		$date_mysql = mysqli_real_escape_string($mysqli,$_POST['datepicker']);
         
-        $sql = "INSERT INTO cups (name, sport, date_limit, contact_name, contact_email, contact_telefone, datahora) VALUES ('".$name."', '".$sport."', DATE_ADD(DATE_FORMAT(STR_TO_DATE('".$date_mysql."', '%d/%m/%Y'), '%Y-%m-%d'), INTERVAL 1 DAY), '".$contact_name."', '".$contact_email."', '".$contact_telefone."', NOW());";
+        $sql = "INSERT INTO cups (name, sport, date_limit, contact_name, contact_email, contact_telefone, datahora, regulament) VALUES ('".$name."', '".$sport."', DATE_ADD(DATE_FORMAT(STR_TO_DATE('".$date_mysql."', '%d/%m/%Y'), '%Y-%m-%d'), INTERVAL 1 DAY), '".$contact_name."', '".$contact_email."', '".$contact_telefone."', NOW(), '".$target_file_bd."');";
         mysqli_query($mysqli, $sql);
         
         $sql_novo = mysqli_query($mysqli,"SELECT id, admin_key from cups order by id DESC limit 1;");
@@ -24,35 +39,40 @@
         $key = $novo['admin_key'];
         $id = $novo['id'];
         
-        //EMAIL COM CHAVE
-        include ('../admin/PHPMailer_config.php');
-        $sUrl = 'http://www.esportes.co/cadastro/template_1.php';
-        $params = array('http' => array(
-            'method' => 'POST',
-        'content' => 'title='.$name.'&key='.$key.'&id='.$id.'&tipo=campeonato'
-        ));
+        if ($contact_email <> ""){
+            //EMAIL COM CHAVE
+            include ('../admin/PHPMailer_config.php');
+            $sUrl = 'http://www.esportes.co/cadastro/template_1.php';
+            $params = array('http' => array(
+                'method' => 'POST',
+            'content' => 'title='.$name.'&key='.$key.'&id='.$id.'&tipo=campeonato'
+            ));
 
-        $ctx = stream_context_create($params);
-        $fp = @fopen($sUrl, 'rb', false, $ctx);
-        if (!$fp)
-        {
-            throw new Exception("Problem with $sUrl, $php_errormsg");
+            $ctx = stream_context_create($params);
+            $fp = @fopen($sUrl, 'rb', false, $ctx);
+            if (!$fp)
+            {
+                throw new Exception("Problem with $sUrl, $php_errormsg");
+            }
+
+            $response = @stream_get_contents($fp);
+            if ($response === false) 
+            {
+            throw new Exception("Problem reading data from $sUrl, $php_errormsg");
+            }
+            $mail->setFrom('contato@esportes.co', 'Esportes.Co');   
+            $mail->AddBCC('emanuel@esportes.co', 'Emanuel');   
+            $mail->Subject = $name.' já está disponível para acesso! Esportes.Co';
+            $mail->Body = $response;
+            $mail->addAddress($contact_email, $contact_name);     // Add a recipient
+            if(!$mail->send()) {
+                echo 'Message could not be sent.';
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            } else {
+               $success = true;
+            }            
         }
 
-        $response = @stream_get_contents($fp);
-        if ($response === false) 
-        {
-        throw new Exception("Problem reading data from $sUrl, $php_errormsg");
-        }
-        $mail->Subject = $name.' já está disponível para acesso! Esportes.Co';
-        $mail->Body = $response;
-        $mail->addAddress($contact_email, '');     // Add a recipient
-        if(!$mail->send()) {
-            echo 'Message could not be sent.';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        } else {
-           $success = true;
-        }
 		$mysqli->close();
 	}
 
@@ -61,6 +81,8 @@
 <!DOCTYPE html>
 <html lang="en" content="text/html; charset=utf-8">
 <head>
+    <link rel="stylesheet" href="http://www.esportes.co/novo/assets/css/swatch-red-white.min.css">
+    <link rel="stylesheet" href="http://www.esportes.co/novo/assets/css/swatch-white-red.min.css">
     <link rel="shortcut icon" href="../img/favicon-trophy.ico" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -187,6 +209,9 @@
 </head>
 
 <body>
+        <?php 
+        include_once("../admin/analyticstracking.php");
+        ?>
     
     <?php 
     if ( !empty($_POST)) {
@@ -240,7 +265,10 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="contact">Organizador</label>
+                                <label for="upload">Anexar Regulamento</label>
+                                <input type='file' name='upload'>
+                                
+                              <label for="contact" style="margin-top:10px;">Organizador</label>
                               <div class="input-group">
                                   <span class="input-group-addon"> <i class="fa fa-user" style="width:15px;"></i></span>
                                   <input type="contact_name" name="contact_name" id="contact_name" class="form-control" id="exampleInputEmail1" placeholder="Nome" required="true">
@@ -273,7 +301,7 @@
             <script type="text/javascript">
                 swal({
                     title: "Campeonato Criado!",
-                    text: "Um email foi enviado com o link de acesso. Clique abaixo para acessar o Painel Administrativo.",
+                    text: "Um email será enviado dentro de alguns minutos com o link de acesso. Verifique sua caixa de entrada e spam. Você será redirecionado ao Painel Administrativo.",
                     type: "success",
                     showCancelButton: false,
                     closeOnConfirm: false

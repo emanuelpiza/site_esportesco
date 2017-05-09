@@ -9,7 +9,6 @@
     $key =  mysqli_real_escape_string($mysqli,$_GET['key']);
     $sqljogador = mysqli_query($mysqli,"SELECT *, IF(birthdate = '1969-12-31', NULL, DATE_FORMAT(birthdate,'%d/%m/%Y')) as birthdate_fmt FROM players where admin_key = '$key'");
     $jogador = mysqli_fetch_assoc($sqljogador);
-    $team = $jogador['players_team_id'];
     $name = $jogador['players_name'];
     $team = $jogador['players_team_id'];
     $whole_name = $jogador['whole_name'];
@@ -178,7 +177,7 @@
         <?php 
                 echo '
                 <div id="estrela_content">
-                    <a href="../times/admintime.php?key='.$key_team.'">
+                    <a href="../times/index.php?id='.$team.'">
                         <img src="../cadastro/uploads/'.$team_picture.'" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:10px;margin-top:-30px;">
                          <span style="font-family: \'Poiret One\', Arial, serif; font-size:25px; color:white;"><br>'.$short_name.'</span>
                     </a>
@@ -279,7 +278,7 @@
                                                 <div class="btn btn-default image-preview-input" style="margin-top:10px;">
                                                     <i class="fa fa-file-image-o" aria-hidden="true"></i>
                                                     <span class="image-preview-input-title">Trocar</span>
-                                                    <input type="file" name="image" id="image" accept="image/*" name="input-file-preview"/>
+                                                    <input type="file" name="image" id="image" accept="image/*;capture=camera" name="input-file-preview"/>
                                                 </div>
                                             </span>
                                         </div>
@@ -309,7 +308,6 @@
                             </div>
                         </form> 
                         <div class="box-footer">
-                            <button class="btn btn btn-default" onclick="window.location.replace('../times/admintime.php?key=<?php echo $key_team; ?>')" style="float:left;">Voltar</button>
                             <button type="button"class="btn btn-danger btn-xs" style="margin-left:20px; margin-top:5px;"  onclick='remover("players", "<?php  echo $id_players ?>")'>Excluir Jogador</button>
                             <button class="btn btn btn-success" onclick="cadastrar();" style="float:right;">Salvar</button>
                         </div>
@@ -403,24 +401,28 @@
             });
             
             
-            
-            var xhr = new XMLHttpRequest();
-
-            xhr.open("POST", "form_edit_jogador.php");
-
-            xhr.send(formData);
-            
-             swal({
-                  title: "Jogador Atualizado!",
-                  text: "Você será redirecionado para a página do time.",
-                  type: "success",
-                  closeOnConfirm: true
-                },
-                function(isConfirm) {
-                  if (isConfirm) {
-                      window.location.replace("../times/admintime.php?key=<?php echo $key_team; ?>");
-                  };
-            });  
+            $.ajax('./form_edit_jogador.php', {
+                        method: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function () { 
+                            swal({
+                                  title: "Jogador Atualizado!",
+                                  text: ".",
+                                  type: "success",
+                                  closeOnConfirm: true
+                                },
+                                function(isConfirm) {
+                                  if (isConfirm) {
+                                      window.location.replace("../times/admintime.php?key=<?php echo $key_team; ?>");
+                                  };
+                            });  
+                        },
+                        error: function () {
+                            swal('Ops!', "Houve um problema no cadastro. Caso o problema persista, procure o responsável pelo campeonato.");
+                        }
+            });
 
         }
          function remover(table, id) {   
@@ -445,7 +447,7 @@
                             closeOnConfirm: false,
                         },
                         function(){
-                            window.location.replace("../times/admintime.php?key=<?php echo $key_team; ?>");
+                            window.location.replace("../times/index.php?id=<?php echo $team; ?>");
                         });
                   } else {
                     swal("Cancelado", ":)", "error");

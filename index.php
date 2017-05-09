@@ -35,6 +35,41 @@
                                 <div class="grid-post swatch-red-white">
                                     <article class="post post-showinfo">
                                        <div class="post-media overlay">
+                                             <a href="http://www.esportes.co/times/jogador.php?id=6161">
+                                                <img src="../img/artilheiro.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="post-head small-screen-center">
+                                            <h2 class="post-title">
+                                                <a href="http://www.esportes.co/times/jogador.php?id=6161">
+                                                    <!--select p.id_players, count(*) as scores from players p left join notes n on p.id_players = n.`player` where MONTH(n.`datetime`) = 4 AND YEAR(n.`datetime`) = 2017 and type = 1 group by n.`player` order by scores DESC;-->
+                                                  Artilheiro do mês, Abril:<br />João Vitor Silva
+                                                </a>
+                                            </h2>
+                                            <small class="post-author">
+                                                02 de Maio de 2017    
+                                            </small>
+                                            <div class="post-icon flat-shadow flat-hex">
+                                                <div class="hex hex-big">
+                                                    <i class="fa fa-soccer-ball-o"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="post-body">
+                                            <p>
+                                                A artilharia geral do mês de Abril ficou com <a href="http://www.esportes.co/times/jogador.php?id=6161">João Vitor Silva</a>, da Liga Futsal Rioclarense Masculino, com 12 gols. Parabéns, João Vitor!
+                                            </p>
+                                        </div>
+                                        <div class="bordered post-extras text-center"> 
+                                        </div>
+                                    </article>
+                                </div>
+                            </li>
+                            
+                            <li class="col-md-4 post-item filter-text isotope-item">
+                                <div class="grid-post swatch-red-white">
+                                    <article class="post post-showinfo">
+                                       <div class="post-media overlay">
                                              <a href="http://www.esportes.co/times/partida.php?id=604">
                                                 <img src="../img/604.jpg">
                                             </a>

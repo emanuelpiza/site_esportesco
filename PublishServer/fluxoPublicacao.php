@@ -155,7 +155,7 @@
     } 
 
 
-    // Publicação dos melhores momentos no Youtube, uma por vez
+    // Publicação dos melhores momentos no Youtube, uma por vez. Removi por hora
     $sql_Melhores = mysqli_query($mysqli,"
         select 
             m.id, 
@@ -174,46 +174,46 @@
             left join cups c on t1.cup_id = c.id
         where m.`datetime` < ADDDATE(NOW(), -4) and m.status in (8, 9)
         order by m.status DESC, datetime DESC LIMIT 1");
-    while ($row = mysqli_fetch_assoc($sql_Melhores)) {
-        if ($row['status'] == 8){
-            $sql_count = mysqli_query($mysqli,"
-                select count(1) as total from plays where match_id in (".$row['id'].") and available in (1,2)");
-            $fetch_count = mysqli_fetch_assoc($sql_count);       
-            $count = $fetch_count['total'];
+    //while ($row = mysqli_fetch_assoc($sql_Melhores)) {
+    //    if ($row['status'] == 8){
+    //        $sql_count = mysqli_query($mysqli,"
+    //            select count(1) as total from plays where match_id in (".$row['id'].") and available in (1,2)");
+      //      $fetch_count = mysqli_fetch_assoc($sql_count);       
+      //      $count = $fetch_count['total'];
             
             // Só rodamos caso mais de 4 momentos foram marcados
-            if ($count < 4){
-                $novo_status = 11;//Fim - Não houve mais que 3 marcações em um espaço de 3 dias após a publicação. Não será gerado vídeo de melhores momentos.
-                $sql = "UPDATE matches set status = '$novo_status', last_status = NOW() where id = ".$row['id'].";";
-                if ($mysqli->query($sql) === TRUE) {
-                    echo "";
-                } else {
-                    echo "Erro na base de dados: " . $mysqli->error;
-                } 
-            }else {
+     //       if ($count < 4){
+     //           $novo_status = 11;//Fim - Não houve mais que 3 marcações em um espaço de 3 dias após a publicação. Não será gerado vídeo de melhores momentos.
+     //           $sql = "UPDATE matches set status = '$novo_status', last_status = NOW() where id = ".$row['id'].";";
+     //           if ($mysqli->query($sql) === TRUE) {
+     //               echo "";
+      //          } else {
+      //              echo "Erro na base de dados: " . $mysqli->error;
+      //          } 
+     //       }else {
                 // Preparação 
-                if ($row['team2_name'] == null){
-                    $title = 'Melhores Momentos - '.$row['team1_name'];
-                } else {
-                    $title = 'Melhores Momentos - '.$row['team1_abrev'] . ' vs ' . $row['team2_abrev'];
-                }
-                $datahora = new DateTime($row['datetime']);
-                $dia = $datahora->format('Y-m-d'); 
-                $hora_ini = $datahora->format('Hi');
-                $datahora->add(new DateInterval('PT' . $row['duration'] . 'M'));
-                $hora_fim = $datahora->format('Hi');
-                $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' '.$row['field_id'].' '.$row['id'].' '.$row['is_two_cameras'];
+      //          if ($row['team2_name'] == null){
+     //               $title = 'Melhores Momentos - '.$row['team1_name'];
+       //         } else {
+       //             $title = 'Melhores Momentos - '.$row['team1_abrev'] . ' vs ' . $row['team2_abrev'];
+       //         }
+        //        $datahora = new DateTime($row['datetime']);
+        //        $dia = $datahora->format('Y-m-d'); 
+       //         $hora_ini = $datahora->format('Hi');
+        //        $datahora->add(new DateInterval('PT' . $row['duration'] . 'M'));
+        //        $hora_fim = $datahora->format('Hi');
+         //       $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' '.$row['field_id'].' '.$row['id'].' '.$row['is_two_cameras'];
 
-                $novo_status = 9;//Match - Publicando seleção de lances no Youtube
-                $sql = "UPDATE matches set status = '$novo_status', last_status = NOW() where id = ".$row['id'].";";
-                if ($mysqli->query($sql) === TRUE) {
-                    echo "";
-                } else {
-                    echo "Erro na base de dados: " . $mysqli->error;
-                } 
-                $cmd = '/var/www/videos/PublishServer/melhores.sh '.$parametros;
-                shell_exec($cmd);     
-            }
-        }
-    } 
+       //         $novo_status = 9;//Match - Publicando seleção de lances no Youtube
+        //        $sql = "UPDATE matches set status = '$novo_status', last_status = NOW() where id = ".$row['id'].";";
+        //        if ($mysqli->query($sql) === TRUE) {
+        //            echo "";
+         //       } else {
+         //           echo "Erro na base de dados: " . $mysqli->error;
+          //      } 
+         //       $cmd = '/var/www/videos/PublishServer/melhores.sh '.$parametros;
+         //       shell_exec($cmd);     
+         //   }
+       // }
+    //} 
 ?>
