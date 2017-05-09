@@ -114,12 +114,12 @@
 
     <!-- Javascript - Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-      
-    <!-- Javascript - Bootstrap -->
-    <script src="bootstrap/js/bootstrap.min.js"></script>
     
     <!-- Javascript - Nosso -->
     <script src="actions.js" type="text/javascript"></script>
+    
+  <!-- Javascript - Bootstrap -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 
     <!-- CSS - Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -130,6 +130,7 @@
     
     <!-- CSS - Nosso -->    
 	<link href="style.css" type="text/css" rel="stylesheet" />    
+     
     
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -146,9 +147,8 @@
     
     <title><?php echo $dados['t1_short']; ?> vs <?php echo $dados['t2_short']; ?> - EsportesCo</title>
 
-   <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+   
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -161,64 +161,58 @@
     <link rel="icon" type="image/png" href="../../img/favicon-16x16.png" sizes="16x16" />
      <!-- jQuery -->
     <style>
-            .rubber_stamp {
-              font-family: 'Vollkorn', serif;
-              font-size: 12px;
-              line-height: 12px;
-              text-transform: uppercase;
-              font-weight: bolder;
-              color: white;
-              border: 2px solid white;
-              padding: 10px 7px;
-              border-radius: 10px;
+        .rubber_stamp {
+          font-family: 'Vollkorn', serif;
+          font-size: 12px;
+          line-height: 12px;
+          text-transform: uppercase;
+          font-weight: bolder;
+          color: white;
+          border: 2px solid white;
+          padding: 10px 7px;
+          border-radius: 10px;
 
-              opacity: 0.8;
-              -webkit-transform: rotate(-10deg);
-              -o-transform: rotate(-10deg);
-              -moz-transform: rotate(-10deg);
-              -ms-transform: rotate(-10deg);
-              position:absolute;
-              margin-top:-30px;
-              margin-left: auto; 
-              margin-right: auto;
-              margin-left:100px;
-              text-align:center;
-              filter:alpha(opacity=80);
-              opacity:0.8;
-              box-shadow: 0 0 2px white;
-                background-color: black;
-            }
-            .rubber_stamp::after {
-              position: absolute;
-              content: " ";
+          opacity: 0.8;
+          -webkit-transform: rotate(-10deg);
+          -o-transform: rotate(-10deg);
+          -moz-transform: rotate(-10deg);
+          -ms-transform: rotate(-10deg);
+          position:absolute;
+          margin-top:-30px;
+          margin-left: auto; 
+          margin-right: auto;
+          margin-left:100px;
+          text-align:center;
+          filter:alpha(opacity=80);
+          opacity:0.8;
+          box-shadow: 0 0 2px white;
+            background-color: black;
+        }
+        .rubber_stamp::after {
+          position: absolute;
+          content: " ";
+          width: 100%;
+          height: auto;
+          min-height: 100%;
+          padding: 10px;
+        }
+
+        .modal { 
               width: 100%;
-              height: auto;
-              min-height: 100%;
-              padding: 10px;
-            }
-        
-            .modal { 
-                  width: 100%;
-                  left: 0;
-                  right: 0;
-                  top: 800px;
-                  bottom: 0;
-                  margin: auto;
-                  position: absolute;
-                  background-color: transparent;
-            }
+              margin: auto;
+        }
 
-            .modal-body { 
-                  display: inline-block; 
-                  background-color: #FFF;
-            }
+        .modal-body { 
+              display: inline-block; 
+              background-color: #FFF;
+        }
 
-            .modal img { min-width: none!important;
-            }
-		</style>
+        .modal img { min-width: none!important;
+        }
+    </style>
     
 </head>
-<body id="<?php echo $id;?>">
+<body id="<?php echo $id;?>" style="padding-top:20px;">
        <div class="row" style="margin-bottom:10px;">
          <div class="col-md-6 col-md-offset-3">
 
@@ -242,10 +236,8 @@
     </div>
     </div>
     <div class="row" style="text-align:center;">
-        <a id="button" class="btn btn-sm btn-secondary" href="#" style="margin: 0 auto;">Penalizações</a>
+        <button id="button" class="btn btn-sm btn-secondary" href="#" style="margin: 0 auto; width:100px;">Penalizações</button>
     </div>
-    
-    
     
     <div class="row hiders" style="
     display: none;">
@@ -338,10 +330,12 @@
             </div>
         </form>   
     </div>
-    
+    <div class="row">
       <div  class="col-md-4 text-center col-md-offset-4" style="text-align:center; font-size:30px; margin-top:20px;">
         <button type="button" class="btn <?php echo $estilo_btn_fase ?>" style="width:270px; margin-bottom:50px;" title="Encerrar" onclick='<?php echo $momento ?>()'><?php echo $texto_btn_fase ?></button>
     </div>
+    </div>
+    
     
     <div class="row">  
         <div class="col-md-8 col-md-offset-2">
@@ -468,33 +462,35 @@
     <!-- Modal -->
     <div id="myModal" class="modal fade">
       <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"></h4>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <button id="envia_gol" class="btn btn-info" data-dismiss="modal">Gol <i class="fa fa-soccer-ball-o" style="color:green;"></i></button>
+                <button id="envia_falta" class="btn btn-info" data-dismiss="modal">Falta</button>
+                <button id="envia_amarelo" class="btn btn-info" data-dismiss="modal">Cartão Amarelo <i class="fa fa-square" style="color:#ffb606;"></i></button>
+                <button id="envia_vermelho" class="btn btn-info" data-dismiss="modal">Cartão Vermelho <i class="fa fa-square" style="color:red;"></i></button>
+                <button id="envia_contra" class="btn btn-info" data-dismiss="modal">Gol Contra</button>
+                <button id="remover" class="btn btn-info" data-dismiss="modal">Substituição  <i class="fa fa-exchange" style="color:white;"></i></button>
+                <button id="envia_campo" class="btn btn-info" data-dismiss="modal">Começou jogando</button>
+                <button id="envia_banco" class="btn btn-info" data-dismiss="modal">Começou no banco</button><br>
+                <div style="height:30px;width:200px; margin:auto; margin-top:10px;">
+                    <h4 style="float:left; margin-top:5px; margin-right:10px;">Camisa:</h4>
+                    <input type="text" class="form-control" id="camisa" onkeydown="alterar_camisa()"    placeholder="-" style="width:60px; height:25px; float:left; margin-right:10px;">
+                    <button id="envia_camisa" class="btn btn-sm btn-success" data-dismiss="modal" style="display:none; float:left; width:50px; height:25px; margin-top:0px;"><i class="fa fa-floppy-o" aria-hidden="true"></i></button> 
+                </div>
+                <div id="d_modal" class="row" style="margin-left:20px"></div>   
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float:left;">Cancelar</button>
+            </div>
           </div>
-          <div class="modal-body">
-            <button id="envia_gol" class="btn btn-success" data-dismiss="modal">Gol</button>
-            <button id="envia_falta" class="btn btn-primary" data-dismiss="modal">Falta</button>
-            <button id="envia_amarelo" class="btn btn-warning" data-dismiss="modal">Cartão Amarelo</button>
-            <button id="envia_vermelho" class="btn btn-danger" data-dismiss="modal">Cartão Vermelho</button>
-            <button id="envia_contra" class="btn btn-primary" data-dismiss="modal">Gol Contra</button>
-            <button id="remover" class="btn btn-primary" data-dismiss="modal">Substituído</button>
-            <button id="envia_campo" class="btn btn-success" data-dismiss="modal">Começou jogando</button>
-            <button id="envia_banco" class="btn btn-primary" data-dismiss="modal">Começou no banco</button><br>
-            <label for="usr"><h4>Camisa:</h4></label>
-            <input type="text" class="form-control" id="camisa" style="width:100px;"> 
-            <div id="d_modal" class="row" style="margin-left:20px"></div>	
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-
       </div>
     </div>
+    
     <script>
         $(function() {
             $( "#button" ).click(function() {
@@ -602,8 +598,13 @@
         }
         
         function alterar(key) {
-            //document.getElementById(key + "_span").style.display = "none";
             document.getElementById(key + "_btn").style.display = "block";
+        };
+        
+        
+        function alterar_camisa() {
+            document.getElementById("envia_camisa").style.display = "block";
+            $("#envia_camisa").click(function(){envia("9")})
         };
         
         function salvar_penalidade(key, id_equipe) {

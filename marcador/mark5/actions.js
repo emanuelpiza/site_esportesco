@@ -82,9 +82,11 @@ function selecionar_jogador(ojogador, camisa){
     document.getElementById("camisa").value = global_camisa;   
     global_nome_jogador = document.getElementById(ojogador).textContent;
     document.getElementsByClassName('modal-title')[0].innerHTML = (global_nome_jogador);
+    $('html,body').scrollTop(0);
     li.setAttribute('data-target', '#myModal');      
     li.setAttribute('data-toggle', 'modal'); 
     remover = document.getElementById("remover");
+    document.getElementById("envia_camisa").style.display = "none";
     ul_atual = li.parentNode;
     //remover.setAttribute('onclick', 'document.getElementById("'+ojogador+'").parentNode.removeChild(document.getElementById("'+ojogador+'"));');  
 }
@@ -168,19 +170,11 @@ function envia(p_type)
            {acao:"marcar", type: p_type, player: fjogador, match: fid, field:0, side:0, nome:fnome, camisa:global_nova_camisa, atualiza:global_atualiza},
            function(data)
            {
-                // se nao retornou 1 entao os dados foram enviados
-                // remove a classe error da div
-                $("#d").removeClass("error");
-                // adiciona a classe sucess na div 
-                $("#d").addClass("sucess");
-                // insere o conteudo vindo do data.php na div
-                $("#d").html(data);
-                console.log(data);
-                //}
-                // torna a div invisivel
-                $("#d").css("display","none");
-                // torna a div visivel usando o efeito show com a slow de parametro
-                $("#d").show("slow");
+              swal({
+                  title: "Marcação realizada!",
+                  text: data,
+                  html: true
+                });
             }
       )
 }
