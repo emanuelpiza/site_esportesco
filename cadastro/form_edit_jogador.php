@@ -33,7 +33,7 @@
     $admin_key =  mysqli_real_escape_string($mysqli,$_POST['admin_key']);
 
     //SQL
-    $sql = "UPDATE `players` set player_picture = '".$target_file."', rg = '".$rg."', cpf = '".$cpf."', birthdate = IF('".$birthdate."' = '1969-12-31', NULL, '".$birthdate."'), email = '".$contact_email."', phone = '".$contact_telefone."', name_responsible = UC_Words('".$contact_name."'), players_name = UC_Words('".$name."'), player_strongfoot = '".$player_strongfoot."', player_height = '".$player_height."', shirt = '".$shirt."', player_position = UC_Words('".$player_position."') where admin_key = '".$admin_key."'";
+    $sql = "UPDATE `players` set player_picture = '".$target_file."', rg = '".$rg."', cpf = '".$cpf."', birthdate = IF('".$birthdate."' = '1969-12-31', NULL, '".$birthdate."'), email = '".$contact_email."', phone = '".$contact_telefone."', name_responsible = UC_Words('".$contact_name."'), players_name = UC_Words('".$name."'), player_strongfoot = '".$player_strongfoot."', player_height = '".$player_height."', shirt = '".$shirt."', player_position = UC_Words('".$player_position."'), datahora_edit = NOW() where admin_key = '".$admin_key."'";
 
     mysqli_query($mysqli, $sql);
     $mysqli->close();

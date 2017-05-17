@@ -43,6 +43,7 @@
     $subtitle = $dados['subtitle'];
     $author_name = $dados['author_name'];
     $author_link = $dados['author_link'];
+    $live_link = $dados['live_link'];
 
     $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available in (1,2) and teams_name LIKE '%".$nome."%' ");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
@@ -53,7 +54,8 @@
         $selecoes .= "<option value=".$data4['id_players'].">".$data4['players_name']."</option>" ;
     }
 
-    $sql_notes = mysqli_query($mysqli,"select p1.*, p2.`players_name` from (
+    $sql_notes = mysqli_query($mysqli,"
+    select p1.*, p2.`players_name`, t3.teams_picture from (
         SELECT  t1.`id`,
         	t1.`match_id`,
             t1.`initial_time`,
@@ -72,8 +74,8 @@
             t2.available,
             t2.`video_id` as detail
         FROM notes t1
-        RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where plays_play_types_id > -1 and t2.match_id ='$id' ) p1 
-    left join players p2 on p1.player = p2.`id_players` where p1.`available` in (1,2) and match_id ='$id' order by p1.`initial_time` DESC;");
+        RIGHT JOIN plays t2 ON t2.`datetime` = t1.`datetime` where plays_play_types_id > -1 and t2.match_id ='$id'  ) p1 
+    left join players p2 on p1.player = p2.`id_players` left join teams t3 on p2.players_team_id = t3.id_teams  where p1.`available` in (1,2) and match_id ='$id' order by p1.`initial_time` DESC;");
     $titulo = $dados['team1_name'] . ' vs ' . $dados['team2_name'] . ' - EsportesCo';
 ?>
 
@@ -232,6 +234,39 @@
             padding-right: 0px;
           }
         }
+        .rec_button {
+            width: 35px;
+            height: 35px;
+            font-size: 0;
+            background-color: red;
+            border: 0;
+            border-radius: 35px;
+            margin: 18px;
+            outline: none;
+        }
+
+        .notRec{
+            background-color: darkred;
+        }
+
+        .Rec{
+            animation-name: pulse;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        @keyframes pulse{
+            0%{
+                box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);
+            }
+            65%{
+                box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);
+            }
+            90%{
+                box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
+            }
+        }
     </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
@@ -352,8 +387,12 @@
               <?php if ($title <> "") { echo $title."<br>";}?>
             <small><?php echo $subtitle; ?></small><br>
           </h1>
-            <?php if ($author_name <> "") {
-                echo '<h5 style="text-align:center;">Informações e imagens por: <a href="'.$author_link.'">'.$author_name.'</a>.</h5>';}?>
+            <?php 
+                if ($live_link <> "") {
+                    echo '<h5 style="text-align:center;">Acompanhe <a href="'.$live_link.'" target="_blank">ao vivo</a>.</h5>';}
+                if ($author_name <> "") {
+                    echo '<h5 style="text-align:center;">Informações e imagens por: <a href="'.$author_link.'">'.$author_name.'</a>.</h5>';}
+            ?>
         </div>
     </div>
     <div class="row"> 
@@ -371,7 +410,7 @@
                             $msg_video = "VÍDEO EM <BR>PROCESSAMENTO.<BR>DISPONÍVEL<BR> EM BREVE.";
                             
                         } else {
-                            $msg_video = "<a href='../painel_video.php?match=".$id."'><button type='button' class='btn btn-success btn-lg'>Subir Vídeos</button></a>";
+                            $msg_video = "<a href='../cadastro/info_partida.php?match=".$id."'><button type='button' class='btn btn-success btn-lg'>Subir Vídeos</button></a>";
                         }
                         if ($data3['match_video_id'] == null) {
                             $cover = " 
@@ -389,10 +428,24 @@
                         <iframe type="text/html" id="video_iframe" width="100%" src="https://www.youtube.com/embed/' . $data3['match_video_id'] . '?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
                         </div>
                          <div class="row">
-                            <div style="margin-top:20px; text-align:center;">
-                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; float:center; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "0"," '.$data3['field_id'].'")\'>Recortar Últimos 10s</button>
+                            <div class"col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4" style="padding:8px; margin:14px; 
+                            border: 1px solid gray;">
+                            <h4 style="text-align:center; margin-top:0px;font-family: Roboto, Arial, serif; font-size:15px;">Recortar Últimos 10s </h4>
+                                 <div class="btn-group btn-group-justified">
+                                  <a class="btn btn-success"  onclick=\'marcacao("'.$data3['match_video_id'].'", "0"," '.$data3['field_id'].'")\'>Lado Esquerdo</a>
+                                  <a class="btn btn-success"  onclick=\'marcacao("'.$data3['match_video_id'].'", "1"," '.$data3['field_id'].'")\'>Lado Direito</a>
+                                </div>
                             </div>
-                     </div>  
+                         </div>
+                         <!--<div class="row">
+                            <div class="col-xs-6 col-md-6" style="margin-top:20px;">
+                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; float:right; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "0"," '.$data3['field_id'].'")\'>Recortar 10s<br>Lado Esquerdo</button>
+                                <button id="recButton" class="rec_button"><span style="color:white;" class="glyphicon glyphicon-record">A</span></button>
+                            </div>
+                            <div class="col-xs-6 col-md-6" style="margin-top:20px;float:right;">
+                                <button class="btn btn-sm btn-success"  style="margin: 10 auto; width:140px;" onclick=\'marcacao("'.$data3['match_video_id'].'", "1"," '.$data3['field_id'].'")\'>Recortar 10s<br>Lado Direito</button>
+                            </div>
+                        </div>  -->
                         ';};
                     echo '
                     <form name="f" id="f" onSubmit="return false">
@@ -475,7 +528,7 @@
                         echo '<li><i class="fa fa-soccer-ball-o bg-white" style="color:black;"></i>
                             <div class="timeline-item">
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['initial_time'].'</span>
-                            <h3 class="timeline-header">Gol de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                            <h3 class="timeline-header"><img src="../cadastro/uploads/'.$notes['teams_picture'].'" style="max-width:30px; max-height:30px; margin-left:5px;"> Gol de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
                             </div>
                             </li>';
                     } else if ($notes['type'] == 2){
@@ -483,7 +536,7 @@
                             <i class="fa fa-square  bg-gray" style="color:#ffb606;"></i>
                             <div class="timeline-item">
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['initial_time'].'</span>
-                            <h3 class="timeline-header">Cartão amarelo para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                            <h3 class="timeline-header"><img src="../cadastro/uploads/'.$notes['teams_picture'].'" style="max-width:30px; max-height:30px; margin-left:5px;"> Cartão amarelo para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
                             </div>
                             </li>';
                     } else if ($notes['type'] == 3){
@@ -491,14 +544,14 @@
                         <i class="fa fa-square  bg-gray" style="color:red;"></i>
                         <div class="timeline-item">
                          <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['initial_time'].'</span>
-                        <h3 class="timeline-header">Cartão vermelho para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                        <h3 class="timeline-header"><img src="../cadastro/uploads/'.$notes['teams_picture'].'" style="max-width:30px; max-height:30px; margin-left:5px;"> Cartão vermelho para <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
                         </div>
                         </li>';
                     } else if ($notes['type'] == 4){
                         echo '<li><i class="fa fa-soccer-ball-o bg-white" style="color:black;"></i>
                             <div class="timeline-item">
                             <span class="time"><i class="fa fa-clock-o"></i> '.$detail.$notes['initial_time'].'</span>
-                            <h3 class="timeline-header">Gol contra de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
+                            <h3 class="timeline-header"><img src="../cadastro/uploads/'.$notes['teams_picture'].'" style="max-width:30px; max-height:30px; margin-left:5px;"> Gol contra de <a href="./jogador.php?id='.$detail.$notes['player'].'">'.$detail.$notes['players_name'].'</a></h3>
                             </div>
                             </li>';
                     } else if ($notes['type'] == 5){
@@ -573,7 +626,20 @@
         </section>
             </div>
     </div>
-    
+    <script>
+        $('#recButton').addClass("notRec");
+
+        $('#recButton').click(function(){
+            if($('#recButton').hasClass('notRec')){
+                $('#recButton').removeClass("notRec");
+                $('#recButton').addClass("Rec");
+            }
+            else{
+                $('#recButton').removeClass("Rec");
+                $('#recButton').addClass("notRec");
+            }
+        });	
+    </script>
     <script>
         //import YouTube API script
         var tag = document.createElement('script');
@@ -609,7 +675,7 @@
     function marcacao(strVideo, lado_esq, campo) {
         var time = player.getCurrentTime();
         if (time < 9){
-            swal("Não foi possível identificar o momento.", "Pressione o botão apenas quando assistir algum lance no vídeo acima.", "warning");
+            swal("Não foi possível identificar o momento.", "Pressione o botão assim que assistir algum lance no vídeo acima.", "warning");
         } else{
         var hours = parseInt( time / 3600 ) % 24;
         var minutes = parseInt( time / 60 ) % 60;

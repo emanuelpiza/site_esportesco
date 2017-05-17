@@ -2350,3 +2350,65 @@
 \nupyykR9lhdY__0h30m48s_10, ,Inicio: 2017-04-22 22:26:27 Final : 20170422 22:32:25
 2017-04-27 15:01:04 arquivo= 8RI9fXxbSrI inicio= 104  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 84
 \n8RI9fXxbSrI__0h1m53s_10, ,Inicio: 2017-04-27 15:01:04 Final : 20170427 15:01:16
+2017-05-11 16:04:25 arquivo= o-AqCr0JdVw inicio= 6  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h0m15s_10, ,Inicio: 2017-05-11 16:04:25 Final : 20170511 16:04:42
+2017-05-11 16:24:43 arquivo= o-AqCr0JdVw inicio= 16  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h0m25s_10, ,Inicio: 2017-05-11 16:24:43 Final : 20170511 16:25:05
+2017-05-11 16:25:05 arquivo= o-AqCr0JdVw inicio= 29  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h0m38s_10, ,Inicio: 2017-05-11 16:25:05 Final : 20170511 16:25:34
+2017-05-11 16:28:54 arquivo= o-AqCr0JdVw inicio= 340  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h5m49s_10, ,Inicio: 2017-05-11 16:28:54 Final : 20170511 16:32:00
+2017-05-11 16:32:00 arquivo= o-AqCr0JdVw inicio= 340  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h5m49s_10, ,Inicio: 2017-05-11 16:32:00 Final : 20170511 16:32:00
+2017-05-11 16:32:00 arquivo= o-AqCr0JdVw inicio= 356  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h6m5s_10, ,Inicio: 2017-05-11 16:32:00 Final : 20170511 16:35:15
+2017-05-11 16:35:15 arquivo= o-AqCr0JdVw inicio= 429  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h7m18s_10, ,Inicio: 2017-05-11 16:35:15 Final : 20170511 16:39:11
+2017-05-11 16:51:10 arquivo= o-AqCr0JdVw inicio= 180  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h3m9s_10, ,Inicio: 2017-05-11 16:51:10 Final : 20170511 16:52:48
+2017-05-11 16:52:48 arquivo= o-AqCr0JdVw inicio= 180  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h3m9s_10, ,Inicio: 2017-05-11 16:52:48 Final : 20170511 16:52:48
+2017-05-11 16:57:31 arquivo= o-AqCr0JdVw inicio= 11  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h0m20s_10, ,Inicio: 2017-05-11 16:57:31 Final : 20170511 16:57:46
+2017-05-11 16:58:25 arquivo= o-AqCr0JdVw inicio= 17  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h0m26s_10, ,Inicio: 2017-05-11 16:58:25 Final : 20170511 16:58:43
+2017-05-11 17:00:11 arquivo= o-AqCr0JdVw inicio= 6  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h0m15s_10, ,Inicio: 2017-05-11 17:00:11 Final : 20170511 17:00:11
+2017-05-11 17:04:19 arquivo= o-AqCr0JdVw inicio= 10  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h0m19s_10, ,Inicio: 2017-05-11 17:04:19 Final : 20170511 17:04:33
+2017-05-11 17:05:46 arquivo= o-AqCr0JdVw inicio= 6  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h0m15s_10, ,Inicio: 2017-05-11 17:05:46 Final : 20170511 17:05:46
+2017-05-11 17:45:24 arquivo= o-AqCr0JdVw inicio= 22  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h0m31s_10, ,Inicio: 2017-05-11 17:45:24 Final : 20170511 17:45:50
+2017-05-11 17:47:03 arquivo= o-AqCr0JdVw inicio= 19  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 241
+\no-AqCr0JdVw__0h0m28s_10, ,Inicio: 2017-05-11 17:47:03 Final : 20170511 17:47:27
+2017-05-13 04:39:46 arquivo= kC7PMIQoQ8o inicio= 535  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h9m4s_10, ,Inicio: 2017-05-13 04:39:46 Final : 20170513 04:45:03
+2017-05-13 04:45:03 arquivo= kC7PMIQoQ8o inicio= 586  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h9m55s_10, ,Inicio: 2017-05-13 04:45:03 Final : 20170513 04:50:53
+2017-05-13 04:50:53 arquivo= kC7PMIQoQ8o inicio= 640  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h10m49s_10, ,Inicio: 2017-05-13 04:50:53 Final : 20170513 04:57:17
+2017-05-13 04:57:17 arquivo= kC7PMIQoQ8o inicio= 610  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h10m19s_10, ,Inicio: 2017-05-13 04:57:17 Final : 20170513 05:03:22
+2017-05-13 05:03:22 arquivo= kC7PMIQoQ8o inicio= 868  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h14m37s_10, ,Inicio: 2017-05-13 05:03:22 Final : 20170513 05:12:15
+2017-05-13 05:12:15 arquivo= kC7PMIQoQ8o inicio= 622  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h10m31s_10, ,Inicio: 2017-05-13 05:12:15 Final : 20170513 05:18:28
+2017-05-13 05:18:28 arquivo= kC7PMIQoQ8o inicio= 794  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h13m23s_10, ,Inicio: 2017-05-13 05:18:28 Final : 20170513 05:26:21
+2017-05-14 11:11:47 arquivo= kC7PMIQoQ8o inicio= 1207  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h20m16s_10, ,Inicio: 2017-05-14 11:11:47 Final : 20170514 11:23:33
+2017-05-14 11:45:17 arquivo= kC7PMIQoQ8o inicio= 3070  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h51m19s_10, ,Inicio: 2017-05-14 11:45:17 Final : 20170514 12:15:15
+2017-05-14 12:15:15 arquivo= kC7PMIQoQ8o inicio= 3498  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h58m27s_10, ,Inicio: 2017-05-14 12:15:15 Final : 20170514 12:50:03
+2017-05-15 20:44:51 arquivo= kC7PMIQoQ8o inicio= 2896  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 991
+2017-05-15 21:07:11 arquivo= kC7PMIQoQ8o inicio= 2896  duracao= 10  lado= 0  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h48m25s_10, ,Inicio: 2017-05-15 21:07:11 Final : 20170515 21:07:11
+2017-05-15 21:07:26 arquivo= kC7PMIQoQ8o inicio= 2910  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h48m25s_10, ,Inicio: 2017-05-15 20:44:51 Final : 20170515 21:18:46
+2017-05-15 21:18:46 arquivo= kC7PMIQoQ8o inicio= 2960  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__0h48m39s_10, ,Inicio: 2017-05-15 21:07:26 Final : 20170515 22:03:59
+\nkC7PMIQoQ8o__0h49m29s_10, ,Inicio: 2017-05-15 21:18:46 Final : 20170515 22:10:04
+2017-05-16 16:55:06 arquivo= kC7PMIQoQ8o inicio= 3799  duracao= 10  lado= 1  jogada= 0  jogador= 45  equipe= 991
+\nkC7PMIQoQ8o__1h3m33s_10, ,Inicio: 2017-05-16 16:55:06 Final : 20170516 16:55:31

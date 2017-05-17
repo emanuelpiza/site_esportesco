@@ -44,8 +44,14 @@
     $month_name = $mons[$month];
     $day = date_parse_from_format('Y-m-d', $data)['day'];
 
-    $sql_fase = mysqli_query($mysqli,"select name from cup_phases where cup_id = '$copa' and start_date <= '$data' order by start_date DESC limit 1");
-    $fase = mysqli_fetch_assoc($sql_fase)['name'];
+    $fase = "";
+    $sql_fase = mysqli_query($mysqli,"select distinct c.name as fase from matches m left join cup_phases c on m.phase = c.id where m.cup_id = '$copa' and DATE_FORMAT(m.datetime,'%Y-%m-%d') = '$data' order by m.phase;");
+    while ($dados_fase = mysqli_fetch_assoc($sql_fase)) {
+        if ($fase <> ""){
+            $fase = $fase . ", ";
+        }
+        $fase = $fase . $dados_fase['fase'];
+    }
 
     $sql_last = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$copa' and datetime <= '$data' and cup_id = '$copa' order by datetime DESC LIMIT 1;");
     $last = mysqli_fetch_assoc($sql_last)['data'];

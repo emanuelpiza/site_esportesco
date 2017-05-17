@@ -75,7 +75,7 @@
                     <div class="row"  style="margin-top:-80px;">
                         <div class="col-md-6  text-default">
                             <h1 class="text-right super hairline bordered-header">
-                                   <br>Valorizar pessoas.
+                                   <br>Valorizar pessoas por meio do esporte.
                                 </h1>
                             <p class="lead text-right">   <br>Esse é o propósito da Esportes.Co. 
                                 <br>
@@ -188,7 +188,7 @@
                                     </a>
                                 </div>
                                 <h3 class="text-center ">
-                                <a href="single-service.html">Automatizar inscrições</a></h3>
+                                <a href="">Automatizar inscrições</a></h3>
                                 <p class="text-center">Receber os dados de times e jogadores dentro do prazo era uma tarefa trabalhosa? Agora não mais.</p>
                             </li>
                             <li class="col-md-3 text-center" data-os-animation="" data-os-animation-delay="">
@@ -199,7 +199,7 @@
                                     </a>
                                 </div>
                                 <h3 class="text-center ">
-                                    <a href="single-service.html">Atualizar e divulgar tabelas</a>
+                                    <a href="">Atualizar e divulgar tabelas</a>
                                 </h3>
                                 <p class="text-center">Dados do campeonato são atualizados automaticamente com as informações dos jogos, reduzindo trabalho e erros.</p>
                             </li>
@@ -211,7 +211,7 @@
                                     </a>
                                 </div>
                                 <h3 class="text-center ">
-                                    <a href="single-service.html">Engajar comunidades</a>
+                                    <a href="">Engajar comunidades</a>
                                 </h3>
                                 <p class="text-center">Para manter jogadores e comunidades engajados, todas as informações são abertas ao público em tempo-real.</p>
                             </li>
@@ -223,7 +223,7 @@
                                     </a>
                                 </div>
                                 <h3 class="text-center ">
-                                    <a href="single-service.html">
+                                    <a href="">
                                         Encontrar patrocinadores
                                     </a>
                                 </h3>

@@ -26,6 +26,9 @@
                             <strong>Futebol de Campo</strong>
                             <ul role="menu">
                                 <li>
+                                    <a href="http://www.esportes.co/times/copa.php?id=98">CHB - Campinas</a>
+                                </li>
+                                <li>
                                     <a href="http://www.esportes.co/times/copa.php?id=17">Série A - LBF</a>
                                 </li>
                                 <li>

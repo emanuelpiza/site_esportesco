@@ -37,8 +37,14 @@
     $month_name = $mons[$month];
     $day = date_parse_from_format('Y-m-d', $data)['day'];
 
-    $sql_fase = mysqli_query($mysqli,"select name from cup_phases where cup_id = '$id' and start_date <= '$data' order by start_date DESC limit 1");
-    $fase = mysqli_fetch_assoc($sql_fase)['name'];
+    $fase = "";
+    $sql_fase = mysqli_query($mysqli,"select distinct c.name as fase from matches m left join cup_phases c on m.phase = c.id where m.cup_id = '$id' and DATE_FORMAT(m.datetime,'%Y-%m-%d') = '$data' order by m.phase;");
+    while ($dados_fase = mysqli_fetch_assoc($sql_fase)) {
+        if ($fase <> ""){
+            $fase = $fase . ", ";
+        }
+        $fase = $fase . $dados_fase['fase'];
+    }
 
     $sql_last = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$id' and datetime <= '$data' and cup_id = '$id' order by datetime DESC LIMIT 1;");
     $last = mysqli_fetch_assoc($sql_last)['data'];
@@ -257,7 +263,7 @@
                             echo '
                                  <div id="paging" class="col-xl-offset-5 col-xl-2 center-block" style="text-align:center; margin-bottom:-10px;margin-top:-22px;">';
                             if ($stmt->rowCount() > 0) {
-                                echo $prevlink, '<span style="font-family: \'Lalezar\', cursive; font-size:17px; font-weight:lighter; margin-top:-15px;">', $day," de ", $month_name,"</span>", $nextlink;
+                                echo $prevlink, '<span style="font-family: \'Lalezar\', cursive; font-size:17px; font-weight:lighter; margin-top:-15px;">', $day," de ", $month_name," - ",$fase,"</span>", $nextlink;
                             }else{
                                 echo '<span style="font-family: \'Lalezar\', cursive; font-size:17px; font-weight:lighter; margin-top:0px;">Nenhuma Partida Encontrada</span></div>';
                             }?>

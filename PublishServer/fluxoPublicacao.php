@@ -79,19 +79,6 @@
     while ($row = mysqli_fetch_assoc($sql_processamento)) {
         if ($row['status'] == 1){
             
-            // Preparação 
-            if ($row['team2_name'] == null){
-                $title = $row['team1_name'];
-            } else {
-                $title = $row['team1_abrev'] . ' vs ' . $row['team2_abrev'];
-            }
-            $datahora = new DateTime($row['datetime']);
-            $dia = $datahora->format('Y-m-d'); 
-            $hora_ini = $datahora->format('Hi');
-            $datahora->add(new DateInterval('PT' . $row['duration'] . 'M'));
-            $hora_fim = $datahora->format('Hi');
-            $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' 0 '.$row['id'].' '.$row['is_two_cameras'];
-            
             $novo_status = 2;//Match - Enviado para recorte
             $sql = "UPDATE matches set status = '$novo_status', last_status = NOW() where id = ".$row['id'].";";
             if ($mysqli->query($sql) === TRUE) {
@@ -99,11 +86,8 @@
             } else {
                 echo "Erro na base de dados: " . $mysqli->error;
             } 
-            if ($row['is_two_cameras'] == 1){
-                $cmd = '/var/www/videos/PublishServer/dvr_processamento.sh '.$parametros;
-            } else {
-                $cmd = '/var/www/videos/PublishServer/celular_processamento.sh '.$parametros;
-            }
+            
+            $cmd = '/var/www/videos/PublishServer/celular_processamento.sh '.$row['id'];
             shell_exec($cmd);
         }
     }
@@ -140,7 +124,7 @@
             $hora_ini = $datahora->format('Hi');
             $datahora->add(new DateInterval('PT' . $row['duration'] . 'M'));
             $hora_fim = $datahora->format('Hi');
-            $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' 0 '.$row['id'].' '.$row['is_two_cameras'];
+            $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' 0 '.$row['id'].' 0';
            
             $novo_status = 7;//Match - Enviado para recorte
             $sql = "UPDATE matches set status = '$novo_status', last_status = NOW() where id = ".$row['id'].";";

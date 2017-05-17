@@ -10,15 +10,13 @@
         header("Location: index.php");
     }
     
-		//Getting data from request
 		$cup_id = mysqli_real_escape_string($mysqli,$_POST['cup_id']);
 		$fase = mysqli_real_escape_string($mysqli,$_POST['fase']);
 		$team1 = mysqli_real_escape_string($mysqli,$_POST['team1']);
 		$team2 = mysqli_real_escape_string($mysqli,$_POST['team2']);
 		$datetime = mysqli_real_escape_string($mysqli,$_POST['datetime']);
-        //$birthdate =  mysqli_real_escape_string($mysqli,date('Y-m-d', strtotime($date)));
-
 		$field = mysqli_real_escape_string($mysqli,$_POST['field']);
+
         $sql_field = mysqli_query($mysqli,"INSERT IGNORE INTO fields (fields_name, cup_id) VALUES ('$field', '$cup_id')");
         mysqli_query($mysqli, $sql_field);
 

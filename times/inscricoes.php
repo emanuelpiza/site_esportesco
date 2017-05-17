@@ -34,9 +34,6 @@
     $month_name = $mons[$month];
     $day = date_parse_from_format('Y-m-d', $data)['day'];
 
-    $sql_fase = mysqli_query($mysqli,"select name from cup_phases where cup_id = '$copa' and start_date <= '$data' order by start_date DESC limit 1");
-    $fase = mysqli_fetch_assoc($sql_fase)['name'];
-
     $sql_last = mysqli_query($mysqli,"select DATE_FORMAT(m.datetime,'%Y-%m-%d') as data from matches m where cup_id = '$copa' and datetime <= '$data' and cup_id = '$copa' order by datetime DESC LIMIT 1;");
     $last = mysqli_fetch_assoc($sql_last)['data'];
 
@@ -54,30 +51,28 @@
     $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays p join teams t on t.`teams_name` = p.`teams_name` where available in (1,2) and id_teams in (select id_teams from teams where cup_id = '$copa');");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     
-        // PAGINATION
-        $total = 21;
-        $limit = 3;
-        $pages = ceil($total / $limit);
+    // PAGINATION
+    $total = 21;
+    $limit = 3;
+    $pages = ceil($total / $limit);
 
-        $sqlcount_inicio = mysqli_query($mysqli,"select round(count(1) / 6) as inicio from matches where cup_id = '$copa' and datetime < now()");
-        $count_inicio = mysqli_fetch_assoc($sqlcount_inicio);
-        $inicio = $count_inicio['inicio'];
-        $page = min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
-            'options' => array(
-                'default'   => $inicio,
-                'min_range' => 1,
-            ),
-        )));
-        // Calculate the offset for the query
-        $offset = ($page - 1)  * $limit;
-        // Some information to display to the user
-        $start = $offset + 1;
-        $end = min(($offset + $limit), $total);
+    $sqlcount_inicio = mysqli_query($mysqli,"select round(count(1) / 6) as inicio from matches where cup_id = '$copa' and datetime < now()");
+    $count_inicio = mysqli_fetch_assoc($sqlcount_inicio);
+    $inicio = $count_inicio['inicio'];
+    $page = min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
+        'options' => array(
+            'default'   => $inicio,
+            'min_range' => 1,
+        ),
+    )));
+    // Calculate the offset for the query
+    $offset = ($page - 1)  * $limit;
+    // Some information to display to the user
+    $start = $offset + 1;
+    $end = min(($offset + $limit), $total);
 
-        $dbh = new PDO('mysql:host=localhost;dbname=Esportes', $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-                            
+    $dbh = new PDO('mysql:host=localhost;dbname=Esportes', $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));                        
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en" content="text/html; charset=utf-8">
