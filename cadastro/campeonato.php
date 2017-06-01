@@ -26,12 +26,25 @@
 		//Getting data from request
 		$name = mysqli_real_escape_string($mysqli,$_POST['name']);
 		$sport = $_POST['sport'];
+		$real_time = $_POST['real_time'];
 		$contact_name = mysqli_real_escape_string($mysqli,$_POST['contact_name']);
 		$contact_email = mysqli_real_escape_string($mysqli,$_POST['contact_email']);
 		$contact_telefone = mysqli_real_escape_string($mysqli,$_POST['contact_telefone']);
 		$date_mysql = mysqli_real_escape_string($mysqli,$_POST['datepicker']);
         
-        $sql = "INSERT INTO cups (name, sport, date_limit, contact_name, contact_email, contact_telefone, datahora, regulament) VALUES ('".$name."', '".$sport."', DATE_ADD(DATE_FORMAT(STR_TO_DATE('".$date_mysql."', '%d/%m/%Y'), '%Y-%m-%d'), INTERVAL 1 DAY), '".$contact_name."', '".$contact_email."', '".$contact_telefone."', NOW(), '".$target_file_bd."');";
+        $tiebreaker = "points DESC, ";
+        for ($x = 1; $x <= 5; $x++) {
+            $current = mysqli_real_escape_string($mysqli,$_POST["desempate_" . $x]);
+            $tiebreaker = $tiebreaker . $current;
+            if ($current <> "goals_taken"){
+                $tiebreaker = $tiebreaker . " DESC";
+            }
+            if ($x < 5){
+                $tiebreaker = $tiebreaker  . ", ";
+            }
+        }
+        
+        $sql = "INSERT INTO cups (name, sport, real_time, date_limit, contact_name, contact_email, contact_telefone, datahora, regulament, tiebreaker) VALUES ('".$name."', '".$sport."', '".$real_time."', DATE_ADD(DATE_FORMAT(STR_TO_DATE('".$date_mysql."', '%d/%m/%Y'), '%Y-%m-%d'), INTERVAL 1 DAY), '".$contact_name."', '".$contact_email."', '".$contact_telefone."', NOW(), '".$target_file_bd."', '".$tiebreaker."');";
         mysqli_query($mysqli, $sql);
         
         $sql_novo = mysqli_query($mysqli,"SELECT id, admin_key from cups order by id DESC limit 1;");
@@ -250,24 +263,69 @@
                               <input type="text" class="form-control" id="name" name="name" placeholder="Exemplo: Liga Futsal Rioclarense Masculino" required="true">
                             </div>
                             <div class="form-group">
-                                <label for="championshipName">Esporte</label>
+                                <label for="sport">Esporte</label>
                                 <select id="sport" name="sport" class="form-control bg-white">
-                                    <option value="Indefinida"></option>
                                     <option value='Futebol de Campo'>Futebol de Campo</option>
                                     <option value='Futebol Society'>Futebol Society</option>
                                     <option value='Futebol de Salão'>Futsal</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Último dia para inscrições:</label><br>
+                                <label for="real_time">Atualizações da plataforma</label>
+                                <select id="real_time" name="real_time" class="form-control bg-white">
+                                    <option value="0">Após o término do jogo.</option>
+                                    <option value='1'>Em tempo-real.(Mesário precisa de 3G)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Data final para inscrições:</label><br>
                                 <input id="datepicker" style="color:#555;" class="form-control" name="datepicker" type="text" placeholder="DD/MM/AAAA" required="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="upload">Anexar Regulamento</label>
+                                <input type='file' name='upload'>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="upload">Anexar Regulamento</label>
-                                <input type='file' name='upload'>
-                                
+                                <label>Critérios de Desempate</label>
+                                <select id="desempate_1" name="desempate_1" class="form-control bg-white">
+                                    <option value="victories" active>1°: Vitórias</option>
+                                    <option value="goals_balance">1°: Saldo de Gols</option>
+                                    <option value="goals">1°: Gols Pró</option>
+                                    <option value="goals_taken">1°: Gols Contra</option>
+                                    <option value="direct_match">1°: Confrontos Diretos</option>
+                                </select>
+                                 <select id="desempate_2" name="desempate_2" class="form-control bg-white">
+                                    <option value="goals_balance" active>2°: Saldo de Gols</option>
+                                    <option value="victories">2°: Vitórias</option>
+                                    <option value="goals">2°: Gols Pró</option>
+                                    <option value="goals_taken">2°: Gols Contra</option>
+                                    <option value="direct_match">2°: Confrontos Diretos</option>
+                                </select>
+                                 <select id="desempate_3" name="desempate_3" class="form-control bg-white">
+                                    <option value="goals" active>3°: Gols Pró</option>
+                                    <option value="victories">3°: Vitórias</option>
+                                    <option value="goals_balance">3°: Saldo de Gols</option>
+                                    <option value="goals_taken">3°: Gols Contra</option>
+                                    <option value="direct_match">3°: Confrontos Diretos</option>
+                                </select>
+                                 <select id="desempate_4" name="desempate_4" class="form-control bg-white">
+                                    <option value="goals_taken" active>4°: Gols Contra</option>
+                                    <option value="victories">4°: Vitórias</option>
+                                    <option value="goals_balance">4°: Saldo de Gols</option>
+                                    <option value="goals">4°: Gols Pró</option>
+                                    <option value="direct_match">4°: Confrontos Diretos</option>
+                                </select>
+                                 <select id="desempate_5" name="desempate_5" class="form-control bg-white">
+                                    <option value="direct_match" active>5°: Confrontos Diretos</option>
+                                    <option value="victories">5°: Vitórias</option>
+                                    <option value="goals_balance">5°: Saldo de Gols</option>
+                                    <option value="goals">5°: Gols Pró</option>
+                                    <option value="goals_taken">5°: Gols Contra</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                               <label for="contact" style="margin-top:10px;">Organizador</label>
                               <div class="input-group">
                                   <span class="input-group-addon"> <i class="fa fa-user" style="width:15px;"></i></span>

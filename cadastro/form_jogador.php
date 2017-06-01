@@ -27,7 +27,7 @@
     $birthdate =  mysqli_real_escape_string($mysqli,date('Y-m-d', strtotime($date)));
 
     //SQL
-    $sql = "INSERT INTO `players` (players_team_id, whole_name, player_picture, rg, cpf, birthdate, email, phone, name_responsible, players_name, datahora) VALUES ('".$team."', UC_Words('".$name."'), '".$target_file."', '".$rg."', '".$cpf."', '".$birthdate."', '".$contact_email."', '".$contact_telefone."', '".$contact_name."', UC_Words(CONCAT_WS(' ', substring_index('".$name."', ' ', 1), substring_index('".$name."', ' ', -1))), NOW());";
+    $sql = "INSERT INTO `players` (players_team_id, whole_name, player_picture, rg, cpf, birthdate, email, phone, name_responsible, players_name, datahora) VALUES ('".$team."', UC_Words('".$name."'), '".$target_file."', '".$rg."', '".$cpf."', IF('".$birthdate."' = '1969-12-31', NULL, '".$birthdate."'), '".$contact_email."', '".$contact_telefone."', '".$contact_name."', UC_Words(CONCAT_WS(' ', substring_index('".$name."', ' ', 1), substring_index('".$name."', ' ', -1))), NOW());";
     mysqli_query($mysqli, $sql);
 
     //Atualiza contagem de jogadores
@@ -69,7 +69,7 @@
         $mail->setFrom('contato@esportes.co', 'Esportes.Co');   
         $mail->Subject = 'Perfil de '.$name.' disponível para edição! Esportes.Co';
         $mail->Body = $response;
-        $mail->addAddress($contact_email, '');     // Add a recipient
+        $mail->addAddress($contact_email, $contact_email);     // Add a recipient
         if(!$mail->send()) {
             echo 'Message could not be sent.';
             echo 'Mailer Error: ' . $mail->ErrorInfo;

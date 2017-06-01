@@ -20,6 +20,17 @@
     $short_name = $dados['short_name'];
     $copa = $dados['cup_id'];
 
+    $sqlokr = mysqli_query($mysqli,"select ROUND(count(distinct(`cup_id`))/125*100,0) as total FROM (select cup_id, count(distinct(match_id)) as partidas from notes n left join matches m on n.match_id = m.id group by cup_id) s where s.partidas > 4");
+    $okr1 = mysqli_fetch_assoc($sqlokr)['total'];
+
+    $sqlokr = mysqli_query($mysqli,"select ROUND(count(1)/1250*100,0) as total FROM matches m where m.`match_video_id` is not null and m.`id` > 900;");
+    $okr2 = mysqli_fetch_assoc($sqlokr)['total'];
+
+    //Meta 3: 365 dias de audiência acumulada. 31.536.000 segundos. 86400 segundos no dia.
+    $sessions = 7217; // Atualizar
+    $avg_session_seconds = 373; // Atualizar
+    $okr3 = round(31536000 / ($sessions * $avg_session_seconds));
+
     $sqlcup = mysqli_query($mysqli,"SELECT name from cups where id = '$copa'");
     $nome_copa = mysqli_fetch_assoc($sqlcup)['name'];
 
@@ -329,17 +340,19 @@
     <div class="row">
                 <div id="estrela_content">
                     <img src="../img/logo_circular_transp.png" class="estrela" style="width:100px;margin-left:30px; margin-right:30px; margin-bottom:10px;">
-                    <span style="font-family: Roboto, Arial, serif; font-size:25px; color:black;"><br>Painel Semanal</span>
+                    <span style="font-family: Roboto, Arial, serif; font-size:25px; color:black;"><br>
+                    Objetivo:<br>Atingir 100k usuários únicos por mês na plataforma até dezembro de 2017.
+                    </span>
                 </div>
    
     </div>
     <div class="row" style="margin-top:15px;">
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-green">
+            <div class="small-box bg-<?php if ($okr1 > 66){echo "green";} elseif($okr1 > 33){echo "yellow";} else{ echo "red";} ?>">
                 <div class="inner">
-                    <h3>73%</h3>
-                    <p>Meta de Copas Ativas</p>
+                    <h3><?php echo $okr1;?>%</h3>
+                    <p>Meta de Copas (125)</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-ribbon-a"></i>
@@ -348,25 +361,25 @@
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-green">
+            <div class="small-box bg-<?php if ($okr2 > 66){echo "green";} elseif($okr2 > 33){echo "yellow";} else{ echo "red";} ?>">
                 <div class="inner">
-                    <h3>65%</h3>
-                    <p>Meta de Dados</p>
+                    <h3><?php echo $okr2;?>%</h3>
+                    <p>Meta de Vídeos (1250)</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
+                    <i class="ion ion-ios-football"></i>
                 </div>
             </div>
         </div><!-- ./col -->
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-yellow">
+            <div class="small-box bg-<?php if ($okr3 > 66){echo "green";} elseif($okr3 > 33){echo "yellow";} else{ echo "red";} ?>">
                 <div class="inner">
-                    <h3>50%</h3>
-                    <p>Meta de Acessos</p>
+                    <h3><?php echo $okr3;?>%</h3>
+                    <p>Meta de Acessos (365d)</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-ios-football"></i>
+                    <i class="ion ion-stats-bars"></i>
                 </div>
             </div>
             </div><!-- ./col --> 
@@ -375,7 +388,7 @@
             <div class="small-box bg-red">
                 <div class="inner">
                     <h3>0%</h3>
-                    <p>Meta de Faturamento</p>
+                    <p>Meta de Receita (R$12k)</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-checkmark-round"></i>

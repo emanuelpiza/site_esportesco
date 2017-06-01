@@ -540,16 +540,25 @@
 
                         <div class="box-body">
                             <div class="row">
-                                <div class="form-group col-md-6 col-md-offset-3" style="text-align:center;">
+                                <div class="form-group col-md-3 col-md-offset-3" style="text-align:center;">
                                     <h3 id="view-mode">Fase</h3>
                                     <select id="fase" name="fase" class="form-control bg-white">
-                                        <option value="0">Classificatórias (Pontos Corridos)</option>
+                                        <option value="0">Classificatórias</option>
                                         <option value='1'>Oitavas de Final</option>
                                         <option value='2'>Quartas de Final</option>
                                         <option value='3'>Semi-Final</option>
                                         <option value='4'>Disputa de 3º e 4º</option>
                                         <option value='5'>Final</option>
                                     </select>
+                                </div>
+                                <div class="form-group col-md-3" style="text-align:center;">
+                                    <div class="form-group">
+                                        <h3 id="view-mode">Soma Pontos</h3>
+                                        <select id="points" name="points" class="form-control bg-white">
+                                            <option value="1">Sim</option>
+                                            <option value='0'>Não (Apenas mata-mata)</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom:10px;">
@@ -624,6 +633,10 @@
             var select_fase = document.getElementById("fase");
             var fase = select_fase.options[select_fase.selectedIndex].value;
             
+            
+            var select_points = document.getElementById("points");
+            var points = select_points.options[select_points.selectedIndex].value;
+            
             var select_team1 = document.getElementById("team1");
             var team1 = select_team1.options[select_team1.selectedIndex].value;
             
@@ -641,7 +654,7 @@
             if ((team1 == "")||(team2 == "")||(team1 == team2)){
                 swal("Times indefinidos.", "Ambos os times tem de estar definidos e serem diferentes entre si.", "warning");
             } else{
-                $.post("form_partida.php",{fase: fase, team1: team1, team2: team2, field: field, datetime:datetime, cup_id: <?php echo $id;?>},function(data){});    
+                $.post("form_partida.php",{fase: fase, points: points, team1: team1, team2: team2, field: field, datetime:datetime, cup_id: <?php echo $id;?>},function(data){});    
                 swal({
                       title: "Partida Criada!",
                       text: "Partida disponível para o público geral.",

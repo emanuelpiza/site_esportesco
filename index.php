@@ -213,7 +213,7 @@
                                     <article class="post post-showinfo">
                                         <div class="post-media overlay">
                                             <a href="http://www.esportes.co/times/copa.php?id=17">
-                                                <img src="../img/estatua.jpg">
+                                                <img src="../img/fundo_kick.jpg">
                                             </a>
                                         </div>
                                         <div class="post-head small-screen-center">
@@ -279,7 +279,7 @@
                                                 <img src="../img/caixa.png" width="150px;" style="display:block; margin:auto;margin-top:-30px; margin-bottom:10px;">
                                             </a>
                                             <a href="http://www.esportes.co/times/copa.php?id=1">
-                                                <img src="../img/estatua.jpg">
+                                                <img src="../img/fundo_amador.jpg">
                                             </a>
                                         </div>
                                         <div class="post-head small-screen-center">

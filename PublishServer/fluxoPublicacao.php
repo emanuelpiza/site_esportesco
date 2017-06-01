@@ -16,47 +16,17 @@
     mb_internal_encoding('UTF-8');
     mysqli_query($mysqli, "set names 'utf8'");
 
+    $sql = "insert into log (datetime) ;";
+    if ($mysqli->query($sql) === TRUE) {
+        echo "";
+    } else {
+        echo "Erro na base de dados: " . $mysqli->error;
+    } 
+
     if (mysqli_connect_errno()) {
         printf("Connect failed: %s\n", mysqli_connect_error());
         exit();
     }
-    // Início do fluxo - Verifica se os arquivos já foram salvos
-  //  $sql_ftp_teste = mysqli_query($mysqli,"
-    //    select 
-     //       m.id, 
-   //         m.status, 
-   //         m.field_id, 
-   //         m.is_two_cameras, 
-   //         m.datetime, 
-   //         c.match_duration as duration, 
-     //       t1.`teams_name` as team1_name, 
-     //       LEFT(t1.`teams_name`, 3) as team1_abrev, 
-     //       t2.`teams_name` as team2_name, 
-     //       LEFT(t2.`teams_name`, 3) as team2_abrev 
-    //    from matches m 
-   //         left join teams t1 on m.team1 = t1.id_teams 
-    //        left join teams t2 on m.team2 = t2.id_teams 
-   //         left join cups c on t1.cup_id = c.id
-   //     where datetime < NOW() and m.status is null
-   //     order by datetime;");
- //   while ($row = mysqli_fetch_assoc($sql_ftp_teste)) {
-        
-        // Preparação 
-   //     if ($row['team2_name'] == null){
-   //         $title = $row['team1_name'];
-   //     } else {
-   //         $title = $row['team1_abrev'] . ' vs ' . $row['team2_abrev'];
-   //     }
-  ////      $datahora = new DateTime($row['datetime']);
-  //      $dia = $datahora->format('Y-m-d'); 
-  //      $hora_ini = $datahora->format('Hi');
-  //      $datahora->add(new DateInterval('PT' . $row['duration'] . 'M'));
-  //      $hora_fim = $datahora->format('Hi');
-        
-  //      $parametros = ' "'.$title.'" '.$dia.' '.$hora_ini.' '.$hora_fim.' '.$row['field_id'].' '.$row['id'].' '.$row['is_two_cameras'];
-   //     $cmd = '/var/www/videos/PublishServer/ftp_teste.sh '.$parametros;
-      //  shell_exec($cmd);
-    //}
   // Após arquivos ok, inicia o processamento, um por vez
   $sql_processamento = mysqli_query($mysqli,"
        select 

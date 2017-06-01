@@ -2,7 +2,10 @@
  
     header('Content-Type: text/html; charset=utf-8');
     session_start();
-
+    ini_set('upload_max_filesize', '50000M');
+    ini_set('post_max_size', '50000M');
+    ini_set('max_input_time', 60000);
+    ini_set('max_execution_time', 60000);
     ob_start();
     include('./admin/dbcon/dbcon.php');
 
@@ -66,6 +69,26 @@
     if (pathinfo(basename($_FILES["fileToUpload3"]['name']), PATHINFO_EXTENSION) <> "") {
         $target_file3 = $target_dir . $rand ."_3". "." . pathinfo(basename($_FILES["fileToUpload3"]['name']), PATHINFO_EXTENSION);
         if (move_uploaded_file($_FILES["fileToUpload3"]["tmp_name"], $target_file3) && ($uploadOk == 1)) {      
+            $uploadOk = 1;
+        }else{
+            $uploadOk = 0;         
+        }
+    }
+
+    // ARQUIVO 4
+    if (pathinfo(basename($_FILES["fileToUpload4"]['name']), PATHINFO_EXTENSION) <> "") {
+        $target_file4 = $target_dir . $rand ."_4". "." . pathinfo(basename($_FILES["fileToUpload4"]['name']), PATHINFO_EXTENSION);
+        if (move_uploaded_file($_FILES["fileToUpload4"]["tmp_name"], $target_file4) && ($uploadOk == 1)) {      
+            $uploadOk = 1;
+        }else{
+            $uploadOk = 0;         
+        }
+    }
+
+    // ARQUIVO 5
+    if (pathinfo(basename($_FILES["fileToUpload5"]['name']), PATHINFO_EXTENSION) <> "") {
+        $target_file5 = $target_dir . $rand ."_5". "." . pathinfo(basename($_FILES["fileToUpload5"]['name']), PATHINFO_EXTENSION);
+        if (move_uploaded_file($_FILES["fileToUpload5"]["tmp_name"], $target_file5) && ($uploadOk == 1)) {      
             $uploadOk = 1;
         }else{
             $uploadOk = 0;         

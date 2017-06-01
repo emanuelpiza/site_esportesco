@@ -556,7 +556,7 @@
                                     </div>
                                     <div class="form-group col-md-6" style="text-align:center;">
                                          <?php 
-                                            for ($x = 1; $x <= 3; $x++) {
+                                            for ($x = 1; $x <= 5; $x++) {
                                                 echo ' <div class="row">
                                                  <div class="col-sm-10">
                                                      <span class="fa-stack fa-3x">
@@ -579,57 +579,13 @@
                          <input type="hidden" name="match" value="<?php echo $match;?>"> 
                         <div class="box-footer">
                             <a class="btn btn-default" onclick="window.location.replace('../times/partida.php?id=<?php echo $match; ?>')" style="float:left;">Voltar</a>
-                            <button class="btn btn-success" type="submit" style="float:right;" onclick="criar()">Salvar</button>
+                            <button class="btn btn-success" type="submit" style="float:right;">Salvar</button>
                         </div>
 					</div>
 				</div>
 			</div>
         </form>
     </div>
-	
-	 <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker12').datetimepicker({
-                inline: true,
-                sideBySide: true,
-                locale: 'pt-Br'
-            });
-        });
-        function criar() {
-            var select_fase = document.getElementById("fase");
-            var fase = select_fase.options[select_fase.selectedIndex].value;
-            
-            var select_team1 = document.getElementById("team1");
-            var team1 = select_team1.options[select_team1.selectedIndex].value;
-            
-            var select_team2 = document.getElementById("team2");
-            var team2 = select_team2.options[select_team2.selectedIndex].value;
-            
-            var field = document.getElementById('novo_campo').value;
-            if (field == ""){
-                var select_field = document.getElementById("field");
-                var field = select_field.options[select_field.selectedIndex].value;    
-            }
-            
-            var datetime = moment($("#datetimepicker12").data("DateTimePicker").date()).format("YYYY-MM-DD HH:mm:00");
-            
-            if ((team1 == "")||(team2 == "")||(team1 == team2)){
-                swal("Times indefinidos.", "Ambos os times tem de estar definidos e serem diferentes entre si.", "warning");
-            } else{
-                $.post("form_partida.php",{fase: fase, team1: team1, team2: team2, field: field, datetime:datetime, cup_id: <?php echo $id;?>},function(data){});    
-                swal({
-                      title: "Partida Criada!",
-                      text: "Partida disponível para o público geral.",
-                      type: "success",
-                      closeOnConfirm: true
-                    },
-                    function(isConfirm) {
-                      if (isConfirm) {window.location.replace("../times/admincopa.php?key=<?php echo $key; ?>");
-                      };
-                });  
-            };
-        };
-    </script>
 	
 </body>
 

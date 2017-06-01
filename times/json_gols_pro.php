@@ -11,7 +11,7 @@
     }
 
     $id = $_GET['id'];
-    $sqlgeral = mysqli_query($mysqli,"   select score1 as goals, date_format(datetime, '%d/%m') as day, datetime from matches where team1 = '$id' and score1 is not null
+    $sqlgeral = mysqli_query($mysqli,"   select score1 as goals, date_format(datetime, '%d/%m') as day, datetime from matches where team1 = '$id' and score2 is not null 
    	UNION ALL
    select score2 as goals, date_format(datetime, '%d/%m') as day, datetime from matches where team2 = '$id' and score2 is not null order by datetime;");
     $array = array();

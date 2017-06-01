@@ -494,7 +494,7 @@
                       <th style="width: 50px">Jogos</th>
                       <th style="width: 50px">Média</th>
                     </tr>
-                    <?php $sqldefesa = mysqli_query($mysqli,"select id_teams, teams_name, goals_taken, matches, ROUND(goals_taken/matches, 2) as media from teams where cup_id = '$copa' order by media, matches DESC LIMIT 5");
+                    <?php $sqldefesa = mysqli_query($mysqli,"select id_teams, teams_name, goals_taken, matches, IF(matches = 0 , 0 ,ROUND(goals_taken/matches, 2)) as media, IF(matches = 0 , 999 ,ROUND(goals_taken/matches, 2)) as ordem from teams where cup_id = '$copa' order by ordem, matches DESC LIMIT 5;");
                         $posicao = 1;
                     while ($data8 = mysqli_fetch_assoc($sqldefesa)) {
                     echo '

@@ -23,6 +23,9 @@
     $sqlcup = mysqli_query($mysqli,"SELECT name from cups where id = '$copa'");
     $nome_copa = mysqli_fetch_assoc($sqlcup)['name'];
 
+    $sqlcampanha = mysqli_query($mysqli,"select count(*) as total from matches where (team1 = '$id' or team2 = '$id') and score2 is not null;");
+    $campanha = mysqli_fetch_assoc($sqlcampanha)['total'];
+
     $sqlcount_plays = mysqli_query($mysqli,"SELECT count(*) as total FROM plays where available in (1,2) and teams_name LIKE '%".$nome."%' ");
     $count_plays = mysqli_fetch_assoc($sqlcount_plays);
     $sql_anos = mysqli_query($mysqli,"SELECT YEAR(teams_schedule_date) as year FROM teams WHERE id_teams='$id'");
@@ -434,7 +437,7 @@
             
                <div class="box" id="class_grupoA">
                 <div class="box-header">
-                  <h1 class="box-title" style="float:middle;">Campanha</h1>
+                  <h3 class="box-title" style="float:middle;">Eventos</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="col-md-10 col-md-offset-1">
@@ -478,29 +481,31 @@
                                   </div>';}
                                 else {
                                  echo '
-                                    <div class="col-sm-6 col-sm-offset-3" style="text-align:center; height: 20px; line-height: 20px; margin-top:-10px; margin-bottom:10px;">
+                                    <div class="col-xl-6 col-xl-offset-3" style="text-align:center; height: 20px; line-height: 20px; margin-top:-10px; margin-bottom:10px;">
                                         <span style="font-family: Roboto, Arial, serif; font-size:18px; color:black;">'.$data5['date'].'</span>
-                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:15px; color:black;">- Amistoso interno</span> 
+                                        <span style="font-family: \'Poiret One\', Arial, serif; font-size:15px; color:black;"> - Amistoso interno</span> 
                                     </div>
                                 ';}
                                 echo '</div></a>';
                         }?> 
-                    </div><!-- /.box-body -->
-                </div>
-              </div><!-- /.box -->
-            
-             <div class="box box-solid bg-light-blue-gradient">
-                <div class="box-header">
-                  <i class="fa fa-th"></i>
-                  <h3 class="box-title">Gols por Partida</h3>
-                </div>
-                <div class="box-body border-radius-none">
-
-                    <div id="tabs-1" class="tab-pane fade in active">
-                        <div class="chart" id="line-chart-gols-pro" style="height: 250px;"></div>
                     </div>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
+                </div>
+              </div>
+            
+                <?php if ($campanha > 0){
+                    echo '
+                    <div class="box box-solid bg-light-blue-gradient">
+                        <div class="box-header">
+                          <i class="fa fa-th"></i>
+                          <h3 class="box-title">Gols por Partida</h3>
+                        </div>
+                        <div class="box-body border-radius-none">
+                            <div id="tabs-1" class="tab-pane fade in active">
+                                <div class="chart" id="line-chart-gols-pro" style="height: 250px;"></div>
+                            </div>
+                        </div>
+                    </div>';}
+                ?>
           
              <div class="box">
                 <div class="box-header with-border">

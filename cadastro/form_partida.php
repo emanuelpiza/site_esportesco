@@ -12,6 +12,7 @@
     
 		$cup_id = mysqli_real_escape_string($mysqli,$_POST['cup_id']);
 		$fase = mysqli_real_escape_string($mysqli,$_POST['fase']);
+		$points = mysqli_real_escape_string($mysqli,$_POST['points']);
 		$team1 = mysqli_real_escape_string($mysqli,$_POST['team1']);
 		$team2 = mysqli_real_escape_string($mysqli,$_POST['team2']);
 		$datetime = mysqli_real_escape_string($mysqli,$_POST['datetime']);
@@ -25,7 +26,7 @@
         $field = mysqli_fetch_assoc($sql)['id_fields'];
 
 		//SQL
-        $sql = "INSERT INTO `matches` (team1, team2, cup_id, field_id, datetime, phase) VALUES ('".$team1."', '".$team2."', '".$cup_id."', '".$field."', '".$datetime."', '".$fase."');";
+        $sql = "INSERT INTO `matches` (team1, team2, cup_id, field_id, datetime, phase, points_sum) VALUES ('".$team1."', '".$team2."', '".$cup_id."', '".$field."', '".$datetime."', '".$fase."', '".$points."');";
         mysqli_query($mysqli, $sql);
 		$mysqli->close();
 ?>
